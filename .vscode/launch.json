@@ -1,0 +1,10 @@
+{
+    "configurations": [
+    {
+        "command": "electron .",
+        "name": "Electron",
+        "request": "launch",
+        "type": "node-terminal"
+    }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "laf",
+  "version": "0.1.1",
+  "description": "A Krunker Client",
+  "main": "app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hiro527/LaF.git"
+  },
+  "author": "Hiro",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Hiro527/LaF/issues"
+  },
+  "homepage": "https://github.com/Hiro527/LaF#readme",
+  "dependencies": {
+    "electron-localshortcut": "^3.2.1"
+  }
+}
