@@ -33,7 +33,7 @@ const initGameWindow = () => {
 const initShortcutKeys = () => {
     const sKeys = [
         ["Esc", () => {             // ゲーム内でのESCキーの有効化
-            gameWindow.webContents.send("esc")
+            gameWindow.webContents.send("ESC")
             console.log("ESC pressed.");
         }], 
         ["F5", () => {              // リ↓ロ↑ードする
@@ -49,6 +49,9 @@ const initShortcutKeys = () => {
             let copiedText = clipboard.readText();
             if (copiedText.substr(0, 25) === "https://krunker.io/?game=" || copiedText.substr(0, 30) === "https://comp.krunker.io/?game=") gameWindow.loadURL(copiedText);
         }],
+        ["Shift+F8", () => {        // URLを入力するフォームの表示
+            gameWindow.webContents.send("DIALOG_OPEN", "URL")
+        }],
         ["Ctrl+Shift+F1", () => {   // クライアントの再起動
             app.relaunch();
             app.quit();
@@ -62,6 +65,10 @@ const initShortcutKeys = () => {
             localShortcut.register(gameWindow, k[0], k[1])
         });
 };
+
+ipcMain.on("OPEN_LINK", (event, arg) => {
+    gameWindow.loadURL(arg);
+})
 
 app.on("ready", () => {
     initFlags();
