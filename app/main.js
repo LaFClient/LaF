@@ -1,7 +1,9 @@
-const { app, BrowserWindow, getCurrentWindow, clipboard } = require("electron");
-const localShortcut= require("electron-localshortcut")
+const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain } = require("electron");
+const localShortcut= require("electron-localshortcut");
+const inputPrompt = require("electron-prompt");
+const path = require("path")
 
-let gameWindow = null
+let gameWindow = null;
 
 const initFlags = () => {
     app.commandLine.appendSwitch("disable-frame-rate-limit"); // 将来的には設定で変更可能にする
@@ -13,7 +15,8 @@ const initGameWindow = () => {
         width: 1200,
         height: 800,
         webPreferences: {
-            contextIsolation: false
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true
         }
     });
     gameWindow.setMenuBarVisibility(false)
@@ -21,6 +24,7 @@ const initGameWindow = () => {
     gameWindow.loadURL("https://krunker.io");
 
     initShortcutKeys();
+    
     gameWindow.on("closed", () => {
         gameWindow = null;
     });
@@ -30,6 +34,7 @@ const initShortcutKeys = () => {
     const sKeys = [
         ["Esc", () => {             // ゲーム内でのESCキーの有効化
             gameWindow.webContents.send("esc")
+            console.log("ESC pressed.");
         }], 
         ["F5", () => {              // リ↓ロ↑ードする
             getCurrentWindow.reload()
