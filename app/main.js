@@ -4,6 +4,8 @@ const inputPrompt = require("electron-prompt");
 const path = require("path")
 
 let gameWindow = null;
+let promptWindow = null;
+
 
 const initFlags = () => {
     app.commandLine.appendSwitch("disable-frame-rate-limit"); // 将来的には設定で変更可能にする
@@ -14,9 +16,11 @@ const initGameWindow = () => {
     gameWindow = new BrowserWindow({
         width: 1200,
         height: 800,
+        show: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-            contextIsolation: true
+            contextIsolation: true,
+            nodeIntegration: true
         }
     });
     gameWindow.setMenuBarVisibility(false)
@@ -28,6 +32,11 @@ const initGameWindow = () => {
     gameWindow.on("closed", () => {
         gameWindow = null;
     });
+
+    gameWindow.once("ready-to-show", () => {
+        gameWindow.setTitle("LaF");
+        gameWindow.show();
+    });
 };
 
 const initShortcutKeys = () => {
@@ -37,7 +46,7 @@ const initShortcutKeys = () => {
             console.log("ESC pressed.");
         }], 
         ["F5", () => {              // リ↓ロ↑ードする
-            getCurrentWindow.reload()
+            gameWindow.reload()
         }],
         ["F6", () => {              // 別のマッチへ
             gameWindow.loadURL("https://krunker.io")
@@ -50,7 +59,19 @@ const initShortcutKeys = () => {
             if (copiedText.substr(0, 25) === "https://krunker.io/?game=" || copiedText.substr(0, 30) === "https://comp.krunker.io/?game=") gameWindow.loadURL(copiedText);
         }],
         ["Shift+F8", () => {        // URLを入力するフォームの表示
-            gameWindow.webContents.send("DIALOG_OPEN", "URL")
+            promptWindow = new BrowserWindow({
+                width: 300,
+                height: 120,
+                parent: gameWindow,
+                resizable: false,
+                movable: false,
+                webPreferences: {
+                    nodeIntegration: true
+                }
+            });
+            promptWindow.setMenuBarVisibility(false);
+            promptWindow.loadURL(path.join(__dirname, "prompt.html"));
+
         }],
         ["Ctrl+Shift+F1", () => {   // クライアントの再起動
             app.relaunch();
@@ -67,8 +88,9 @@ const initShortcutKeys = () => {
 };
 
 ipcMain.on("OPEN_LINK", (event, arg) => {
+    promptWindow.destroy();
     gameWindow.loadURL(arg);
-})
+});
 
 app.on("ready", () => {
     initFlags();
