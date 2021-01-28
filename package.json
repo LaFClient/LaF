@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/Hiro527/LaF#readme",
   "dependencies": {
-    "electron-localshortcut": "^3.2.1",
+    "electron-localshortcut": "^3.2.1"
   }
 }

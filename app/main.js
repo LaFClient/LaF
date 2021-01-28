@@ -8,9 +8,15 @@ let promptWindow = null;
 
 
 const initFlags = () => {
-    app.commandLine.appendSwitch("disable-frame-rate-limit"); // 将来的には設定で変更可能にする
-    app.commandLine.appendSwitch("enable-zero-copy")
+    // 将来的には設定で変更可能にする
+    app.commandLine.appendSwitch("disable-frame-rate-limit");       // FPS上限解放
+    app.commandLine.appendSwitch("disable-gpu-vsync");
+    app.commandLine.appendSwitch("enable-zero-copy");
+    app.commandLine.appendSwitch('use-angle', 'd3d9');              // 録画できるようにするやつ
+    app.commandLine.appendSwitch('enable-webgl2-compute-context');
 };
+
+initFlags();
 
 const initGameWindow = () => {
     gameWindow = new BrowserWindow({
@@ -93,6 +99,6 @@ ipcMain.on("OPEN_LINK", (event, arg) => {
 });
 
 app.on("ready", () => {
-    initFlags();
+    // initFlags();
     initGameWindow();
 });
