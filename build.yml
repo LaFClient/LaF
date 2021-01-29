@@ -1,0 +1,18 @@
+appId: jp.laf.hiro
+productName: 'LaF'
+win:
+  artifactName: ${productName}_${version}_portable_${os}_${arch}.${ext}
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+    - target: portable
+      arch:
+        - x64
+        - ia32
+nsis:
+  artifactName: ${productName}_${version}_installer_${os}_${arch}.${ext}
+  oneClick: false
+  perMachine: true
+  allowToChangeInstallationDirectory: true

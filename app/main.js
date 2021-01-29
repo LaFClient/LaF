@@ -1,6 +1,5 @@
 const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain } = require("electron");
 const localShortcut= require("electron-localshortcut");
-const inputPrompt = require("electron-prompt");
 const path = require("path")
 
 let gameWindow = null;
@@ -26,7 +25,7 @@ const initGameWindow = () => {
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: true,
-            nodeIntegration: true
+            nodeIntegration: false
         }
     });
     gameWindow.setMenuBarVisibility(false)
