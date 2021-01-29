@@ -48,8 +48,7 @@ const initGameWindow = () => {
 const initShortcutKeys = () => {
     const sKeys = [
         ["Esc", () => {             // ゲーム内でのESCキーの有効化
-            gameWindow.webContents.send("ESC")
-            console.log("ESC pressed.");
+            gameWindow.webContents.send("ESC");
         }], 
         ["F5", () => {              // リ↓ロ↑ードする
             gameWindow.reload()
