@@ -1,6 +1,6 @@
 # What is LaF?
 **Laf = Lite and Fast**</br>
-Krunkerはとても軽いゲームです。故に「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している順日本製Krunkerクライアントです。</br>
+Krunkerはとても軽いゲームです。故に「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 
 # Attention
 **THIS SOFTWARE IS IN ALPHA VERSION. DON'T USE THIS SOFTWARE FOR EXCEPT DEVELOPPING OR TESTING.**</br>
