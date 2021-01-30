@@ -2,7 +2,6 @@
 <html>
     <head>
         <title>LaF</title>
-        <!--
         <style>
             body {
                 background-color: black;
@@ -19,17 +18,16 @@
                 color: white;
                 left: 10px;
                 bottom: 10px;
-                font-size: 25px;
+                font-size: 20px;
             }
             #downloadStatus {
                 position: absolute;
                 color: white;
                 left: 10px;
                 bottom: 10px;
-                font-size: 25px;
+                font-size: 20px;
             }
         </style>
-        -->
     </head>
     <body>
         <div id="appVersion"></div>
@@ -42,7 +40,7 @@
             updates = document.getElementById("updateStatus");
             dls = document.getElementById("downloadStatus")
 
-            appv.innerHTML = `LaF v${app.getVersion()}`;
+            // appv.innerHTML = `LaF v${app.getVersion()}`;
 
             ipcRenderer.on('checking-for-update', () => {
                 updates.innerHTML = "Checking for update...";

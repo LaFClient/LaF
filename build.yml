@@ -14,5 +14,5 @@ win:
 nsis:
   artifactName: ${productName}_${version}_installer_${os}_${arch}.${ext}
   oneClick: false
-  perMachine: true
+  perMachine: false
   allowToChangeInstallationDirectory: true

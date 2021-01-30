@@ -150,8 +150,8 @@ const initEditorWindow = (url) => {
 
 const initSplashWindow = () => {
     splashWindow = new BrowserWindow({
-        width: 300,
-        height: 200,
+        width: 600,
+        height: 400,
         frame: false,
         resizable: false,
         movable: false,
@@ -171,25 +171,44 @@ const initAutoUpdater = () => {
     const { autoUpdater } = require("electron-updater");
 
     let updateCheck = null;
-    let autoUpdateType = null;
 
     autoUpdater.on('checking-for-update', () => {
         splashWindow.webContents.send("checking-for-update")
+        updateCheck = setTimeout(() => {
+            splashWindow.webContents.send("update-not-available")
+            setTimeout(() =>{
+                initGameWindow()
+            }, 1000)
+        }, 15000)
     })
     autoUpdater.on('update-available', (info) => {
+        if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-available", info)
     })
     autoUpdater.on('update-not-available', () => {
+        if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-not-available")
+        setTimeout(() => {
+            initGameWindow()
+        }, 1000)
     })
     autoUpdater.on('error', (err) => {
+        if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-error")
+        setTimeout(() => {
+            initGameWindow()
+        }, 1000)
     })
     autoUpdater.on('download-progress', (info) => {
+        if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("download-progress", info)
     })
     autoUpdater.on('update-downloaded', (info) => {
+        if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-downloaded", info)
+        setTimeout(() => {
+            autoUpdater.quitAndInstall(true, true)
+        }, 3000)
     });
     autoUpdater.autoDownload = "download";
     autoUpdater.checkForUpdates();
@@ -249,5 +268,4 @@ ipcMain.on("OPEN_LINK", (event, arg) => {
 
 app.on("ready", () => {
     initSplashWindow();
-    initGameWindow();
 });
