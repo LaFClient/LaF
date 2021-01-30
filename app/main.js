@@ -5,8 +5,9 @@ const utils = require("./utils.js")
 
 let gameWindow = null,
     editorWindow = null,
-    hubWindow = null;
-let promptWindow = null;
+    hubWindow = null,
+    splashWindow = null,
+    promptWindow = null;
 
 var lafUtils = new utils();
 
@@ -33,18 +34,21 @@ const initGameWindow = () => {
         }
     });
     gameWindow.setMenuBarVisibility(false);
-    gameWindow.loadURL("https://krunker.io");
 
     initShortcutKeys();
+
+    gameWindow.loadURL("https://krunker.io");
     
     gameWindow.on("closed", () => {
         gameWindow = null;
     });
 
     gameWindow.once("ready-to-show", () => {
+        splashWindow.destroy();
         gameWindow.setTitle("LaF");
         gameWindow.show();
     });
+
     gameWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
         switch(lafUtils.urlType(url)) {
@@ -73,6 +77,7 @@ const initHubWindow = (url) => {
         width: 900,
         height: 600,
         show: false,
+        parent: gameWindow
     });
     hubWindow.setMenuBarVisibility(false);
     hubWindow.loadURL(url);
@@ -84,6 +89,7 @@ const initHubWindow = (url) => {
         hubWindow.setTitle("LaF: Krunker Hub");
         hubWindow.show();
     });
+
     hubWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
         switch(lafUtils.urlType(url)) {
@@ -109,6 +115,7 @@ const initEditorWindow = (url) => {
         width: 900,
         height: 600,
         show: false,
+        parent: gameWindow
     });
     editorWindow.setMenuBarVisibility(false);
     editorWindow.loadURL(url);
@@ -120,6 +127,7 @@ const initEditorWindow = (url) => {
         editorWindow.setTitle("LaF: Krunker Editor");
         editorWindow.show();
     });
+
     editorWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
         switch(lafUtils.urlType(url)) {
@@ -139,6 +147,53 @@ const initEditorWindow = (url) => {
         };
     });
 };
+
+const initSplashWindow = () => {
+    splashWindow = new BrowserWindow({
+        width: 300,
+        height: 200,
+        frame: false,
+        resizable: false,
+        movable: false,
+        center: true,
+        webPreferences: {
+            nodeIntegration: true
+        }
+    });
+    splashWindow.setMenuBarVisibility(false);
+    splashWindow.loadURL(path.join(__dirname, "splash.html"))
+    splashWindow.webContents.once("did-finish-load", () => {
+        initAutoUpdater();
+    });
+}
+
+const initAutoUpdater = () => {
+    const { autoUpdater } = require("electron-updater");
+
+    let updateCheck = null;
+    let autoUpdateType = null;
+
+    autoUpdater.on('checking-for-update', () => {
+        splashWindow.webContents.send("checking-for-update")
+    })
+    autoUpdater.on('update-available', (info) => {
+        splashWindow.webContents.send("update-available", info)
+    })
+    autoUpdater.on('update-not-available', () => {
+        splashWindow.webContents.send("update-not-available")
+    })
+    autoUpdater.on('error', (err) => {
+        splashWindow.webContents.send("update-error")
+    })
+    autoUpdater.on('download-progress', (info) => {
+        splashWindow.webContents.send("download-progress", info)
+    })
+    autoUpdater.on('update-downloaded', (info) => {
+        splashWindow.webContents.send("update-downloaded", info)
+    });
+    autoUpdater.autoDownload = "download";
+    autoUpdater.checkForUpdates();
+}
 
 const initShortcutKeys = () => {
     const sKeys = [
@@ -193,6 +248,6 @@ ipcMain.on("OPEN_LINK", (event, arg) => {
 });
 
 app.on("ready", () => {
-    // initFlags();
+    initSplashWindow();
     initGameWindow();
 });
