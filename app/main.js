@@ -1,11 +1,11 @@
-const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain } = require("electron");
+const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain, shell } = require("electron");
 const localShortcut= require("electron-localshortcut");
 const path = require("path")
 const utils = require("./utils.js")
 
 let gameWindow = null,
     editorWindow = null,
-    socialWindow = null;
+    hubWindow = null;
 let promptWindow = null;
 
 var lafUtils = new utils();
@@ -32,8 +32,7 @@ const initGameWindow = () => {
             nodeIntegration: false
         }
     });
-    gameWindow.setMenuBarVisibility(false)
-
+    gameWindow.setMenuBarVisibility(false);
     gameWindow.loadURL("https://krunker.io");
 
     initShortcutKeys();
@@ -46,12 +45,105 @@ const initGameWindow = () => {
         gameWindow.setTitle("LaF");
         gameWindow.show();
     });
+    gameWindow.webContents.on("new-window", (event, url) => {
+        event.preventDefault();
+        switch(lafUtils.urlType(url)) {
+            case "hub":
+                if (!hubWindow) {
+                    initHubWindow(url)
+                } else {
+                    hubWindow.loadURL(url);
+                }
+                break;
+            case "editor":
+                if (!editorWindow) {
+                    initEditorWindow(url);
+                } else {
+                    editorWindow.loadURL(url);
+                }
+                break;
+            default:
+                shell.openExternal(url);
+        };
+    });
+};
+
+const initHubWindow = (url) => {
+    hubWindow = new BrowserWindow({
+        width: 900,
+        height: 600,
+        show: false,
+    });
+    hubWindow.setMenuBarVisibility(false);
+    hubWindow.loadURL(url);
+
+    hubWindow.on("closed", () => {
+        hubWindow = null;
+    });
+    hubWindow.once("ready-to-show", () => {
+        hubWindow.setTitle("LaF: Krunker Hub");
+        hubWindow.show();
+    });
+    hubWindow.webContents.on("new-window", (event, url) => {
+        event.preventDefault();
+        switch(lafUtils.urlType(url)) {
+            case "game":
+                hubWindow.destroy();
+                gameWindow.loadURL(url);
+                break;
+            case "editor":
+                if (!editorWindow) {
+                    initEditorWindow(url);
+                } else {
+                    editorWindow.loadURL(url);
+                };
+                break;
+            default:
+                shell.openExternal(url);
+        };
+    });
+};
+
+const initEditorWindow = (url) => {
+    editorWindow = new BrowserWindow({
+        width: 900,
+        height: 600,
+        show: false,
+    });
+    editorWindow.setMenuBarVisibility(false);
+    editorWindow.loadURL(url);
+
+    editorWindow.on("closed", () => {
+        editorWindow = null;
+    });
+    editorWindow.once("ready-to-show", () => {
+        editorWindow.setTitle("LaF: Krunker Editor");
+        editorWindow.show();
+    });
+    editorWindow.webContents.on("new-window", (event, url) => {
+        event.preventDefault();
+        switch(lafUtils.urlType(url)) {
+            case "hub":
+                if (!hubWindow) {
+                    initHubWindow(url);
+                } else {
+                    hubWindow.loadURL(url);
+                };
+                break;
+            case "game":
+                editorWindow.destroy();
+                gameWindow.loadURL(url);
+                break;
+            default:
+                shell.openExternal(url);
+        };
+    });
 };
 
 const initShortcutKeys = () => {
     const sKeys = [
         ["Esc", () => {             // ゲーム内でのESCキーの有効化
-            gameWindow.webContents.send("ESC");
+            gameWindow.webContents.send("ESC")
         }], 
         ["F5", () => {              // リ↓ロ↑ードする
             gameWindow.reload()
@@ -63,8 +155,8 @@ const initShortcutKeys = () => {
             clipboard.writeText(gameWindow.webContents.getURL())
         }],
         ["F8", () => {              // クリップボードのURLへアクセス(実質Joinボタン)
-            let copiedText = clipboard.readText();
-            if (lafUtils.urlType(copiedText) === "game") gameWindow.loadURL(copiedText);
+            let copiedText = clipboard.readText()
+            if (lafUtils.urlType(copiedText) === "game") gameWindow.loadURL(copiedText)
         }],
         ["Shift+F8", () => {        // URLを入力するフォームの表示
             promptWindow = new BrowserWindow({
