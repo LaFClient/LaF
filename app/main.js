@@ -1,10 +1,14 @@
 const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain } = require("electron");
 const localShortcut= require("electron-localshortcut");
 const path = require("path")
+const utils = require("./utils.js")
 
-let gameWindow = null;
+let gameWindow = null,
+    editorWindow = null,
+    socialWindow = null;
 let promptWindow = null;
 
+var lafUtils = new utils();
 
 const initFlags = () => {
     // 将来的には設定で変更可能にする
@@ -60,7 +64,7 @@ const initShortcutKeys = () => {
         }],
         ["F8", () => {              // クリップボードのURLへアクセス(実質Joinボタン)
             let copiedText = clipboard.readText();
-            if (copiedText.substr(0, 25) === "https://krunker.io/?game=" || copiedText.substr(0, 30) === "https://comp.krunker.io/?game=") gameWindow.loadURL(copiedText);
+            if (lafUtils.urlType(copiedText) === "game") gameWindow.loadURL(copiedText);
         }],
         ["Shift+F8", () => {        // URLを入力するフォームの表示
             promptWindow = new BrowserWindow({

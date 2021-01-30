@@ -2,9 +2,9 @@ const { ipcRenderer } = require("electron");
 
 gameUI = document.getElementById("gameUI");
 
-const initIpc = () => {
+function initIpc() {
     ipcRenderer.on("ESC", () => {
-        document.exitPointerLock()
+        document.exitPointerLock();
     });
-};
+}
 initIpc();
