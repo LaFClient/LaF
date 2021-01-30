@@ -1,5 +1,5 @@
 # What is LaF?
-**Laf = Light and Fast**</br>
+**Laf = Lite and Fast**</br>
 Krunkerはとても軽いゲームです。故に「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している順日本製Krunkerクライアントです。</br>
 
 # Attention
