@@ -1,5 +1,5 @@
 const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain, shell } = require("electron");
-const localShortcut= require("electron-localshortcut");
+const localShortcut = require("electron-localshortcut");
 const path = require("path")
 const utils = require("./utils.js")
 
@@ -38,7 +38,7 @@ const initGameWindow = () => {
     initShortcutKeys();
 
     gameWindow.loadURL("https://krunker.io");
-    
+
     gameWindow.on("closed", () => {
         gameWindow = null;
     });
@@ -51,7 +51,7 @@ const initGameWindow = () => {
 
     gameWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
-        switch(lafUtils.urlType(url)) {
+        switch (lafUtils.urlType(url)) {
             case "hub":
                 if (!hubWindow) {
                     initHubWindow(url)
@@ -92,7 +92,7 @@ const initHubWindow = (url) => {
 
     hubWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
-        switch(lafUtils.urlType(url)) {
+        switch (lafUtils.urlType(url)) {
             case "game":
                 hubWindow.destroy();
                 gameWindow.loadURL(url);
@@ -130,7 +130,7 @@ const initEditorWindow = (url) => {
 
     editorWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
-        switch(lafUtils.urlType(url)) {
+        switch (lafUtils.urlType(url)) {
             case "hub":
                 if (!hubWindow) {
                     initHubWindow(url);
@@ -156,6 +156,7 @@ const initSplashWindow = () => {
         resizable: false,
         movable: false,
         center: true,
+        show: false,
         webPreferences: {
             nodeIntegration: true
         }
@@ -163,6 +164,7 @@ const initSplashWindow = () => {
     splashWindow.setMenuBarVisibility(false);
     splashWindow.loadURL(path.join(__dirname, "splash.html"))
     splashWindow.webContents.once("did-finish-load", () => {
+        splashWindow.show();
         initAutoUpdater();
     });
 }
@@ -176,7 +178,7 @@ const initAutoUpdater = () => {
         splashWindow.webContents.send("checking-for-update")
         updateCheck = setTimeout(() => {
             splashWindow.webContents.send("update-not-available")
-            setTimeout(() =>{
+            setTimeout(() => {
                 initGameWindow()
             }, 1000)
         }, 15000)
@@ -211,6 +213,7 @@ const initAutoUpdater = () => {
         }, 3000)
     });
     autoUpdater.autoDownload = "download";
+    // autoUpdater.allowDowngrade = true;
     autoUpdater.checkForUpdates();
 }
 
@@ -218,7 +221,7 @@ const initShortcutKeys = () => {
     const sKeys = [
         ["Esc", () => {             // ゲーム内でのESCキーの有効化
             gameWindow.webContents.send("ESC")
-        }], 
+        }],
         ["F5", () => {              // リ↓ロ↑ードする
             gameWindow.reload()
         }],
@@ -257,13 +260,17 @@ const initShortcutKeys = () => {
     ];
 
     sKeys.forEach((k) => {
-            localShortcut.register(gameWindow, k[0], k[1])
-        });
+        localShortcut.register(gameWindow, k[0], k[1])
+    });
 };
 
 ipcMain.on("OPEN_LINK", (event, arg) => {
     promptWindow.destroy();
     gameWindow.loadURL(arg);
+});
+
+ipcMain.on("GET_VERSION", (event, arg) => {
+    event.reply("GET_VERSION", app.getVersion())
 });
 
 app.on("ready", () => {

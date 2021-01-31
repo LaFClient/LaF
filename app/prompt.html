@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>LaF Utils</title>
-        <style type="text/css">
+
+<head>
+    <title>LaF Utils</title>
+    <style type="text/css">
         #inputArea {
             text-align: center;
         }
+
         #errorMessage {
             text-align: center;
             color: red;
             font-weight: bold;
         }
-        </style>
-    </head>
-    <body>
-        <div id="inputArea">
-            <form id="inputURLForm" action="#">
-                <input type="url" id="inputURL">
-                <input type="button" onclick="sendURL()" value="JOIN">
-            </form>
-        </div>
-        <p id="errorMessage" ></p>
-        <script type="text/javascript">
+    </style>
+</head>
+
+<body>
+    <div id="inputArea">
+        <form id="inputURLForm" action="#">
+            <input type="url" id="inputURL">
+            <input type="button" onclick="sendURL()" value="JOIN">
+        </form>
+    </div>
+    <p id="errorMessage"></p>
+    <script type="text/javascript">
         const { ipcRenderer } = require("electron")
         const sendURL = () => {
             var inputText = document.getElementById("inputURL").value;
-            if (inputText.substr(0, 25) === "https://krunker.io/?game=" || inputText.substr(0, 30) === "https://comp.krunker.io/?game="){
+            if (inputText.substr(0, 25) === "https://krunker.io/?game=" || inputText.substr(0, 30) === "https://comp.krunker.io/?game=") {
                 ipcRenderer.send("OPEN_LINK", inputText);
             } else {
                 errMsgForm = document.getElementById("errorMessage");
                 errMsgForm.innerHTML = "Invalid URL!"
             };
         }
-        </script>
-    </body>
+    </script>
+</body>
+
 </html>

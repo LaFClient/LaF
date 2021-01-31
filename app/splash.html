@@ -1,69 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>LaF</title>
-        <style>
-            body {
-                background-color: black;
-            }
-            #appVersion {
-                position: absolute;
-                color: white;
-                left: 10px;
-                top: 10px;
-                font-size: 15px;
-            }
-            #updateStatus {
-                position: absolute;
-                color: white;
-                left: 10px;
-                bottom: 10px;
-                font-size: 20px;
-            }
-            #downloadStatus {
-                position: absolute;
-                color: white;
-                left: 10px;
-                bottom: 10px;
-                font-size: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="appVersion"></div>
-        <div id="updateStatus"></div>
-        <div id="downloadStatus"></div>
-        <script type="text/javascript">
-            const { ipcRenderer } = require("electron");
 
-            appv = document.getElementById("appVersion");
-            updates = document.getElementById("updateStatus");
-            dls = document.getElementById("downloadStatus")
+<head>
+    <title>LaF</title>
+    <style>
+        body {
+            background-image: url("img/splash.png");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: rgba(128, 128, 128, 0.2);
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            margin: 0;
+        }
 
-            // appv.innerHTML = `LaF v${app.getVersion()}`;
+        @font-face {
+            font-family: "Aldrich";
+            src: url("fonts/Aldrich-Regular.ttf");
+        }
 
-            ipcRenderer.on('checking-for-update', () => {
-                updates.innerHTML = "Checking for update...";
-            });
-            ipcRenderer.on('update-available', (evt, info) => {
-                updates.innerHTML = "New update: LaF v" + info.version;
-            });
-            ipcRenderer.on('update-not-available', () => {
-                updates.innerHTML = "This is latest version.";
-            });
-            ipcRenderer.on('download-progress', (evt, info) => {
-                updates.innerHTML = `Downloading now... ${Math.floor(info.percent)}%`;
-                dls.innerHTML = `${Math.floor(info.bytesPerSecond / 1000)} kB/s`;
-            });
-            ipcRenderer.on('update-downloaded', (evt, info) => {
-                updates.innerHTML = "Installing LaF v" + info.version;
-                dls.innerHTML = ""
-            });
-            ipcRenderer.on('update-error', () => {
-                updates.innerHTML = "Update failed. Try again next time.";
-                dls.innerHTML = ""
-            });
+        * {
+            outline: none;
+            font-family: "Aldrich";
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+        }
 
-        </script>
-    </body>
+        #appVersion {
+            position: absolute;
+            color: white;
+            left: 10px;
+            top: 10px;
+            font-size: 25px;
+            text-shadow: 5px 5px 5px rgba(0, 0, 0, 1);
+        }
+
+        #updateStatus {
+            position: absolute;
+            color: white;
+            left: 10px;
+            bottom: 10px;
+            font-size: 20px;
+        }
+
+        #downloadStatus {
+            position: absolute;
+            color: white;
+            left: 10px;
+            bottom: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="appVersion"></div>
+    <div id="updateStatus"></div>
+    <div id="downloadStatus"></div>
+    <script type="text/javascript">
+        const { ipcRenderer } = require("electron");
+
+        appv = document.getElementById("appVersion");
+        updates = document.getElementById("updateStatus");
+        dls = document.getElementById("downloadStatus")
+
+        ipcRenderer.send("GET_VERSION")
+        ipcRenderer.on("GET_VERSION", (e, v) => {
+            appv.innerHTML = `LaF ${v}`;
+        });
+
+        ipcRenderer.on('checking-for-update', () => {
+            updates.innerHTML = "Checking for update...";
+        });
+        ipcRenderer.on('update-available', (evt, info) => {
+            updates.innerHTML = "New update: LaF " + info.version;
+        });
+        ipcRenderer.on('update-not-available', () => {
+            updates.innerHTML = "This is the latest version.";
+        });
+        ipcRenderer.on('download-progress', (evt, info) => {
+            updates.innerHTML = `Downloading now...`;
+            dls.innerHTML = `${Math.floor(info.percent)}% (${Math.floor(info.bytesPerSecond / 1000)} kB/s)`;
+        });
+        ipcRenderer.on('update-downloaded', (evt, info) => {
+            updates.innerHTML = "Installing LaF " + info.version;
+            dls.innerHTML = ""
+        });
+        ipcRenderer.on('update-error', () => {
+            updates.innerHTML = "Update failed. Try again next time.";
+            dls.innerHTML = ""
+        });
+
+    </script>
+</body>
+
 </html>

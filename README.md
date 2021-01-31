@@ -3,10 +3,10 @@
 Krunkerはとても軽いゲームです。故に「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 
 # Attention
-**THIS SOFTWARE IS IN ALPHA VERSION. DON'T USE THIS SOFTWARE FOR EXCEPT DEVELOPPING OR TESTING.**</br>
+**THIS SOFTWARE IS IN ALPHA VERSION. DON'T USE THIS SOFTWARE FOR EXCEPT DEVELOPPING OR TESTING.**
 **このソフトウェアは現在アルファ版です。決して開発やテスト目的以外での使用はしないでください。**
-最初のリリースはWindowsのみになります。また、EditorやHubを開くと**閉じれません**(処理未実装)。</br>
-また、次回のリリースで自動アップデートを実装する予定です。
+最新のコミットでは一応HubとEditorをサポートしていますが多分バグがあるので気をつけてください
+もし見つかったらissueを立てるか直接連絡をください(TwitterかDiscordが反応早いです)
 
 # Controls
 - F5: リロード/Reload
