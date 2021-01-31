@@ -1,7 +1,7 @@
 const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain, shell } = require("electron");
 const localShortcut = require("electron-localshortcut");
-const path = require("path")
-const utils = require("./utils.js")
+const path = require("path");
+const utils = require("./utils.js");
 
 let gameWindow = null,
     editorWindow = null,
@@ -9,7 +9,7 @@ let gameWindow = null,
     splashWindow = null,
     promptWindow = null;
 
-var lafUtils = new utils();
+let lafUtils = new utils();
 
 const initFlags = () => {
     // 将来的には設定で変更可能にする
@@ -167,6 +167,36 @@ const initSplashWindow = () => {
         splashWindow.show();
         initAutoUpdater();
     });
+};
+
+const initPromptWindow = (m, v) => {
+    promptWindow = new BrowserWindow({
+        width: 300,
+        height: 120,
+        resizable: false,
+        movable: false,
+        show: false,
+        parent: gameWindow,
+        webPreferences: {
+            nodeIntegration: true
+        }
+    });
+    promptWindow.setMenuBarVisibility(false);
+    promptWindow.loadURL(path.join(__dirname, "prompt.html"));
+
+    promptWindow.webContents.on("did-finish-load", () => {
+        promptWindow.webContents.send("PROMPT_FORM", m, v)
+        promptWindow.show()
+    });
+
+    promptWindow.on("closed", () => {
+        promptWindow.destroy()
+    });
+
+    ipcMain.on("PROMPT_SUBMIT", (event, value) => {
+        promptWindow.destroy();
+        return value;
+    });
 }
 
 const initAutoUpdater = () => {
@@ -236,19 +266,7 @@ const initShortcutKeys = () => {
             if (lafUtils.urlType(copiedText) === "game") gameWindow.loadURL(copiedText)
         }],
         ["Shift+F8", () => {        // URLを入力するフォームの表示
-            promptWindow = new BrowserWindow({
-                width: 300,
-                height: 120,
-                parent: gameWindow,
-                resizable: false,
-                movable: false,
-                webPreferences: {
-                    nodeIntegration: true
-                }
-            });
-            promptWindow.setMenuBarVisibility(false);
-            promptWindow.loadURL(path.join(__dirname, "prompt.html"));
-
+            initPromptWindow("Input the Krunker Link", "");
         }],
         ["Ctrl+Shift+F1", () => {   // クライアントの再起動
             app.relaunch();
@@ -265,8 +283,16 @@ const initShortcutKeys = () => {
 };
 
 ipcMain.on("OPEN_LINK", (event, arg) => {
-    promptWindow.destroy();
     gameWindow.loadURL(arg);
+});
+
+ipcMain.on("OPEN_PROMPT", (event, m, v) => {
+    initPromptWindow(m, v);
+    return v
+});
+
+ipcMain.on("PROMPT_SUBMIT", (event, v) => {
+    console.log(v)
 });
 
 ipcMain.on("GET_VERSION", (event, arg) => {

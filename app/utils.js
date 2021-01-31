@@ -6,4 +6,21 @@ module.exports =  class utils {
         if (url.substr(0, 30) === "https://krunker.io/editor.html") return "editor";
         if (url.substr(0, 18) === "https://krunker.io" || url.substr(0, 25) === "https://krunker.io/?game=" || url.substr(0, 30) === "https://comp.krunker.io/?game=" || url.substr(0, 22) === "https://127.0.0.1:8080") return "game";
     }
+
+    generateSettings() {
+        const injectSettings = () => {
+            //pass
+        }
+
+        let waitForWindows = setInterval(() => {
+			if (window.windows) {
+				injectSettings();
+				clearInterval(waitForWindows);
+			}
+		}, 100);
+    }
+
+    importSettingsPrompt() {
+        // pass
+    }
 }

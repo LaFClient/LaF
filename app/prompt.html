@@ -4,37 +4,42 @@
 <head>
     <title>LaF Utils</title>
     <style type="text/css">
-        #inputArea {
-            text-align: center;
+        @font-face {
+            font-family: "Aldrich";
+            src: url("fonts/Aldrich-Regular.ttf");
         }
-
-        #errorMessage {
+        #inputArea {
+            font-family: "Aldrich";
             text-align: center;
-            color: red;
-            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
     <div id="inputArea">
-        <form id="inputURLForm" action="#">
-            <input type="url" id="inputURL">
-            <input type="button" onclick="sendURL()" value="JOIN">
+        <div id="message"></div>
+        <form id="inputForm" action="#">
+            <input type="url" id="inputText">
+            <input type="button" id="submitBtn" value="SUBMIT">
         </form>
     </div>
-    <p id="errorMessage"></p>
     <script type="text/javascript">
-        const { ipcRenderer } = require("electron")
-        const sendURL = () => {
-            var inputText = document.getElementById("inputURL").value;
-            if (inputText.substr(0, 25) === "https://krunker.io/?game=" || inputText.substr(0, 30) === "https://comp.krunker.io/?game=") {
-                ipcRenderer.send("OPEN_LINK", inputText);
-            } else {
-                errMsgForm = document.getElementById("errorMessage");
-                errMsgForm.innerHTML = "Invalid URL!"
-            };
+    const { ipcRenderer } = require("electron")
+
+    messageE = document.getElementById("message");
+    inputTextE = document.getElementById("inputText");
+    submitBtnE = document.getElementById("submitBtn");
+
+    ipcRenderer.on("PROMPT_FORM", (e, m, v) => {
+        messageE.innerHTML = m;
+        inputTextE.defaultValue = v;
+    });
+    
+    submitBtnE.onclick = () => {
+        if (inputTextE.value) {
+            ipcRenderer.send("PROMPT_SUBMIT", inputTextE.value)
         }
+    }
     </script>
 </body>
 
