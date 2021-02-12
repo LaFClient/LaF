@@ -1,5 +1,7 @@
 const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain, shell } = require("electron");
 const localShortcut = require("electron-localshortcut");
+const prompt = require("electron-prompt");
+const { url } = require("inspector");
 const path = require("path");
 const utils = require("./utils.js");
 
@@ -10,6 +12,7 @@ let gameWindow = null,
     promptWindow = null;
 
 let lafUtils = new utils();
+
 
 const initFlags = () => {
     // 将来的には設定で変更可能にする
@@ -29,8 +32,9 @@ const initGameWindow = () => {
         show: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
+            webSecurity: false,
             contextIsolation: true,
-            nodeIntegration: false
+            nodeIntegration: true
         }
     });
     gameWindow.setMenuBarVisibility(false);
@@ -169,36 +173,6 @@ const initSplashWindow = () => {
     });
 };
 
-const initPromptWindow = (m, v) => {
-    promptWindow = new BrowserWindow({
-        width: 300,
-        height: 120,
-        resizable: false,
-        movable: false,
-        show: false,
-        parent: gameWindow,
-        webPreferences: {
-            nodeIntegration: true
-        }
-    });
-    promptWindow.setMenuBarVisibility(false);
-    promptWindow.loadURL(path.join(__dirname, "prompt.html"));
-
-    promptWindow.webContents.on("did-finish-load", () => {
-        promptWindow.webContents.send("PROMPT_FORM", m, v)
-        promptWindow.show()
-    });
-
-    promptWindow.on("closed", () => {
-        promptWindow.destroy()
-    });
-
-    ipcMain.on("PROMPT_SUBMIT", (event, value) => {
-        promptWindow.destroy();
-        return value;
-    });
-}
-
 const initAutoUpdater = () => {
     const { autoUpdater } = require("electron-updater");
 
@@ -266,7 +240,34 @@ const initShortcutKeys = () => {
             if (lafUtils.urlType(copiedText) === "game") gameWindow.loadURL(copiedText)
         }],
         ["Shift+F8", () => {        // URLを入力するフォームの表示
-            initPromptWindow("Input the Krunker Link", "");
+            prompt({
+                title: 'Input a Game Link',
+                label: 'URL:',
+                value: '',
+                inputAttrs: {
+                    type: 'url'
+                },
+                type: 'input',
+                alwaysOnTop: true,
+                icon: path.join(__dirname, "img/icon.ico"),
+                skipTaskbar: true,
+                buttonLabels: {
+                    ok: "SUBMIT",
+                    cancel: "CANCEL"
+                },
+                parent: gameWindow,
+                width: 400,
+                height: 200,
+                customStylesheet: path.join(__dirname, "css/prompt.css")
+            })
+            .then((r) => {
+                if(r === null) {
+                    console.log('user cancelled');
+                } else {
+                    if (lafUtils.urlType(r) === "game") gameWindow.loadURL(r);
+                }
+            })
+            .catch(console.error);
         }],
         ["Ctrl+Shift+F1", () => {   // クライアントの再起動
             app.relaunch();
@@ -282,14 +283,41 @@ const initShortcutKeys = () => {
     });
 };
 
+
 ipcMain.on("OPEN_LINK", (event, arg) => {
     gameWindow.loadURL(arg);
 });
 
-ipcMain.on("OPEN_PROMPT", (event, m, v) => {
-    initPromptWindow(m, v);
-    return v
-});
+ipcMain.handle("PROMPT", (e, message, defaultValue) => {
+    prompt({
+        title: 'LaF',
+        label: message,
+        value: defaultValue,
+        inputAttrs: {
+            type: 'text'
+        },
+        type: 'input',
+        alwaysOnTop: true,
+        icon: path.join(__dirname, "img/icon.ico"),
+        skipTaskbar: true,
+        buttonLabels: {
+            ok: "IMPORT",
+            cancel: "CANCEL"
+        },
+        parent: gameWindow,
+        width: 400,
+        height: 200,
+        customStylesheet: path.join(__dirname, "css/prompt.css")
+    })
+    .then((r) => {
+        if(r === null) {
+            console.log('user cancelled');
+        } else {
+            return r
+        }
+    })
+    .catch(console.error);
+})
 
 ipcMain.on("PROMPT_SUBMIT", (event, v) => {
     console.log(v)

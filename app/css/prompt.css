@@ -1,0 +1,7 @@
+@font-face {
+    font-family: "Aldrich";
+    src: url("fonts/Aldrich-Regular.ttf");
+}
+* {
+    font-family: "Aldrich";
+}

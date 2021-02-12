@@ -2,24 +2,25 @@ const { ipcRenderer } = require("electron");
 const path = require("path");
 const utils = require("./utils.js")
 
-const lafUtils = new utils();
+let lafUtils = new utils();
 
-gameUI = document.getElementById("gameUI");
+window.prompt = (message, defaultValue) => ipcRenderer.invoke("PROMPT", message, defaultValue);
 
-window.prompt = (message, defaultValue) => {
-    ipcRenderer.send("OPEN_PROMPT", message, defaultValue);
-}
-
-initIpc = () => {
+const initIpc = () => {
+    console.log("start init ipc");
     ipcRenderer.on("ESC", () => {
         document.exitPointerLock();
     });
-}
-initIpc();
+    ipcRenderer.on("OPEN_URL_PROMPT", (event) => {
+        
+    })
+    console.log("finished init ipc")
+};
+setTimeout(initIpc, 1000)
 
-document.addEventListener("DOMContentLoaded", () => {
-        let observer = new MutationObserver(() => {
-            observer.disconnect()
-            lafUtils.generateSettings()
-    });
-})
+//document.addEventListener("DOMContentLoaded", () => {
+//        let observer = new MutationObserver(() => {
+//            observer.disconnect()
+//            lafUtils.generateSettings()
+//    });
+//})
