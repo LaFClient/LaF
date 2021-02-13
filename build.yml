@@ -11,6 +11,14 @@ win:
       arch:
         - x64
         - ia32
+linux:
+  artifactName: ${productName}_portable_${os}_${arch}.${ext}
+  target:
+    - target: appImage
+      arch:
+        - x64
+        - ia32
+  category: game
 nsis:
   artifactName: ${productName}_${version}_installer_${os}_${arch}.${ext}
   oneClick: false
