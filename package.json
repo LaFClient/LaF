@@ -5,7 +5,7 @@
   "main": "app/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "make": "node_modules/.bin/electron-builder --config build.yml"
+    "make": "electron-builder"
   },
   "repository": {
     "type": "git",
