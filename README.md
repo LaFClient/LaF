@@ -5,9 +5,9 @@
 Krunkerはとても軽いゲームです。故に「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 
 # Attention
-**THIS SOFTWARE IS IN ALPHA VERSION. DON'T USE THIS SOFTWARE FOR EXCEPT DEVELOPPING OR TESTING.**
-**このソフトウェアは現在アルファ版です。決して開発やテスト目的以外での使用はしないでください。**
-バグが絶対あると思います。見つけた場合はDMで直接連絡をするかissueを立ててくださるとありがたいです。
+**THIS SOFTWARE IS IN ALPHA VERSION. DON'T USE THIS SOFTWARE FOR EXCEPT DEVELOPPING OR TESTING.**</br>
+**このソフトウェアは現在アルファ版です。決して開発やテスト目的以外での使用はしないでください。**</br>
+バグが絶対あると思います。見つけた場合はDMで直接連絡をするかissueを立ててくださるとありがたいです。</br>
 もし見つかったらissueを立てるか直接連絡をください(TwitterかDiscordが反応早いです)
 
 # Controls
