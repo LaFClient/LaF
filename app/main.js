@@ -1,9 +1,13 @@
-const { app, BrowserWindow, getCurrentWindow, clipboard, ipcMain, shell } = require("electron");
+require("v8-compile-cache");
+const { app, BrowserWindow, clipboard, ipcMain, shell } = require("electron");
 const localShortcut = require("electron-localshortcut");
 const prompt = require("electron-prompt");
-const { url } = require("inspector");
+const log = require("electron-log");
 const path = require("path");
-const utils = require("./utils.js");
+const tools = require("./tools");
+const { ftruncate } = require("fs");
+
+Object.assign(console, log.functions);
 
 let gameWindow = null,
     editorWindow = null,
@@ -11,18 +15,33 @@ let gameWindow = null,
     splashWindow = null,
     promptWindow = null;
 
-let lafUtils = new utils();
+let lafTools = new tools();
 
+console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 
 const initFlags = () => {
-    // 将来的には設定で変更可能にする
-    app.commandLine.appendSwitch("disable-frame-rate-limit");       // FPS上限解放
-    app.commandLine.appendSwitch("disable-gpu-vsync");
-    app.commandLine.appendSwitch("enable-zero-copy");
-    app.commandLine.appendSwitch('use-angle', 'd3d9');              // 録画できるようにするやつ
-    app.commandLine.appendSwitch('enable-webgl2-compute-context');
+    flagsInfo = `Chromium Switch Status:`
+    chromiumFlags = [
+        // ["オプション", null("オプション2"), 有効[bool]]
+        ["disable-frame-rate-limit", null, true],
+        ["disable-gpu-vsync", null, true],
+        ["enable-zero-copy", null, true],
+        ["use-angle", "gl", false],
+        ["enable-webgl2-compute-context", null, false]
+    ];
+    chromiumFlags.forEach((f) => {
+        isEnable = f[2] ? "Enable" : "Disable";
+        flagsInfo += `\n- ${f[0]}, ${f[1]}: ${isEnable}`;
+        if (f[2]) {
+            if (f[1] === null) {
+                app.commandLine.appendSwitch(f[0]);
+            } else {
+                app.commandLine.appendSwitch(f[0], f[1]);
+            };
+        }
+    });
+    console.log(flagsInfo);
 };
-
 initFlags();
 
 const initGameWindow = () => {
@@ -32,12 +51,12 @@ const initGameWindow = () => {
         show: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
+            contextIsolation: false,
             webSecurity: false,
-            contextIsolation: true,
-            nodeIntegration: true
+            enableRemoteModule: true
         }
     });
-    gameWindow.setMenuBarVisibility(false);
+    gameWindow.removeMenu();
 
     initShortcutKeys();
 
@@ -55,7 +74,7 @@ const initGameWindow = () => {
 
     gameWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
-        switch (lafUtils.urlType(url)) {
+        switch (lafTools.urlType(url)) {
             case "hub":
                 if (!hubWindow) {
                     initHubWindow(url)
@@ -83,12 +102,13 @@ const initHubWindow = (url) => {
         show: false,
         parent: gameWindow
     });
-    hubWindow.setMenuBarVisibility(false);
+    hubWindow.removeMenu();
     hubWindow.loadURL(url);
 
     hubWindow.on("closed", () => {
         hubWindow = null;
     });
+
     hubWindow.once("ready-to-show", () => {
         hubWindow.setTitle("LaF: Krunker Hub");
         hubWindow.show();
@@ -96,7 +116,7 @@ const initHubWindow = (url) => {
 
     hubWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
-        switch (lafUtils.urlType(url)) {
+        switch (lafTools.urlType(url)) {
             case "game":
                 hubWindow.destroy();
                 gameWindow.loadURL(url);
@@ -121,12 +141,13 @@ const initEditorWindow = (url) => {
         show: false,
         parent: gameWindow
     });
-    editorWindow.setMenuBarVisibility(false);
+    editorWindow.removeMenu();
     editorWindow.loadURL(url);
 
     editorWindow.on("closed", () => {
         editorWindow = null;
     });
+
     editorWindow.once("ready-to-show", () => {
         editorWindow.setTitle("LaF: Krunker Editor");
         editorWindow.show();
@@ -134,7 +155,7 @@ const initEditorWindow = (url) => {
 
     editorWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
-        switch (lafUtils.urlType(url)) {
+        switch (lafTools.urlType(url)) {
             case "hub":
                 if (!hubWindow) {
                     initHubWindow(url);
@@ -165,7 +186,7 @@ const initSplashWindow = () => {
             nodeIntegration: true
         }
     });
-    splashWindow.setMenuBarVisibility(false);
+    splashWindow.removeMenu();
     splashWindow.loadURL(path.join(__dirname, "splash.html"))
     splashWindow.webContents.once("did-finish-load", () => {
         splashWindow.show();
@@ -178,7 +199,7 @@ const initAutoUpdater = () => {
 
     let updateCheck = null;
 
-    autoUpdater.on('checking-for-update', () => {
+    autoUpdater.on("checking-for-update", (info) => {
         splashWindow.webContents.send("checking-for-update")
         updateCheck = setTimeout(() => {
             splashWindow.webContents.send("update-not-available")
@@ -187,29 +208,32 @@ const initAutoUpdater = () => {
             }, 1000)
         }, 15000)
     })
-    autoUpdater.on('update-available', (info) => {
+    autoUpdater.on("update-available", (info) => {
+        console.log(info)
         if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-available", info)
     })
-    autoUpdater.on('update-not-available', () => {
+    autoUpdater.on("update-not-available", (info) => {
+        console.log(info)
         if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-not-available")
         setTimeout(() => {
             initGameWindow()
         }, 1000)
     })
-    autoUpdater.on('error', (err) => {
+    autoUpdater.on("error", (err) => {
+        console.log(err)
         if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-error")
         setTimeout(() => {
             initGameWindow()
         }, 1000)
     })
-    autoUpdater.on('download-progress', (info) => {
+    autoUpdater.on("download-progress", (info) => {
         if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("download-progress", info)
     })
-    autoUpdater.on('update-downloaded', (info) => {
+    autoUpdater.on("update-downloaded", (info) => {
         if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-downloaded", info)
         setTimeout(() => {
@@ -237,17 +261,17 @@ const initShortcutKeys = () => {
         }],
         ["F8", () => {              // クリップボードのURLへアクセス(実質Joinボタン)
             let copiedText = clipboard.readText()
-            if (lafUtils.urlType(copiedText) === "game") gameWindow.loadURL(copiedText)
+            if (lafTools.urlType(copiedText) === "game") gameWindow.loadURL(copiedText)
         }],
         ["Shift+F8", () => {        // URLを入力するフォームの表示
             prompt({
-                title: 'Input a Game Link',
-                label: 'URL:',
-                value: '',
+                title: "Input a Game Link",
+                label: "URL:",
+                value: "",
                 inputAttrs: {
-                    type: 'url'
+                    type: "url"
                 },
-                type: 'input',
+                type: "input",
                 alwaysOnTop: true,
                 icon: path.join(__dirname, "img/icon.ico"),
                 skipTaskbar: true,
@@ -255,19 +279,22 @@ const initShortcutKeys = () => {
                     ok: "SUBMIT",
                     cancel: "CANCEL"
                 },
-                parent: gameWindow,
                 width: 400,
                 height: 200,
                 customStylesheet: path.join(__dirname, "css/prompt.css")
             })
             .then((r) => {
                 if(r === null) {
-                    console.log('user cancelled');
+                    console.log("user cancelled");
                 } else {
-                    if (lafUtils.urlType(r) === "game") gameWindow.loadURL(r);
+                    if (lafTools.urlType(r) === "game") gameWindow.loadURL(r);
                 }
             })
             .catch(console.error);
+        }],
+        ["F11", () => {
+            isFullScreen = !gameWindow.isFullScreen();
+            gameWindow.setFullScreen(isFullScreen);
         }],
         ["Ctrl+Shift+F1", () => {   // クライアントの再起動
             app.relaunch();
@@ -288,20 +315,54 @@ ipcMain.on("OPEN_LINK", (event, arg) => {
     gameWindow.loadURL(arg);
 });
 
-ipcMain.handle("PROMPT", (e, message, defaultValue) => {
+
+ipcMain.on("PROMPT", (e, message, defaultValue) => {
     prompt({
-        title: 'LaF',
+        title: "LaF",
         label: message,
         value: defaultValue,
         inputAttrs: {
-            type: 'text'
+            type: "text"
         },
-        type: 'input',
+        type: "input",
         alwaysOnTop: true,
         icon: path.join(__dirname, "img/icon.ico"),
         skipTaskbar: true,
         buttonLabels: {
-            ok: "IMPORT",
+            ok: "SUBMIT",
+            cancel: "CANCEL"
+        },
+        width: 400,
+        height: 200,
+        customStylesheet: path.join(__dirname, "css/prompt.css")
+    })
+    .then((r) => {
+        if(r === null) {
+            console.log("user cancelled");
+            e.returnValue = null;
+        } else {
+            console.log(r)
+            e.returnValue = r;
+        }
+    })
+    .catch(console.error);
+})
+
+/*
+ipcMain.on("PROMPT", (event, message, defaultValue) => {
+    prompt({
+        title: "LaF",
+        label: message,
+        value: defaultValue,
+        inputAttrs: {
+            type: "text"
+        },
+        type: "input",
+        alwaysOnTop: true,
+        icon: path.join(__dirname, "img/icon.ico"),
+        skipTaskbar: true,
+        buttonLabels: {
+            ok: "SUBMIT",
             cancel: "CANCEL"
         },
         parent: gameWindow,
@@ -311,20 +372,17 @@ ipcMain.handle("PROMPT", (e, message, defaultValue) => {
     })
     .then((r) => {
         if(r === null) {
-            console.log('user cancelled');
+            console.log("user cancelled");
         } else {
-            return r
+            event.returnValue = r;
         }
     })
     .catch(console.error);
 })
+*/
 
-ipcMain.on("PROMPT_SUBMIT", (event, v) => {
-    console.log(v)
-});
-
-ipcMain.on("GET_VERSION", (event, arg) => {
-    event.reply("GET_VERSION", app.getVersion())
+ipcMain.on("GET_VERSION", (e) => {
+    e.reply("GET_VERSION", app.getVersion())
 });
 
 app.on("ready", () => {
