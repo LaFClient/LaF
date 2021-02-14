@@ -26,8 +26,8 @@ const initFlags = () => {
         ["disable-frame-rate-limit", null, true],
         ["disable-gpu-vsync", null, true],
         ["enable-zero-copy", null, true],
-        ["use-angle", "gl", false],
-        ["enable-webgl2-compute-context", null, false]
+        ["use-angle", "gl", true],
+        ["enable-webgl2-compute-context", null, true]
     ];
     chromiumFlags.forEach((f) => {
         isEnable = f[2] ? "有効" : "無効";

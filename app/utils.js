@@ -9,10 +9,10 @@ let gameUI = document.getElementById("gameUI");
 module.exports =  class utils {
     setupGameWindow () {
         const injectSettings = () => {
-            let customHTML = ""
             let settingsWindow = window.windows[0];
             let clientTabIndex = settingsWindow.tabs.push({name: "LaF", categories: []})
             window.windows[0].getCSettings = () => {
+                let customHTML = ""
                 if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
                     return '';
                 }
@@ -21,7 +21,7 @@ module.exports =  class utils {
                 <a onclick="window.utils.tolset('resetOptions')" class="menuLink">オプションのリセット</a> | 
                 <a onclick="window.utils.tolset('restartClient')" class="menuLink">再起動</a>
                 `;
-                return customHTML;
+                return customHTML ? customHTML + "</div>" : "";
             }
         };
         injectSettings();
