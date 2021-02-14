@@ -1,12 +1,12 @@
 require('v8-compile-cache');
-const { ipcRenderer, app } = require("electron");
+const { ipcRenderer, app, TouchBarSegmentedControl } = require("electron");
 const log = require("electron-log")
 const store = require("electron-store")
 const langRes = require("./lang")
 
 const config = new store();
 
-if (config.get("lang", "ja_JP")) {
+if (config.get("lang") === "ja_JP") {
     langPack = new langRes.ja_JP();
 } else {
     langPack = new langRes.en_US();
@@ -17,7 +17,6 @@ Object.assign(console, log.functions);
 let gameUI = document.getElementById("gameUI");
 
 module.exports = class utils {
-    /*
     settings = {
         languages: {
             id: "lang",
@@ -31,19 +30,24 @@ module.exports = class utils {
             val: config.get("lang", "ja_JP"),
             html: `
             <select onchange="window.utils.setConfig('lang', this.value, true)" class="inputGrey2">
-                <option value="ja_JP" ${this.settings.languages.val === "ja_JP" ? " selected" : ""}>日本語</option>
-                <option value="en_US" ${this.settings.languages.val === "en_US" ? " selected" : ""}>English</option>
+                <option value="en_US" ${config.get("lang") === "en_US" ? " selected" : ""}>English</option>
+                <option value="ja_JP" ${config.get("lang") === "ja_JP" ? " selected" : ""}>日本語</option>
             </select>
             `
         },
         unlimitedFPS: {
             id: "unlimitedFPS",
             title: langPack.unlimitedFPS,
-            type: "checkbox",
+            type: "select",
             restart: true,
-            val: config.get("unlimitedFPS", true),
-            html: () => {return this.generateSettings(this)}
-        },
+            val: config.get("unlimitedFPS"),
+            html: `
+            <select onchange="window.utils.setConfig('unlimitedFPS', this.value, true)" class="inputGrey2">
+                <option value="enabled" ${config.get("unlimitedFPS") === "enabled" ? " selected" : ""}>${langPack.unlimitedFPSMode}</option>
+                <option value="disabled" ${!config.get("unlimitedFPS") === "disabled" ? " selected" : ""}>${langPack.enableVsync}</option>
+            </select>
+            `
+        }/*
         enableVsync: {
             id: "enableVsync",
             title: langPack.enableVsync,
@@ -98,11 +102,12 @@ module.exports = class utils {
             restart: true,
             val: config.get("inProcessGPU", false),
             html: () => {return this.generateSettings(this)}
-        }
-    }*/
+        }*/
+    }
 
     setConfig(id, value, restart) {
         config.set(id, value)
+        console.log(`${id} has set to ${value}.`)
         if (restart) {
             alert(langPack.restartMsg)
             ipcRenderer.send("RELAUNCH")
@@ -125,13 +130,16 @@ module.exports = class utils {
             window.windows[0].getCSettings = () => {
                 let customHTML = ""
                 if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) return '';
-                /*Object.values(this.settings).forEach((k) => {
+                Object.values(this.settings).forEach((k) => {
                     let tmpHTML = "";
                     if (k.type !== "category") {
                         tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `
                     }
+                    if (k.restart) {
+                        tmpHTML += "<span style='color: #eb5656'> *</span>"
+                    }
                     customHTML += tmpHTML + k.html + "</div>";
-                });*/
+                });
                 customHTML += `
                 <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
                 <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
@@ -152,7 +160,11 @@ module.exports = class utils {
                     }
                     break;
                 case "resetOptions":
-                    // pass
+                    if (confirm(langPack.confirmResetConfig)){
+                        config.clear();
+                        alert(langPack.resetedConfigAndRestart)
+                        ipcRenderer.send("RELAUNCH");
+                    }
                     break;
                 case "restartClient":
                     ipcRenderer.send("RELAUNCH")

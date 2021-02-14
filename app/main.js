@@ -23,7 +23,7 @@ let langPack = null;
 
 console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 
-if (config.get("lang", "ja_JP")) {
+if (config.get("lang") === "ja_JP") {
     langPack = new langRes.ja_JP();
 } else {
     langPack = new langRes.en_US();
@@ -36,8 +36,8 @@ const initFlags = () => {
     chromiumFlags = [
         // ["オプション", null("オプション2"), 有効[bool]]
         // FPS解放周り
-        ["disable-frame-rate-limit", null, config.get("unlimitedFPS", true)],
-        ["disable-gpu-vsync", null, config.get("enableVsync", false)],
+        ["disable-frame-rate-limit", null, config.get("unlimitedFPS", "enabled") === "enabled" ? true : false],
+        ["disable-gpu-vsync", null, config.get("unlimitedFPS", "enabled") === "enabled" ? true : false],
         // 描画関係
         ["use-angle", config.get("angleType", "gl"), true],
         ["enable-webgl2-compute-context", null, config.get("webgl2Context", true)],
@@ -134,6 +134,8 @@ const initHubWindow = (url) => {
     hubWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
         switch (lafTools.urlType(url)) {
+            case "hub":
+                hubWindow.loadURL(url);
             case "game":
                 hubWindow.destroy();
                 gameWindow.loadURL(url);
@@ -367,7 +369,7 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
 })
 
 ipcMain.on("CLEAR_CACHE", () => {
-    session.defaultSession.clearCache(() => {})
+    session.defaultSession.clearStorageData();
 })
 
 ipcMain.on("RELAUNCH", () => {
@@ -380,7 +382,7 @@ ipcMain.on("GET_VERSION", (e) => {
 });
 
 ipcMain.on("GET_LANG", (e) => {
-    e.reply("GET_LANG", config.get("lang", "ja_JP"))
+    e.reply("GET_LANG", config.get("lang"))
 })
 
 app.on("ready", () => {

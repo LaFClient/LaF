@@ -1,6 +1,7 @@
 require("v8-compile-cache");
 const { ipcRenderer } = require("electron");
 const log = require("electron-log");
+const store = require("electron-store")
 const utils = require("./utils.js")
 const tools = require("./tools.js")
 const langRes = require("./lang")
@@ -9,7 +10,14 @@ const langRes = require("./lang")
 const lafUtils = new utils();
 const lafTools = new tools();
 
-const langPack = new langRes.ja_JP();
+const config = new store();
+
+
+if (config.get("lang") == "ja_JP") {
+    langPack = new langRes.ja_JP();
+} else {
+    langPack = new langRes.en_US();
+}
 
 Object.assign(console, log.functions);
 
