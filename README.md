@@ -20,6 +20,9 @@ Krunkerはとても軽いゲームです。故に「公式クライアントで�
 - Ctrl+Shift+F1: 再起動/Restart LaF
 - Ctrl+F1: 開発者ツールを開く/Open Dev Tools
 
+# WIP
+- 設定項目の追加/Add Original Settings
+
 # Contact
 e-mail: [Send e-mail](mailto:hiro527.dev@gmail.com)</br>
 Discord: Hiro527#0527</br>
