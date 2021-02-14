@@ -1,5 +1,5 @@
 require("v8-compile-cache");
-const { app, BrowserWindow, clipboard, ipcMain, shell } = require("electron");
+const { app, BrowserWindow, clipboard, ipcMain, shell, session } = require("electron");
 const localShortcut = require("electron-localshortcut");
 const prompt = require("electron-prompt");
 const log = require("electron-log");
@@ -20,7 +20,7 @@ let lafTools = new tools();
 console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 
 const initFlags = () => {
-    flagsInfo = `Chromium Switch Status:`
+    flagsInfo = `Chromiumオプション設定状況:`
     chromiumFlags = [
         // ["オプション", null("オプション2"), 有効[bool]]
         ["disable-frame-rate-limit", null, true],
@@ -30,7 +30,7 @@ const initFlags = () => {
         ["enable-webgl2-compute-context", null, false]
     ];
     chromiumFlags.forEach((f) => {
-        isEnable = f[2] ? "Enable" : "Disable";
+        isEnable = f[2] ? "有効" : "無効";
         flagsInfo += `\n- ${f[0]}, ${f[1]}: ${isEnable}`;
         if (f[2]) {
             if (f[1] === null) {
@@ -265,8 +265,8 @@ const initShortcutKeys = () => {
         }],
         ["Shift+F8", () => {        // URLを入力するフォームの表示
             prompt({
-                title: "Input a Game Link",
-                label: "URL:",
+                title: "LaF",
+                label: "URLを入力してください:",
                 value: "",
                 inputAttrs: {
                     type: "url"
@@ -285,7 +285,7 @@ const initShortcutKeys = () => {
             })
             .then((r) => {
                 if(r === null) {
-                    console.log("user cancelled");
+                    console.log("キャンセルされました");
                 } else {
                     if (lafTools.urlType(r) === "game") gameWindow.loadURL(r);
                 }
@@ -338,7 +338,7 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
     })
     .then((r) => {
         if(r === null) {
-            console.log("user cancelled");
+            console.log("キャンセルされました");
             e.returnValue = null;
         } else {
             console.log(r)
@@ -348,38 +348,14 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
     .catch(console.error);
 })
 
-/*
-ipcMain.on("PROMPT", (event, message, defaultValue) => {
-    prompt({
-        title: "LaF",
-        label: message,
-        value: defaultValue,
-        inputAttrs: {
-            type: "text"
-        },
-        type: "input",
-        alwaysOnTop: true,
-        icon: path.join(__dirname, "img/icon.ico"),
-        skipTaskbar: true,
-        buttonLabels: {
-            ok: "SUBMIT",
-            cancel: "CANCEL"
-        },
-        parent: gameWindow,
-        width: 400,
-        height: 200,
-        customStylesheet: path.join(__dirname, "css/prompt.css")
-    })
-    .then((r) => {
-        if(r === null) {
-            console.log("user cancelled");
-        } else {
-            event.returnValue = r;
-        }
-    })
-    .catch(console.error);
+ipcMain.on("CLEAR_CACHE", () => {
+    session.defaultSession.clearCache(() => {})
 })
-*/
+
+ipcMain.on("RELAUNCH", () => {
+    app.relaunch();
+    app.quit();
+})
 
 ipcMain.on("GET_VERSION", (e) => {
     e.reply("GET_VERSION", app.getVersion())

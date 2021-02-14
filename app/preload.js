@@ -21,11 +21,12 @@ const initIpc = () => {
 };
 initIpc();
 
-/*
+
 document.addEventListener("DOMContentLoaded", () => {
-        let observer = new MutationObserver(() => {
-            observer.disconnect()
-            lafUtils.generateSettings()
+    window.utils = new utils();
+    let observer = new MutationObserver(() => {
+        observer.disconnect();
+        lafUtils.setupGameWindow();
     });
+    observer.observe(document.getElementById("instructions"), {childList: true});
 });
-*/

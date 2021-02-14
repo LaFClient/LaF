@@ -10,8 +10,8 @@
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
-            border: rgba(128, 128, 128, 0.2);
-            border-radius: 5px;
+            border: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
             position: absolute;
             top: 0;
             bottom: 0;
@@ -21,13 +21,13 @@
         }
 
         @font-face {
-            font-family: "Aldrich";
-            src: url("fonts/Aldrich-Regular.ttf");
+            font-family: "チェックポイント★リベンジ";
+            src: url("fonts/CP_Revenge.ttf");
         }
 
         * {
             outline: none;
-            font-family: "Aldrich";
+            font-family: "チェックポイント★リベンジ";
             text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
         }
 
@@ -75,24 +75,24 @@
         });
 
         ipcRenderer.on('checking-for-update', () => {
-            updates.innerHTML = "Checking for update...";
+            updates.innerHTML = "更新があるか確認しています・・・";
         });
         ipcRenderer.on('update-available', (evt, info) => {
-            updates.innerHTML = "New update: LaF " + info.version;
+            updates.innerHTML = "LaFの最新版が見つかりました: LaF v" + info.version;
         });
         ipcRenderer.on('update-not-available', () => {
-            updates.innerHTML = "This is the latest version.";
+            updates.innerHTML = "現在のバージョンは最新版です";
         });
         ipcRenderer.on('download-progress', (evt, info) => {
-            updates.innerHTML = `Downloading now...`;
+            updates.innerHTML = `更新ファイルをダウンロード中・・・`;
             dls.innerHTML = `${Math.floor(info.percent)}% (${Math.floor(info.bytesPerSecond / 1000)} kB/s)`;
         });
         ipcRenderer.on('update-downloaded', (evt, info) => {
-            updates.innerHTML = "Installing LaF " + info.version;
+            updates.innerHTML = `LaF v${info.version}をインストールしています`;
             dls.innerHTML = ""
         });
         ipcRenderer.on('update-error', () => {
-            updates.innerHTML = "Update failed. Try again next time.";
+            updates.innerHTML = "更新に失敗しました";
             dls.innerHTML = ""
         });
 

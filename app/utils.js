@@ -7,20 +7,40 @@ Object.assign(console, log.functions);
 let gameUI = document.getElementById("gameUI");
 
 module.exports =  class utils {
-    generateSettings() {
+    setupGameWindow () {
         const injectSettings = () => {
-            console.log("TEST")
-        }
-
-        let waitForWindows = setInterval(() => {
-			if (window.windows) {
-				injectSettings();
-				clearInterval(waitForWindows);
-			}
-		}, 100);
+            let customHTML = ""
+            let settingsWindow = window.windows[0];
+            let clientTabIndex = settingsWindow.tabs.push({name: "LaF", categories: []})
+            window.windows[0].getCSettings = () => {
+                if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
+                    return '';
+                }
+                customHTML += `
+                <a onclick="window.utils.tolset('clearCache')" class="menuLink">キャッシュをクリア</a> | 
+                <a onclick="window.utils.tolset('resetOptions')" class="menuLink">オプションのリセット</a> | 
+                <a onclick="window.utils.tolset('restartClient')" class="menuLink">再起動</a>
+                `;
+                return customHTML;
+            }
+        };
+        injectSettings();
     }
-
-    importSettingsPrompt() {
-        // pass
+    tolset (v) {
+        switch(v){
+            case "clearCache":
+                if (confirm("本当にキャッシュをクリアしてもよろしいですか？取り消すことはできません。")) {
+                    ipcRenderer.send("CLEAR_CACHE");
+                    alert("キャッシュをクリアしました。再起動します。")
+                    ipcRenderer.send("RELAUNCH");
+                }
+                break;
+            case "resetOptions":
+                // pass
+                break;
+            case "restartClient":
+                ipcRenderer.send("RELAUNCH")
+                break;
+        }
     }
 }
