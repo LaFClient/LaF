@@ -3,10 +3,13 @@ const { ipcRenderer } = require("electron");
 const log = require("electron-log");
 const utils = require("./utils.js")
 const tools = require("./tools.js")
+const langRes = require("./lang")
 // const path = require("path");
 
 const lafUtils = new utils();
 const lafTools = new tools();
+
+const langPack = new langRes.ja_JP();
 
 Object.assign(console, log.functions);
 

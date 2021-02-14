@@ -64,39 +64,50 @@
     <div id="downloadStatus"></div>
     <script type="text/javascript">
         const { ipcRenderer } = require("electron");
+        const langRes = require("./lang")
 
         appv = document.getElementById("appVersion");
         updates = document.getElementById("updateStatus");
         dls = document.getElementById("downloadStatus")
 
+        let appVersion = null
+
         ipcRenderer.send("GET_VERSION")
         ipcRenderer.on("GET_VERSION", (e, v) => {
-            appv.innerHTML = `LaF ${v}`;
+            appVersion = v
+            appv.innerHTML = `LaF ${appVersion}`;
         });
 
+        ipcRenderer.send("GET_LANG")
+        ipcRenderer.on("GET_LANG", (e, v) => {
+            if (v === "ja_JP") {
+                langPack = new langRes.ja_JP();
+            } else {
+                langPack = new langRes.en_US();
+            }
+        })
+
         ipcRenderer.on('checking-for-update', () => {
-            updates.innerHTML = "更新があるか確認しています・・・";
+            updates.innerHTML = langPack.checkingForUpdate;
         });
         ipcRenderer.on('update-available', (evt, info) => {
-            updates.innerHTML = "LaFの最新版が見つかりました: LaF v" + info.version;
+            updates.innerHTML = langPack.updateAvailable + info.version;
         });
         ipcRenderer.on('update-not-available', () => {
-            updates.innerHTML = "現在のバージョンは最新版です";
+            updates.innerHTML = langPack.updateNotAvailable;
         });
         ipcRenderer.on('download-progress', (evt, info) => {
-            updates.innerHTML = `更新ファイルをダウンロード中・・・`;
+            updates.innerHTML = langPack.downloadProgress;
             dls.innerHTML = `${Math.floor(info.percent)}% (${Math.floor(info.bytesPerSecond / 1000)} kB/s)`;
         });
         ipcRenderer.on('update-downloaded', (evt, info) => {
-            updates.innerHTML = `LaF v${info.version}をインストールしています`;
+            updates.innerHTML = langPack.updateDownloaded.replace("%appVersion", appVersion);
             dls.innerHTML = ""
         });
         ipcRenderer.on('update-error', () => {
-            updates.innerHTML = "更新に失敗しました";
+            updates.innerHTML = langPack.updateError;
             dls.innerHTML = ""
         });
-
     </script>
 </body>
-
 </html>

@@ -3,9 +3,12 @@ const { app, BrowserWindow, clipboard, ipcMain, shell, session } = require("elec
 const localShortcut = require("electron-localshortcut");
 const prompt = require("electron-prompt");
 const log = require("electron-log");
+const store = require("electron-store");
 const path = require("path");
 const tools = require("./tools");
-const { ftruncate } = require("fs");
+const langRes = require("./lang")
+
+const config = new store();
 
 Object.assign(console, log.functions);
 
@@ -16,21 +19,35 @@ let gameWindow = null,
     promptWindow = null;
 
 let lafTools = new tools();
+let langPack = null;
 
 console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 
+if (config.get("lang", "ja_JP")) {
+    langPack = new langRes.ja_JP();
+} else {
+    langPack = new langRes.en_US();
+}
+
+console.log(`UI Language: ${langPack.lang}`)
+
 const initFlags = () => {
-    flagsInfo = `Chromiumオプション設定状況:`
+    flagsInfo = `Chromium Options:`
     chromiumFlags = [
         // ["オプション", null("オプション2"), 有効[bool]]
-        ["disable-frame-rate-limit", null, true],
-        ["disable-gpu-vsync", null, true],
-        ["enable-zero-copy", null, true],
-        ["use-angle", "gl", true],
-        ["enable-webgl2-compute-context", null, true]
+        // FPS解放周り
+        ["disable-frame-rate-limit", null, config.get("unlimitedFPS", true)],
+        ["disable-gpu-vsync", null, config.get("enableVsync", false)],
+        // 描画関係
+        ["use-angle", config.get("angleType", "gl"), true],
+        ["enable-webgl2-compute-context", null, config.get("webgl2Context", true)],
+        ["disable-accelerated-2d-canvas", "true", !config.get("acceleratedCanvas", true)],
+        ["in-process-gpu", null, config.get("inProcessGPU", false)],
+        // その他
+        ["autoplay-policy", "no-user-gesture-required", true]
     ];
     chromiumFlags.forEach((f) => {
-        isEnable = f[2] ? "有効" : "無効";
+        isEnable = f[2] ? "Enable" : "Disable";
         flagsInfo += `\n- ${f[0]}, ${f[1]}: ${isEnable}`;
         if (f[2]) {
             if (f[1] === null) {
@@ -183,7 +200,8 @@ const initSplashWindow = () => {
         center: true,
         show: false,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false
         }
     });
     splashWindow.removeMenu();
@@ -266,7 +284,7 @@ const initShortcutKeys = () => {
         ["Shift+F8", () => {        // URLを入力するフォームの表示
             prompt({
                 title: "LaF",
-                label: "URLを入力してください:",
+                label: langPack.inputURL,
                 value: "",
                 inputAttrs: {
                     type: "url"
@@ -276,8 +294,8 @@ const initShortcutKeys = () => {
                 icon: path.join(__dirname, "img/icon.ico"),
                 skipTaskbar: true,
                 buttonLabels: {
-                    ok: "SUBMIT",
-                    cancel: "CANCEL"
+                    ok: langPack.ok,
+                    cancel: langPack.cancel
                 },
                 width: 400,
                 height: 200,
@@ -285,7 +303,7 @@ const initShortcutKeys = () => {
             })
             .then((r) => {
                 if(r === null) {
-                    console.log("キャンセルされました");
+                    console.log("User canceled.");
                 } else {
                     if (lafTools.urlType(r) === "game") gameWindow.loadURL(r);
                 }
@@ -329,8 +347,8 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
         icon: path.join(__dirname, "img/icon.ico"),
         skipTaskbar: true,
         buttonLabels: {
-            ok: "SUBMIT",
-            cancel: "CANCEL"
+            ok: langPack.ok,
+            cancel: langPack.cancel
         },
         width: 400,
         height: 200,
@@ -338,7 +356,7 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
     })
     .then((r) => {
         if(r === null) {
-            console.log("キャンセルされました");
+            console.log("User canceled.");
             e.returnValue = null;
         } else {
             console.log(r)
@@ -360,6 +378,10 @@ ipcMain.on("RELAUNCH", () => {
 ipcMain.on("GET_VERSION", (e) => {
     e.reply("GET_VERSION", app.getVersion())
 });
+
+ipcMain.on("GET_LANG", (e) => {
+    e.reply("GET_LANG", config.get("lang", "ja_JP"))
+})
 
 app.on("ready", () => {
     initSplashWindow();
