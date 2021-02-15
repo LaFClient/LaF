@@ -45,7 +45,7 @@
             color: white;
             left: 10px;
             bottom: 10px;
-            font-size: 20px;
+            font-size: 15px;
         }
 
         #downloadStatus {
@@ -53,7 +53,7 @@
             color: white;
             right: 10px;
             bottom: 10px;
-            font-size: 20px;
+            font-size: 15px;
         }
     </style>
 </head>
@@ -101,7 +101,7 @@
             dls.innerHTML = `${Math.floor(info.percent)}% (${Math.floor(info.bytesPerSecond / 1000)} kB/s)`;
         });
         ipcRenderer.on('update-downloaded', (evt, info) => {
-            updates.innerHTML = langPack.updateDownloaded.replace("%appVersion", appVersion);
+            updates.innerHTML = langPack.updateDownloaded.replace("%appVersion", info.version);
             dls.innerHTML = ""
         });
         ipcRenderer.on('update-error', () => {
