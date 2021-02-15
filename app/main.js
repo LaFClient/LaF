@@ -257,7 +257,7 @@ const initAutoUpdater = () => {
         if (updateCheck) clearTimeout(updateCheck)
         splashWindow.webContents.send("update-downloaded", info)
         setTimeout(() => {
-            autoUpdater.quitAndInstall(true, true)
+            autoUpdater.quitAndInstall()
         }, 3000)
     });
     autoUpdater.autoDownload = "download";
