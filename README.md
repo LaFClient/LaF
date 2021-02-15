@@ -1,4 +1,10 @@
-[![Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/total)](https://github.com/Hiro527/LaF/Releases)
+[![License](https://img.shields.io/github/license/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/blob/master/LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
+[![Latest](https://img.shields.io/github/v/release/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)]
+[![Latest Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/latest/total?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/total?style=flat-square&logo=appveyor)](https://github.com/Hiro527/LaF/releases)</br>
+[![Discord server](https://discord.com/api/guilds/810717714745786378/widget.png)](https://discord.gg/MpuVpx6RY3)
+
 
 # What is LaF?
 **Laf = Lite and Fast**</br>
@@ -24,6 +30,7 @@ Krunkerはとても軽いゲームです。故に「公式クライアントで�
 - 設定項目の追加/Add Original Settings
 
 # Contact
+Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)
 e-mail: [Send e-mail](mailto:hiro527.dev@gmail.com)</br>
 Discord: Hiro527#0527</br>
 Twitter: [Hiro](https://twitter.com/zHiro527)
