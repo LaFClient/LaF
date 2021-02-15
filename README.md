@@ -30,7 +30,7 @@ Krunkerはとても軽いゲームです。故に「公式クライアントで�
 - 設定項目の追加/Add Original Settings
 
 # Contact
-Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)
+Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)</br>
 e-mail: [Send e-mail](mailto:hiro527.dev@gmail.com)</br>
 Discord: Hiro527#0527</br>
 Twitter: [Hiro](https://twitter.com/zHiro527)
