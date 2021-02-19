@@ -70,6 +70,7 @@ const initGameWindow = () => {
         width: 1200,
         height: 800,
         show: false,
+        fullscreen: config.get("Fullscreen", false),
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
@@ -317,8 +318,9 @@ const initShortcutKeys = () => {
             .catch(console.error);
         }],
         ["F11", () => {
-            isFullScreen = !gameWindow.isFullScreen();
-            gameWindow.setFullScreen(isFullScreen);
+            isFullScreen = gameWindow.isFullScreen();
+            config.set("Fullscreen", !isFullScreen)
+            gameWindow.setFullScreen(!isFullScreen);
         }],
         ["Ctrl+Shift+F1", () => {   // クライアントの再起動
             app.relaunch();
