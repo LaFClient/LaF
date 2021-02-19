@@ -1,12 +1,12 @@
 require("v8-compile-cache");
-const { app, BrowserWindow, clipboard, ipcMain, shell, session } = require("electron");
+const { app, BrowserWindow, clipboard, ipcMain, shell, session, dialog } = require("electron");
 const localShortcut = require("electron-localshortcut");
 const prompt = require("electron-prompt");
 const log = require("electron-log");
 const store = require("electron-store");
 const path = require("path");
 const tools = require("./tools");
-const langRes = require("./lang")
+const langRes = require("./lang");
 
 const config = new store();
 
@@ -15,8 +15,7 @@ Object.assign(console, log.functions);
 let gameWindow = null,
     editorWindow = null,
     hubWindow = null,
-    splashWindow = null,
-    promptWindow = null;
+    splashWindow = null;
 
 let lafTools = new tools();
 let langPack = null;
@@ -74,8 +73,7 @@ const initGameWindow = () => {
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
-            webSecurity: false,
-            enableRemoteModule: true
+            webSecurity: false
         }
     });
     gameWindow.removeMenu();
@@ -118,11 +116,17 @@ const initGameWindow = () => {
 };
 
 const initHubWindow = (url) => {
+    console.log("New Window: Krunker Hub")
     hubWindow = new BrowserWindow({
         width: 900,
         height: 600,
         show: false,
-        parent: gameWindow
+        parent: gameWindow,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            nodeIntegration: true,
+            enableRemoteModule: true
+        }
     });
     hubWindow.removeMenu();
     hubWindow.loadURL(url);
@@ -159,11 +163,17 @@ const initHubWindow = (url) => {
 };
 
 const initEditorWindow = (url) => {
+    console.log("New Window: Krunker Editor")
     editorWindow = new BrowserWindow({
         width: 900,
         height: 600,
         show: false,
-        parent: gameWindow
+        parent: gameWindow,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            nodeIntegration: true,
+            enableRemoteModule: true
+        }
     });
     editorWindow.removeMenu();
     editorWindow.loadURL(url);
@@ -195,6 +205,17 @@ const initEditorWindow = (url) => {
                 shell.openExternal(url);
         };
     });
+
+    editorWindow.webContents.on("will-prevent-unload", (event) => {
+        if (!dialog.showMessageBoxSync({
+            buttons: [langPack.leavePage, langPack.cancel],
+            title: langPack.leavePageTitle,
+            message: langPack.confirmLeavePage,
+            noLink: true
+        })) {
+            event.preventDefault();
+        }
+    });
 };
 
 const initSplashWindow = () => {
@@ -223,6 +244,8 @@ const initAutoUpdater = () => {
     const { autoUpdater } = require("electron-updater");
 
     let updateCheck = null;
+
+    autoUpdater.logger = log;
 
     autoUpdater.on("checking-for-update", (info) => {
         splashWindow.webContents.send("checking-for-update")
@@ -376,12 +399,13 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
 
 ipcMain.on("CLEAR_CACHE", () => {
     session.defaultSession.clearStorageData();
-})
+    console.log("CLEARED CACHE.");
+});
 
 ipcMain.on("RELAUNCH", () => {
     app.relaunch();
     app.quit();
-})
+});
 
 ipcMain.on("GET_VERSION", (e) => {
     e.reply("GET_VERSION", app.getVersion())
@@ -389,7 +413,7 @@ ipcMain.on("GET_VERSION", (e) => {
 
 ipcMain.on("GET_LANG", (e) => {
     e.reply("GET_LANG", config.get("lang"))
-})
+});
 
 app.on("ready", () => {
     initSplashWindow();
