@@ -42,19 +42,10 @@ module.exports = class utils {
             restart: true,
             val: config.get("unlimitedFPS"),
             html: `
-            <select onchange="window.utils.setConfig('unlimitedFPS', this.value, true)" class="inputGrey2">
-                <option value="enabled" ${config.get("unlimitedFPS") === "enabled" ? " selected" : ""}>${langPack.unlimitedFPSMode}</option>
-                <option value="disabled" ${!config.get("unlimitedFPS") === "disabled" ? " selected" : ""}>${langPack.enableVsync}</option>
-            </select>
-            `
-        }/*
-        enableVsync: {
-            id: "enableVsync",
-            title: langPack.enableVsync,
-            type: "checkbox",
-            restart: true,
-            val: config.get("enableVsync", false),
-            html: () => {return this.generateSettings(this)}
+            <label class='switch'>
+                <input type='checkbox' onclick='window.utils.setConfig("unlimitedFPS", this.checked, true)'${config.get("unlimitedFPS", true) ? ' checked' : ''}>
+                <span class='slider'></span>
+            </label>`
         },
         angleType: {
             id: "angleType",
@@ -71,11 +62,11 @@ module.exports = class utils {
             val: config.get("angleType", "gl"),
             html: `
             <select onchange="window.utils.setConfig('angleType', this.value, true)" class="inputGrey2">
-                <option value="default" ${this.settings.languages.val === "default" ? " selected" : ""}>Default</option>
-                <option value="gl" ${this.settings.languages.val === "gl" ? " selected" : ""}>OpenGL</option>
-                <option value="d3d11" ${this.settings.languages.val === "d3d11" ? " selected" : ""}>D3D11</option>
-                <option value="d3d9" ${this.settings.languages.val === "d3d9" ? " selected" : ""}>D3D9</option>
-                <option value="d3d11on12" ${this.settings.languages.val === "d3d11on12" ? " selected" : ""}>D3D11on12</option>
+                <option value="default" ${config.get("angleType", "gl") === "default" ? " selected" : ""}>Default</option>
+                <option value="gl" ${config.get("angleType", "gl") === "gl" ? " selected" : ""}>OpenGL</option>
+                <option value="d3d11" ${config.get("angleType", "gl") === "d3d11" ? " selected" : ""}>D3D11</option>
+                <option value="d3d9" ${config.get("angleType", "gl") === "d3d9" ? " selected" : ""}>D3D9</option>
+                <option value="d3d11on12" ${config.get("angleType", "gl") === "d3d11on12" ? " selected" : ""}>D3D11on12</option>
             </select>
             `
         },
@@ -85,7 +76,11 @@ module.exports = class utils {
             type: "chackbox",
             restart: true,
             val: config.get("webgl2Context", true),
-            html: () => {return this.generateSettings(this)}
+            html: `
+            <label class='switch'>
+                <input type='checkbox' onclick='window.utils.setConfig("webgl2Context", this.checked, true)'${config.get("webgl2Context", true) ? ' checked' : ''}>
+                <span class='slider'></span>
+            </label>`
         },
         acceleratedCanvas: {
             id: "acceleratedCanvas",
@@ -93,7 +88,11 @@ module.exports = class utils {
             type: "checkbox",
             restart: true,
             val: config.get("acceleratedCanvas", true),
-            html: () => {return this.generateSettings(this)}
+            html: `
+            <label class='switch'>
+                <input type='checkbox' onclick='window.utils.setConfig("acceleratedCanvas", this.checked, true)'${config.get("acceleratedCanvas", true) ? ' checked' : ''}>
+                <span class='slider'></span>
+            </label>`
         },
         inProcessGPU: {
             id: "inProcessGPU",
@@ -101,8 +100,12 @@ module.exports = class utils {
             type: "checkbox",
             restart: true,
             val: config.get("inProcessGPU", false),
-            html: () => {return this.generateSettings(this)}
-        }*/
+            html: `
+            <label class='switch'>
+                <input type='checkbox' onclick='window.utils.setConfig("inProcessGPU", this.checked, true)'${config.get("inProcessGPU", false) ? ' checked' : ''}>
+                <span class='slider'></span>
+            </label>`
+        }
     }
 
     setConfig(id, value, restart) {

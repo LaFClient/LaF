@@ -1,6 +1,6 @@
 {
   "name": "laf",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Krunker Client Made in Japan.",
   "main": "app/main.js",
   "scripts": {
