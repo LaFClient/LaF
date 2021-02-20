@@ -24,6 +24,7 @@ console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n
 
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
+    
 };
 
 if (config.get("lang") === "ja_JP") {
@@ -73,7 +74,7 @@ const initGameWindow = () => {
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
-            webSecurity: false
+            enableRemoteModule: true
         }
     });
     gameWindow.removeMenu();
@@ -84,6 +85,7 @@ const initGameWindow = () => {
 
     gameWindow.on("closed", () => {
         gameWindow = null;
+        app.quit()
     });
 
     gameWindow.once("ready-to-show", () => {
@@ -124,7 +126,7 @@ const initHubWindow = (url) => {
         parent: gameWindow,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-            nodeIntegration: true,
+            contextIsolation: false,
             enableRemoteModule: true
         }
     });
@@ -145,6 +147,7 @@ const initHubWindow = (url) => {
         switch (lafTools.urlType(url)) {
             case "hub":
                 hubWindow.loadURL(url);
+                break;
             case "game":
                 hubWindow.destroy();
                 gameWindow.loadURL(url);
@@ -171,7 +174,7 @@ const initEditorWindow = (url) => {
         parent: gameWindow,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-            nodeIntegration: true,
+            contextIsolation: false,
             enableRemoteModule: true
         }
     });
@@ -417,4 +420,8 @@ ipcMain.on("GET_LANG", (e) => {
 
 app.on("ready", () => {
     initSplashWindow();
+});
+
+app.on("window-all-closed", () => {
+    app.quit();
 });

@@ -112,8 +112,9 @@ module.exports = class utils {
         config.set(id, value)
         console.log(`${id} has set to ${value}.`)
         if (restart) {
-            alert(langPack.restartMsg)
-            ipcRenderer.send("RELAUNCH")
+            if (confirm(langPack.restartMsg)) {
+                ipcRenderer.send("RELAUNCH")
+            }
         }
     }
 
