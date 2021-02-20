@@ -154,25 +154,47 @@ module.exports = class utils {
         }
         injectSettings();
     }
-        tolset(v) {
-            switch (v) {
-                case "clearCache":
-                    if (confirm(langPack.confirmClearCache)) {
-                        ipcRenderer.send("CLEAR_CACHE");
-                        alert(langPack.clearedCacheAndRestart)
-                        ipcRenderer.send("RELAUNCH");
-                    }
-                    break;
-                case "resetOptions":
-                    if (confirm(langPack.confirmResetConfig)){
-                        config.clear();
-                        alert(langPack.resetedConfigAndRestart)
-                        ipcRenderer.send("RELAUNCH");
-                    }
-                    break;
-                case "restartClient":
-                    ipcRenderer.send("RELAUNCH")
-                    break;
-            }
+    /*
+    generateSetting(obj, type, id, defaultValue, options) {
+        switch (type) {
+            case "checkbox":
+                tmpData = `
+                    <label class='switch'>
+                        <input type='checkbox' onclick='window.utils.setConfig(${id}, this.checked, true)'${config.get(id, defaultValue) ? ' checked' : ''}>
+                        <span class='slider'></span>
+                    </label>`
+                return tmpData;
+            case "select":
+                tmpData = `
+                    <select onchange="window.utils.setConfig(${id}, this.value, true)" class="inputGrey2">
+                `
+                options.forEach((k) => {
+                    tmpData += `<option value=${obj[k]} ${config.get(id, defaultValue) === obj[k] ? " selected" : ""}>${k}</option>`
+                })
+                tmpData += "</select>"
+                return tmpData;
         }
+    }*/
+
+    tolset(v) {
+        switch (v) {
+            case "clearCache":
+                if (confirm(langPack.confirmClearCache)) {
+                    ipcRenderer.send("CLEAR_CACHE");
+                    alert(langPack.clearedCacheAndRestart)
+                    ipcRenderer.send("RELAUNCH");
+                }
+                break;
+            case "resetOptions":
+                if (confirm(langPack.confirmResetConfig)){
+                    config.clear();
+                    alert(langPack.resetedConfigAndRestart)
+                    ipcRenderer.send("RELAUNCH");
+                }
+                break;
+            case "restartClient":
+                ipcRenderer.send("RELAUNCH")
+                break;
+        }
+    }
 }
