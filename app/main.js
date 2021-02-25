@@ -47,6 +47,7 @@ const initFlags = () => {
         ["enable-webgl2-compute-context", null, config.get("webgl2Context", true)],
         ["disable-accelerated-2d-canvas", "true", !config.get("acceleratedCanvas", true)],
         ["in-process-gpu", null, config.get("inProcessGPU", false)],
+        ["ignore-gpu-blacklist", null, true],
         // その他
         ["autoplay-policy", "no-user-gesture-required", true]
     ];
