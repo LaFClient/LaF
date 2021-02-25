@@ -155,28 +155,6 @@ module.exports = class utils {
         injectSettings();
     }
 
-    /*
-    generateSetting(obj, type, id, defaultValue, options) {
-        switch (type) {
-            case "checkbox":
-                tmpData = `
-                    <label class='switch'>
-                        <input type='checkbox' onclick='window.utils.setConfig(${id}, this.checked, true)'${config.get(id, defaultValue) ? ' checked' : ''}>
-                        <span class='slider'></span>
-                    </label>`
-                return tmpData;
-            case "select":
-                tmpData = `
-                    <select onchange="window.utils.setConfig(${id}, this.value, true)" class="inputGrey2">
-                `
-                options.forEach((k) => {
-                    tmpData += `<option value=${obj[k]} ${config.get(id, defaultValue) === obj[k] ? " selected" : ""}>${k}</option>`
-                })
-                tmpData += "</select>"
-                return tmpData;
-        }
-    }*/
-
     tolset(v) {
         switch (v) {
             case "clearCache":

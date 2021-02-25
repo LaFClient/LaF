@@ -70,9 +70,9 @@
 
         appv = document.getElementById("appVersion");
         updates = document.getElementById("updateStatus");
-        dls = document.getElementById("downloadStatus")
+        dls = document.getElementById("downloadStatus");
 
-        let appVersion = null
+        let appVersion = null;
 
         ipcRenderer.send("GET_VERSION")
         ipcRenderer.on("GET_VERSION", (e, v) => {
