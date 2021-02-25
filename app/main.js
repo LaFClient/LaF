@@ -97,6 +97,9 @@ const initGameWindow = () => {
     gameWindow.webContents.on("new-window", (event, url) => {
         event.preventDefault();
         switch (lafTools.urlType(url)) {
+            case "game":
+                gameWindow.loadURL(url);
+                break;
             case "hub":
                 if (!hubWindow) {
                     initHubWindow(url)

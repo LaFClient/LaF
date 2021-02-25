@@ -154,6 +154,7 @@ module.exports = class utils {
         }
         injectSettings();
     }
+
     /*
     generateSetting(obj, type, id, defaultValue, options) {
         switch (type) {
