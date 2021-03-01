@@ -37,7 +37,16 @@ document.addEventListener("DOMContentLoaded", () => {
     window.utils = new utils();
     let observer = new MutationObserver(() => {
         observer.disconnect();
+        window.closeClient = () => {
+            ipcRenderer.send("CLOSE");
+            console.log("CLOSE BTN")
+        }
         lafUtils.setupGameWindow();
     });
     observer.observe(document.getElementById("instructions"), {childList: true});
 });
+
+ipcRenderer.on("DID-FINISH-LOAD", () => {
+    quitBTN = document.getElementById("clientExit");
+    quitBTN.style.display = "inherit";
+})

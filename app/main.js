@@ -119,6 +119,11 @@ const initGameWindow = () => {
                 shell.openExternal(url);
         };
     });
+
+    gameWindow.webContents.on("did-finish-load", () => {
+        gameWindow.webContents.send("DID-FINISH-LOAD");
+        console.log("DID-FINISH-LOAD");
+    })
 };
 
 const initHubWindow = (url) => {
@@ -402,6 +407,10 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
         }
     })
     .catch(console.error);
+})
+
+ipcMain.on("CLOSE", () => {
+    app.quit();
 })
 
 ipcMain.on("CLEAR_CACHE", () => {
