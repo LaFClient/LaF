@@ -12,8 +12,8 @@
 Krunkerはとても軽いゲームです。故に「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 
 # Attention
-**THIS SOFTWARE IS IN ALPHA VERSION. DON'T USE THIS SOFTWARE FOR EXCEPT DEVELOPPING OR TESTING.**</br>
-**このソフトウェアは現在アルファ版です。決して開発やテスト目的以外での使用はしないでください。**</br>
+**THIS SOFTWARE IS IN BETA VERSION.**</br>
+**このソフトウェアは現在ベータ版です。**</br>
 バグが絶対あると思います。見つけた場合はDMで直接連絡をするかissueを立ててくださるとありがたいです。</br>
 もし見つかったらissueを立てるか直接連絡をください(TwitterかDiscordが反応早いです)
 
@@ -28,7 +28,9 @@ Krunkerはとても軽いゲームです。故に「公式クライアントで�
 - Ctrl+F1: 開発者ツールを開く/Open Dev Tools
 
 # WIP
-- 設定項目の追加/Add Original Settings
+- Discord RPC
+- Resource Swapper
+- Customizable Key Binds
 
 # Contact
 Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)</br>
