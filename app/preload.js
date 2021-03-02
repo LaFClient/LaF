@@ -32,6 +32,15 @@ const initIpc = () => {
 };
 initIpc();
 
+/*
+const initDiscordRPC = () => {
+    window.addEventListener("focus", () => {
+        
+    })
+}
+*/
+
+window.OffCliV = true;
 
 document.addEventListener("DOMContentLoaded", () => {
     window.utils = new utils();
