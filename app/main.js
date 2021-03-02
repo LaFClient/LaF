@@ -15,6 +15,7 @@ Object.assign(console, log.functions);
 let gameWindow = null,
     editorWindow = null,
     hubWindow = null,
+    viewerWindow = null;
     splashWindow = null;
 
 let lafTools = new tools();
@@ -108,6 +109,9 @@ const initGameWindow = () => {
                     hubWindow.loadURL(url);
                 }
                 break;
+            case "viewer":
+                initViewerWindow(url);
+                break;
             case "editor":
                 if (!editorWindow) {
                     initEditorWindow(url);
@@ -156,6 +160,9 @@ const initHubWindow = (url) => {
         switch (lafTools.urlType(url)) {
             case "hub":
                 hubWindow.loadURL(url);
+                break;
+            case "viewer":
+                initViewerWindow(url);
                 break;
             case "game":
                 hubWindow.destroy();
@@ -227,6 +234,57 @@ const initEditorWindow = (url) => {
         })) {
             event.preventDefault();
         }
+    });
+};
+
+const initViewerWindow = (url) => {
+    console.log("New Window: Krunker Viewer")
+    viewerWindow = new BrowserWindow({
+        width: 900,
+        height: 600,
+        show: false,
+        parent: gameWindow,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: false,
+            enableRemoteModule: true
+        }
+    });
+    viewerWindow.removeMenu();
+    viewerWindow.loadURL(url);
+
+    viewerWindow.on("closed", () => {
+        viewerWindow = null;
+    });
+
+    viewerWindow.once("ready-to-show", () => {
+        viewerWindow.setTitle("LaF: Krunker Viewer");
+        viewerWindow.show();
+    });
+
+    viewerWindow.webContents.on("new-window", (event, url) => {
+        event.preventDefault();
+        switch (lafTools.urlType(url)) {
+            case "hub":
+                initHubWindow(url);
+                break;
+            case "viewer":
+                viewerWindow.loadURL(url);
+                break;
+            case "game":
+                viewerWindow.destroy();
+                gameWindow.loadURL(url);
+                break;
+            case "editor":
+                if (!editorWindow) {
+                    initEditorWindow(url);
+                } else {
+                    editorWindow.loadURL(url);
+                };
+                break;
+            default:
+                shell.openExternal(url);
+        };
     });
 };
 

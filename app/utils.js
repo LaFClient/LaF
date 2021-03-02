@@ -146,7 +146,7 @@ module.exports = class utils {
                 settingsWindow = window.windows[0];
                 let customHTML = ""
                 console.log(`Debug: ${clientTabIndex}, ${settingsWindow.tabIndex}`)
-                if (settingsWindow.tabIndex != 6 && !settingsWindow.settingSearch) {
+                if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
                     console.log("Debug: Currently tab is not LaF. Return")
                     return "";
                 }
