@@ -137,13 +137,20 @@ module.exports = class utils {
     setupGameWindow() {
         const injectSettings = () => {
             settingsWindow = window.windows[0];
+
+            let GetSettings = settingsWindow.getSettings;
+            settingsWindow.getSettings = (...args) => GetSettings.call(settingsWindow, ...args).replace(/^<\/div>/, '');
+
             let clientTabIndex = settingsWindow.tabs.push({ name: "LaF", categories: [] })
             settingsWindow.getCSettings = () => {
                 settingsWindow = window.windows[0];
                 let customHTML = ""
-                if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
-                    return;
+                console.log(`Debug: ${clientTabIndex}, ${settingsWindow.tabIndex}`)
+                if (settingsWindow.tabIndex != 6 && !settingsWindow.settingSearch) {
+                    console.log("Debug: Currently tab is not LaF. Return")
+                    return "";
                 }
+                console.log("Debug: Currently tab is LaF.")
                 Object.values(this.settings).forEach((k) => {
                     if (settingsWindow.settingSearch && !window.lafUtils.searchMatches(k.id, k.title, k.category)) {
                         return;

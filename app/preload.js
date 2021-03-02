@@ -54,6 +54,7 @@ window.OffCliV = true;
 document.addEventListener("DOMContentLoaded", () => {
     window.utils = new utils();
     let observer = new MutationObserver(() => {
+        console.log("Debug: DOMLoaded")
         observer.disconnect();
         window.closeClient = () => {
             ipcRenderer.send("CLOSE");
