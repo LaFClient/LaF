@@ -15,12 +15,14 @@ if (config.get("lang") === "ja_JP") {
 Object.assign(console, log.functions);
 
 let gameUI = document.getElementById("gameUI");
+let settingsWindow = null;
 
 module.exports = class utils {
     settings = {
         languages: {
             id: "lang",
             title: langPack.languageSetting,
+            category: "lang",
             type: "select",
             restart: true,
             options: {
@@ -38,6 +40,7 @@ module.exports = class utils {
         unlimitedFPS: {
             id: "unlimitedFPS",
             title: langPack.unlimitedFPS,
+            category: "fps",
             type: "select",
             restart: true,
             val: config.get("unlimitedFPS"),
@@ -50,6 +53,7 @@ module.exports = class utils {
         angleType: {
             id: "angleType",
             title: langPack.angleType,
+            category: "render",
             type: "select",
             restart: true,
             options: {
@@ -73,6 +77,7 @@ module.exports = class utils {
         webgl2Context: {
             id: "webgl2Context",
             title: langPack.webgl2Context,
+            category: "render",
             type: "chackbox",
             restart: true,
             val: config.get("webgl2Context", true),
@@ -85,6 +90,7 @@ module.exports = class utils {
         acceleratedCanvas: {
             id: "acceleratedCanvas",
             title: langPack.acceleratedCanvas,
+            category: "render",
             type: "checkbox",
             restart: true,
             val: config.get("acceleratedCanvas", true),
@@ -97,6 +103,7 @@ module.exports = class utils {
         inProcessGPU: {
             id: "inProcessGPU",
             title: langPack.inProcessGPU,
+            category: "render",
             type: "checkbox",
             restart: true,
             val: config.get("inProcessGPU", false),
@@ -129,12 +136,18 @@ module.exports = class utils {
 
     setupGameWindow() {
         const injectSettings = () => {
-            let settingsWindow = window.windows[0];
+            settingsWindow = window.windows[0];
             let clientTabIndex = settingsWindow.tabs.push({ name: "LaF", categories: [] })
-            window.windows[0].getCSettings = () => {
+            settingsWindow.getCSettings = () => {
+                settingsWindow = window.windows[0];
                 let customHTML = ""
-                if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) return '';
+                if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
+                    return;
+                }
                 Object.values(this.settings).forEach((k) => {
+                    if (settingsWindow.settingSearch && !window.lafUtils.searchMatches(k.id, k.title, k.category)) {
+                        return;
+                    }
                     let tmpHTML = "";
                     if (k.type !== "category") {
                         tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `

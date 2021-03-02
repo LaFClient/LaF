@@ -12,6 +12,7 @@ const lafTools = new tools();
 
 const config = new store();
 
+window.lafUtils = new utils();
 
 if (config.get("lang") == "ja_JP") {
     langPack = new langRes.ja_JP();
@@ -20,6 +21,14 @@ if (config.get("lang") == "ja_JP") {
 }
 
 Object.assign(console, log.functions);
+
+Object.assign(window.lafUtils, {
+    searchMatches: (id, name, cat) => {
+        let settingsWindow = window.windows[0];
+        let query = settingsWindow.settingSearch.toLowerCase() || "";
+        return (id.toLowerCase() || "").includes(query) || (name.toLowerCase() || "").includes(query) || (cat.toLowerCase() || "").includes(query);
+    }
+})
 
 window.prompt = (message, defaultValue) => {
     return ipcRenderer.sendSync("PROMPT", message, defaultValue);
