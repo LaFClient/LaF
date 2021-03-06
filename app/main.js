@@ -72,6 +72,8 @@ const initFlags = () => {
 };
 initFlags();
 
+console.log(`Discord RPC: ${isRPCEnabled ? "Enabled" : "Disabled"}`)
+
 const initGameWindow = () => {
     gameWindow = new BrowserWindow({
         width: 1200,
@@ -493,11 +495,16 @@ ipcMain.on("GET_LANG", (e) => {
     e.reply("GET_LANG", config.get("lang"))
 });
 
+ipcMain.handle("RPC_SEND", (e, d) => {
+    // console.log(d);
+    rpc.setActivity(d);
+})
+
 DiscordRPC.register(ClientID);
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 
 rpc.on("ready", () => {
-    console.log("Discord RPC OK")
+    console.log("Discord RPC Ready")
 })
 
 app.once("ready", () => {

@@ -41,12 +41,56 @@ const initIpc = () => {
 };
 initIpc();
 
+const isEnabledRPC = config.get("enableRPC", true)
+let rpcAvtivity = null;
+let rpcInterval = null;
+
+const initDiscordRPC = () => {
+    let sendDiscordRPC = () => {
+        try {
+            let gameActiviry = window.getGameActivity();
+            rpcAvtivity = {
+                state: gameActiviry.map,
+                details: gameActiviry.mode,
+                largeImageKey: "laf_icon",
+                largeImageText: "LaF CLient"
+            }
+            if (gameActiviry.time) {
+                rpcAvtivity.endTimestamp = Date.now() + gameActiviry.time * 1e3;
+            }
+            ipcRenderer.invoke("RPC_SEND", rpcAvtivity)
+        } catch (error) {
+            rpcAvtivity = {
+                state: "Playing Krunker",
+                largeImageKey: "laf_icon",
+                largeImageText: "LaF CLient"
+            }
+            ipcRenderer.invoke("RPC_SEND", rpcAvtivity)
+        }
+    }
+    if (isEnabledRPC) {
+        rpcAvtivity = {
+            startTimestamp: Math.floor(Date.now() / 1e3),
+        }
+        ipcRenderer.invoke("RPC_SEND", rpcAvtivity);
+        rpcInterval = setInterval(sendDiscordRPC, 500);
+    }
+}
+
+ipcRenderer.on("RPC_STOP", () => {
+    if (rpcInterval) {
+        clearInterval(rpcInterval)
+    }
+})
+
+initDiscordRPC();
+
 window.OffCliV = true;
 
 document.addEventListener("DOMContentLoaded", () => {
     window.utils = new utils();
     let observer = new MutationObserver(() => {
-        console.log("Debug: DOMLoaded")
+        // console.log("Debug: DOMLoaded")
         observer.disconnect();
         window.closeClient = () => {
             ipcRenderer.send("CLOSE");
@@ -58,8 +102,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 ipcRenderer.on("DID-FINISH-LOAD", () => {
-    if (config.get("showExitBtn", true)){
-        quitBTN = document.getElementById("clientExit");
-        quitBTN.style.display = "inherit";
+    menuContainer = document.getElementById("menuItemContainer")
+    quitBTN = document.getElementById("clientExit");
+    switch (config.get("showExitBtn", "bottom")){
+        case "top":
+            menuContainer.removeChild(menuContainer.children[7])
+            menuContainer.insertAdjacentHTML("afterbegin", `
+            <div class="menuItem" onmouseenter="playTick()" onclick="clientExitPopup()" id="clientExit">
+            <div class="menuItemIcon iconExit"></div>
+            <div class="menuItemTitle" id="menuBtnExit">Exit</div>
+            </div>
+            `)
+            quitBTN = document.getElementById("clientExit");
+            quitBTN.style.display = "inherit";
+            break;
+        case "bottom":
+            quitBTN.style.display = "inherit";
+            break;
+        case "disable":
+            break;
     }
 })

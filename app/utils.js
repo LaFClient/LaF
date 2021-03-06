@@ -22,7 +22,7 @@ module.exports = class utils {
         languages: {
             id: "lang",
             title: langPack.languageSetting,
-            category: "lang",
+            category: "General",
             type: "select",
             restart: true,
             options: {
@@ -37,23 +37,10 @@ module.exports = class utils {
             </select>
             `
         },
-        unlimitedFPS: {
-            id: "unlimitedFPS",
-            title: langPack.unlimitedFPS,
-            category: "fps",
-            type: "checkbox",
-            restart: true,
-            val: config.get("unlimitedFPS"),
-            html: `
-            <label class='switch'>
-                <input type='checkbox' onclick='window.utils.setConfig("unlimitedFPS", this.checked, true)'${config.get("unlimitedFPS", true) ? ' checked' : ''}>
-                <span class='slider'></span>
-            </label>`
-        },
         enableRPC: {
-            id: "enableRPC",
+            id: "General",
             title: langPack.enableRPC,
-            category: "discord",
+            category: "General",
             type: "checkbox",
             restart: true,
             val: config.get("showExitBtn", true),
@@ -66,20 +53,40 @@ module.exports = class utils {
         showExitBtn: {
             id: "showExitBtn",
             title: langPack.showExitBtn,
-            category: "fps",
+            category: "General",
+            type: "select",
+            restart: true,
+            options: {
+                top: "top",
+                bottom: "bottom",
+                disable: "disable"
+            },
+            val: config.get("showExitBtn", "bottom"),
+            html: `
+            <select onchange="window.utils.setConfig('showExitBtn', this.value, true)" class="inputGrey2">
+                <option value="top" ${config.get("showExitBtn", "bottom") === "top" ? " selected" : ""}>${langPack.topExitBtn}</option>
+                <option value="bottom" ${config.get("showExitBtn", "bottom") === "bottom" ? " selected" : ""}>${langPack.bottomExitBtn}</option>
+                <option value="disable" ${config.get("showExitBtn", "bottom") === "disable" ? " selected" : ""}>${langPack.disableExitBtn}</option>
+            </select>
+            `
+        },
+        unlimitedFPS: {
+            id: "unlimitedFPS",
+            title: langPack.unlimitedFPS,
+            category: "Video",
             type: "checkbox",
             restart: true,
-            val: config.get("showExitBtn", true),
+            val: config.get("unlimitedFPS"),
             html: `
             <label class='switch'>
-                <input type='checkbox' onclick='window.utils.setConfig("showExitBtn", this.checked, true)'${config.get("showExitBtn", true) ? ' checked' : ''}>
+                <input type='checkbox' onclick='window.utils.setConfig("unlimitedFPS", this.checked, true)'${config.get("unlimitedFPS", true) ? ' checked' : ''}>
                 <span class='slider'></span>
             </label>`
         },
         angleType: {
             id: "angleType",
             title: langPack.angleType,
-            category: "render",
+            category: "Video",
             type: "select",
             restart: true,
             options: {
@@ -103,7 +110,7 @@ module.exports = class utils {
         webgl2Context: {
             id: "webgl2Context",
             title: langPack.webgl2Context,
-            category: "render",
+            category: "Video",
             type: "chackbox",
             restart: true,
             val: config.get("webgl2Context", true),
@@ -116,7 +123,7 @@ module.exports = class utils {
         acceleratedCanvas: {
             id: "acceleratedCanvas",
             title: langPack.acceleratedCanvas,
-            category: "render",
+            category: "Video",
             type: "checkbox",
             restart: true,
             val: config.get("acceleratedCanvas", true),
@@ -129,7 +136,7 @@ module.exports = class utils {
         inProcessGPU: {
             id: "inProcessGPU",
             title: langPack.inProcessGPU,
-            category: "render",
+            category: "Video",
             type: "checkbox",
             restart: true,
             val: config.get("inProcessGPU", false),
@@ -171,17 +178,24 @@ module.exports = class utils {
             settingsWindow.getCSettings = () => {
                 settingsWindow = window.windows[0];
                 let customHTML = ""
-                console.log(`Debug: ${clientTabIndex}, ${settingsWindow.tabIndex}`)
+                // console.log(`Debug: ${clientTabIndex}, ${settingsWindow.tabIndex}`)
                 if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
-                    console.log("Debug: Currently tab is not LaF. Return")
+                    // console.log("Debug: Currently tab is not LaF. Return")
                     return "";
                 }
-                console.log("Debug: Currently tab is LaF.")
+                let prevCat = null;
                 Object.values(this.settings).forEach((k) => {
                     if (settingsWindow.settingSearch && !window.lafUtils.searchMatches(k.id, k.title, k.category)) {
                         return;
                     }
                     let tmpHTML = "";
+                    if (k.category != prevCat) {
+                        if (prevCat) {
+                            tmpHTML += "</div>"
+                        }
+                        prevCat = k.category;
+                        tmpHTML += `<div class='setHed' id='setHed_${btoa(k.category)}' onclick='window.windows[0].collapseFolder(this)'><span class='material-icons plusOrMinus'>keyboard_arrow_down</span> ${k.category}</div><div id='setBod_${btoa(k.category)}'>`;
+                    }
                     if (k.type !== "category") {
                         tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `
                     }
@@ -191,6 +205,7 @@ module.exports = class utils {
                     customHTML += tmpHTML + k.html + "</div>";
                 });
                 customHTML += `
+                </div>
                 <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
                 <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
                 <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a>
