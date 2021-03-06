@@ -41,12 +41,38 @@ module.exports = class utils {
             id: "unlimitedFPS",
             title: langPack.unlimitedFPS,
             category: "fps",
-            type: "select",
+            type: "checkbox",
             restart: true,
             val: config.get("unlimitedFPS"),
             html: `
             <label class='switch'>
                 <input type='checkbox' onclick='window.utils.setConfig("unlimitedFPS", this.checked, true)'${config.get("unlimitedFPS", true) ? ' checked' : ''}>
+                <span class='slider'></span>
+            </label>`
+        },
+        enableRPC: {
+            id: "enableRPC",
+            title: langPack.enableRPC,
+            category: "discord",
+            type: "checkbox",
+            restart: true,
+            val: config.get("showExitBtn", true),
+            html: `
+            <label class='switch'>
+                <input type='checkbox' onclick='window.utils.setConfig("enableRPC", this.checked, true)'${config.get("enableRPC", true) ? ' checked' : ''}>
+                <span class='slider'></span>
+            </label>`
+        },
+        showExitBtn: {
+            id: "showExitBtn",
+            title: langPack.showExitBtn,
+            category: "fps",
+            type: "checkbox",
+            restart: true,
+            val: config.get("showExitBtn", true),
+            html: `
+            <label class='switch'>
+                <input type='checkbox' onclick='window.utils.setConfig("showExitBtn", this.checked, true)'${config.get("showExitBtn", true) ? ' checked' : ''}>
                 <span class='slider'></span>
             </label>`
         },

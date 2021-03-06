@@ -5,6 +5,7 @@ const prompt = require("electron-prompt");
 const log = require("electron-log");
 const store = require("electron-store");
 const path = require("path");
+const DiscordRPC = require("discord-rpc");
 const tools = require("./tools");
 const langRes = require("./lang");
 
@@ -20,6 +21,10 @@ let gameWindow = null,
 
 let lafTools = new tools();
 let langPack = null;
+
+let isRPCEnabled = config.get("enableRPC", true);
+
+const ClientID = "810350252023349248";
 
 console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 
@@ -429,7 +434,6 @@ const initShortcutKeys = () => {
     });
 };
 
-
 ipcMain.on("OPEN_LINK", (event, arg) => {
     gameWindow.loadURL(arg);
 });
@@ -489,10 +493,24 @@ ipcMain.on("GET_LANG", (e) => {
     e.reply("GET_LANG", config.get("lang"))
 });
 
-app.on("ready", () => {
+DiscordRPC.register(ClientID);
+const rpc = new DiscordRPC.Client({ transport: "ipc" });
+
+rpc.on("ready", () => {
+    console.log("Discord RPC OK")
+})
+
+app.once("ready", () => {
+    if (isRPCEnabled) {
+        rpc.login({ clientId: ClientID }).catch(console.error);
+        console.log("Discord Login OK")
+    }
     initSplashWindow();
 });
 
-app.on("window-all-closed", () => {
-    app.quit();
-});
+app.on("quit", async () => {
+    if (isRPCEnabled) {
+		await rpc.clearActivity();
+		rpc.destroy();
+	}
+})

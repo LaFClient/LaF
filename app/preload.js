@@ -41,14 +41,6 @@ const initIpc = () => {
 };
 initIpc();
 
-/*
-const initDiscordRPC = () => {
-    window.addEventListener("focus", () => {
-        
-    })
-}
-*/
-
 window.OffCliV = true;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -66,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 ipcRenderer.on("DID-FINISH-LOAD", () => {
-    quitBTN = document.getElementById("clientExit");
-    quitBTN.style.display = "inherit";
+    if (config.get("showExitBtn", true)){
+        quitBTN = document.getElementById("clientExit");
+        quitBTN.style.display = "inherit";
+    }
 })
