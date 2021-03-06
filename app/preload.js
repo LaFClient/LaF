@@ -70,7 +70,7 @@ const initDiscordRPC = () => {
     }
     if (isEnabledRPC) {
         rpcAvtivity = {
-            startTimestamp: Math.floor(Date.now() / 1e3),
+            startTimestamp: Math.floor(Date.now() / 1e3)
         }
         ipcRenderer.invoke("RPC_SEND", rpcAvtivity);
         rpcInterval = setInterval(sendDiscordRPC, 500);
@@ -84,6 +84,15 @@ ipcRenderer.on("RPC_STOP", () => {
 })
 
 initDiscordRPC();
+
+window.addEventListener('unload', () => {
+	ipcRenderer.invoke("RPC_SEND", {
+		state: "Idle",
+		startTimestamp: Math.floor(Date.now() / 1e3),
+		largeImageKey: "laf_icon",
+		largeImageText: "LaF Client"
+	});
+});
 
 window.OffCliV = true;
 

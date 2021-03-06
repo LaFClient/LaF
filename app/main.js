@@ -517,6 +517,7 @@ app.once("ready", () => {
 
 app.on("quit", async () => {
     if (isRPCEnabled) {
+        gameWindow.webContents.send("RPC_STOP");
 		await rpc.clearActivity();
 		rpc.destroy();
 	}
