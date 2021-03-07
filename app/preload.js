@@ -85,6 +85,7 @@ ipcRenderer.on("RPC_STOP", () => {
 
 initDiscordRPC();
 
+/*
 window.addEventListener('unload', () => {
 	ipcRenderer.invoke("RPC_SEND", {
 		state: "Idle",
@@ -92,7 +93,7 @@ window.addEventListener('unload', () => {
 		largeImageKey: "laf_icon",
 		largeImageText: "LaF Client"
 	});
-});
+});*/
 
 window.OffCliV = true;
 
