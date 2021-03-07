@@ -366,6 +366,7 @@ const initAutoUpdater = () => {
         }, 3000)
     });
     autoUpdater.autoDownload = "download";
+    autoUpdater.allowPrerelease = false;
     // autoUpdater.allowDowngrade = true;
     autoUpdater.checkForUpdates();
 }
