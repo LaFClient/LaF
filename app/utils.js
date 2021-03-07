@@ -15,12 +15,14 @@ if (config.get("lang") === "ja_JP") {
 Object.assign(console, log.functions);
 
 let gameUI = document.getElementById("gameUI");
+let settingsWindow = null;
 
 module.exports = class utils {
     settings = {
         languages: {
             id: "lang",
             title: langPack.languageSetting,
+            category: "General",
             type: "select",
             restart: true,
             options: {
@@ -35,10 +37,44 @@ module.exports = class utils {
             </select>
             `
         },
+        enableRPC: {
+            id: "General",
+            title: langPack.enableRPC,
+            category: "General",
+            type: "checkbox",
+            restart: true,
+            val: config.get("showExitBtn", true),
+            html: `
+            <label class='switch'>
+                <input type='checkbox' onclick='window.utils.setConfig("enableRPC", this.checked, true)'${config.get("enableRPC", true) ? ' checked' : ''}>
+                <span class='slider'></span>
+            </label>`
+        },
+        showExitBtn: {
+            id: "showExitBtn",
+            title: langPack.showExitBtn,
+            category: "General",
+            type: "select",
+            restart: true,
+            options: {
+                top: "top",
+                bottom: "bottom",
+                disable: "disable"
+            },
+            val: config.get("showExitBtn", "bottom"),
+            html: `
+            <select onchange="window.utils.setConfig('showExitBtn', this.value, true)" class="inputGrey2">
+                <option value="top" ${config.get("showExitBtn", "bottom") === "top" ? " selected" : ""}>${langPack.topExitBtn}</option>
+                <option value="bottom" ${config.get("showExitBtn", "bottom") === "bottom" ? " selected" : ""}>${langPack.bottomExitBtn}</option>
+                <option value="disable" ${config.get("showExitBtn", "bottom") === "disable" ? " selected" : ""}>${langPack.disableExitBtn}</option>
+            </select>
+            `
+        },
         unlimitedFPS: {
             id: "unlimitedFPS",
             title: langPack.unlimitedFPS,
-            type: "select",
+            category: "Video",
+            type: "checkbox",
             restart: true,
             val: config.get("unlimitedFPS"),
             html: `
@@ -50,6 +86,7 @@ module.exports = class utils {
         angleType: {
             id: "angleType",
             title: langPack.angleType,
+            category: "Video",
             type: "select",
             restart: true,
             options: {
@@ -73,6 +110,7 @@ module.exports = class utils {
         webgl2Context: {
             id: "webgl2Context",
             title: langPack.webgl2Context,
+            category: "Video",
             type: "chackbox",
             restart: true,
             val: config.get("webgl2Context", true),
@@ -85,6 +123,7 @@ module.exports = class utils {
         acceleratedCanvas: {
             id: "acceleratedCanvas",
             title: langPack.acceleratedCanvas,
+            category: "Video",
             type: "checkbox",
             restart: true,
             val: config.get("acceleratedCanvas", true),
@@ -97,6 +136,7 @@ module.exports = class utils {
         inProcessGPU: {
             id: "inProcessGPU",
             title: langPack.inProcessGPU,
+            category: "Video",
             type: "checkbox",
             restart: true,
             val: config.get("inProcessGPU", false),
@@ -129,13 +169,33 @@ module.exports = class utils {
 
     setupGameWindow() {
         const injectSettings = () => {
-            let settingsWindow = window.windows[0];
+            settingsWindow = window.windows[0];
+
+            let GetSettings = settingsWindow.getSettings;
+            settingsWindow.getSettings = (...args) => GetSettings.call(settingsWindow, ...args).replace(/^<\/div>/, '');
+
             let clientTabIndex = settingsWindow.tabs.push({ name: "LaF", categories: [] })
-            window.windows[0].getCSettings = () => {
+            settingsWindow.getCSettings = () => {
+                settingsWindow = window.windows[0];
                 let customHTML = ""
-                if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) return '';
+                // console.log(`Debug: ${clientTabIndex}, ${settingsWindow.tabIndex}`)
+                if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
+                    // console.log("Debug: Currently tab is not LaF. Return")
+                    return "";
+                }
+                let prevCat = null;
                 Object.values(this.settings).forEach((k) => {
+                    if (settingsWindow.settingSearch && !window.lafUtils.searchMatches(k.id, k.title, k.category)) {
+                        return;
+                    }
                     let tmpHTML = "";
+                    if (k.category != prevCat) {
+                        if (prevCat) {
+                            tmpHTML += "</div>"
+                        }
+                        prevCat = k.category;
+                        tmpHTML += `<div class='setHed' id='setHed_${btoa(k.category)}' onclick='window.windows[0].collapseFolder(this)'><span class='material-icons plusOrMinus'>keyboard_arrow_down</span> ${k.category}</div><div id='setBod_${btoa(k.category)}'>`;
+                    }
                     if (k.type !== "category") {
                         tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `
                     }
@@ -145,6 +205,7 @@ module.exports = class utils {
                     customHTML += tmpHTML + k.html + "</div>";
                 });
                 customHTML += `
+                </div>
                 <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
                 <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
                 <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a>

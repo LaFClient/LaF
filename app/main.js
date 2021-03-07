@@ -5,6 +5,7 @@ const prompt = require("electron-prompt");
 const log = require("electron-log");
 const store = require("electron-store");
 const path = require("path");
+const DiscordRPC = require("discord-rpc");
 const tools = require("./tools");
 const langRes = require("./lang");
 
@@ -15,10 +16,15 @@ Object.assign(console, log.functions);
 let gameWindow = null,
     editorWindow = null,
     hubWindow = null,
+    viewerWindow = null;
     splashWindow = null;
 
 let lafTools = new tools();
 let langPack = null;
+
+let isRPCEnabled = config.get("enableRPC", true);
+
+const ClientID = "810350252023349248";
 
 console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 
@@ -66,6 +72,8 @@ const initFlags = () => {
 };
 initFlags();
 
+console.log(`Discord RPC: ${isRPCEnabled ? "Enabled" : "Disabled"}`)
+
 const initGameWindow = () => {
     gameWindow = new BrowserWindow({
         width: 1200,
@@ -84,6 +92,10 @@ const initGameWindow = () => {
 
     gameWindow.loadURL("https://krunker.io");
 
+    gameWindow.on("close", () => {
+        config.set("isMaximized", gameWindow.isMaximized())
+    })
+
     gameWindow.on("closed", () => {
         gameWindow = null;
         app.quit()
@@ -91,6 +103,7 @@ const initGameWindow = () => {
 
     gameWindow.once("ready-to-show", () => {
         splashWindow.destroy();
+        if (config.get("isMaximized", true)) gameWindow.maximize();
         gameWindow.setTitle("LaF");
         gameWindow.show();
     });
@@ -108,6 +121,9 @@ const initGameWindow = () => {
                     hubWindow.loadURL(url);
                 }
                 break;
+            case "viewer":
+                initViewerWindow(url);
+                break;
             case "editor":
                 if (!editorWindow) {
                     initEditorWindow(url);
@@ -119,6 +135,11 @@ const initGameWindow = () => {
                 shell.openExternal(url);
         };
     });
+
+    gameWindow.webContents.on("did-finish-load", () => {
+        gameWindow.webContents.send("DID-FINISH-LOAD");
+        console.log("DID-FINISH-LOAD");
+    })
 };
 
 const initHubWindow = (url) => {
@@ -129,7 +150,7 @@ const initHubWindow = (url) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            //  preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
@@ -151,6 +172,9 @@ const initHubWindow = (url) => {
         switch (lafTools.urlType(url)) {
             case "hub":
                 hubWindow.loadURL(url);
+                break;
+            case "viewer":
+                initViewerWindow(url);
                 break;
             case "game":
                 hubWindow.destroy();
@@ -177,7 +201,7 @@ const initEditorWindow = (url) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            // preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
@@ -222,6 +246,57 @@ const initEditorWindow = (url) => {
         })) {
             event.preventDefault();
         }
+    });
+};
+
+const initViewerWindow = (url) => {
+    console.log("New Window: Krunker Viewer")
+    viewerWindow = new BrowserWindow({
+        width: 900,
+        height: 600,
+        show: false,
+        parent: gameWindow,
+        webPreferences: {
+            // preload: path.join(__dirname, "preload.js"),
+            contextIsolation: false,
+            enableRemoteModule: true
+        }
+    });
+    viewerWindow.removeMenu();
+    viewerWindow.loadURL(url);
+
+    viewerWindow.on("closed", () => {
+        viewerWindow = null;
+    });
+
+    viewerWindow.once("ready-to-show", () => {
+        viewerWindow.setTitle("LaF: Krunker Viewer");
+        viewerWindow.show();
+    });
+
+    viewerWindow.webContents.on("new-window", (event, url) => {
+        event.preventDefault();
+        switch (lafTools.urlType(url)) {
+            case "hub":
+                initHubWindow(url);
+                break;
+            case "viewer":
+                viewerWindow.loadURL(url);
+                break;
+            case "game":
+                viewerWindow.destroy();
+                gameWindow.loadURL(url);
+                break;
+            case "editor":
+                if (!editorWindow) {
+                    initEditorWindow(url);
+                } else {
+                    editorWindow.loadURL(url);
+                };
+                break;
+            default:
+                shell.openExternal(url);
+        };
     });
 };
 
@@ -296,6 +371,7 @@ const initAutoUpdater = () => {
         }, 3000)
     });
     autoUpdater.autoDownload = "download";
+    autoUpdater.allowPrerelease = false;
     // autoUpdater.allowDowngrade = true;
     autoUpdater.checkForUpdates();
 }
@@ -366,7 +442,6 @@ const initShortcutKeys = () => {
     });
 };
 
-
 ipcMain.on("OPEN_LINK", (event, arg) => {
     gameWindow.loadURL(arg);
 });
@@ -404,6 +479,10 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
     .catch(console.error);
 })
 
+ipcMain.on("CLOSE", () => {
+    app.quit();
+})
+
 ipcMain.on("CLEAR_CACHE", () => {
     session.defaultSession.clearStorageData();
     console.log("CLEARED CACHE.");
@@ -422,10 +501,30 @@ ipcMain.on("GET_LANG", (e) => {
     e.reply("GET_LANG", config.get("lang"))
 });
 
-app.on("ready", () => {
+ipcMain.handle("RPC_SEND", (e, d) => {
+    // console.log(d);
+    rpc.setActivity(d);
+})
+
+DiscordRPC.register(ClientID);
+const rpc = new DiscordRPC.Client({ transport: "ipc" });
+
+rpc.on("ready", () => {
+    console.log("Discord RPC Ready")
+})
+
+app.once("ready", () => {
+    if (isRPCEnabled) {
+        rpc.login({ clientId: ClientID }).catch(console.error);
+        console.log("Discord Login OK")
+    }
     initSplashWindow();
 });
 
-app.on("window-all-closed", () => {
-    app.quit();
-});
+app.on("quit", async () => {
+    if (isRPCEnabled) {
+        gameWindow.webContents.send("RPC_STOP");
+		await rpc.clearActivity();
+		rpc.destroy();
+	}
+})

@@ -1,6 +1,7 @@
 ![TitleImage](https://cdn.discordapp.com/attachments/810718686657642526/812216851206635550/social_prv.png)</br>
 [![License](https://img.shields.io/github/license/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/blob/master/LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
+![Code Lines](https://img.shields.io/tokei/lines/github/Hiro527/LaF?style=flat-square)
 [![Latest](https://img.shields.io/github/v/release/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Latest Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/latest/total?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/total?style=flat-square&logo=appveyor)](https://github.com/Hiro527/LaF/releases)</br>
@@ -9,11 +10,11 @@
 
 # What is LaF?
 **Laf = Lite and Fast**</br>
-Krunkerはとても軽いゲームです。故に「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
+Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 
 # Attention
-**THIS SOFTWARE IS IN ALPHA VERSION. DON'T USE THIS SOFTWARE FOR EXCEPT DEVELOPPING OR TESTING.**</br>
-**このソフトウェアは現在アルファ版です。決して開発やテスト目的以外での使用はしないでください。**</br>
+**THIS SOFTWARE IS IN BETA VERSION.**</br>
+**このソフトウェアは現在ベータ版です。**</br>
 バグが絶対あると思います。見つけた場合はDMで直接連絡をするかissueを立ててくださるとありがたいです。</br>
 もし見つかったらissueを立てるか直接連絡をください(TwitterかDiscordが反応早いです)
 
@@ -28,7 +29,8 @@ Krunkerはとても軽いゲームです。故に「公式クライアントで�
 - Ctrl+F1: 開発者ツールを開く/Open Dev Tools
 
 # WIP
-- 設定項目の追加/Add Original Settings
+- Resource Swapper -> v1.0.0
+- Customizable Key Binds -> v1.1.0
 
 # Contact
 Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)</br>
