@@ -28,9 +28,8 @@ Krunkerはとても軽いゲームです。故に「公式クライアントで�
 - Ctrl+F1: 開発者ツールを開く/Open Dev Tools
 
 # WIP
-- Discord RPC
-- Resource Swapper
-- Customizable Key Binds
+- Resource Swapper -> v1.0.0
+- Customizable Key Binds -> v1.1.0
 
 # Contact
 Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)</br>
