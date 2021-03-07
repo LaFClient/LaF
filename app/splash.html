@@ -103,7 +103,7 @@
             dls.innerHTML = `${Math.floor(info.percent)}% (${Math.floor(info.bytesPerSecond / 1000)} kB/s)`;
         });
         ipcRenderer.on('update-downloaded', (evt, info) => {
-            updates.innerHTML = langPack.updateDownloaded.replace("%appVersion", info.version);
+            updates.innerHTML = langPack.updateDownloaded.replace("%appVersion%", info.version);
             dls.innerHTML = ""
         });
         ipcRenderer.on('update-error', () => {

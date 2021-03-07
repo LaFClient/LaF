@@ -92,6 +92,10 @@ const initGameWindow = () => {
 
     gameWindow.loadURL("https://krunker.io");
 
+    gameWindow.on("close", () => {
+        config.set("isMaximized", gameWindow.isMaximized())
+    })
+
     gameWindow.on("closed", () => {
         gameWindow = null;
         app.quit()
@@ -99,6 +103,7 @@ const initGameWindow = () => {
 
     gameWindow.once("ready-to-show", () => {
         splashWindow.destroy();
+        if (config.get("isMaximized", true)) gameWindow.maximize();
         gameWindow.setTitle("LaF");
         gameWindow.show();
     });
