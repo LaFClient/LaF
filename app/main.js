@@ -150,7 +150,7 @@ const initHubWindow = (url) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            //  preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
@@ -201,7 +201,7 @@ const initEditorWindow = (url) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            // preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
@@ -257,7 +257,7 @@ const initViewerWindow = (url) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            // preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
