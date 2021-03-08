@@ -7,14 +7,19 @@
 [![Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/total?style=flat-square&logo=appveyor)](https://github.com/Hiro527/LaF/releases)</br>
 [![Discord server](https://discord.com/api/guilds/810717714745786378/widget.png)](https://discord.gg/MpuVpx6RY3)
 
-
 # What is LaF?
-**Laf = Lite and Fast**</br>
+**LaF = Lite and Fast**</br>
 Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 
+# LaF v1.0.0
+Now, LaF is not beta version🥳 Thanks for everyone!!!
+
+ついにベータを脱出し、正式版となりました🥳 v1.x.x系ではリソーススワッパーなどの基本的な機能を拡充し、v2.x.x系では軽さを維持しつつ、安定性や便利機能を重視したクライアントにつくりあげていきたいと思っています。</br>
+そしてダウンロード回数が1000回を超えてました・・・！これからも頑張っていくので応援よろしくおねがいします！</br>
+
 # Attention
-**THIS SOFTWARE IS IN BETA VERSION.**</br>
-**このソフトウェアは現在ベータ版です。**</br>
+If you found some issues, please tell me with SNS or GitHub(Twitter or Discord is better)</br>
+
 バグが絶対あると思います。見つけた場合はDMで直接連絡をするかissueを立ててくださるとありがたいです。</br>
 もし見つかったらissueを立てるか直接連絡をください(TwitterかDiscordが反応早いです)
 
@@ -29,7 +34,7 @@ Krunkerは低スペックPCでも動く軽いゲームですが、「公式ク�
 - Ctrl+F1: 開発者ツールを開く/Open Dev Tools
 
 # WIP
-- Resource Swapper -> v1.0.0
+- Resource Swapper -> v1.1.0
 - Customizable Key Binds -> v1.1.0
 
 # Contact
