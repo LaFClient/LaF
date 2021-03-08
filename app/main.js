@@ -150,7 +150,6 @@ const initHubWindow = (url) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
-            //  preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
@@ -201,7 +200,6 @@ const initEditorWindow = (url) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
-            // preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
@@ -257,7 +255,6 @@ const initViewerWindow = (url) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
-            // preload: path.join(__dirname, "preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
@@ -502,7 +499,6 @@ ipcMain.on("GET_LANG", (e) => {
 });
 
 ipcMain.handle("RPC_SEND", (e, d) => {
-    // console.log(d);
     rpc.setActivity(d);
 })
 
