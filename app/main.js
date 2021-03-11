@@ -498,21 +498,29 @@ ipcMain.on("GET_LANG", (e) => {
     e.reply("GET_LANG", config.get("lang"))
 });
 
+let isDiscordAlive;
+
 ipcMain.handle("RPC_SEND", (e, d) => {
+    if (isDiscordAlive) {
     rpc.setActivity(d);
+    }
 })
 
 DiscordRPC.register(ClientID);
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 
 rpc.on("ready", () => {
+    isDiscordAlive = true;
     console.log("Discord RPC Ready")
 })
 
 app.once("ready", () => {
     if (isRPCEnabled) {
-        rpc.login({ clientId: ClientID }).catch(console.error);
-        console.log("Discord Login OK")
+        try {
+            rpc.login({ clientId: ClientID }).catch(console.error);
+        } catch (e) {
+            console.log("Discord Login Error. Please check if Discord has been run.")
+        };
     }
     initSplashWindow();
 });
