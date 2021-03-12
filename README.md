@@ -24,7 +24,7 @@ If you found some issues, please tell me with SNS or GitHub(Twitter or Discord i
 もし見つかったらissueを立てるか直接連絡をください(TwitterかDiscordが反応早いです)
 
 # Controls
-```md
+```
 F5: リロード / Reload
 F6: 別の部屋へ / New Game
 F7: 招待リンクをコピー / Copy the Invitation Link
@@ -39,7 +39,7 @@ Alt+F4: クライアントを閉じる / Quit
 ```
 
 # LaF Settings
-```md
+```
 /* General */
 言語/UI Language: 言語を変更できます(日本語/英語) / Change the language(JP/EN)
 Discord RPC: Discord RPCの有効化/無効化が出来ます / Toggle if Discord is enabled
