@@ -239,11 +239,8 @@ const initSplashWindow = () => {
 
 const initAutoUpdater = () => {
     const { autoUpdater } = require("electron-updater");
-
     let updateCheck = null;
-
     autoUpdater.logger = log;
-
     autoUpdater.on("checking-for-update", (info) => {
         splashWindow.webContents.send("checking-for-update")
         updateCheck = setTimeout(() => {
