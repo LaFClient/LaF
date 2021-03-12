@@ -502,7 +502,7 @@ let isDiscordAlive;
 
 ipcMain.handle("RPC_SEND", (e, d) => {
     if (isDiscordAlive) {
-    rpc.setActivity(d);
+        rpc.setActivity(d);
     }
 })
 
@@ -515,12 +515,11 @@ rpc.on("ready", () => {
 })
 
 app.once("ready", () => {
-    if (isRPCEnabled) {
-        try {
-            rpc.login({ clientId: ClientID }).catch(console.error);
-        } catch (e) {
-            console.log("Discord Login Error. Please check if Discord has been run.")
-        };
+    if (isRPCEnabled && isDiscordAlive) {
+        rpc.login({ clientId: ClientID })
+        .catch(
+            console.error
+        );
     }
     initSplashWindow();
 });
