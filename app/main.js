@@ -33,8 +33,7 @@ const ClientID = "810350252023349248";
 console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 
 if (!app.requestSingleInstanceLock()) {
-	app.quit();
-    
+    app.quit();
 };
 
 if (config.get("lang") === "ja_JP") {
@@ -330,14 +329,14 @@ const initShortcutKeys = () => {
                 height: 200,
                 customStylesheet: path.join(__dirname, "css/prompt.css")
             })
-            .then((r) => {
-                if(r === null) {
-                    console.log("User canceled.");
-                } else {
-                    if (lafTools.urlType(r) === "game") gameWindow.loadURL(r);
-                }
-            })
-            .catch(console.error);
+                .then((r) => {
+                    if (r === null) {
+                        console.log("User canceled.");
+                    } else {
+                        if (lafTools.urlType(r) === "game") gameWindow.loadURL(r);
+                    }
+                })
+                .catch(console.error);
         }],
         ["F11", () => {
             isFullScreen = gameWindow.isFullScreen();
@@ -383,16 +382,16 @@ ipcMain.on("PROMPT", (e, message, defaultValue) => {
         height: 200,
         customStylesheet: path.join(__dirname, "css/prompt.css")
     })
-    .then((r) => {
-        if(r === null) {
-            console.log("User canceled.");
-            e.returnValue = null;
-        } else {
-            console.log(r)
-            e.returnValue = r;
-        }
-    })
-    .catch(console.error);
+        .then((r) => {
+            if (r === null) {
+                console.log("User canceled.");
+                e.returnValue = null;
+            } else {
+                console.log(r)
+                e.returnValue = r;
+            }
+        })
+        .catch(console.error);
 })
 
 ipcMain.on("CLOSE", () => {
@@ -439,7 +438,7 @@ app.once("ready", () => {
         try {
             rpc.login({ clientId: ClientID });
             logined = true;
-        } catch (e){
+        } catch (e) {
             console.error(e);
         }
         if (logined) {
@@ -452,7 +451,7 @@ app.once("ready", () => {
 app.on("quit", async () => {
     if (isRPCEnabled) {
         gameWindow.webContents.send("RPC_STOP");
-		await rpc.clearActivity();
-		rpc.destroy();
-	}
+        await rpc.clearActivity();
+        rpc.destroy();
+    }
 })
