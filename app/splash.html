@@ -35,11 +35,21 @@
 
         #appVersion {
             position: absolute;
-            font-family: "源真ゴシックP Medium";
+            font-family: "源真ゴシックP Medium" !important;
             color: rgba(77, 77, 77, 1);
             left: 15px;
             top: 10px;
             font-size: 20px;
+        }
+
+        #message {
+            position: absolute;
+            font-family: "源真ゴシックP Medium" !important;
+            text-align: right;
+            color: rgba(77, 77, 77, 1);
+            right: 15px;
+            top: 10px;
+            font-size: 15px;
         }
 
         #updateStatus {
@@ -62,6 +72,10 @@
 
 <body>
     <div id="appVersion"></div>
+    <div id="message">
+        Thanks for over 1k Downlaods!</br>
+        1000ダウンロード突破しました！ありがとうございます！
+    </div>
     <div id="updateStatus"></div>
     <div id="downloadStatus"></div>
     <script type="text/javascript">
@@ -92,17 +106,17 @@
         ipcRenderer.on('checking-for-update', () => {
             updates.innerHTML = langPack.checkingForUpdate;
         });
-        ipcRenderer.on('update-available', (evt, info) => {
+        ipcRenderer.on('update-available', (event, info) => {
             updates.innerHTML = langPack.updateAvailable + info.version;
         });
         ipcRenderer.on('update-not-available', () => {
             updates.innerHTML = langPack.updateNotAvailable;
         });
-        ipcRenderer.on('download-progress', (evt, info) => {
+        ipcRenderer.on('download-progress', (event, info) => {
             updates.innerHTML = langPack.downloadProgress;
             dls.innerHTML = `${Math.floor(info.percent)}% (${Math.floor(info.bytesPerSecond / 1000)} kB/s)`;
         });
-        ipcRenderer.on('update-downloaded', (evt, info) => {
+        ipcRenderer.on('update-downloaded', (event, info) => {
             updates.innerHTML = langPack.updateDownloaded.replace("%appVersion%", info.version);
             dls.innerHTML = ""
         });

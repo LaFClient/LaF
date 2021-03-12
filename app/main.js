@@ -8,16 +8,20 @@ const path = require("path");
 const DiscordRPC = require("discord-rpc");
 const tools = require("./tools");
 const langRes = require("./lang");
+const { NONAME } = require("dns");
 
 const config = new store();
 
 Object.assign(console, log.functions);
 
 let gameWindow = null,
-    editorWindow = null,
-    hubWindow = null,
-    viewerWindow = null;
     splashWindow = null;
+
+let windowManage = {
+    "hub": null,
+    "editor": null,
+    "viewer": null
+}
 
 let lafTools = new tools();
 let langPack = null;
@@ -115,20 +119,24 @@ const initGameWindow = () => {
                 gameWindow.loadURL(url);
                 break;
             case "hub":
-                if (!hubWindow) {
-                    initHubWindow(url)
+                if (!windowManage.hub) {
+                    windowManage.hub = initNewWindow(url, "Krunker Hub");
                 } else {
-                    hubWindow.loadURL(url);
+                    windowManage.hub.loadURL(url);
                 }
                 break;
             case "viewer":
-                initViewerWindow(url);
+                if (!windowManage.viewer) {
+                    windowManage.viewer = initNewWindow(url, "Krunker Viewer");
+                } else {
+                    windowManage.viewer.loadURL(url);
+                }
                 break;
             case "editor":
-                if (!editorWindow) {
-                    initEditorWindow(url);
+                if (!windowManage.editor) {
+                    windowManage.editor = initNewWindow(url, "Krunker Editor");
                 } else {
-                    editorWindow.loadURL(url);
+                    windowManage.editor.loadURL(url);
                 }
                 break;
             default:
@@ -142,100 +150,60 @@ const initGameWindow = () => {
     })
 };
 
-const initHubWindow = (url) => {
-    console.log("New Window: Krunker Hub")
-    hubWindow = new BrowserWindow({
+const initNewWindow = (url, title) => {
+    let win = new BrowserWindow({
         width: 900,
         height: 600,
         show: false,
         parent: gameWindow,
         webPreferences: {
-            contextIsolation: false,
-            enableRemoteModule: true
+            contextIsolation: false
         }
     });
-    hubWindow.removeMenu();
-    hubWindow.loadURL(url);
+    win.removeMenu();
+    win.loadURL(url);
 
-    hubWindow.on("closed", () => {
-        hubWindow = null;
+    win.on("closed", () => {
+        win = null;
     });
 
-    hubWindow.once("ready-to-show", () => {
-        hubWindow.setTitle("LaF: Krunker Hub");
-        hubWindow.show();
+    win.once("ready-to-show", () => {
+        win.setTitle(`LaF: ${title}`);
+        win.show();
     });
 
-    hubWindow.webContents.on("new-window", (event, url) => {
+    win.webContents.on("new-window", (event, url) => {
         event.preventDefault();
         switch (lafTools.urlType(url)) {
+            case "game":
+                gameWindow.loadURL(url);
+                break;
             case "hub":
-                hubWindow.loadURL(url);
+                if (!windowManage.hub) {
+                    windowManage.hub = initNewWindow(url, "Krunker Hub");
+                } else {
+                    windowManage.hub.loadURL(url);
+                }
                 break;
             case "viewer":
-                initViewerWindow(url);
-                break;
-            case "game":
-                hubWindow.destroy();
-                gameWindow.loadURL(url);
+                if (!windowManage.viewer) {
+                    windowManage.viewer = initNewWindow(url, "Krunker Viewer");
+                } else {
+                    windowManage.viewer.loadURL(url);
+                }
                 break;
             case "editor":
-                if (!editorWindow) {
-                    initEditorWindow(url);
+                if (!windowManage.editor) {
+                    windowManage.editor = initNewWindow(url, "Krunker Editor");
                 } else {
-                    editorWindow.loadURL(url);
-                };
+                    windowManage.viewer.loadURL(url);
+                }
                 break;
             default:
                 shell.openExternal(url);
         };
     });
-};
-
-const initEditorWindow = (url) => {
-    console.log("New Window: Krunker Editor")
-    editorWindow = new BrowserWindow({
-        width: 900,
-        height: 600,
-        show: false,
-        parent: gameWindow,
-        webPreferences: {
-            contextIsolation: false,
-            enableRemoteModule: true
-        }
-    });
-    editorWindow.removeMenu();
-    editorWindow.loadURL(url);
-
-    editorWindow.on("closed", () => {
-        editorWindow = null;
-    });
-
-    editorWindow.once("ready-to-show", () => {
-        editorWindow.setTitle("LaF: Krunker Editor");
-        editorWindow.show();
-    });
-
-    editorWindow.webContents.on("new-window", (event, url) => {
-        event.preventDefault();
-        switch (lafTools.urlType(url)) {
-            case "hub":
-                if (!hubWindow) {
-                    initHubWindow(url);
-                } else {
-                    hubWindow.loadURL(url);
-                };
-                break;
-            case "game":
-                editorWindow.destroy();
-                gameWindow.loadURL(url);
-                break;
-            default:
-                shell.openExternal(url);
-        };
-    });
-
-    editorWindow.webContents.on("will-prevent-unload", (event) => {
+    win.webContents.on("will-prevent-unload", (event) => {
         if (!dialog.showMessageBoxSync({
             buttons: [langPack.leavePage, langPack.cancel],
             title: langPack.leavePageTitle,
@@ -245,56 +213,7 @@ const initEditorWindow = (url) => {
             event.preventDefault();
         }
     });
-};
-
-const initViewerWindow = (url) => {
-    console.log("New Window: Krunker Viewer")
-    viewerWindow = new BrowserWindow({
-        width: 900,
-        height: 600,
-        show: false,
-        parent: gameWindow,
-        webPreferences: {
-            contextIsolation: false,
-            enableRemoteModule: true
-        }
-    });
-    viewerWindow.removeMenu();
-    viewerWindow.loadURL(url);
-
-    viewerWindow.on("closed", () => {
-        viewerWindow = null;
-    });
-
-    viewerWindow.once("ready-to-show", () => {
-        viewerWindow.setTitle("LaF: Krunker Viewer");
-        viewerWindow.show();
-    });
-
-    viewerWindow.webContents.on("new-window", (event, url) => {
-        event.preventDefault();
-        switch (lafTools.urlType(url)) {
-            case "hub":
-                initHubWindow(url);
-                break;
-            case "viewer":
-                viewerWindow.loadURL(url);
-                break;
-            case "game":
-                viewerWindow.destroy();
-                gameWindow.loadURL(url);
-                break;
-            case "editor":
-                if (!editorWindow) {
-                    initEditorWindow(url);
-                } else {
-                    editorWindow.loadURL(url);
-                };
-                break;
-            default:
-                shell.openExternal(url);
-        };
-    });
+    return win;
 };
 
 const initSplashWindow = () => {
@@ -515,11 +434,17 @@ rpc.on("ready", () => {
 })
 
 app.once("ready", () => {
-    if (isRPCEnabled && isDiscordAlive) {
-        rpc.login({ clientId: ClientID })
-        .catch(
-            console.error
-        );
+    if (isRPCEnabled) {
+        let logined;
+        try {
+            rpc.login({ clientId: ClientID });
+            logined = true;
+        } catch (e){
+            console.error(e);
+        }
+        if (logined) {
+            console.log("Discord Login OK")
+        }
     }
     initSplashWindow();
 });

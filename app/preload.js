@@ -14,7 +14,7 @@ const config = new store();
 
 window.lafUtils = new utils();
 
-if (config.get("lang") == "ja_JP") {
+if (config.get("lang") === "ja_JP") {
     langPack = new langRes.ja_JP();
 } else {
     langPack = new langRes.en_US();
