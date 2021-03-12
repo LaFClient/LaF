@@ -24,14 +24,33 @@ If you found some issues, please tell me with SNS or GitHub(Twitter or Discord i
 もし見つかったらissueを立てるか直接連絡をください(TwitterかDiscordが反応早いです)
 
 # Controls
-- F5: リロード/Reload
-- F6: 他のゲームへ/New Game
-- F7: リンクをコピー/Copy the Link
-- F8: コピーしたリンクへ参加/Open the Link in Clipboard
-- Shift+F8: リンクを入力するプロンプトを開く/Open the Link with Prompt
-- F11: フルスクリーン切り替え/Toggle FullScreen
-- Ctrl+Shift+F1: 再起動/Restart LaF
-- Ctrl+F1: 開発者ツールを開く/Open Dev Tools
+```
+F5: リロード / Reload
+F6: 別の部屋へ / New Game
+F7: 招待リンクをコピー / Copy the Invitation Link
+F8: コピーした招待リンクを開く / Open the Invitation Link in Clipboard
+Shift+F8: リンクを入力して開く / Open the Invitation Link with Prompt
+F11: フルスクリーン切り替え / Toggle Fullscreen
+
+Ctrl+F1: 開発者ツールを起動する / Launch Developer Tools
+Ctrl+Shift+F1: 再起動 / Restart
+
+Alt+F4: クライアントを閉じる / Quit
+```
+
+# LaF Settings
+```
+/* General */
+言語/UI Language: 言語を変更できます(日本語/英語) / Change the language(JP/EN)
+Discord RPC: Discord RPCの有効化/無効化が出来ます / Toggle if Discord is enabled
+EXITボタン/Exit Button: EXITボタンの位置の変更と非表示の設定ができます / Select EXIT button's position or if it is hidden
+/* Video */
+FPS解放/Unlimited FPS: FPSを解放できます / Unlimited FPS
+Angleタイプ/Angle Type: バックエンドを選択できます。描画バグが起きた場合や画面キャプチャをできない場合、FPSが不安定な場合に変更すると効果があることがあります。 / You can change backend. When graphics issues has occured, it may effects better.
+WebGL2 Compute Shader: WebGL2 Compute Shaderを使用するか選択できます。これによってパフォーマンスが向上する場合があります(環境依存) / You can toggle WebGL2 Compute Shader. It may effects better to performance.(Depends to environment)
+ハードウェアアクセラレーション(2D)/Hardware Acceleration(2D): 2Dの描画にGPUを使用するか選択できます。 / You can toggle if it use GPU in 2D.
+In Process GPU: GPUプロセスを独立させるかどうか選択できます。 / You can toggle if it run the GPU process as a thread in the browser process.
+```
 
 # WIP
 - Resource Swapper -> v1.1.0
