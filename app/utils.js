@@ -111,7 +111,7 @@ module.exports = class utils {
             id: "webgl2Context",
             title: langPack.webgl2Context,
             category: "Video",
-            type: "chackbox",
+            type: "checkbox",
             restart: true,
             val: config.get("webgl2Context", true),
             html: `
@@ -226,9 +226,9 @@ module.exports = class utils {
                 }
                 break;
             case "resetOptions":
-                if (confirm(langPack.confirmResetConfig)){
+                if (confirm(langPack.confirmResetConfig)) {
                     config.clear();
-                    alert(langPack.resetedConfigAndRestart)
+                    alert(langPack.resetConfigAndRestart)
                     ipcRenderer.send("RELAUNCH");
                 }
                 break;

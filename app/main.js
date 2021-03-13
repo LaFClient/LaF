@@ -8,7 +8,7 @@ const path = require("path");
 const DiscordRPC = require("discord-rpc");
 const tools = require("./tools");
 const langRes = require("./lang");
-const { NONAME } = require("dns");
+// const { NONAME } = require("dns");
 
 const config = new store();
 
@@ -431,14 +431,14 @@ rpc.on("ready", () => {
 
 app.once("ready", () => {
     if (isRPCEnabled) {
-        let logined;
+        let loggedIn;
         try {
             rpc.login({ clientId: ClientID });
-            logined = true;
+            loggedIn = true;
         } catch (e) {
             console.error(e);
         }
-        if (logined) {
+        if (loggedIn) {
             console.log("Discord Login OK")
         }
     }

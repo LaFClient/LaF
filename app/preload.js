@@ -42,37 +42,37 @@ const initIpc = () => {
 initIpc();
 
 const isEnabledRPC = config.get("enableRPC", true)
-let rpcAvtivity = null;
+let rpcActivity = null;
 let rpcInterval = null;
 
 const initDiscordRPC = () => {
     let sendDiscordRPC = () => {
         try {
-            let gameActiviry = window.getGameActivity();
-            rpcAvtivity = {
-                state: gameActiviry.map,
-                details: gameActiviry.mode,
+            let gameActivity = window.getGameActivity();
+            rpcActivity = {
+                state: gameActivity.map,
+                details: gameActivity.mode,
                 largeImageKey: "laf_icon",
                 largeImageText: "LaF CLient"
             }
-            if (gameActiviry.time) {
-                rpcAvtivity.endTimestamp = Date.now() + gameActiviry.time * 1e3;
+            if (gameActivity.time) {
+                rpcActivity.endTimestamp = Date.now() + gameActivity.time * 1e3;
             }
-            ipcRenderer.invoke("RPC_SEND", rpcAvtivity)
+            ipcRenderer.invoke("RPC_SEND", rpcActivity)
         } catch (error) {
-            rpcAvtivity = {
+            rpcActivity = {
                 state: "Playing Krunker",
                 largeImageKey: "laf_icon",
                 largeImageText: "LaF CLient"
             }
-            ipcRenderer.invoke("RPC_SEND", rpcAvtivity)
+            ipcRenderer.invoke("RPC_SEND", rpcActivity)
         }
     }
     if (isEnabledRPC) {
-        rpcAvtivity = {
+        rpcActivity = {
             startTimestamp: Math.floor(Date.now() / 1e3)
         }
-        ipcRenderer.invoke("RPC_SEND", rpcAvtivity);
+        ipcRenderer.invoke("RPC_SEND", rpcActivity);
         rpcInterval = setInterval(sendDiscordRPC, 500);
     }
 }
@@ -98,13 +98,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         lafUtils.setupGameWindow();
     });
-    observer.observe(document.getElementById("instructions"), {childList: true});
+    observer.observe(document.getElementById("instructions"), { childList: true });
 });
 
 ipcRenderer.on("DID-FINISH-LOAD", () => {
     menuContainer = document.getElementById("menuItemContainer")
     quitBTN = document.getElementById("clientExit");
-    switch (config.get("showExitBtn", "bottom")){
+    switch (config.get("showExitBtn", "bottom")) {
         case "top":
             menuContainer.removeChild(menuContainer.children[7])
             menuContainer.insertAdjacentHTML("afterbegin", `
