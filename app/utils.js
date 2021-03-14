@@ -1,5 +1,5 @@
 require('v8-compile-cache');
-const { ipcRenderer, app, TouchBarSegmentedControl } = require("electron");
+const { ipcRenderer } = require("electron");
 const log = require("electron-log")
 const store = require("electron-store")
 const langRes = require("./lang")
@@ -30,12 +30,7 @@ module.exports = class utils {
                 en_US: "English"
             },
             val: config.get("lang", "ja_JP"),
-            html: `
-            <select onchange="window.utils.setConfig('lang', this.value, true)" class="inputGrey2">
-                <option value="en_US" ${config.get("lang") === "en_US" ? " selected" : ""}>English</option>
-                <option value="ja_JP" ${config.get("lang") === "ja_JP" ? " selected" : ""}>日本語</option>
-            </select>
-            `
+            default: "en_US"
         },
         enableRPC: {
             id: "General",
@@ -44,11 +39,7 @@ module.exports = class utils {
             type: "checkbox",
             restart: true,
             val: config.get("showExitBtn", true),
-            html: `
-            <label class='switch'>
-                <input type='checkbox' onclick='window.utils.setConfig("enableRPC", this.checked, true)'${config.get("enableRPC", true) ? ' checked' : ''}>
-                <span class='slider'></span>
-            </label>`
+            default: true
         },
         showExitBtn: {
             id: "showExitBtn",
@@ -57,18 +48,12 @@ module.exports = class utils {
             type: "select",
             restart: true,
             options: {
-                top: "top",
-                bottom: "bottom",
-                disable: "disable"
+                top: langPack.topExitBtn,
+                bottom: langPack.bottomExitBtn,
+                disable: langPack.disableExitBtn
             },
             val: config.get("showExitBtn", "bottom"),
-            html: `
-            <select onchange="window.utils.setConfig('showExitBtn', this.value, true)" class="inputGrey2">
-                <option value="top" ${config.get("showExitBtn", "bottom") === "top" ? " selected" : ""}>${langPack.topExitBtn}</option>
-                <option value="bottom" ${config.get("showExitBtn", "bottom") === "bottom" ? " selected" : ""}>${langPack.bottomExitBtn}</option>
-                <option value="disable" ${config.get("showExitBtn", "bottom") === "disable" ? " selected" : ""}>${langPack.disableExitBtn}</option>
-            </select>
-            `
+            default: "bottom"
         },
         unlimitedFPS: {
             id: "unlimitedFPS",
@@ -76,12 +61,8 @@ module.exports = class utils {
             category: "Video",
             type: "checkbox",
             restart: true,
-            val: config.get("unlimitedFPS"),
-            html: `
-            <label class='switch'>
-                <input type='checkbox' onclick='window.utils.setConfig("unlimitedFPS", this.checked, true)'${config.get("unlimitedFPS", true) ? ' checked' : ''}>
-                <span class='slider'></span>
-            </label>`
+            val: config.get("unlimitedFPS", true),
+            default: true
         },
         angleType: {
             id: "angleType",
@@ -97,15 +78,7 @@ module.exports = class utils {
                 d3d11on12: "D3D11on12"
             },
             val: config.get("angleType", "gl"),
-            html: `
-            <select onchange="window.utils.setConfig('angleType', this.value, true)" class="inputGrey2">
-                <option value="default" ${config.get("angleType", "gl") === "default" ? " selected" : ""}>Default</option>
-                <option value="gl" ${config.get("angleType", "gl") === "gl" ? " selected" : ""}>OpenGL</option>
-                <option value="d3d11" ${config.get("angleType", "gl") === "d3d11" ? " selected" : ""}>D3D11</option>
-                <option value="d3d9" ${config.get("angleType", "gl") === "d3d9" ? " selected" : ""}>D3D9</option>
-                <option value="d3d11on12" ${config.get("angleType", "gl") === "d3d11on12" ? " selected" : ""}>D3D11on12</option>
-            </select>
-            `
+            default: "gl"
         },
         webgl2Context: {
             id: "webgl2Context",
@@ -114,11 +87,7 @@ module.exports = class utils {
             type: "checkbox",
             restart: true,
             val: config.get("webgl2Context", true),
-            html: `
-            <label class='switch'>
-                <input type='checkbox' onclick='window.utils.setConfig("webgl2Context", this.checked, true)'${config.get("webgl2Context", true) ? ' checked' : ''}>
-                <span class='slider'></span>
-            </label>`
+            default: true
         },
         acceleratedCanvas: {
             id: "acceleratedCanvas",
@@ -127,11 +96,7 @@ module.exports = class utils {
             type: "checkbox",
             restart: true,
             val: config.get("acceleratedCanvas", true),
-            html: `
-            <label class='switch'>
-                <input type='checkbox' onclick='window.utils.setConfig("acceleratedCanvas", this.checked, true)'${config.get("acceleratedCanvas", true) ? ' checked' : ''}>
-                <span class='slider'></span>
-            </label>`
+            default: true
         },
         inProcessGPU: {
             id: "inProcessGPU",
@@ -140,11 +105,7 @@ module.exports = class utils {
             type: "checkbox",
             restart: true,
             val: config.get("inProcessGPU", false),
-            html: `
-            <label class='switch'>
-                <input type='checkbox' onclick='window.utils.setConfig("inProcessGPU", this.checked, true)'${config.get("inProcessGPU", false) ? ' checked' : ''}>
-                <span class='slider'></span>
-            </label>`
+            default: false
         }
     }
 
@@ -167,6 +128,31 @@ module.exports = class utils {
         }, delay)
     }
 
+    generateHTML(obj) {
+        switch(obj.type) {
+            case "checkbox":
+                return `
+                <label class='switch'>
+                <input type='checkbox' onclick='window.utils.setConfig("${obj.id}", this.checked, true)'${obj.val ? ' checked' : ''}>
+                <span class='slider'></span>
+                </label>`;
+            case "select":
+                let tmpHTML = `<select onchange='window.utils.setConfig("${obj.id}", this.value, ${obj.restart})' class="inputGrey2">`;
+                Object.keys(obj.options).forEach((k) => {
+                    tmpHTML += `<option value="${k}" ${obj.val === k ? " selected" : ""}>${obj.options[k]}</option>`
+                })
+                return tmpHTML + "</select>";
+            case "slider":
+                return `
+                <input type='number' class='sliderVal' id='c_slid_input_${obj.id}' min='${obj.min}' max='${obj.max}' value='${obj.val}' onkeypress='window.utils.delaySetConfig("${obj.id}", this)' style='border-width:0px'/><div class='slidecontainer'><input type='range' id='c_slid_${obj.id}' min='${obj.min}' max='${obj.max}' step='${obj.step}' value='${obj.val}' class='sliderM' oninput='window.utils.setConfig("${obj.id}", this.value)'></div>
+                `;
+            default:
+                return `
+                <input type='${obj.type}' name='${obj.id}' id='c_slid_${obj.id}' ${obj.type == 'color' ? 'style="float:right;margin-top:5px;"' : `class='inputGrey2' ${obj.placeholder ? `placeholder='${obj.placeholder}'` : ''}`} value='${obj.val.replace(/'/g, '')}' oninput='window.utils.setConfig("${obj.id}", this.value, ${obj.restart})'/>
+                `;
+        };
+    }
+
     setupGameWindow() {
         const injectSettings = () => {
             settingsWindow = window.windows[0];
@@ -178,9 +164,7 @@ module.exports = class utils {
             settingsWindow.getCSettings = () => {
                 settingsWindow = window.windows[0];
                 let customHTML = ""
-                // console.log(`Debug: ${clientTabIndex}, ${settingsWindow.tabIndex}`)
                 if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
-                    // console.log("Debug: Currently tab is not LaF. Return")
                     return "";
                 }
                 let prevCat = null;
@@ -196,13 +180,11 @@ module.exports = class utils {
                         prevCat = k.category;
                         tmpHTML += `<div class='setHed' id='setHed_${btoa(k.category)}' onclick='window.windows[0].collapseFolder(this)'><span class='material-icons plusOrMinus'>keyboard_arrow_down</span> ${k.category}</div><div id='setBod_${btoa(k.category)}'>`;
                     }
-                    if (k.type !== "category") {
-                        tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `
-                    }
+                    tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `
                     if (k.restart) {
                         tmpHTML += "<span style='color: #eb5656'> *</span>"
                     }
-                    customHTML += tmpHTML + k.html + "</div>";
+                    customHTML += tmpHTML + this.generateHTML(k) + "</div>";
                 });
                 customHTML += `
                 </div>
