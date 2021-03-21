@@ -21,7 +21,7 @@ let windowManage = {
     "hub": null,
     "editor": null,
     "viewer": null
-}
+};
 
 let lafTools = new tools();
 let langPack = null;
@@ -120,6 +120,7 @@ const initGameWindow = () => {
             case "hub":
                 if (!windowManage.hub) {
                     windowManage.hub = initNewWindow(url, "Krunker Hub");
+                    windowManage.hub.on("closed", () => windowManage.hub = null)
                 } else {
                     windowManage.hub.loadURL(url);
                 }
@@ -127,6 +128,7 @@ const initGameWindow = () => {
             case "viewer":
                 if (!windowManage.viewer) {
                     windowManage.viewer = initNewWindow(url, "Krunker Viewer");
+                    windowManage.viewer.on("closed", () => windowManage.viewer = null)
                 } else {
                     windowManage.viewer.loadURL(url);
                 }
@@ -134,6 +136,7 @@ const initGameWindow = () => {
             case "editor":
                 if (!windowManage.editor) {
                     windowManage.editor = initNewWindow(url, "Krunker Editor");
+                    windowManage.editor.on("closed", () => windowManage.editor = null)
                 } else {
                     windowManage.editor.loadURL(url);
                 }
@@ -156,15 +159,12 @@ const initNewWindow = (url, title) => {
         show: false,
         parent: gameWindow,
         webPreferences: {
+            nodeIntegration: true,
             contextIsolation: false
         }
     });
     win.removeMenu();
     win.loadURL(url);
-
-    win.on("closed", () => {
-        win = null;
-    });
 
     win.once("ready-to-show", () => {
         win.setTitle(`LaF: ${title}`);
@@ -180,6 +180,7 @@ const initNewWindow = (url, title) => {
             case "hub":
                 if (!windowManage.hub) {
                     windowManage.hub = initNewWindow(url, "Krunker Hub");
+                    windowManage.hub.on("closed", () => windowManage.hub = null)
                 } else {
                     windowManage.hub.loadURL(url);
                 }
@@ -187,6 +188,7 @@ const initNewWindow = (url, title) => {
             case "viewer":
                 if (!windowManage.viewer) {
                     windowManage.viewer = initNewWindow(url, "Krunker Viewer");
+                    windowManage.viewer.on("closed", () => windowManage.viewer = null)
                 } else {
                     windowManage.viewer.loadURL(url);
                 }
@@ -194,8 +196,9 @@ const initNewWindow = (url, title) => {
             case "editor":
                 if (!windowManage.editor) {
                     windowManage.editor = initNewWindow(url, "Krunker Editor");
+                    windowManage.editor.on("closed", () => windowManage.editor = null)
                 } else {
-                    windowManage.viewer.loadURL(url);
+                    windowManage.editor.loadURL(url);
                 }
                 break;
             default:
