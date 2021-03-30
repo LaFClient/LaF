@@ -2,8 +2,8 @@ require("v8-compile-cache");
 const { ipcRenderer } = require("electron");
 const log = require("electron-log");
 const store = require("electron-store")
-const utils = require("./utils.js")
-const tools = require("./tools.js")
+const utils = require("./utils")
+const tools = require("./tools")
 const langRes = require("./lang")
 // const path = require("path");
 

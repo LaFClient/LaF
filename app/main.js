@@ -6,8 +6,8 @@ const log = require("electron-log");
 const store = require("electron-store");
 const path = require("path");
 const DiscordRPC = require("discord-rpc");
-const tools = require("./tools");
-const langRes = require("./lang");
+const tools = require("./js/tools");
+const langRes = require("./js/lang");
 // const { NONAME } = require("dns");
 
 const config = new store();
@@ -84,7 +84,7 @@ const initGameWindow = () => {
         show: false,
         fullscreen: config.get("Fullscreen", false),
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            preload: path.join(__dirname, "js/preload.js"),
             contextIsolation: false,
             enableRemoteModule: true
         }
@@ -154,8 +154,8 @@ const initGameWindow = () => {
 
 const initNewWindow = (url, title) => {
     let win = new BrowserWindow({
-        width: 900,
-        height: 600,
+        width: 1350,
+        height: 900,
         show: false,
         parent: gameWindow,
         webPreferences: {
@@ -233,7 +233,7 @@ const initSplashWindow = () => {
         }
     });
     splashWindow.removeMenu();
-    splashWindow.loadURL(path.join(__dirname, "splash.html"))
+    splashWindow.loadURL(path.join(__dirname, "html/splash.html"))
     splashWindow.webContents.once("did-finish-load", () => {
         splashWindow.show();
         initAutoUpdater();

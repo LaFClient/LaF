@@ -5,7 +5,7 @@
     <title>LaF</title>
     <style>
         body {
-            background-image: url("img/splash.png");
+            background-image: url("../img/splash.png");
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -20,12 +20,12 @@
 
         @font-face {
             font-family: "源真ゴシックP Light";
-            src: url("fonts/GenShinGothic-P-Light.ttf");
+            src: url("../fonts/GenShinGothic-P-Light.ttf");
         }
 
         @font-face {
             font-family: "源真ゴシックP Medium";
-            src: url("fonts/GenShinGothic-P-Medium.ttf");
+            src: url("../fonts/GenShinGothic-P-Medium.ttf");
         }
 
         * {
@@ -80,7 +80,7 @@
     <div id="downloadStatus"></div>
     <script type="text/javascript">
         const { ipcRenderer } = require("electron");
-        const langRes = require("./lang")
+        const langRes = require("../js/lang")
 
         appv = document.getElementById("appVersion");
         updates = document.getElementById("updateStatus");
