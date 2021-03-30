@@ -271,7 +271,7 @@ const initNewWindow = (url, title) => {
         ["F7", () => {              // クリップボードへURLをコピー
             clipboard.writeText(win.webContents.getURL())
         }],
-        ["Ctrl+F1", () => {         // 開発者ツールの起動
+        [["Ctrl+F1", "F12"], () => {         // 開発者ツールの起動
             win.webContents.openDevTools()
         }]
     ];
