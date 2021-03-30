@@ -82,12 +82,12 @@ console.log(`Discord RPC: ${isRPCEnabled ? "Enabled" : "Disabled"}`)
 swapPath = path.join(app.getPath("documents"), "/LaFSwap");
 
 if (!fs.existsSync(swapPath)) {
-    fs.mkdir(swapPath, { recursive: true }, e => {})
+    fs.mkdir(swapPath, { recursive: true }, e => { })
 }
 
 protocol.registerSchemesAsPrivileged([{
-	scheme: 'laf',
-	privileges: { secure: true, corsEnabled: true }
+    scheme: 'laf',
+    privileges: { secure: true, corsEnabled: true }
 }]);
 
 const initResourceSwapper = (win) => {
@@ -95,7 +95,7 @@ const initResourceSwapper = (win) => {
     const recursiveFolder = (win, prefix = "") => {
         try {
             fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach(cPath => {
-                if(cPath.isDirectory()) {
+                if (cPath.isDirectory()) {
                     recursiveFolder(win, `${prefix}/${cPath.name}`);
                 } else {
                     let name = `${prefix}/${cPath.name}`;
@@ -108,7 +108,7 @@ const initResourceSwapper = (win) => {
                 }
             })
         } catch (e) {
-            console.error("Error occured on esource Swapper.");
+            console.error("Error occurred on Resource Swapper.");
             console.error(e);
         }
     }
