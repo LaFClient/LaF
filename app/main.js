@@ -8,6 +8,7 @@ const path = require("path");
 const DiscordRPC = require("discord-rpc");
 const tools = require("./js/tools");
 const langRes = require("./js/lang");
+const { truncateSync } = require("fs");
 // const { NONAME } = require("dns");
 
 const config = new store();
@@ -15,7 +16,9 @@ const config = new store();
 Object.assign(console, log.functions);
 
 let gameWindow = null,
-    splashWindow = null;
+    splashWindow = null,
+    bananaWindow = null,
+    splashInterval = null;
 
 let windowManage = {
     "hub": null,
@@ -105,10 +108,20 @@ const initGameWindow = () => {
     });
 
     gameWindow.once("ready-to-show", () => {
+        clearInterval(splashInterval);
         splashWindow.destroy();
         if (config.get("isMaximized", true)) gameWindow.maximize();
         gameWindow.setTitle("LaF");
         gameWindow.show();
+        if (!config.get("showedBanana", false)) {
+            setTimeout(() => {
+                initBananaWindow();
+                setTimeout(() => {
+                    bananaWindow.destroy();
+                    config.set("showedBanana", true)
+                }, 10000)
+            }, 3000)
+        }
     });
 
     gameWindow.webContents.on("new-window", (event, url) => {
@@ -232,11 +245,45 @@ const initSplashWindow = () => {
             contextIsolation: false
         }
     });
+
+    let x;
+    let y;
+
+    const moveWindow = () => {
+        x = Math.round(Math.random() * 1280)
+        y = Math.round(Math.random() * 720)
+        splashWindow.setPosition(x, y, false)
+    }
+
     splashWindow.removeMenu();
     splashWindow.loadURL(path.join(__dirname, "html/splash.html"))
     splashWindow.webContents.once("did-finish-load", () => {
+        splashInterval = setInterval(() => {
+            moveWindow()
+        }, 100);
         splashWindow.show();
         initAutoUpdater();
+    });
+};
+
+const initBananaWindow = () => {
+    bananaWindow = new BrowserWindow({
+        width: 650,
+        height: 250,
+        frame: false,
+        resizable: false,
+        movable: false,
+        center: true,
+        show: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    });
+    bananaWindow.removeMenu();
+    bananaWindow.loadURL(path.join(__dirname, "html/banana.html"))
+    bananaWindow.webContents.once("did-finish-load", () => {
+        bananaWindow.show();
     });
 };
 
