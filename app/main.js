@@ -411,7 +411,7 @@ const initShortcutKeys = () => {
             app.relaunch();
             app.quit();
         }],
-        ["Ctrl+F1", () => {         // 開発者ツールの起動
+        [["Ctrl+F1", "F12"], () => {         // 開発者ツールの起動
             gameWindow.webContents.openDevTools()
         }]
     ];
