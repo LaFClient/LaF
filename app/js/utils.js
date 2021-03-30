@@ -186,12 +186,14 @@ module.exports = class utils {
                     }
                     customHTML += tmpHTML + this.generateHTML(k) + "</div>";
                 });
-                customHTML += `
-                </div>
-                <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
-                <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
-                <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a>
-                `;
+                if (!settingsWindow.settingSearch) {
+                    customHTML += `
+                    </div>
+                    <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
+                    <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
+                    <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a>
+                    `;
+                }
                 return customHTML ? customHTML + "</div>" : "";
             }
         }
