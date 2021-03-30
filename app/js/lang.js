@@ -35,8 +35,9 @@ module.exports.ja_JP = class {
     angleType = "Angleタイプ"
     webgl2Context = "WebGL2 Compute Shader"
     acceleratedCanvas = "ハードウェアアクセラレーション(2D)"
-    inProcessGPU = "In Process GPU"
+    inProcessGPU = "inProcessGPU"
     resourceSwapper = "リソーススワッパー"
+    ignoreBlacklist = "ignoreGPUBlacklist"
 }
 
 module.exports.en_US = class {
@@ -76,6 +77,7 @@ module.exports.en_US = class {
     angleType = "Angle Type"
     webgl2Context = "WebGL2 Compute Shader"
     acceleratedCanvas = "Hardware Acceleration(2D)"
-    inProcessGPU = "In Process GPU"
+    inProcessGPU = "inProcessGPU"
     resourceSwapper = "Resource Swapper"
+    ignoreBlacklist = "ignoreGPUBlacklist"
 }

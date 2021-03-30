@@ -107,6 +107,15 @@ module.exports = class utils {
             val: config.get("inProcessGPU", false),
             default: false
         },
+        ignoreBlacklist: {
+            id: "ignoreBlacklist",
+            title: langPack.ignoreBlacklist,
+            category: "Video",
+            type: "checkbox",
+            restart: true,
+            val: config.get("ignoreBlacklist", false),
+            default: false
+        },
         enableResourceSwapper: {
             id: "enableResourceSwapper",
             title: langPack.resourceSwapper,
