@@ -18,9 +18,9 @@
     "url": "https://github.com/Hiro527/LaF/issues"
   },
   "homepage": "https://github.com/Hiro527/LaF#readme",
-  "electronVersion": "8.5.5",
+  "electronVersion": "9.4.4",
   "devDependencies": {
-    "electron": "^8.5.5",
+    "electron": "^9.4.4",
     "electron-builder": "^22.9.1"
   },
   "dependencies": {
