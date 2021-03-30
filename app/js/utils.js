@@ -29,7 +29,7 @@ module.exports = class utils {
                 ja_JP: "日本語",
                 en_US: "English"
             },
-            val: config.get("lang", "ja_JP"),
+            val: config.get("lang", "en_US"),
             default: "en_US"
         },
         enableRPC: {
@@ -106,6 +106,15 @@ module.exports = class utils {
             restart: true,
             val: config.get("inProcessGPU", false),
             default: false
+        },
+        enableResourceSwapper: {
+            id: "enableResourceSwapper",
+            title: langPack.resourceSwapper,
+            category: "Customize",
+            type: "checkbox",
+            restart: true,
+            val: config.get("enableResourceSwapper", true),
+            default: true
         }
     }
 

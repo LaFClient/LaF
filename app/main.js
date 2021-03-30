@@ -1,10 +1,11 @@
 require("v8-compile-cache");
-const { app, BrowserWindow, clipboard, ipcMain, shell, session, dialog } = require("electron");
+const { app, BrowserWindow, clipboard, ipcMain, shell, session, dialog, protocol } = require("electron");
 const localShortcut = require("electron-localshortcut");
 const prompt = require("electron-prompt");
 const log = require("electron-log");
 const store = require("electron-store");
 const path = require("path");
+const fs = require("fs");
 const DiscordRPC = require("discord-rpc");
 const tools = require("./js/tools");
 const langRes = require("./js/lang");
@@ -27,6 +28,7 @@ let lafTools = new tools();
 let langPack = null;
 
 let isRPCEnabled = config.get("enableRPC", true);
+let isSwapperEnabled = config.get("enableResourceSwapper", true);
 
 const ClientID = "810350252023349248";
 
@@ -77,8 +79,38 @@ initFlags();
 
 console.log(`Discord RPC: ${isRPCEnabled ? "Enabled" : "Disabled"}`)
 
+swapPath = path.join(app.getPath("documents"), "/LaFSwap");
+
+if (!fs.existsSync(swapPath)) {
+    fs.mkdir(swapPath, { recursive: true }, e => {})
+}
+
 const initResourceSwapper = (win) => {
-    // WIP
+    let urls = [];
+    const recursiveFolder = (win, prefix = "") => {
+        try {
+            fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach(cPath => {
+                if(cPath.isDirectory()) {
+                    recursiveFolder(win, `${prefix}/${cPath.name}`);
+                } else {
+                    let name = `${prefix}/${cPath.name}`;
+                    let isAsset = /^\/(models|textures)($|\/)/.test(name);
+                    if (isAsset) {
+                        urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
+                    } else {
+                        urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
+                    }
+                }
+            })
+        } catch (e) {
+            console.error("Error occured on esource Swapper.");
+            console.error(e);
+        }
+    }
+    recursiveFolder(win);
+    if (urls.length) {
+        win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ redirectURL: 'laf:/' + path.join(swapPath, new URL(details.url).pathname) }));
+    }
 }
 
 const initGameWindow = () => {
@@ -96,6 +128,7 @@ const initGameWindow = () => {
     gameWindow.removeMenu();
 
     initShortcutKeys();
+    if (isSwapperEnabled) initResourceSwapper(gameWindow);
 
     gameWindow.loadURL("https://krunker.io");
 
@@ -168,6 +201,9 @@ const initNewWindow = (url, title) => {
         }
     });
     win.removeMenu();
+
+    if (isSwapperEnabled) initResourceSwapper(win)
+
     win.loadURL(url);
 
     win.once("ready-to-show", () => {
@@ -219,6 +255,25 @@ const initNewWindow = (url, title) => {
             event.preventDefault();
         }
     });
+
+    const sKeys = [
+        ["Esc", () => {             // ウィンドウ内でのESCキーの有効化
+            win.webContents.send("ESC")
+        }],
+        ["F5", () => {              // リ↓ロ↑ードする
+            win.reload()
+        }],
+        ["F7", () => {              // クリップボードへURLをコピー
+            clipboard.writeText(win.webContents.getURL())
+        }],
+        ["Ctrl+F1", () => {         // 開発者ツールの起動
+            win.webContents.openDevTools()
+        }]
+    ];
+    sKeys.forEach((k) => {
+        localShortcut.register(win, k[0], k[1])
+    });
+
     return win;
 };
 
@@ -437,6 +492,7 @@ rpc.on("ready", () => {
 })
 
 app.once("ready", () => {
+    protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:/, ''))));
     if (isRPCEnabled) {
         let loggedIn;
         try {
@@ -459,3 +515,10 @@ app.on("quit", async () => {
         rpc.destroy();
     }
 })
+
+/*
+- Special Thanks -
+idkr from Mixaz: https://github.com/Mixaz017/idkr
+本ソフトウェア(以下、LaFとする)ではMITライセンスに従ってidkrの一部のソースコードを流用しています。
+ただし、LaFを使用したことによる損害に対する責任はMixaz様には一切ございませんことをご了承ください。
+*/

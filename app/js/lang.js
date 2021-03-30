@@ -36,6 +36,7 @@ module.exports.ja_JP = class {
     webgl2Context = "WebGL2 Compute Shader"
     acceleratedCanvas = "ハードウェアアクセラレーション(2D)"
     inProcessGPU = "In Process GPU"
+    resourceSwapper = "リソーススワッパー"
 }
 
 module.exports.en_US = class {
@@ -76,4 +77,5 @@ module.exports.en_US = class {
     webgl2Context = "WebGL2 Compute Shader"
     acceleratedCanvas = "Hardware Acceleration(2D)"
     inProcessGPU = "In Process GPU"
+    resourceSwapper = "Resource Swapper"
 }
