@@ -85,6 +85,11 @@ if (!fs.existsSync(swapPath)) {
     fs.mkdir(swapPath, { recursive: true }, e => {})
 }
 
+protocol.registerSchemesAsPrivileged([{
+	scheme: 'laf',
+	privileges: { secure: true, corsEnabled: true }
+}]);
+
 const initResourceSwapper = (win) => {
     let urls = [];
     const recursiveFolder = (win, prefix = "") => {
