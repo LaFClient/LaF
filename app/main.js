@@ -77,6 +77,10 @@ initFlags();
 
 console.log(`Discord RPC: ${isRPCEnabled ? "Enabled" : "Disabled"}`)
 
+const initResourceSwapper = (win) => {
+    // WIP
+}
+
 const initGameWindow = () => {
     gameWindow = new BrowserWindow({
         width: 1200,
