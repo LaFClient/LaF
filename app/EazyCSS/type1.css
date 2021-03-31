@@ -121,8 +121,7 @@
 .settingTab{
     background:lightblue;
     border-radius:300px;
-    width: fit-content;
-    height: fit-content;
+    height: max-content;
 }
 
 .tabANew{
@@ -175,13 +174,13 @@
 
 }
 .chatItem{
-    background: #ffffff;
-    color:gray;
-    border:solid black 1px;
-    font-size: 20px;
-    width: -webkit-fill-available;
-    height: min-content;
-    line-height: 30px;
+    background: #ffffff !important;
+    color: gray !important;
+    border: solid black 1px !important;
+    font-size: 20px !important;
+    width: -webkit-fill-available !important;
+    height: min-content !important;
+    line-height: 30px !important;
 }
 .chatMsg{
     color:black;
@@ -386,4 +385,9 @@
     font-size:55px;
     text-align: center;
     text-shadow: 2px 2px 5px black, -2px -2px 5px black, 2px 2px 5px black, -2px -2px 5px black;
+}
+.topRightCounters{
+    position: fixed;
+    right: 0%;
+    top: 15%;
 }
