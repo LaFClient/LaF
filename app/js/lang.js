@@ -46,6 +46,8 @@ module.exports.ja_JP = class {
     eazyCSSDisable = "無効"
     userCSSPath = "カスタムCSSファイル"
     selectFile = "開く"
+    openSwapFolder = "リソーススワッパーを開く"
+    msg = "ただいま、技術的な問題でリソーススワッパーとEazyCSSを同時に使うことが出来ません。解決方法を見つけ次第早急に解決しますので、しばらくお待ち下さい。"
 }
 
 module.exports.en_US = class {
@@ -96,4 +98,6 @@ module.exports.en_US = class {
     eazyCSSDisable = "Disable"
     userCSSPath = "Custom CSS Path"
     selectFile = "OPEN"
+    openSwapFolder = "Open ResourceSwapper"
+    msg = "At this time, you can't use Resource Swapper and EazyCSS at same time due to technical issues. We'll fix it as soon as possible, please wait for a while."
 }

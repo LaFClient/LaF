@@ -127,8 +127,6 @@ const initResourceSwapper = (win) => {
 
 const eazyCSS = () => {
     let mode = config.get("eazyCSSMode", "disable");
-    console.log(mode)
-    console.log(cssPath[mode])
     const injectCSS = () => {
         let urls = [];
         urls.push(`*://krunker.io/css/main_custom.css`, `*://krunker.io/css/main_custom.css?*`, `*://comp.krunker.io/css/main_custom.css`, `*://comp.krunker.io/css/main_custom.css?*`);
@@ -446,6 +444,9 @@ ipcMain.on("OPEN_LINK", (event, arg) => {
     gameWindow.loadURL(arg);
 });
 
+ipcMain.on("OPEN_SWAP", (e) => {
+    shell.showItemInFolder(swapPath);
+});
 
 ipcMain.on("PROMPT", (e, message, defaultValue) => {
     prompt({

@@ -194,7 +194,7 @@ module.exports = class utils {
                 `;
             case "file":
                 return `
-                <button class='settingsBtn' onclick='window.utils.tolset("setCustomCSS")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div></br>
+                <button class='settingsBtn' onclick='window.utils.tolset("setCustomCSS")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
                 `
             default:
                 return `
@@ -239,9 +239,11 @@ module.exports = class utils {
                 if (!settingsWindow.settingSearch) {
                     customHTML += `
                     </div>
+                    <div id='lafMessage' style="font-size:13pt;margin-top:10px;text-align:left;">${langPack.msg}</div>
                     <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
                     <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
-                    <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a>
+                    <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a> | 
+                    <a onclick="window.utils.tolset('openSwapper')" class="menuLink">${langPack.openSwapFolder}</a>
                     `;
                 }
                 return customHTML ? customHTML + "</div>" : "";
@@ -258,6 +260,9 @@ module.exports = class utils {
                     let el = document.getElementById("userCSSPath");
                     el.innerHTML = v;
                 })
+                break;
+            case "openSwapper":
+                ipcRenderer.send("OPEN_SWAP")
                 break;
             case "clearCache":
                 if (confirm(langPack.confirmClearCache)) {
