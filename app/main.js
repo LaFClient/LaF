@@ -24,6 +24,15 @@ let windowManage = {
     "viewer": null
 };
 
+let cssPath = {
+    type1: "EazyCSS/type1.css",
+    type2: "EazyCSS/type2.css",
+    type3: "EazyCSS/type3.css",
+    custom: config.get("userCSSPath", "")
+};
+
+let swapPath = path.join(app.getPath("documents"), "/LaFSwap");
+
 let lafTools = new tools();
 let langPack = null;
 
@@ -79,8 +88,6 @@ initFlags();
 
 console.log(`Discord RPC: ${isRPCEnabled ? "Enabled" : "Disabled"}`)
 
-swapPath = path.join(app.getPath("documents"), "/LaFSwap");
-
 if (!fs.existsSync(swapPath)) {
     fs.mkdir(swapPath, { recursive: true }, e => { })
 }
@@ -118,6 +125,19 @@ const initResourceSwapper = (win) => {
     }
 }
 
+const eazyCSS = () => {
+    let mode = config.get("eazyCSSMode", "disable");
+    console.log(mode)
+    console.log(cssPath[mode])
+    const injectCSS = () => {
+        let urls = [];
+        urls.push(`*://krunker.io/css/main_custom.css`, `*://krunker.io/css/main_custom.css?*`, `*://comp.krunker.io/css/main_custom.css`, `*://comp.krunker.io/css/main_custom.css?*`);
+        let cssURL = mode === "custom" ? cssPath["custom"] : path.join(__dirname, cssPath[mode]);
+        gameWindow.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ redirectURL: 'laf:/' + cssURL}));
+    }
+    if (mode != "disable") injectCSS();
+};
+
 const initGameWindow = () => {
     gameWindow = new BrowserWindow({
         width: 1200,
@@ -134,6 +154,7 @@ const initGameWindow = () => {
 
     initShortcutKeys();
     if (isSwapperEnabled) initResourceSwapper(gameWindow);
+    eazyCSS();
 
     gameWindow.loadURL("https://krunker.io");
 
@@ -478,6 +499,21 @@ ipcMain.on("GET_VERSION", (e) => {
 
 ipcMain.on("GET_LANG", (e) => {
     e.reply("GET_LANG", config.get("lang"))
+});
+
+ipcMain.on("setCustomCSS", (e) => {
+    let cssPath = dialog.showOpenDialogSync(null, {
+        properties: ['openFile'],
+        title: "LaF: CSS File Loader",
+        defaultPath: '.',
+        filters: [
+            {name: 'CSS File', extensions: ['txt', 'css']}
+        ]
+    });
+    if(cssPath) {
+    config.set("userCSSPath", cssPath);
+    e.reply("setCustomCSS", cssPath);
+    };
 });
 
 let isDiscordAlive;

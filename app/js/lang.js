@@ -38,6 +38,14 @@ module.exports.ja_JP = class {
     inProcessGPU = "inProcessGPU"
     resourceSwapper = "リソーススワッパー"
     ignoreBlacklist = "ignoreGPUBlacklist"
+    eazyCSS = "EazyCSS"
+    eazyCSStype1 = "LaF Theme"
+    eazyCSStype2 = "タイプ2"
+    eazyCSStype3 = "タイプ3"
+    eazyCSSCustom = "カスタム"
+    eazyCSSDisable = "無効"
+    userCSSPath = "カスタムCSSファイル"
+    selectFile = "開く"
 }
 
 module.exports.en_US = class {
@@ -80,4 +88,12 @@ module.exports.en_US = class {
     inProcessGPU = "inProcessGPU"
     resourceSwapper = "Resource Swapper"
     ignoreBlacklist = "ignoreGPUBlacklist"
+    eazyCSS = "EazyCSS"
+    eazyCSStype1 = "LaF Theme"
+    eazyCSStype2 = "Type2"
+    eazyCSStype3 = "Type3"
+    eazyCSSCustom = "Custom"
+    eazyCSSDisable = "Disable"
+    userCSSPath = "Custom CSS Path"
+    selectFile = "OPEN"
 }
