@@ -127,6 +127,10 @@ const initResourceSwapper = (win) => {
         urls.push(`*://krunker.io/css/main_custom.css`, `*://krunker.io/css/main_custom.css?*`, `*://comp.krunker.io/css/main_custom.css`, `*://comp.krunker.io/css/main_custom.css?*`)
     }
 
+    if (!urls.includes("*://krunker.io/css/main_custom.css")) {
+        urls.push(`*://krunker.io/css/main_custom.css`, `*://krunker.io/css/main_custom.css?*`, `*://comp.krunker.io/css/main_custom.css`, `*://comp.krunker.io/css/main_custom.css?*`)
+    }
+
     if (urls.length) {
         win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ 
             redirectURL: isEzCSSEnabled && new URL(details.url).pathname === "/css/main_custom.css" ? (ezCSSMode === "custom" ? "laf:/" + cssPath["custom"] : "laf:/" + path.join(__dirname, cssPath[ezCSSMode])) : "laf:/" + path.join(swapPath, new URL(details.url).pathname)
