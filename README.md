@@ -33,23 +33,26 @@ Shift+F8: リンクを入力して開く / Open the Invitation Link with Prompt
 F11: フルスクリーン切り替え / Toggle Fullscreen
 
 Ctrl+F1: 開発者ツールを起動する / Launch Developer Tools
-Ctrl+Shift+F1: 再起動 / Restart
+Ctrl+Shift+F1 or F12: 再起動 / Restart
 
 Alt+F4: クライアントを閉じる / Quit
 ```
 
 # LaF Settings
 ```
-/* General */
+/* Video */
+FPS解放/Unlimited FPS: FPSを解放できます / Unlimited FPS
+Angleタイプ/Angle Type: バックエンドを選択できます。描画バグが起きた場合や画面キャプチャをできない場合、FPSが不安定な場合に変更すると効果があることがあります。 / You can change backend. When graphics issues has occured, it may effects better.(e.g. Unstable FPS, Can't capture the screen, and so on.)
+WebGL2 Compute Shader: WebGL2 Compute Shaderを使用するか選択できます。これによってパフォーマンスが向上する場合があります(環境依存) / You can toggle WebGL2 Compute Shader. It may effects better to performance.(Depends to environment)
+ハードウェアアクセラレーション(2D)/Hardware Acceleration(2D): 2Dの描画にGPUを使用するか選択できます。 / You can toggle if it use GPU in 2D.
+inProcessGPU: GPUプロセスを独立させるかどうか選択できます。 / You can toggle if it run the GPU process as a thread in the browser process.
+/* Customize */
 言語/UI Language: 言語を変更できます(日本語/英語) / Change the language(JP/EN)
 Discord RPC: Discord RPCの有効化/無効化が出来ます / Toggle if Discord is enabled
 EXITボタン/Exit Button: EXITボタンの位置の変更と非表示の設定ができます / Select EXIT button's position or if it is hidden
-/* Video */
-FPS解放/Unlimited FPS: FPSを解放できます / Unlimited FPS
-Angleタイプ/Angle Type: バックエンドを選択できます。描画バグが起きた場合や画面キャプチャをできない場合、FPSが不安定な場合に変更すると効果があることがあります。 / You can change backend. When graphics issues has occured, it may effects better.
-WebGL2 Compute Shader: WebGL2 Compute Shaderを使用するか選択できます。これによってパフォーマンスが向上する場合があります(環境依存) / You can toggle WebGL2 Compute Shader. It may effects better to performance.(Depends to environment)
-ハードウェアアクセラレーション(2D)/Hardware Acceleration(2D): 2Dの描画にGPUを使用するか選択できます。 / You can toggle if it use GPU in 2D.
-In Process GPU: GPUプロセスを独立させるかどうか選択できます。 / You can toggle if it run the GPU process as a thread in the browser process.
+リソーススワッパー/Resource Swapper: リソーススワッパーの有効化・無効化ができます / You can toggle if Resource Swapper is enabled
+EazyCSS: EazyCSSのモードを切り替えることが出来ます / You can change EazyCSS mode
+カスタムCSSファイル/Custom CSS Path: EazyCSSの「カスタム」モードで使用するCSSファイルを指定できます / You can select a CSS file that is used in Custom mode of EazyCSS
 ```
 
 # WIP

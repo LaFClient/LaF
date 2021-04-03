@@ -65,24 +65,6 @@ module.exports = class utils {
             val: config.get("acceleratedCanvas", true),
             default: true
         },
-        inProcessGPU: {
-            id: "inProcessGPU",
-            title: langPack.inProcessGPU,
-            category: "Video",
-            type: "checkbox",
-            restart: true,
-            val: config.get("inProcessGPU", false),
-            default: false
-        },
-        ignoreBlacklist: {
-            id: "ignoreBlacklist",
-            title: langPack.ignoreBlacklist,
-            category: "Video",
-            type: "checkbox",
-            restart: true,
-            val: config.get("ignoreBlacklist", false),
-            default: false
-        },
         languages: {
             id: "lang",
             title: langPack.languageSetting,
