@@ -38,6 +38,8 @@ let langPack = null;
 
 let isRPCEnabled = config.get("enableRPC", true);
 let isSwapperEnabled = config.get("enableResourceSwapper", true);
+let ezCSSMode = config.get("eazyCSSMode", "disable");
+let isEzCSSEnabled = ezCSSMode !== "disable";
 
 const ClientID = "810350252023349248";
 
@@ -118,10 +120,14 @@ const initResourceSwapper = (win) => {
             console.error(e);
         }
     }
-    recursiveFolder(win);
+
+    if (isSwapperEnabled) {
+        recursiveFolder(win);
+    } else if (isEzCSSEnabled && !isSwapperEnabled) {
+        urls.push(`*://krunker.io/css/main_custom.css`, `*://krunker.io/css/main_custom.css?*`, `*://comp.krunker.io/css/main_custom.css`, `*://comp.krunker.io/css/main_custom.css?*`)
+    }
+
     if (urls.length) {
-        let ezCSSMode = config.get("eazyCSSMode", "disable");
-        let isEzCSSEnabled = ezCSSMode !== "disable";
         win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ 
             redirectURL: isEzCSSEnabled && new URL(details.url).pathname === "/css/main_custom.css" ? (ezCSSMode === "custom" ? "laf:/" + cssPath["custom"] : "laf:/" + path.join(__dirname, cssPath[ezCSSMode])) : "laf:/" + path.join(swapPath, new URL(details.url).pathname)
         }));
@@ -143,7 +149,7 @@ const initGameWindow = () => {
     gameWindow.removeMenu();
 
     initShortcutKeys();
-    if (isSwapperEnabled) initResourceSwapper(gameWindow);
+    initResourceSwapper(gameWindow);
 
     gameWindow.loadURL("https://krunker.io");
 
