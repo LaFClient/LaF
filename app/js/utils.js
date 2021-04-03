@@ -239,7 +239,6 @@ module.exports = class utils {
                 if (!settingsWindow.settingSearch) {
                     customHTML += `
                     </div>
-                    <div id='lafMessage' style="font-size:13pt;margin-top:10px;text-align:left;">${langPack.msg}</div>
                     <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
                     <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
                     <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a> | 

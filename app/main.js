@@ -121,20 +121,13 @@ const initResourceSwapper = (win) => {
     }
     recursiveFolder(win);
     if (urls.length) {
-        win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ redirectURL: 'laf:/' + path.join(swapPath, new URL(details.url).pathname) }));
+        let ezCSSMode = config.get("eazyCSSMode", "disable");
+        let isEzCSSEnabled = ezCSSMode !== "disable";
+        win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ 
+            redirectURL: isEzCSSEnabled && new URL(details.url).pathname === "/css/main_custom.css" ? (ezCSSMode === "custom" ? "laf:/" + cssPath["custom"] : "laf:/" + path.join(__dirname, cssPath[ezCSSMode])) : "laf:/" + path.join(swapPath, new URL(details.url).pathname)
+        }));
     }
 }
-
-const eazyCSS = () => {
-    let mode = config.get("eazyCSSMode", "disable");
-    const injectCSS = () => {
-        let urls = [];
-        urls.push(`*://krunker.io/css/main_custom.css`, `*://krunker.io/css/main_custom.css?*`, `*://comp.krunker.io/css/main_custom.css`, `*://comp.krunker.io/css/main_custom.css?*`);
-        let cssURL = mode === "custom" ? cssPath["custom"] : path.join(__dirname, cssPath[mode]);
-        gameWindow.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ redirectURL: 'laf:/' + cssURL}));
-    }
-    if (mode != "disable") injectCSS();
-};
 
 const initGameWindow = () => {
     gameWindow = new BrowserWindow({
@@ -152,7 +145,6 @@ const initGameWindow = () => {
 
     initShortcutKeys();
     if (isSwapperEnabled) initResourceSwapper(gameWindow);
-    eazyCSS();
 
     gameWindow.loadURL("https://krunker.io");
 
