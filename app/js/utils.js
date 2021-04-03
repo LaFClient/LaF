@@ -1,8 +1,11 @@
 require('v8-compile-cache');
 const { ipcRenderer } = require("electron");
-const log = require("electron-log")
-const store = require("electron-store")
-const langRes = require("./lang")
+const log = require("electron-log");
+const store = require("electron-store");
+const { fstat } = require('fs');
+const path = require("path");
+const fs = require("fs");
+const langRes = require("./lang");
 
 const config = new store();
 
@@ -19,42 +22,6 @@ let settingsWindow = null;
 
 module.exports = class utils {
     settings = {
-        languages: {
-            id: "lang",
-            title: langPack.languageSetting,
-            category: "General",
-            type: "select",
-            restart: true,
-            options: {
-                ja_JP: "日本語",
-                en_US: "English"
-            },
-            val: config.get("lang", "ja_JP"),
-            default: "en_US"
-        },
-        enableRPC: {
-            id: "General",
-            title: langPack.enableRPC,
-            category: "General",
-            type: "checkbox",
-            restart: true,
-            val: config.get("showExitBtn", true),
-            default: true
-        },
-        showExitBtn: {
-            id: "showExitBtn",
-            title: langPack.showExitBtn,
-            category: "General",
-            type: "select",
-            restart: true,
-            options: {
-                top: langPack.topExitBtn,
-                bottom: langPack.bottomExitBtn,
-                disable: langPack.disableExitBtn
-            },
-            val: config.get("showExitBtn", "bottom"),
-            default: "bottom"
-        },
         unlimitedFPS: {
             id: "unlimitedFPS",
             title: langPack.unlimitedFPS,
@@ -98,14 +65,75 @@ module.exports = class utils {
             val: config.get("acceleratedCanvas", true),
             default: true
         },
-        inProcessGPU: {
-            id: "inProcessGPU",
-            title: langPack.inProcessGPU,
-            category: "Video",
+        languages: {
+            id: "lang",
+            title: langPack.languageSetting,
+            category: "Customize",
+            type: "select",
+            restart: true,
+            options: {
+                ja_JP: "日本語",
+                en_US: "English"
+            },
+            val: config.get("lang", "en_US"),
+            default: "en_US"
+        },
+        enableRPC: {
+            id: "enableRPC",
+            title: langPack.enableRPC,
+            category: "Customize",
             type: "checkbox",
             restart: true,
-            val: config.get("inProcessGPU", false),
-            default: false
+            val: config.get("showExitBtn", true),
+            default: true
+        },
+        showExitBtn: {
+            id: "showExitBtn",
+            title: langPack.showExitBtn,
+            category: "Customize",
+            type: "select",
+            restart: true,
+            options: {
+                top: langPack.topExitBtn,
+                bottom: langPack.bottomExitBtn,
+                disable: langPack.disableExitBtn
+            },
+            val: config.get("showExitBtn", "bottom"),
+            default: "bottom"
+        },
+        enableResourceSwapper: {
+            id: "enableResourceSwapper",
+            title: langPack.resourceSwapper,
+            category: "Customize",
+            type: "checkbox",
+            restart: true,
+            val: config.get("enableResourceSwapper", true),
+            default: true
+        },
+        eazyCSSMode: {
+            id: "eazyCSSMode",
+            title: langPack.eazyCSS,
+            category: "Customize",
+            type: "select",
+            restart: true,
+            options: {
+                type1: langPack.eazyCSStype1,
+                //type2: langPack.eazyCSStype2,
+                //type3: langPack.eazyCSStype3,
+                custom: langPack.eazyCSSCustom,
+                disable: langPack.eazyCSSDisable
+            },
+            val: config.get("eazyCSSMode", "disable"),
+            default: "disable"
+        },
+        userCSSPath: {
+            id: "userCSSPath",
+            title: langPack.userCSSPath,
+            category: "Customize",
+            type: "file",
+            restart: true,
+            val: config.get("enableCSSPath", ""),
+            default: ""
         }
     }
 
@@ -133,22 +161,26 @@ module.exports = class utils {
             case "checkbox":
                 return `
                 <label class='switch'>
-                <input type='checkbox' onclick='window.utils.setConfig("${obj.id}", this.checked, true)'${obj.val ? ' checked' : ''}>
+                <input type='checkbox' onclick='window.utils.setConfig("${obj.id}", this.checked, true)'${config.get(obj.id, obj.default) ? ' checked' : ''}>
                 <span class='slider'></span>
                 </label>`;
             case "select":
                 let tmpHTML = `<select onchange='window.utils.setConfig("${obj.id}", this.value, ${obj.restart})' class="inputGrey2">`;
                 Object.keys(obj.options).forEach((k) => {
-                    tmpHTML += `<option value="${k}" ${obj.val === k ? " selected" : ""}>${obj.options[k]}</option>`
+                    tmpHTML += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? " selected" : ""}>${obj.options[k]}</option>`
                 })
                 return tmpHTML + "</select>";
             case "slider":
                 return `
-                <input type='number' class='sliderVal' id='c_slid_input_${obj.id}' min='${obj.min}' max='${obj.max}' value='${obj.val}' onkeypress='window.utils.delaySetConfig("${obj.id}", this)' style='border-width:0px'/><div class='slidecontainer'><input type='range' id='c_slid_${obj.id}' min='${obj.min}' max='${obj.max}' step='${obj.step}' value='${obj.val}' class='sliderM' oninput='window.utils.setConfig("${obj.id}", this.value)'></div>
+                <input type='number' class='sliderVal' id='c_slid_input_${obj.id}' min='${obj.min}' max='${obj.max}' value='${config.get(obj.id, obj.default)}' onkeypress='window.utils.delaySetConfig("${obj.id}", this)' style='border-width:0px'/><div class='slidecontainer'><input type='range' id='c_slid_${obj.id}' min='${obj.min}' max='${obj.max}' step='${obj.step}' value='${config.get(obj.id, obj.default)}' class='sliderM' oninput='window.utils.setConfig("${obj.id}", this.value)'></div>
                 `;
+            case "file":
+                return `
+                <button class='settingsBtn' onclick='window.utils.tolset("setCustomCSS")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
+                `
             default:
                 return `
-                <input type='${obj.type}' name='${obj.id}' id='c_slid_${obj.id}' ${obj.type == 'color' ? 'style="float:right;margin-top:5px;"' : `class='inputGrey2' ${obj.placeholder ? `placeholder='${obj.placeholder}'` : ''}`} value='${obj.val.replace(/'/g, '')}' oninput='window.utils.setConfig("${obj.id}", this.value, ${obj.restart})'/>
+                <input type='${obj.type}' name='${obj.id}' id='c_slid_${obj.id}' ${obj.type == 'color' ? 'style="float:right;margin-top:5px;"' : `class='inputGrey2' ${obj.placeholder ? `placeholder='${obj.placeholder}'` : ''}`} value='${config.get(obj.id, obj.default).replace(/'/g, '')}' oninput='window.utils.setConfig("${obj.id}", this.value, ${obj.restart})'/>
                 `;
         };
     }
@@ -186,12 +218,15 @@ module.exports = class utils {
                     }
                     customHTML += tmpHTML + this.generateHTML(k) + "</div>";
                 });
-                customHTML += `
-                </div>
-                <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
-                <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
-                <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a>
-                `;
+                if (!settingsWindow.settingSearch) {
+                    customHTML += `
+                    </div>
+                    <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
+                    <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
+                    <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a> | 
+                    <a onclick="window.utils.tolset('openSwapper')" class="menuLink">${langPack.openSwapFolder}</a>
+                    `;
+                }
                 return customHTML ? customHTML + "</div>" : "";
             }
         }
@@ -200,6 +235,16 @@ module.exports = class utils {
 
     tolset(v) {
         switch (v) {
+            case "setCustomCSS":
+                ipcRenderer.send("setCustomCSS")
+                ipcRenderer.on("setCustomCSS", (e, v) => {
+                    let el = document.getElementById("userCSSPath");
+                    el.innerHTML = v;
+                })
+                break;
+            case "openSwapper":
+                ipcRenderer.send("OPEN_SWAP")
+                break;
             case "clearCache":
                 if (confirm(langPack.confirmClearCache)) {
                     ipcRenderer.send("CLEAR_CACHE");

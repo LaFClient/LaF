@@ -1,10 +1,11 @@
 require("v8-compile-cache");
-const { app, BrowserWindow, clipboard, ipcMain, shell, session, dialog } = require("electron");
+const { app, BrowserWindow, clipboard, ipcMain, shell, session, dialog, protocol } = require("electron");
 const localShortcut = require("electron-localshortcut");
 const prompt = require("electron-prompt");
 const log = require("electron-log");
 const store = require("electron-store");
 const path = require("path");
+const fs = require("fs");
 const DiscordRPC = require("discord-rpc");
 const tools = require("./js/tools");
 const langRes = require("./js/lang");
@@ -23,10 +24,20 @@ let windowManage = {
     "viewer": null
 };
 
+let cssPath = {
+    type1: "EazyCSS/type1.css",
+    type2: "EazyCSS/type2.css",
+    type3: "EazyCSS/type3.css",
+    custom: config.get("userCSSPath", "")
+};
+
+let swapPath = path.join(app.getPath("documents"), "/LaFSwap");
+
 let lafTools = new tools();
 let langPack = null;
 
 let isRPCEnabled = config.get("enableRPC", true);
+let isSwapperEnabled = config.get("enableResourceSwapper", true);
 
 const ClientID = "810350252023349248";
 
@@ -56,7 +67,6 @@ const initFlags = () => {
         ["enable-webgl2-compute-context", null, config.get("webgl2Context", true)],
         ["disable-accelerated-2d-canvas", "true", !config.get("acceleratedCanvas", true)],
         ["in-process-gpu", null, config.get("inProcessGPU", false)],
-        ["ignore-gpu-blacklist", null, true],
         // その他
         ["autoplay-policy", "no-user-gesture-required", true]
     ];
@@ -77,6 +87,47 @@ initFlags();
 
 console.log(`Discord RPC: ${isRPCEnabled ? "Enabled" : "Disabled"}`)
 
+if (!fs.existsSync(swapPath)) {
+    fs.mkdir(swapPath, { recursive: true }, e => { })
+}
+
+protocol.registerSchemesAsPrivileged([{
+    scheme: 'laf',
+    privileges: { secure: true, corsEnabled: true }
+}]);
+
+const initResourceSwapper = (win) => {
+    let urls = [];
+    const recursiveFolder = (win, prefix = "") => {
+        try {
+            fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach(cPath => {
+                if (cPath.isDirectory()) {
+                    recursiveFolder(win, `${prefix}/${cPath.name}`);
+                } else {
+                    let name = `${prefix}/${cPath.name}`;
+                    let isAsset = /^\/(models|textures)($|\/)/.test(name);
+                    if (isAsset) {
+                        urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
+                    } else {
+                        urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
+                    }
+                }
+            })
+        } catch (e) {
+            console.error("Error occurred on Resource Swapper.");
+            console.error(e);
+        }
+    }
+    recursiveFolder(win);
+    if (urls.length) {
+        let ezCSSMode = config.get("eazyCSSMode", "disable");
+        let isEzCSSEnabled = ezCSSMode !== "disable";
+        win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ 
+            redirectURL: isEzCSSEnabled && new URL(details.url).pathname === "/css/main_custom.css" ? (ezCSSMode === "custom" ? "laf:/" + cssPath["custom"] : "laf:/" + path.join(__dirname, cssPath[ezCSSMode])) : "laf:/" + path.join(swapPath, new URL(details.url).pathname)
+        }));
+    }
+}
+
 const initGameWindow = () => {
     gameWindow = new BrowserWindow({
         width: 1200,
@@ -92,6 +143,7 @@ const initGameWindow = () => {
     gameWindow.removeMenu();
 
     initShortcutKeys();
+    if (isSwapperEnabled) initResourceSwapper(gameWindow);
 
     gameWindow.loadURL("https://krunker.io");
 
@@ -164,6 +216,9 @@ const initNewWindow = (url, title) => {
         }
     });
     win.removeMenu();
+
+    if (isSwapperEnabled) initResourceSwapper(win)
+
     win.loadURL(url);
 
     win.once("ready-to-show", () => {
@@ -215,6 +270,25 @@ const initNewWindow = (url, title) => {
             event.preventDefault();
         }
     });
+
+    const sKeys = [
+        ["Esc", () => {             // ウィンドウ内でのESCキーの有効化
+            win.webContents.send("ESC")
+        }],
+        ["F5", () => {              // リ↓ロ↑ードする
+            win.reload()
+        }],
+        ["F7", () => {              // クリップボードへURLをコピー
+            clipboard.writeText(win.webContents.getURL())
+        }],
+        [["Ctrl+F1", "F12"], () => {         // 開発者ツールの起動
+            win.webContents.openDevTools()
+        }]
+    ];
+    sKeys.forEach((k) => {
+        localShortcut.register(win, k[0], k[1])
+    });
+
     return win;
 };
 
@@ -347,7 +421,7 @@ const initShortcutKeys = () => {
             app.relaunch();
             app.quit();
         }],
-        ["Ctrl+F1", () => {         // 開発者ツールの起動
+        [["Ctrl+F1", "F12"], () => {         // 開発者ツールの起動
             gameWindow.webContents.openDevTools()
         }]
     ];
@@ -361,6 +435,9 @@ ipcMain.on("OPEN_LINK", (event, arg) => {
     gameWindow.loadURL(arg);
 });
 
+ipcMain.on("OPEN_SWAP", (e) => {
+    shell.showItemInFolder(swapPath);
+});
 
 ipcMain.on("PROMPT", (e, message, defaultValue) => {
     prompt({
@@ -416,6 +493,21 @@ ipcMain.on("GET_LANG", (e) => {
     e.reply("GET_LANG", config.get("lang"))
 });
 
+ipcMain.on("setCustomCSS", (e) => {
+    let cssPath = dialog.showOpenDialogSync(null, {
+        properties: ['openFile'],
+        title: "LaF: CSS File Loader",
+        defaultPath: '.',
+        filters: [
+            {name: 'CSS File', extensions: ['txt', 'css']}
+        ]
+    });
+    if(cssPath) {
+    config.set("userCSSPath", cssPath);
+    e.reply("setCustomCSS", cssPath);
+    };
+});
+
 let isDiscordAlive;
 
 ipcMain.handle("RPC_SEND", (e, d) => {
@@ -433,6 +525,7 @@ rpc.on("ready", () => {
 })
 
 app.once("ready", () => {
+    protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:/, ''))));
     if (isRPCEnabled) {
         let loggedIn;
         try {
@@ -455,3 +548,10 @@ app.on("quit", async () => {
         rpc.destroy();
     }
 })
+
+/*
+- Special Thanks -
+idkr from Mixaz: https://github.com/Mixaz017/idkr
+本ソフトウェア(以下、LaFとする)ではMITライセンスに従ってidkrの一部のソースコードを流用しています。
+ただし、LaFを使用したことによる損害に対する責任はMixaz様には一切ございませんことをご了承ください。
+*/
