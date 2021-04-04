@@ -142,11 +142,11 @@ const initGameWindow = () => {
         width: 1200,
         height: 800,
         show: false,
+        title: "LaF",
         fullscreen: config.get("Fullscreen", false),
         webPreferences: {
             preload: path.join(__dirname, "js/preload.js"),
-            contextIsolation: false,
-            enableRemoteModule: true
+            contextIsolation: false
         }
     });
     gameWindow.removeMenu();
@@ -168,7 +168,6 @@ const initGameWindow = () => {
     gameWindow.once("ready-to-show", () => {
         splashWindow.destroy();
         if (config.get("isMaximized", true)) gameWindow.maximize();
-        gameWindow.setTitle("LaF");
         gameWindow.show();
     });
 
@@ -207,6 +206,10 @@ const initGameWindow = () => {
         };
     });
 
+    gameWindow.on('page-title-updated', (e) => {
+        e.preventDefault();
+    });
+
     gameWindow.webContents.on("did-finish-load", () => {
         gameWindow.webContents.send("DID-FINISH-LOAD");
         console.log("DID-FINISH-LOAD");
@@ -219,6 +222,7 @@ const initNewWindow = (url, title) => {
         height: 900,
         show: false,
         parent: gameWindow,
+        title: `LaF: ${title}`,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -231,7 +235,6 @@ const initNewWindow = (url, title) => {
     win.loadURL(url);
 
     win.once("ready-to-show", () => {
-        win.setTitle(`LaF: ${title}`);
         win.show();
     });
 
@@ -269,6 +272,11 @@ const initNewWindow = (url, title) => {
                 shell.openExternal(url);
         };
     });
+
+    win.on('page-title-updated', (e) => {
+        e.preventDefault();
+    });
+
     win.webContents.on("will-prevent-unload", (event) => {
         if (!dialog.showMessageBoxSync({
             buttons: [langPack.leavePage, langPack.cancel],
