@@ -68,7 +68,7 @@ const initFlags = () => {
         ["use-angle", config.get("angleType", "gl"), true],
         ["enable-webgl2-compute-context", null, config.get("webgl2Context", true)],
         ["disable-accelerated-2d-canvas", "true", !config.get("acceleratedCanvas", true)],
-        ["in-process-gpu", null, config.get("inProcessGPU", false)],
+        ["in-process-gpu", null, true],
         // その他
         ["autoplay-policy", "no-user-gesture-required", true]
     ];
@@ -126,7 +126,6 @@ const initResourceSwapper = (win) => {
     } else if (isEzCSSEnabled && !isSwapperEnabled) {
         urls.push(`*://krunker.io/css/main_custom.css`, `*://krunker.io/css/main_custom.css?*`, `*://comp.krunker.io/css/main_custom.css`, `*://comp.krunker.io/css/main_custom.css?*`)
     }
-
     if (!urls.includes("*://krunker.io/css/main_custom.css")) {
         urls.push(`*://krunker.io/css/main_custom.css`, `*://krunker.io/css/main_custom.css?*`, `*://comp.krunker.io/css/main_custom.css`, `*://comp.krunker.io/css/main_custom.css?*`)
     }
