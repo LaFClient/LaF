@@ -312,7 +312,7 @@ const initNewWindow = (url, title) => {
 const initSplashWindow = () => {
     splashWindow = new BrowserWindow({
         width: 640,
-        height: 360,
+        height: 320,
         frame: false,
         resizable: false,
         movable: false,
