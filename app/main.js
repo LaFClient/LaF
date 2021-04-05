@@ -25,9 +25,9 @@ let windowManage = {
 };
 
 let cssPath = {
-    type1: "EazyCSS/type1.css",
-    type2: "EazyCSS/type2.css",
-    type3: "EazyCSS/type3.css",
+    type1: "EasyCSS/type1.css",
+    type2: "EasyCSS/type2.css",
+    type3: "EasyCSS/type3.css",
     custom: config.get("userCSSPath", "")
 };
 
@@ -38,7 +38,7 @@ let langPack = null;
 
 let isRPCEnabled = config.get("enableRPC", true);
 let isSwapperEnabled = config.get("enableResourceSwapper", true);
-let ezCSSMode = config.get("eazyCSSMode", "disable");
+let ezCSSMode = config.get("easyCSSMode", "disable");
 let isEzCSSEnabled = ezCSSMode !== "disable";
 
 const ClientID = "810350252023349248";
@@ -131,7 +131,7 @@ const initResourceSwapper = (win) => {
     }
 
     if (urls.length) {
-        win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({ 
+        win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({
             redirectURL: isEzCSSEnabled && new URL(details.url).pathname === "/css/main_custom.css" ? (ezCSSMode === "custom" ? "laf:/" + cssPath["custom"] : "laf:/" + path.join(__dirname, cssPath[ezCSSMode])) : "laf:/" + path.join(swapPath, new URL(details.url).pathname)
         }));
     }
@@ -516,12 +516,12 @@ ipcMain.on("setCustomCSS", (e) => {
         title: "LaF: CSS File Loader",
         defaultPath: '.',
         filters: [
-            {name: 'CSS File', extensions: ['txt', 'css']}
+            { name: 'CSS File', extensions: ['txt', 'css'] }
         ]
     });
-    if(cssPath) {
-    config.set("userCSSPath", cssPath);
-    e.reply("setCustomCSS", cssPath);
+    if (cssPath) {
+        config.set("userCSSPath", cssPath);
+        e.reply("setCustomCSS", cssPath);
     };
 });
 

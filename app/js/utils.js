@@ -110,20 +110,20 @@ module.exports = class utils {
             val: config.get("enableResourceSwapper", true),
             default: true
         },
-        eazyCSSMode: {
-            id: "eazyCSSMode",
-            title: langPack.eazyCSS,
+        easyCSSMode: {
+            id: "easyCSSMode",
+            title: langPack.easyCSS,
             category: "Customize",
             type: "select",
             restart: true,
             options: {
-                type1: langPack.eazyCSStype1,
-                //type2: langPack.eazyCSStype2,
-                //type3: langPack.eazyCSStype3,
-                custom: langPack.eazyCSSCustom,
-                disable: langPack.eazyCSSDisable
+                type1: langPack.easyCSStype1,
+                //type2: langPack.easyCSStype2,
+                //type3: langPack.easyCSStype3,
+                custom: langPack.easyCSSCustom,
+                disable: langPack.easyCSSDisable
             },
-            val: config.get("eazyCSSMode", "disable"),
+            val: config.get("easyCSSMode", "disable"),
             default: "disable"
         },
         userCSSPath: {
@@ -157,7 +157,7 @@ module.exports = class utils {
     }
 
     generateHTML(obj) {
-        switch(obj.type) {
+        switch (obj.type) {
             case "checkbox":
                 return `
                 <label class='switch'>

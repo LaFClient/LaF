@@ -75,7 +75,7 @@
 .menuItem:hover{
     background:linear-gradient(90deg,#93f8ff,white);
     width:240px;
-     border-color:lightgreen;
+    border-color:lightgreen;
 }
 
 /*Just for beauty*/
