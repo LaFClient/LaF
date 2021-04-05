@@ -1,4 +1,4 @@
-![TitleImage](https://cdn.discordapp.com/attachments/810718686657642526/812216851206635550/social_prv.png)</br>
+![TitleImage](https://raw.githubusercontent.com/Hiro527/LaF/master/app/img/social_prv.png)</br>
 [![License](https://img.shields.io/github/license/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/blob/master/LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
 ![Code Lines](https://img.shields.io/tokei/lines/github/Hiro527/LaF?style=flat-square)
