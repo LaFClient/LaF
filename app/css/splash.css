@@ -8,30 +8,6 @@
     src: url("../fonts/Makinas-4-Flat.otf");
 }
 
-@keyframes fadeIn {
-    0% {
-        transform: translateX(640px) rotate(247deg);
-    }
-    100% {
-        transform: translateX(223.5px) rotate(0deg);
-    }
-}
-
-@keyframes fadeOut {
-    0% {
-        -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,.8));
-        filter: drop-shadow(0px 0px 10px rgba(0,0,0,.8));
-    }
-    66% {
-        -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,.8));
-        filter: drop-shadow(0px 0px 10px rgba(0,0,0,.8));
-    }
-    100% {
-        -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,0));
-        filter: drop-shadow(0px 0px 10px rgba(0,0,0,0));
-    }
-}
-
 * {
     outline: none;
     font-family: "Aldrich Regular", "Makinas4 Flat";
@@ -51,13 +27,6 @@ body {
     left: 0;
     margin: 0;
     overflow: hidden;
-}
-
-.logo {
-    position:absolute;
-    top: 50%;
-    margin-top: -96.5px;
-    animation: fadeIn 1s forwards, fadeOut 1.5s forwards;
 }
 
 #appVersion {
