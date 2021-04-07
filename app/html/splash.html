@@ -3,79 +3,15 @@
 
 <head>
     <title>LaF</title>
-    <style>
-        body {
-            background-image: url("../img/splash.png");
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            margin: 0;
-        }
-
-        @font-face {
-            font-family: "源真ゴシックP Light";
-            src: url("../fonts/GenShinGothic-P-Light.ttf");
-        }
-
-        @font-face {
-            font-family: "源真ゴシックP Medium";
-            src: url("../fonts/GenShinGothic-P-Medium.ttf");
-        }
-
-        * {
-            outline: none;
-            font-family: "源真ゴシックP Light";
-        }
-
-        #appVersion {
-            position: absolute;
-            font-family: "源真ゴシックP Medium" !important;
-            color: rgba(77, 77, 77, 1);
-            left: 15px;
-            top: 10px;
-            font-size: 20px;
-        }
-
-        #message {
-            position: absolute;
-            font-family: "源真ゴシックP Medium" !important;
-            text-align: right;
-            color: rgba(77, 77, 77, 1);
-            right: 15px;
-            top: 10px;
-            font-size: 15px;
-        }
-
-        #updateStatus {
-            position: absolute;
-            color: rgba(77, 77, 77, 1);
-            left: 10px;
-            bottom: 10px;
-            font-size: 15px;
-        }
-
-        #downloadStatus {
-            position: absolute;
-            color: rgba(77, 77, 77, 1);
-            right: 10px;
-            bottom: 10px;
-            font-size: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/splash.css">
 </head>
 
 <body>
     <div id="appVersion"></div>
     <div id="message">
-        I love you all users XD</br>
-        LaF will not stop.
+        Design Updated!
     </div>
+    <img class="logo" src="../img/icon_small.png">
     <div id="updateStatus"></div>
     <div id="downloadStatus"></div>
     <script type="text/javascript">
@@ -91,7 +27,7 @@
         ipcRenderer.send("GET_VERSION")
         ipcRenderer.on("GET_VERSION", (e, v) => {
             appVersion = v
-            appv.innerHTML = `v${appVersion}`;
+            appv.innerHTML = `LaF v${appVersion}`;
         });
 
         ipcRenderer.send("GET_LANG")

@@ -1,0 +1,78 @@
+@font-face {
+    font-family: "Aldrich Regular";
+    src: url("../fonts/Aldrich-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Makinas4 Flat";
+    src: url("../fonts/Makinas-4-Flat.otf");
+}
+
+@keyframes fadeIn {
+    0% {
+        transform: translateX(640px) rotate(247deg);
+    }
+    100% {
+        transform: translateX(223.5px) rotate(0deg);
+    }
+}
+
+* {
+    outline: none;
+    font-family: "Aldrich Regular", "Makinas4 Flat";
+}
+
+body {
+    background-image: url("../img/splash.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.logo {
+    position:absolute;
+    top: 50%;
+    margin-top: -96.5px;
+    animation: fadeIn 1s forwards;
+}
+
+#appVersion {
+    position: absolute;
+    color: rgba(77, 77, 77, 1);
+    left: 15px;
+    top: 10px;
+    font-size: 20px;
+}
+
+#message {
+    position: absolute;
+    text-align: right;
+    color: rgba(77, 77, 77, 1);
+    right: 15px;
+    top: 10px;
+    font-size: 15px;
+}
+
+#updateStatus {
+    position: absolute;
+    color: rgba(77, 77, 77, 1);
+    left: 10px;
+    bottom: 10px;
+    font-size: 15px;
+}
+
+#downloadStatus {
+    position: absolute;
+    color: rgba(77, 77, 77, 1);
+    right: 10px;
+    bottom: 10px;
+    font-size: 15px;
+}

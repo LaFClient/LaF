@@ -46,6 +46,7 @@ const ClientID = "810350252023349248";
 console.log(`LaF v${app.getVersion()}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 
 if (!app.requestSingleInstanceLock()) {
+    console.error("Other process(es) are already existing. Quit. If you can't see the window, please kill all task(s).")
     app.quit();
 };
 
