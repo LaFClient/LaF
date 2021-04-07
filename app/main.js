@@ -25,9 +25,9 @@ let windowManage = {
 };
 
 let cssPath = {
-    type1: "EasyCSS/type1.css",
-    type2: "EasyCSS/type2.css",
-    type3: "EasyCSS/type3.css",
+    type1: "css/EasyCSS/type1.css",
+    type2: "css/EasyCSS/type2.css",
+    type3: "css/EasyCSS/type3.css",
     custom: config.get("userCSSPath", "")
 };
 
