@@ -118,7 +118,7 @@ module.exports = class utils {
             restart: true,
             options: {
                 type1: langPack.easyCSStype1,
-                //type2: langPack.easyCSStype2,
+                type2: langPack.easyCSStype2,
                 //type3: langPack.easyCSStype3,
                 custom: langPack.easyCSSCustom,
                 disable: langPack.easyCSSDisable
