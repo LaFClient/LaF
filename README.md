@@ -10,12 +10,12 @@
 # What is LaF?
 **LaF = Lite and Fast**</br>
 Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
+Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to greatful playing experience for low spec pc developping in Japan.
 
-# LaF v1.0.0
-Now, LaF is not beta version🥳 Thanks for everyone!!!
-
-ついにベータを脱出し、正式版となりました🥳 v1.x.x系ではリソーススワッパーなどの基本的な機能を拡充し、v2.x.x系では軽さを維持しつつ、安定性や便利機能を重視したクライアントにつくりあげていきたいと思っています。</br>
-そしてダウンロード回数が1000回を超えてました・・・！これからも頑張っていくので応援よろしくおねがいします！</br>
+# LaF v1.2.0
+- Design Updated! / デザインを新しくしました！
+- New Splash Screen / スプラッシュスクリーンが豪華になりました👀
+- Added New CSS: "Cutie Comp" by @NamekujiLSDs / @NamekujiLSDs 作のCSS「Cutie Comp」を追加しました！
 
 # Attention
 If you found some issues, please tell me with SNS or GitHub(Twitter or Discord is better)</br>
@@ -45,7 +45,6 @@ FPS解放/Unlimited FPS: FPSを解放できます / Unlimited FPS
 Angleタイプ/Angle Type: バックエンドを選択できます。描画バグが起きた場合や画面キャプチャをできない場合、FPSが不安定な場合に変更すると効果があることがあります。 / You can change backend. When graphics issues has occurred, it may effects better.(e.g. Unstable FPS, Can't capture the screen, and so on.)
 WebGL2 Compute Shader: WebGL2 Compute Shaderを使用するか選択できます。これによってパフォーマンスが向上する場合があります(環境依存) / You can toggle WebGL2 Compute Shader. It may effects better to performance.(Depends to environment)
 ハードウェアアクセラレーション(2D)/Hardware Acceleration(2D): 2Dの描画にGPUを使用するか選択できます。 / You can toggle if it use GPU in 2D.
-inProcessGPU: GPUプロセスを独立させるかどうか選択できます。 / You can toggle if it run the GPU process as a thread in the browser process.
 /* Customize */
 言語/UI Language: 言語を変更できます(日本語/英語) / Change the language(JP/EN)
 Discord RPC: Discord RPCの有効化/無効化が出来ます / Toggle if Discord is enabled
