@@ -223,7 +223,7 @@ module.exports = class utils {
                     </div>
                     <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
                     <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
-                    <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a> | 
+                    <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a></br>
                     <a onclick="window.utils.tolset('openSwapper')" class="menuLink">${langPack.openSwapFolder}</a>
                     `;
                 }
