@@ -32,8 +32,8 @@ F8: コピーした招待リンクを開く / Open the Invitation Link in Clipbo
 Shift+F8: リンクを入力して開く / Open the Invitation Link with Prompt
 F11: フルスクリーン切り替え / Toggle Fullscreen
 
-Ctrl+F1: 開発者ツールを起動する / Launch Developer Tools
-Ctrl+Shift+F1 or F12: 再起動 / Restart
+Ctrl+F1 or F12: 開発者ツールを起動する / Launch Developer Tools
+Ctrl+Shift+F1: 再起動 / Restart
 
 Alt+F4: クライアントを閉じる / Quit
 ```
