@@ -16,7 +16,8 @@ const config = new store();
 Object.assign(console, log.functions);
 
 let gameWindow = null,
-    splashWindow = null;
+    splashWindow = null,
+    infoWindow = null;
 
 let windowManage = {
     "hub": null,
@@ -168,6 +169,10 @@ const initGameWindow = () => {
 
     gameWindow.once("ready-to-show", () => {
         splashWindow.destroy();
+        if (config.get("isFirstLaunch", true)) {
+            initInfoWindow();
+            config.set("isFirstLaunch", false);
+        }
         if (config.get("isMaximized", true)) gameWindow.maximize();
         gameWindow.show();
     });
@@ -308,6 +313,34 @@ const initNewWindow = (url, title) => {
     });
 
     return win;
+};
+
+const initInfoWindow = () => {
+    infoWindow = new BrowserWindow({
+        width: 1350,
+        height: 900,
+        show: false,
+        resizable: false,
+        maximizable: false,
+        parent: gameWindow,
+        title: "LaF: Information",
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    });
+    infoWindow.removeMenu();
+
+    infoWindow.loadURL(path.join(__dirname, "html/info.html"));
+
+    infoWindow.on("close", () => {
+        infoWindow = null;
+    })
+
+    infoWindow.once("ready-to-show", () => {
+        infoWindow.show();
+    });
+
 };
 
 const initSplashWindow = () => {
@@ -502,6 +535,10 @@ ipcMain.on("RELAUNCH", () => {
     app.relaunch();
     app.quit();
 });
+
+ipcMain.on("OPEN_INFO", () => {
+    initInfoWindow();
+})
 
 ipcMain.on("GET_VERSION", (e) => {
     e.reply("GET_VERSION", app.getVersion())

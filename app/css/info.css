@@ -1,0 +1,217 @@
+@font-face {
+    font-family: "Aldrich Regular";
+    src: url("../fonts/Aldrich-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Makinas4 Flat";
+    src: url("../fonts/Makinas-4-Flat.otf");
+}
+
+* {
+    outline: none;
+    font-family: "Aldrich Regular", "Makinas4 Flat";
+    font-size: 20px;
+    color: rgb(226, 226, 226);
+}
+
+body {
+    background-color: #1d1d1d;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+#logoImage {
+    width: 100px;
+    height: 100px;
+}
+
+#logoText {
+    font-size: 75px;
+    color: rgb(214, 249, 255) !important;
+}
+
+.cp_hr06 {
+	position: relative;
+	height: 1px;
+	border-width: 0;
+	background-image: -webkit-linear-gradient(left,
+	transparent 0%,#73efff 50%,transparent 100%);
+	background-image:         linear-gradient(90deg,
+	transparent 0%,#73efff 50%,transparent 100%);
+}
+
+.aboutLaF {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.titleTxt {
+    text-align: center;
+}
+
+h1 {
+    color: #ff00c8;
+    font-size: 40px;
+    user-select: none;
+}
+
+#lafDetail {
+    color: #FFFFFF;
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#lafContainer {
+    display: flex;
+    align-items: center;
+    width: 90%;
+}
+
+#prevImg {
+    width: 75%;
+    height: 75%;
+}
+
+#aboutLaFTxt {
+    width: 90%;
+    margin: 10px;
+}
+
+.infoTabContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.infoTab {
+    width: 90%;
+}
+
+.infoTitle {
+    color: #ff00c8;
+    font-size: 40px;
+    user-select: none;
+}
+
+.category {
+    color: #73efff !important;
+    font-size: 30px;
+}
+
+.cp_hr08 {
+	border-top: 1px dashed #1d1d1d;
+	border-bottom: 1px dashed #4b9ca7;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.devInfoTitle {
+    text-align: center;
+}
+
+
+.devsInfo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.profCard {
+    margin: 10px;
+    display: flex;
+    width: 600px;
+    height: 210px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.profCardDev {
+    border: 3px solid rgb(155, 89, 182);
+}
+
+.profCardAdmin {
+    border: 3px solid rgb(231, 76, 60);
+}
+
+.profCardMod {
+    border: 3px solid rgb(241, 196, 15);
+}
+
+.profCardKr {
+    border: 3px solid rgb(52, 152, 219);
+}
+
+.pfp {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin: 50px;
+}
+
+.profData {
+    display: flex;
+    flex-direction: column;
+}
+
+.profMiniCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profName {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.profRole {
+    font-size: 15px;
+    color: rgb(153, 153, 153)
+}
+
+.profSns {
+    margin-top: 5px;
+    font-size: 13px !important;
+}
+
+.profSns a {
+    font-size: 13px !important;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.discord {
+    width: 50%;
+    text-align: center;
+}
+
+.copyrights {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 40%;
+    height: 130px;
+    margin: 10px;
+    font-size: 20px;
+    text-align: center;
+    color: #1d1d1d !important;
+    background-color: rgb(226, 226, 226);
+    border-radius: 5px;
+}
