@@ -54,10 +54,6 @@ EasyCSS: EasyCSSのモードを切り替えることが出来ます / You can ch
 カスタムCSSファイル/Custom CSS Path: EasyCSSの「カスタム」モードで使用するCSSファイルを指定できます / You can select a CSS file that is used in Custom mode of EasyCSS
 ```
 
-# WIP
-- Resource Swapper -> v1.1.0
-- Customizable Key Binds -> v1.1.0
-
 # Contact
 Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)</br>
 e-mail: [Send e-mail](mailto:hiro527.dev@gmail.com)</br>
