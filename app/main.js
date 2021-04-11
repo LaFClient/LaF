@@ -333,6 +333,41 @@ const initInfoWindow = () => {
 
     infoWindow.loadURL(path.join(__dirname, "html/info.html"));
 
+    infoWindow.webContents.on("new-window", (event, url) => {
+        event.preventDefault();
+        switch (lafTools.urlType(url)) {
+            case "game":
+                gameWindow.loadURL(url);
+                break;
+            case "hub":
+                if (!windowManage.hub) {
+                    windowManage.hub = initNewWindow(url, "Krunker Hub");
+                    windowManage.hub.on("closed", () => windowManage.hub = null)
+                } else {
+                    windowManage.hub.loadURL(url);
+                }
+                break;
+            case "viewer":
+                if (!windowManage.viewer) {
+                    windowManage.viewer = initNewWindow(url, "Krunker Viewer");
+                    windowManage.viewer.on("closed", () => windowManage.viewer = null)
+                } else {
+                    windowManage.viewer.loadURL(url);
+                }
+                break;
+            case "editor":
+                if (!windowManage.editor) {
+                    windowManage.editor = initNewWindow(url, "Krunker Editor");
+                    windowManage.editor.on("closed", () => windowManage.editor = null)
+                } else {
+                    windowManage.editor.loadURL(url);
+                }
+                break;
+            default:
+                shell.openExternal(url);
+        };
+    });
+
     infoWindow.on("close", () => {
         infoWindow = null;
     })
