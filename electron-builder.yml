@@ -12,13 +12,19 @@ win:
         - x64
         - ia32
 linux:
-  artifactName: ${productName}_portable_${os}_${arch}.${ext}
+  artifactName: ${productName}_${version}_portable_${os}_${arch}.${ext}
   target:
     - target: appImage
       arch:
         - x64
         - ia32
   category: game
+mac:
+  artifactName: ${productName}-${version}_portable_${os}_${arch}.${ext}
+  target:
+    - target: dmg
+      arch:
+        - x64
 nsis:
   artifactName: ${productName}_${version}_installer_${os}_${arch}.${ext}
   oneClick: false
