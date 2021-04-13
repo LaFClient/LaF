@@ -46,7 +46,7 @@ const isEnabledTimer = config.get("enableTimer", true);
 const insertMenuTimer = () => {
     let instructions = document.getElementById("instructions");
     let menuTimerText = `
-    <div id="menuTimer" style="position:absolute;top:calc(50% + 50px);left:50%;margin-right:50%;transform:translate(-50%,-50%);font-size:40px;color:rgba(255, 255, 255, 0.8)"></div>;
+    <div id="menuTimer" style="position:absolute;top:calc(50% + 50px);left:50%;margin-right:50%;transform:translate(-50%,-50%);font-size:40px;color:rgba(255, 255, 255, 0.8);"></div>;
     `;
     instructions.insertAdjacentHTML("afterend", menuTimerText)
 }
