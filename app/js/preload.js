@@ -41,6 +41,25 @@ const initIpc = () => {
 };
 initIpc();
 
+const isEnabledTimer = config.get("enableTimer", true);
+
+const initMenuTimer = () => {
+    const getActivity = () => {
+        let gameActivity;
+        try  {
+            gameActivity = window.getGameActivity();
+        } catch (e) {
+            // 何もしなくていい
+        }
+        let timerSec = gameActivity.time % 60;
+        let timerMin = gameActivity.time < 60 ? "0" : (gameActivity.time - timerSec) / 60;
+        console.log(`${("0" + timerMin).slice(-2)}:${("0" + timerSec).slice(-2)}`)
+    }
+    let menuTimerInterval = setInterval(getActivity, 500);
+}
+
+if (isEnabledTimer) initMenuTimer();
+
 const isEnabledRPC = config.get("enableRPC", true)
 let rpcActivity = null;
 let rpcInterval = null;
