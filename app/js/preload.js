@@ -43,6 +43,14 @@ initIpc();
 
 const isEnabledTimer = config.get("enableTimer", true);
 
+const insertMenuTimer = () => {
+    let instructions = document.getElementById("instructions");
+    let menuTimerText = `
+    <div id="menuTimer" style="position:absolute;top:calc(50% + 50px);left:50%;margin-right:50%;transform:translate(-50%,-50%);font-size:40px;color:rgba(255, 255, 255, 0.8)"></div>;
+    `;
+    instructions.insertAdjacentHTML("afterend", menuTimerText)
+}
+
 const initMenuTimer = () => {
     const getActivity = () => {
         let gameActivity;
@@ -53,7 +61,7 @@ const initMenuTimer = () => {
         }
         let timerSec = gameActivity.time % 60;
         let timerMin = gameActivity.time < 60 ? "0" : (gameActivity.time - timerSec) / 60;
-        console.log(`${("0" + timerMin).slice(-2)}:${("0" + timerSec).slice(-2)}`)
+        document.getElementById("menuTimer").innerText = (`${("0" + timerMin).slice(-2)}:${("0" + timerSec).slice(-2)}`)
     }
     let menuTimerInterval = setInterval(getActivity, 500);
 }
@@ -111,10 +119,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let observer = new MutationObserver(() => {
         // console.log("Debug: DOMLoaded")
         observer.disconnect();
+        insertMenuTimer();
         window.closeClient = () => {
             ipcRenderer.send("CLOSE");
             console.log("CLOSE BTN")
-        }
+        };
         lafUtils.setupGameWindow();
     });
     observer.observe(document.getElementById("instructions"), { childList: true });
