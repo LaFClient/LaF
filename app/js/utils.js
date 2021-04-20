@@ -130,9 +130,9 @@ module.exports = class utils {
             id: "userCSSPath",
             title: langPack.userCSSPath,
             category: "Customize",
-            type: "file",
+            type: "fileWithEyes",
             restart: true,
-            val: config.get("enableCSSPath", ""),
+            val: config.get("userCSSPath", ""),
             default: ""
         }
     }
@@ -176,7 +176,12 @@ module.exports = class utils {
                 `;
             case "file":
                 return `
-                <button class='settingsBtn' onclick='window.utils.tolset("setCustomCSS")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
+                <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
+                `
+            case "fileWithEyes":
+                return `
+                <a class="material-icons" id="eye_${obj.id}" onclick="window.utils.tolset('changeVisibility', '${obj.id}')" style="text-decoration:none;">${config.get(`${obj.id}_visibility`, true) ? "visibility" : "visibility_off"}</a>
+                <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
                 `
             default:
                 return `
@@ -234,11 +239,11 @@ module.exports = class utils {
         injectSettings();
     }
 
-    tolset(v) {
+    tolset(v, opt="") {
         switch (v) {
-            case "setCustomCSS":
-                ipcRenderer.send("setCustomCSS")
-                ipcRenderer.on("setCustomCSS", (e, v) => {
+            case "userCSSPath":
+                ipcRenderer.send("userCSSPath")
+                ipcRenderer.on("userCSSPath", (e, v) => {
                     let el = document.getElementById("userCSSPath");
                     el.innerHTML = v;
                 })
@@ -251,6 +256,19 @@ module.exports = class utils {
                     ipcRenderer.send("CLEAR_CACHE");
                     alert(langPack.clearedCacheAndRestart)
                     ipcRenderer.send("RELAUNCH");
+                }
+                break;
+            case "changeVisibility":
+                console.log("TEST")
+                let el = document.getElementById(`eye_${opt}`);
+                if (config.get(`${opt}_visibility`, true)) {
+                    el.innerText = "visibility_off"
+                    document.getElementById(opt).style.display = "none";
+                    config.set(`${opt}_visibility`, false);
+                } else {
+                    el.innerText = "visibility"
+                    document.getElementById(opt).style.display = "";
+                    config.set(`${opt}_visibility`, true);
                 }
                 break;
             case "resetOptions":

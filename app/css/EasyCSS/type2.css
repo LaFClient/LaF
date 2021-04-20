@@ -121,7 +121,7 @@ span {
 .chatItem {
   color: #b7b7b7 !important;
   width: -webkit-fill-available;
-  background: #d0fdff;
+  background: #d0fdff !important;
   opacity: 1 !important;
   text-shadow: 1px 1px 1px black, 1px -1px 01px black, -1px -1px 1px black, -1px 1px 1px black;
   border-radius: 0px;
