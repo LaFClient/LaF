@@ -227,7 +227,6 @@ const initNewWindow = (url, title) => {
         width: 1350,
         height: 900,
         show: false,
-        parent: gameWindow,
         title: `LaF: ${title}`,
         webPreferences: {
             nodeIntegration: true,
@@ -322,7 +321,6 @@ const initInfoWindow = () => {
         show: false,
         resizable: false,
         maximizable: false,
-        parent: gameWindow,
         title: "LaF: Information",
         webPreferences: {
             nodeIntegration: true,
@@ -583,7 +581,7 @@ ipcMain.on("GET_LANG", (e) => {
     e.reply("GET_LANG", config.get("lang"))
 });
 
-ipcMain.on("setCustomCSS", (e) => {
+ipcMain.on("userCSSPath", (e) => {
     let cssPath = dialog.showOpenDialogSync(null, {
         properties: ['openFile'],
         title: "LaF: CSS File Loader",
@@ -593,8 +591,8 @@ ipcMain.on("setCustomCSS", (e) => {
         ]
     });
     if (cssPath) {
-        config.set("userCSSPath", cssPath);
-        e.reply("setCustomCSS", cssPath);
+        config.set("userCSSPath", cssPath[0]);
+        e.reply("userCSSPath", cssPath);
     };
 });
 
