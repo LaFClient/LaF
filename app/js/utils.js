@@ -180,8 +180,9 @@ module.exports = class utils {
                 `
             case "fileWithEyes":
                 return `
-                <a class="material-icons" id="eye_${obj.id}" onclick="window.utils.tolset('changeVisibility', '${obj.id}')" style="text-decoration:none;">${config.get(`${obj.id}_visibility`, true) ? "visibility" : "visibility_off"}</a>
-                <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
+                <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button>
+                <a class="material-icons" id="eye_${obj.id}" onclick="window.utils.tolset('changeVisibility', '${obj.id}')" style="text-decoration:none;float:right;margin-top:10px;color:rgba(0,0,0,0.5);">${config.get(`${obj.id}_visibility`, true) ? "visibility" : "visibility_off"}</a>
+                <div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
                 `
             default:
                 return `
