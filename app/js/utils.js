@@ -240,6 +240,30 @@ module.exports = class utils {
         injectSettings();
     }
 
+    injectAccManager() {
+        // console.log("INSERT ALT")
+        let menuWindow = document.getElementById("menuWindow");
+        if (menuWindow.firstChild.id === "accName") {
+            menuWindow.insertAdjacentHTML("beforeend", "<div class='accountButton' onclick='window.utils.addAltAcc()' style='width:100%'>Add Account</div>");
+        }
+    }
+
+    addAltAcc() {
+        let accName = document.getElementById("accName").value;
+        let accPass = document.getElementById("accPass").value;
+        let accPassB64 = btoa(accPass);
+        let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
+        if (!altAccounts) {
+            altAccounts = [[accName, accPassB64]];
+        } else {
+            altAccounts.push([accName, accPassB64]);
+        }
+        localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
+        document.getElementById("accName").value = "";
+        document.getElementById("accPass").value = "";
+        document.getElementById("accResp").innerText = langPack.addAccOK;
+    }
+
     tolset(v, opt="") {
         switch (v) {
             case "userCSSPath":

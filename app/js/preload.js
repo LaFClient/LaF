@@ -126,6 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         lafUtils.setupGameWindow();
     });
+    let altManagerObserver = new MutationObserver(() => {
+        altManagerObserver.disconnect();
+        lafUtils.injectAccManager();
+        setTimeout(altManagerObserver.observe(document.getElementById("menuWindow"), { childList: true }), 500);
+    })
+    altManagerObserver.observe(document.getElementById("menuWindow"), { childList: true });
     observer.observe(document.getElementById("instructions"), { childList: true });
 });
 

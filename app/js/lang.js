@@ -49,6 +49,7 @@ module.exports.ja_JP = class {
     openSwapFolder = "リソーススワッパーを開く"
     msg = "ただいま、技術的な問題でリソーススワッパーとEasyCSSを同時に使うことが出来ません。解決方法を見つけ次第早急に解決しますので、しばらくお待ち下さい。"
     openInfo = "LaFについて"
+    addAccOK = "正常にアカウントを追加しました"
 }
 
 module.exports.en_US = class {
@@ -102,4 +103,5 @@ module.exports.en_US = class {
     openSwapFolder = "Open ResourceSwapper"
     msg = "At this time, you can't use Resource Swapper and EasyCSS at same time due to technical issues. We'll fix it as soon as possible, please wait for a while."
     openInfo = "About LaF"
+    addAccOK = "Added account successfully."
 }
