@@ -1,6 +1,6 @@
 {
   "name": "laf",
-  "version": "1.2.1",
+  "version": "1.2.2-beta.1",
   "description": "Krunker Client Made in Japan.",
   "main": "app/main.js",
   "scripts": {
@@ -18,9 +18,9 @@
     "url": "https://github.com/Hiro527/LaF/issues"
   },
   "homepage": "https://github.com/Hiro527/LaF#readme",
-  "electronVersion": "9.4.4",
+  "electronVersion": "12.0.5",
   "devDependencies": {
-    "electron": "^9.4.4",
+    "electron": "^12.0.5",
     "electron-builder": "^22.10.5"
   },
   "dependencies": {
