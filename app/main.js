@@ -17,7 +17,8 @@ Object.assign(console, log.functions);
 
 let gameWindow = null,
     splashWindow = null,
-    infoWindow = null;
+    infoWindow = null,
+    altMWindow = null;
 
 let windowManage = {
     "hub": null,
@@ -372,6 +373,68 @@ const initInfoWindow = () => {
 
     infoWindow.once("ready-to-show", () => {
         infoWindow.show();
+    });
+
+};
+
+const initAltMWindow = () => {
+    altMWindow = new BrowserWindow({
+        width: 1350,
+        height: 900,
+        show: false,
+        resizable: false,
+        maximizable: false,
+        title: "LaF: AltManager",
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    });
+    altMWindow.removeMenu();
+
+    altMWindow.loadURL(path.join(__dirname, "html/info.html"));
+
+    altMWindow.webContents.on("new-window", (event, url) => {
+        event.preventDefault();
+        switch (lafTools.urlType(url)) {
+            case "game":
+                gameWindow.loadURL(url);
+                break;
+            case "hub":
+                if (!windowManage.hub) {
+                    windowManage.hub = initNewWindow(url, "Krunker Hub");
+                    windowManage.hub.on("closed", () => windowManage.hub = null)
+                } else {
+                    windowManage.hub.loadURL(url);
+                }
+                break;
+            case "viewer":
+                if (!windowManage.viewer) {
+                    windowManage.viewer = initNewWindow(url, "Krunker Viewer");
+                    windowManage.viewer.on("closed", () => windowManage.viewer = null)
+                } else {
+                    windowManage.viewer.loadURL(url);
+                }
+                break;
+            case "editor":
+                if (!windowManage.editor) {
+                    windowManage.editor = initNewWindow(url, "Krunker Editor");
+                    windowManage.editor.on("closed", () => windowManage.editor = null)
+                } else {
+                    windowManage.editor.loadURL(url);
+                }
+                break;
+            default:
+                shell.openExternal(url);
+        };
+    });
+
+    altMWindow.on("close", () => {
+        altMWindow = null;
+    })
+
+    altMWindow.once("ready-to-show", () => {
+        altMWindow.show();
     });
 
 };

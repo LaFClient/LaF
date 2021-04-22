@@ -196,7 +196,7 @@ module.exports = class utils {
             settingsWindow = window.windows[0];
 
             let GetSettings = settingsWindow.getSettings;
-            settingsWindow.getSettings = (...args) => GetSettings.call(settingsWindow, ...args).replace(/^<\/div>/, '');
+            settingsWindow.getSettings = (...args) => GetSettings.call(settingsWindow, ...args).replace(/^<\/div>/, '') + settingsWindow.getCSettings();
 
             let clientTabIndex = settingsWindow.tabs.push({ name: "LaF", categories: [] })
             settingsWindow.getCSettings = () => {
