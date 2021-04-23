@@ -240,11 +240,53 @@ module.exports = class utils {
         injectSettings();
     }
 
-    injectAccManager() {
+    injectAddAccBtn() {
         // console.log("INSERT ALT")
         let menuWindow = document.getElementById("menuWindow");
         if (menuWindow.firstChild.id === "accName") {
             menuWindow.insertAdjacentHTML("beforeend", "<div class='accountButton' onclick='window.utils.addAltAcc()' style='width:100%'>Add Account</div>");
+        }
+    }
+
+    showAltMng(f=false) {
+        let menuWindow = document.getElementById("menuWindow");
+        menuWindow.style.overflowY = "auto";
+        let tmpHTML = `
+        <div id="lafAltTitle" style="font-size:30px;text-align:center;margin:5px;font-weight:700;">Alt Mamager</div>
+        <hr style="color:rgba(28, 28, 28, .5);">
+        <div style="display:flex;flex-direction:column;justify-content:center;">
+        `;
+        const generateHTML = () => {
+            let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
+            Object.keys(altAccounts).forEach((k) => {
+                tmpHTML += `
+                <div style="display:flex;justify-content:flex-end;align-items:center;">
+                <span style="margin-right:auto">${k}</span>
+                <div class="button buttonG lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.loginAcc('${k}')">
+                <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">login</span>
+                </div>
+                <div class="verticalSeparator" style="height:35px;background:rgba(28, 28, 28, .3);;"></div>
+                <div class="button buttonY lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.editAcc('${k}')">
+                <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">edit</span>
+                </div>
+                <div class="button buttonR lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.deleteAcc('${k}')">
+                <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">delete</span>
+                </div></div>`
+            })
+            tmpHTML += "</div>"
+        }
+        generateHTML();
+        if (document.getElementById("windowHolder").style.display === "block" &&  !f) {
+            if (document.getElementById("windowHeader").innerText === "Alt Manager") {
+                document.getElementById("windowHolder").style.display = "none";
+            } else {
+                document.getElementById("windowHeader").innerText = "Alt Manager";
+                menuWindow.innerHTML = tmpHTML;
+            }
+        } else {
+            document.getElementById("windowHolder").style.display = "block";
+            document.getElementById("windowHeader").innerText = "Alt Manager";
+            menuWindow.innerHTML = tmpHTML;
         }
     }
 
@@ -254,14 +296,57 @@ module.exports = class utils {
         let accPassB64 = btoa(accPass);
         let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
         if (!altAccounts) {
-            altAccounts = [[accName, accPassB64]];
+            altAccounts = {
+                [accName]: accPassB64
+            };
+            localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
+            document.getElementById("accName").value = "";
+            document.getElementById("accPass").value = "";
+            document.getElementById("accResp").innerText = langPack.addAccOK;
         } else {
-            altAccounts.push([accName, accPassB64]);
+            let existing = false;
+            Object.keys(altAccounts).forEach((k) => {
+                if (k === accName) {
+                    document.getElementById("accResp").innerText = langPack.addAccErr;
+                    existing = true;
+                }
+            })
+            if (!existing) {
+                altAccounts[accName] = accPassB64;
+                localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
+                document.getElementById("accName").value = "";
+                document.getElementById("accPass").value = "";
+                document.getElementById("accResp").innerText = langPack.addAccOK;
+            }
         }
-        localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
-        document.getElementById("accName").value = "";
-        document.getElementById("accPass").value = "";
-        document.getElementById("accResp").innerText = langPack.addAccOK;
+    }
+
+    loginAcc(accName) {
+        let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
+        window.logoutAcc()
+        let accNameEl = document.getElementById("accName");
+        let accPassEl = document.getElementById("accPass");
+        accNameEl.value = accName;
+        accPassEl.value = atob(altAccounts[accName]);
+        window.loginAcc();
+        document.getElementById('accName').style.display = 'none';
+        document.getElementById('accPass').style.display = 'none';
+        document.getElementsByClassName('accountButton')[0].style.display = 'none';
+        document.getElementsByClassName('accountButton')[1].style.display = 'none';
+        document.getElementsByClassName('accountButton')[2].style.display = 'none';
+    }
+
+    editAcc(accName) {
+        // pass
+    }
+
+    deleteAcc(accName) {
+        if (confirm(langPack.deleteAcc.replace("%accName%", accName))) {
+            let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
+            delete altAccounts[accName];
+            localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
+            this.showAltMng(true);
+        }
     }
 
     tolset(v, opt="") {
