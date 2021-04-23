@@ -52,6 +52,9 @@ module.exports.ja_JP = class {
     addAccOK = "正常にアカウントを追加しました"
     addAccErr = "エラー: このアカウントはすでに登録されています"
     deleteAcc = "本当にアカウント %accName% を削除しますか？"
+    edittingAcc = "%accName% を編集中"
+    saveAccOK = "正常にアカウントの変更を保存しました"
+    saveAccErr = "エラー: アカウントの変更を保存できませんでした"
 }
 
 module.exports.en_US = class {
@@ -108,4 +111,7 @@ module.exports.en_US = class {
     addAccOK = "Added account successfully"
     addAccErr = "Error: This account has already registered"
     deleteAcc = "Are you sure you want to delete the account?: %accName%"
+    edittingAcc = "You are editting: %accName%"
+    saveAccOK = "Saved account changes successfully"
+    saveAccErr = "Error: Couldn't save account changes"
 }

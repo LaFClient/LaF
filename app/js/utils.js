@@ -248,11 +248,11 @@ module.exports = class utils {
         }
     }
 
-    showAltMng(f=false) {
+    showAltMng() {
         let menuWindow = document.getElementById("menuWindow");
         menuWindow.style.overflowY = "auto";
         let tmpHTML = `
-        <div id="lafAltTitle" style="font-size:30px;text-align:center;margin:5px;font-weight:700;">Alt Mamager</div>
+        <div id="lafAltTitle" style="font-size:30px;text-align:center;margin:3px;font-weight:700;">Alt Mamager</div>
         <hr style="color:rgba(28, 28, 28, .5);">
         <div style="display:flex;flex-direction:column;justify-content:center;">
         `;
@@ -276,7 +276,7 @@ module.exports = class utils {
             tmpHTML += "</div>"
         }
         generateHTML();
-        if (document.getElementById("windowHolder").style.display === "block" &&  !f) {
+        if (document.getElementById("windowHolder").style.display === "block") {
             if (document.getElementById("windowHeader").innerText === "Alt Manager") {
                 document.getElementById("windowHolder").style.display = "none";
             } else {
@@ -290,7 +290,7 @@ module.exports = class utils {
         }
     }
 
-    addAltAcc() {
+    addAltAcc(f=false) {
         let accName = document.getElementById("accName").value;
         let accPass = document.getElementById("accPass").value;
         let accPassB64 = btoa(accPass);
@@ -306,7 +306,7 @@ module.exports = class utils {
         } else {
             let existing = false;
             Object.keys(altAccounts).forEach((k) => {
-                if (k === accName) {
+                if (k === accName && !f) {
                     document.getElementById("accResp").innerText = langPack.addAccErr;
                     existing = true;
                 }
@@ -316,7 +316,7 @@ module.exports = class utils {
                 localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
                 document.getElementById("accName").value = "";
                 document.getElementById("accPass").value = "";
-                document.getElementById("accResp").innerText = langPack.addAccOK;
+                document.getElementById("accResp").innerText = f ? langPack.saveAccOK : langPack.addAccOK;
             }
         }
     }
@@ -331,13 +331,28 @@ module.exports = class utils {
         window.loginAcc();
         document.getElementById('accName').style.display = 'none';
         document.getElementById('accPass').style.display = 'none';
-        document.getElementsByClassName('accountButton')[0].style.display = 'none';
-        document.getElementsByClassName('accountButton')[1].style.display = 'none';
-        document.getElementsByClassName('accountButton')[2].style.display = 'none';
+        document.getElementsByClassName('accountButton').forEach((k) => {
+            k.style.display = "none";
+        })
     }
 
     editAcc(accName) {
-        // pass
+        let menuWindow = document.getElementById("menuWindow");
+        menuWindow.innerHTML = `
+        <input id="accName" type="text" placeholder="Enter Username" class="accountInput" style="margin-top:0" value="${accName}" readonly="readonly">
+        <input id="accPass" type="password" placeholder="Enter New Password" class="accountInput">
+        <div id="accResp" style="margin-top:10px;font-size:18px;color:rgba(0,0,0,0.5);">${langPack.edittingAcc.replace("%accName%", accName)}</div>
+        <div class="accountButton" onclick="window.utils.addAltAcc(true)" style="width:100%">Save Account</div>
+        `
+    }
+
+    saveAcc() {
+        try {
+            this.addAltAcc(true);
+        } catch (e) {
+            console.error(e);
+        }
+        setTimeout(document.getElementById("windowHolder").style.display = "none", 3000);
     }
 
     deleteAcc(accName) {
@@ -369,7 +384,6 @@ module.exports = class utils {
                 }
                 break;
             case "changeVisibility":
-                console.log("TEST")
                 let el = document.getElementById(`eye_${opt}`);
                 if (config.get(`${opt}_visibility`, true)) {
                     el.innerText = "visibility_off"

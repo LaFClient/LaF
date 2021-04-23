@@ -55,10 +55,10 @@ const insertAltManager = () => {
     let signedOutHeader = document.getElementById("signedOutHeaderBar");
     let mLevelCont = document.getElementById("mLevelCont");
     let altManagerBtnHTMLloggedOut = `
+    <div class="verticalSeparator" style="height:35px;"></div>
     <div class="button buttonPI lgn" style="width:200px;margin-right:0px;padding-top:3px;padding-bottom:15px" onmouseenter="playTick()" onclick="window.utils.showAltMng()">
     Alt Manager <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">manage_accounts</span>
     </div>
-    <div class="verticalSeparator" style="height:35px;"></div>
     `
     let altManagerBtnHTMLloggedIn = `
     <div class="verticalSeparator" style="height:35px;"></div>
@@ -69,7 +69,7 @@ const insertAltManager = () => {
     <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">logout</span>
     </div>
     `
-    signedOutHeader.insertAdjacentHTML("afterbegin", altManagerBtnHTMLloggedOut);
+    signedOutHeader.insertAdjacentHTML("beforeend", altManagerBtnHTMLloggedOut);
     mLevelCont.insertAdjacentHTML("afterend", altManagerBtnHTMLloggedIn);
 }
 
