@@ -291,28 +291,28 @@ module.exports = class utils {
     }
 
     addAltAcc(f=false) {
-        let accName = document.getElementById("accName").value;
-        let accPass = document.getElementById("accPass").value;
-        let accPassB64 = btoa(accPass);
+        let accNameEl = document.getElementById("accName");
+        let accPassEl = document.getElementById("accPass");
+        let accPassB64 = btoa(accPassEl.value);
         let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
         if (!altAccounts) {
             altAccounts = {
-                [accName]: accPassB64
+                [accNameEl.value]: accPassB64
             };
             localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
-            document.getElementById("accName").value = "";
-            document.getElementById("accPass").value = "";
+            accNameEl.value = "";
+            accPassEl.value = "";
             document.getElementById("accResp").innerText = langPack.addAccOK;
         } else {
             let existing = false;
             Object.keys(altAccounts).forEach((k) => {
-                if (k === accName && !f) {
+                if (k === accNameEl.value && !f) {
                     document.getElementById("accResp").innerText = langPack.addAccErr;
                     existing = true;
                 }
             })
             if (!existing) {
-                altAccounts[accName] = accPassB64;
+                altAccounts[accNameEl.value] = accPassB64;
                 localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
                 document.getElementById("accName").value = "";
                 document.getElementById("accPass").value = "";
