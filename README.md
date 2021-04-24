@@ -12,16 +12,9 @@
 Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to greatful playing experience for low spec pc developping in Japan.
 
-# LaF v1.2.0
-- Design Updated! / デザインを新しくしました！
-- New Splash Screen / スプラッシュスクリーンが豪華になりました👀
-- Added New CSS: "Cutie Comp" by @NamekujiLSDs / @NamekujiLSDs 作のCSS「Cutie Comp」を追加しました！
-
-# Attention
-If you found some issues, please tell me with SNS or GitHub(Twitter or Discord is better)</br>
-
-バグが絶対あると思います。見つけた場合はDMで直接連絡をするかissueを立ててくださるとありがたいです。</br>
-もし見つかったらissueを立てるか直接連絡をください(TwitterかDiscordが反応早いです)
+# LaF v1.3.0
+- [x] メニュータイマー / Menu timer
+- [x] サブ垢マネージャー / Alt Manager
 
 # Controls
 ```
@@ -53,6 +46,16 @@ EXITボタン/Exit Button: EXITボタンの位置の変更と非表示の設定�
 EasyCSS: EasyCSSのモードを切り替えることが出来ます / You can change EasyCSS mode
 カスタムCSSファイル/Custom CSS Path: EasyCSSの「カスタム」モードで使用するCSSファイルを指定できます / You can select a CSS file that is used in Custom mode of EasyCSS
 ```
+
+# Requirements
+|     | Least/最低 | Recommended/推奨 |
+|:---:|   :---:   |      :---:      |
+| OS  | Windows7 32bit | Windows10 Home/Pro 64bit |
+| CPU | 2.33GHz x86 Processor | 3.5GHz x86 Processor |
+| RAM | 4GB | 8GB |
+| Network | Broadband Internet Connection | Broadband Internet Connection |
+| Storage | 100MB | 2GB |
+| Memo | 720p60 Low Settings | 1080p60 High Settings |
 
 # Contact
 Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)</br>
