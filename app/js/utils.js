@@ -254,13 +254,13 @@ module.exports = class utils {
         let tmpHTML = `
         <div id="lafAltTitle" style="font-size:30px;text-align:center;margin:3px;font-weight:700;">Alt Mamager</div>
         <hr style="color:rgba(28, 28, 28, .5);">
-        <div style="display:flex;flex-direction:column;justify-content:center;">
+        <div class="lafAltMngHolder" style="display:flex;flex-direction:column;justify-content:center;">
         `;
         const generateHTML = () => {
             let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
             Object.keys(altAccounts).forEach((k) => {
                 tmpHTML += `
-                <div style="display:flex;justify-content:flex-end;align-items:center;">
+                <div class="lafAltMngAccName" style="display:flex;justify-content:flex-end;align-items:center;">
                 <span style="margin-right:auto">${k}</span>
                 <div class="button buttonG lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.loginAcc('${k}')">
                 <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">login</span>

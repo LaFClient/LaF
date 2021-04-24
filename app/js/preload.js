@@ -56,16 +56,16 @@ const insertAltManager = () => {
     let mLevelCont = document.getElementById("mLevelCont");
     let altManagerBtnHTMLloggedOut = `
     <div class="verticalSeparator" style="height:35px;"></div>
-    <div class="button buttonPI lgn" style="width:200px;margin-right:0px;padding-top:3px;padding-bottom:15px" onmouseenter="playTick()" onclick="window.utils.showAltMng()">
+    <div class="button buttonPI lgn" id="lafAltMngMBtnO" style="width:200px;margin-right:0px;padding-top:3px;padding-bottom:15px" onmouseenter="playTick()" onclick="window.utils.showAltMng()">
     Alt Manager <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">manage_accounts</span>
     </div>
     `
     let altManagerBtnHTMLloggedIn = `
     <div class="verticalSeparator" style="height:35px;"></div>
-    <div class="button buttonPI lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.showAltMng()">
+    <div class="button buttonPI lgn" id="lafAltMngMBtnI" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.showAltMng()">
     <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">manage_accounts</span>
     </div>
-    <div class="button buttonR lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.logoutAcc()">
+    <div class="button buttonR lgn"  id="lafAltMngLogoutBtn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.logoutAcc()">
     <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">logout</span>
     </div>
     `
