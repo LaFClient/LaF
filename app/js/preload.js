@@ -56,7 +56,7 @@ const insertAltManager = () => {
     let mLevelCont = document.getElementById("mLevelCont");
     let altManagerBtnHTMLloggedOut = `
     <div class="verticalSeparator" style="height:35px;"></div>
-    <div class="button buttonPI lgn" id="lafAltMngMBtnO" style="width:200px;margin-right:0px;padding-top:3px;padding-bottom:15px" onmouseenter="playTick()" onclick="window.utils.showAltMng()">
+    <div class="button buttonPI lgn" id="lafAltMngMBtnO" style="width:auto;margin-right:0px;padding-top:3px;padding-bottom:15px" onmouseenter="playTick()" onclick="window.utils.showAltMng()">
     Alt Manager <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">manage_accounts</span>
     </div>
     `
