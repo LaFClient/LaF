@@ -55,6 +55,7 @@ module.exports.ja_JP = class {
     edittingAcc = "%accName% を編集中"
     saveAccOK = "正常にアカウントの変更を保存しました"
     saveAccErr = "エラー: アカウントの変更を保存できませんでした"
+    enableAltMng = "アカウントマネージャー"
 }
 
 module.exports.en_US = class {
@@ -114,4 +115,5 @@ module.exports.en_US = class {
     edittingAcc = "You are editting: %accName%"
     saveAccOK = "Saved account changes successfully"
     saveAccErr = "Error: Couldn't save account changes"
+    enableAltMng = "Alt Manager"
 }

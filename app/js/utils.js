@@ -87,6 +87,15 @@ module.exports = class utils {
             val: config.get("showExitBtn", true),
             default: true
         },
+        enableAltMng: {
+            id: "enableAltMng",
+            title: langPack.enableAltMng,
+            category: "Customize",
+            type: "checkbox",
+            restart: true,
+            val: config.get("enableAltMng", true),
+            default: true
+        },
         showExitBtn: {
             id: "showExitBtn",
             title: langPack.showExitBtn,
