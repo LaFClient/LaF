@@ -274,7 +274,7 @@ module.exports = class utils {
                 <div class="button buttonG lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.loginAcc('${k}')">
                 <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">login</span>
                 </div>
-                <div class="verticalSeparator" style="height:35px;background:rgba(28, 28, 28, .3);;"></div>
+                <div class="verticalSeparator" style="height:35px;background:rgba(28, 28, 28, .3);"></div>
                 <div class="button buttonY lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.editAcc('${k}')">
                 <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">edit</span>
                 </div>
