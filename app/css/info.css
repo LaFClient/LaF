@@ -157,6 +157,16 @@ h1 {
     border: 3px solid rgb(52, 152, 219);
 }
 
+.profCardGh {
+    border: 3px solid rgb(165, 165, 165);
+}
+
+.profCardGh a{
+    font-size: 40px;
+    text-decoration: underline !important;
+    color: #0099ff !important;
+}
+
 .pfp {
     border-radius: 50%;
     width: 150px;
