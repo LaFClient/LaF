@@ -207,11 +207,10 @@ module.exports = class utils {
             let GetSettings = settingsWindow.getSettings;
             settingsWindow.getSettings = (...args) => GetSettings.call(settingsWindow, ...args).replace(/^<\/div>/, '') + settingsWindow.getCSettings();
 
-            let clientTabIndex = settingsWindow.tabs.push({ name: "LaF", categories: [] })
             settingsWindow.getCSettings = () => {
                 settingsWindow = window.windows[0];
                 let customHTML = ""
-                if (clientTabIndex != settingsWindow.tabIndex + 1 && !settingsWindow.settingSearch) {
+                if (settingsWindow.tabIndex + 1 !== 7 && !settingsWindow.settingSearch) {
                     return "";
                 }
                 let prevCat = null;
