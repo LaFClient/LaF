@@ -248,7 +248,7 @@ module.exports = class utils {
         injectSettings();
     }
 
-    injectAddAccBtn() {
+    injectAddAccBtn() { // DONE
         // console.log("INSERT ALT")
         let menuWindow = document.getElementById("menuWindow");
         if (menuWindow.firstChild.id === "accName") {
@@ -256,7 +256,7 @@ module.exports = class utils {
         }
     }
 
-    showAltMng() {
+    showAltMng() { // DONE
         let menuWindow = document.getElementById("menuWindow");
         menuWindow.style.overflowY = "auto";
         let tmpHTML = `
@@ -298,7 +298,7 @@ module.exports = class utils {
         }
     }
 
-    addAltAcc(f=false) {
+    addAltAcc(f=false) { // DONE
         let accNameEl = document.getElementById("accName");
         let accPassEl = document.getElementById("accPass");
         let accPassB64 = btoa(accPassEl.value);
@@ -329,7 +329,7 @@ module.exports = class utils {
         }
     }
 
-    loginAcc(accName) {
+    loginAcc(accName) { // DONE
         let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
         window.logoutAcc()
         let accNameEl = document.getElementById("accName");
@@ -344,7 +344,7 @@ module.exports = class utils {
         })
     }
 
-    editAcc(accName) {
+    editAcc(accName) { // DONE
         let menuWindow = document.getElementById("menuWindow");
         menuWindow.innerHTML = `
         <input id="accName" type="text" placeholder="Enter Username" class="accountInput" style="margin-top:0" value="${accName}" readonly="readonly">
@@ -354,7 +354,7 @@ module.exports = class utils {
         `
     }
 
-    saveAcc() {
+    saveAcc() { // DONE
         try {
             this.addAltAcc(true);
         } catch (e) {
@@ -363,7 +363,7 @@ module.exports = class utils {
         setTimeout(document.getElementById("windowHolder").style.display = "none", 3000);
     }
 
-    deleteAcc(accName) {
+    deleteAcc(accName) { // DONE
         if (confirm(langPack.deleteAcc.replace("%accName%", accName))) {
             let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
             delete altAccounts[accName];
