@@ -51,7 +51,7 @@ const insertMenuTimer = () => {
     instructions.insertAdjacentHTML("afterend", menuTimerText)
 }
 
-const insertAltManager = () => {
+const insertAltManager = () => { // DONE
     let signedOutHeader = document.getElementById("signedOutHeaderBar");
     let mLevelCont = document.getElementById("mLevelCont");
     let altManagerBtnHTMLloggedOut = `
