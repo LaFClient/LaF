@@ -1,3 +1,5 @@
+// ALL DONE
+
 module.exports.ja_JP = class {
     lang = "日本語(ja_JP)"
     inputURL = "URLを入力してください"
