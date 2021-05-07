@@ -7,13 +7,15 @@ Object.assign(console, log.functions);
 const config = new store();
 switch (config.get("lang", "ja_JP")) {
     case "ja_JP":
-        const langPack = require("../lang/ja_JP");
+        const langRes = require("../lang/ja_JP");
         break;
     case "en_US":
-        const langPack = require("../lang/en_US");
+        const langRes = require("../lang/en_US");
         break;
 }
+const langPack = new langRes.lang();
 
+// 本体
 export class manager {
     insertHeaderBtnHTML() {
         let signedOutHeaderBarEl = document.getElementById("signedOutHeaderBar");
@@ -42,7 +44,7 @@ export class manager {
             menuWindowEl.insertAdjacentHTML("beforeend", "<div class='accountButton' onclick='window.utils.addAltAcc()' style='width:100%'>Add Account</div>");
         }
     }
-    showAltMng(force=false) {
+    showMainUI(force=false) {
         let menuWindowEl = document.getElementById("menuWindow");
         let windowHolderEl = document.getElementById("windowHolder");
         let windowHeaderEl = document.getElementById("windowHeader");
@@ -82,36 +84,91 @@ export class manager {
             menuWindowEl.innerHTML = tmpHTML;
         }
     }
-    addAcc(force=false) {
+    showEditUI(mode="a", accName="") {
+        /*
+        mode {
+            新規追加: a,
+            編集: e
+        }
+        */
+        let menuWindowEl = document.getElementById("menuWindow");
+        switch (mode) {
+            case "a":
+                menuWindowEl.innerHTML = `
+                <input id="accName" type="text" placeholder="Enter Username" class="accountInput" style="margin-top:0">
+                <input id="accPass" type="password" placeholder="Enter New Password" class="accountInput">
+                <div class="accountButton" onclick="window.altMng.editAcc('a')" style="width:100%">${langPack.addAcc}</div>
+                `
+                break;
+            case "e":
+                menuWindowEl.innerHTML = `
+                <input id="accName" type="text" placeholder="Enter Username" class="accountInput" style="margin-top:0" value="${accName}" readonly="readonly">
+                <input id="accPass" type="password" placeholder="Enter New Password" class="accountInput">
+                <div id="accResp" style="margin-top:10px;font-size:18px;color:rgba(0,0,0,0.5);">${langPack.edittingAcc.replace("%accName%", accName)}</div>
+                <div class="accountButton" onclick="window.altMng.saveAcc()" style="width:100%">${langPack.saveAcc}</div>
+                `
+                break;
+        }
+    }
+    editAcc(mode="a") {
+        /*
+        mode {
+            新規追加: a,
+            編集: e,
+            削除: d
+        }
+        */
         let accNameEl = document.getElementById("accName");
         let accPassEl = document.getElementById("accPass");
         let accRespEl = document.getElementById("accResp");
         let accPassB64 = btoa(accPassEl.value);
         let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
-        if (!altAccounts) {
-            altAccounts = {
-                [accNameEl.value]: accPassB64
-            };
-            localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
-            accNameEl.value = "";
-            accPassEl.value = "";
-            accRespEl.innerText = langPack.addAccOK;
-        } else {
-            let existing = false;
-            Object.keys(altAccounts).forEach((k) => {
-                if (k === accNameEl.value && !force) {
-                    accRespEl.innerText = langPack.addAccErr;
-                    existing = true;
+        switch (mode) {
+            case "a":
+                if (!altAccounts) {
+                    altAccounts = {
+                        [accNameEl.value]: accPassB64
+                    };
+                    localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
+                    accNameEl.value = "";
+                    accPassEl.value = "";
+                    accRespEl.innerText = langPack.addAccOK;
+                } else {
+                    let existing = false;
+                    Object.keys(altAccounts).forEach((k) => {
+                        if (k === accNameEl.value) {
+                            accRespEl.innerText = langPack.addAccErr;
+                            existing = true;
+                        }
+                    })
+                    if (!existing) {
+                        altAccounts[accNameEl.value] = accPassB64;
+                        localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
+                        accNameEl.value = "";
+                        accPassEl.value = "";
+                        accRespEl.innerText = langPack.addAccOK;
+                    }
                 }
-            })
-            if (!existing) {
+                break;
+            case "e":
                 altAccounts[accNameEl.value] = accPassB64;
                 localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
                 accNameEl.value = "";
                 accPassEl.value = "";
-                accRespEl.innerText = f ? langPack.saveAccOK : langPack.addAccOK;
-            }
+                accRespEl.innerText = langPack.saveAccOK;
+                break;
+            case "d":
+                if (confirm(langPack.deleteAcc.replace("%accName%", accName))) {
+                    let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
+                    delete altAccounts[accName];
+                    localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
+                    this.showAltMng(true);
+                }
         }
+    }
+    saveAcc() {
+        this.editAcc("e");
+        setTimeout(document.getElementById("windowHolder").style.display = "none", 3000);
     }
     loginAcc(accName) {
         let accNameEl = document.getElementById("accName");
@@ -126,30 +183,5 @@ export class manager {
         document.getElementsByClassName('accountButton').forEach((el) => {
             el.style.display = "none";
         })
-    }
-    editAcc(accName) {
-        let menuWindowEl = document.getElementById("menuWindow");
-        menuWindowEl.innerHTML = `
-        <input id="accName" type="text" placeholder="Enter Username" class="accountInput" style="margin-top:0" value="${accName}" readonly="readonly">
-        <input id="accPass" type="password" placeholder="Enter New Password" class="accountInput">
-        <div id="accResp" style="margin-top:10px;font-size:18px;color:rgba(0,0,0,0.5);">${langPack.edittingAcc.replace("%accName%", accName)}</div>
-        <div class="accountButton" onclick="window.utils.addAltAcc(true)" style="width:100%">Save Account</div>
-        `
-    }
-    saveAcc() {
-        try {
-            this.addAltAcc(true);
-        } catch (e) {
-            console.error(e);
-        }
-        setTimeout(document.getElementById("windowHolder").style.display = "none", 3000);
-    }
-    deleteAcc(accName) {
-        if (confirm(langPack.deleteAcc.replace("%accName%", accName))) {
-            let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
-            delete altAccounts[accName];
-            localStorage.setItem("altAccounts", JSON.stringify(altAccounts));
-            this.showAltMng(true);
-        }
     }
 }
