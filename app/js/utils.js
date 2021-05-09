@@ -17,7 +17,6 @@ if (config.get("lang") === "ja_JP") {
 
 Object.assign(console, log.functions);
 
-let gameUI = document.getElementById("gameUI");
 let settingsWindow = null;
 
 module.exports = class utils {
@@ -258,7 +257,13 @@ module.exports = class utils {
 
     showAltMng() {
         let menuWindow = document.getElementById("menuWindow");
+        // overflow-y: auto;width: 800px;max-height: calc(100% - 330px);top: 50%;transform: translate(-50%, -50%);
+        menuWindow.classList = "dark";
         menuWindow.style.overflowY = "auto";
+        menuWindow.style.width = "800px";
+        menuWindow.style.maxHeight = "calc(100% - 330px";
+        menuWindow.style.top = "50%";
+        menuWindow.style.transform = "translate(-50%, -50%)";
         let tmpHTML = `
         <div id="lafAltTitle" style="font-size:30px;text-align:center;margin:3px;font-weight:700;">Alt Mamager</div>
         <hr style="color:rgba(28, 28, 28, .5);">

@@ -134,6 +134,16 @@ ipcRenderer.on("RPC_STOP", () => {
 
 initDiscordRPC();
 
+const injectWaterMarkHTML = () => {
+    let gameUIEl = document.getElementById("gameUI");
+    ipcRenderer.send("GET_VERSION");
+    ipcRenderer.on("GET_VERSION", (e, v) => {
+        gameUIEl.insertAdjacentHTML("beforeend", `
+        <div id="LaFWaterMark" style="position:absolute;font-size:15px;bottom:5px;right:5px;color:rgba(255, 255, 255, .75);">LaF v${v}</div>
+        `);
+    })
+}
+
 window.OffCliV = true;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -159,8 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 ipcRenderer.on("DID-FINISH-LOAD", () => {
-    menuContainer = document.getElementById("menuItemContainer")
-    quitBTN = document.getElementById("clientExit");
+    injectWaterMarkHTML();
+    let menuContainer = document.getElementById("menuItemContainer")
+    let quitBTN = document.getElementById("clientExit");
     switch (config.get("showExitBtn", "bottom")) {
         case "top":
             menuContainer.removeChild(menuContainer.children[7])
