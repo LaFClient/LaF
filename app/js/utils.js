@@ -247,7 +247,7 @@ module.exports = class utils {
         injectSettings();
     }
 
-    injectAddAccBtn() {
+    injectAddAccBtn() { // DONE
         let windowHeaderEl = document.getElementById("windowHeader");
         let accountButtonEl = document.getElementsByClassName("accountButton")
         if (windowHeaderEl.innerText = "Account" && accountButtonEl) {

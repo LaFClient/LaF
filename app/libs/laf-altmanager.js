@@ -39,9 +39,10 @@ export class manager {
         mLevelContEl.insertAdjacentHTML("afterend", altManagerBtnHTMLloggedIn);
     }
     insertAddAccBtnHTML() {
-        let menuWindowEl = document.getElementById("menuWindow");
-        if (menuWindowEl.firstChild.id === "accName") {
-            menuWindowEl.insertAdjacentHTML("beforeend", "<div class='accountButton' onclick='window.utils.addAltAcc()' style='width:100%'>Add Account</div>");
+        let windowHeaderEl = document.getElementById("windowHeader");
+        let accountButtonEl = document.getElementsByClassName("accountButton")
+        if (windowHeaderEl.innerText = "Account" && accountButtonEl) {
+            accountButtonEl[1].insertAdjacentHTML("afterend", "<div class='accountButton' onclick='window.utils.addAltAcc()' style='width:910px'>Add Account</div>");
         }
     }
     showMainUI(force=false) {
