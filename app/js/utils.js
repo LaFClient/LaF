@@ -17,7 +17,6 @@ if (config.get("lang") === "ja_JP") {
 
 Object.assign(console, log.functions);
 
-let gameUI = document.getElementById("gameUI");
 let settingsWindow = null;
 
 module.exports = class utils {
@@ -210,13 +209,13 @@ module.exports = class utils {
             settingsWindow.getCSettings = () => {
                 settingsWindow = window.windows[0];
                 let customHTML = ""
-                if (settingsWindow.tabIndex + 1 !== 7 && !settingsWindow.settingSearch) {
+                if (settingsWindow.tabIndex !== 6 && !settingsWindow.settingSearch) {
                     return "";
                 }
                 let prevCat = null;
                 Object.values(this.settings).forEach((k) => {
                     if (settingsWindow.settingSearch && !window.lafUtils.searchMatches(k.id, k.title, k.category)) {
-                        return;
+                        return "";
                     }
                     let tmpHTML = "";
                     if (k.category != prevCat) {
@@ -224,7 +223,7 @@ module.exports = class utils {
                             tmpHTML += "</div>"
                         }
                         prevCat = k.category;
-                        tmpHTML += `<div class='setHed' id='setHed_${btoa(k.category)}' onclick='window.windows[0].collapseFolder(this)'><span class='material-icons plusOrMinus'>keyboard_arrow_down</span> ${k.category}</div><div id='setBod_${btoa(k.category)}'>`;
+                        tmpHTML += `<div class='setHed' id='setHed_${k.category}' onclick='window.windows[0].collapseFolder(this)'><span class='material-icons plusOrMinus'>keyboard_arrow_down</span> ${k.category}</div><div class='setBodH' id='setBod_${btoa(k.category)}'>`;
                     }
                     tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `
                     if (k.restart) {
@@ -248,17 +247,23 @@ module.exports = class utils {
         injectSettings();
     }
 
-    injectAddAccBtn() { // DONE
-        // console.log("INSERT ALT")
-        let menuWindow = document.getElementById("menuWindow");
-        if (menuWindow.firstChild.id === "accName") {
-            menuWindow.insertAdjacentHTML("beforeend", "<div class='accountButton' onclick='window.utils.addAltAcc()' style='width:100%'>Add Account</div>");
+    injectAddAccBtn() {
+        let windowHeaderEl = document.getElementById("windowHeader");
+        let accountButtonEl = document.getElementsByClassName("accountButton")
+        if (windowHeaderEl.innerText = "Account" && accountButtonEl) {
+            accountButtonEl[1].insertAdjacentHTML("afterend", "<div class='accountButton' onclick='window.utils.addAltAcc()' style='width:910px'>Add Account</div>");
         }
     }
 
     showAltMng() { // DONE
         let menuWindow = document.getElementById("menuWindow");
+        // overflow-y: auto;width: 800px;max-height: calc(100% - 330px);top: 50%;transform: translate(-50%, -50%);
+        menuWindow.classList = "dark";
         menuWindow.style.overflowY = "auto";
+        menuWindow.style.width = "800px";
+        menuWindow.style.maxHeight = "calc(100% - 330px";
+        menuWindow.style.top = "50%";
+        menuWindow.style.transform = "translate(-50%, -50%)";
         let tmpHTML = `
         <div id="lafAltTitle" style="font-size:30px;text-align:center;margin:3px;font-weight:700;">Alt Mamager</div>
         <hr style="color:rgba(28, 28, 28, .5);">
@@ -269,17 +274,18 @@ module.exports = class utils {
             Object.keys(altAccounts).forEach((k) => {
                 tmpHTML += `
                 <div class="lafAltMngAccName" style="display:flex;justify-content:flex-end;align-items:center;">
-                <span style="margin-right:auto">${k}</span>
-                <div class="button buttonG lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.loginAcc('${k}')">
-                <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">login</span>
-                </div>
-                <div class="verticalSeparator" style="height:35px;background:rgba(28, 28, 28, .3);"></div>
-                <div class="button buttonY lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.editAcc('${k}')">
-                <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">edit</span>
-                </div>
-                <div class="button buttonR lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.deleteAcc('${k}')">
-                <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">delete</span>
-                </div></div>`
+                    <span style="margin-right:auto;color:#FFFFFF">${k}</span>
+                    <div class="button buttonG lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.loginAcc('${k}')">
+                        <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">login</span>
+                    </div>
+                    <div class="verticalSeparator" style="height:35px;background:rgba(28, 28, 28, .3);"></div>
+                    <div class="button buttonY lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.editAcc('${k}')">
+                        <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">edit</span>
+                    </div>
+                    <div class="button buttonR lgn" style="width:70px;margin-right:0px;padding-top:3px;padding-bottom:15px;transform:scale(0.75)" onmouseenter="playTick()" onclick="window.utils.deleteAcc('${k}')">
+                        <span class="material-icons" style="vertical-align:bottom;color:#fff;font-size:30px;margin-bottom:-1px;">delete</span>
+                    </div>
+                </div>`
             })
             tmpHTML += "</div>"
         }
