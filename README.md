@@ -5,7 +5,7 @@
 [![Latest](https://img.shields.io/github/v/release/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Latest Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/latest/total?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/total?style=flat-square&logo=appveyor)](https://github.com/Hiro527/LaF/releases)</br>
-[![Discord server](https://discord.com/api/guilds/810717714745786378/widget.png)](https://discord.gg/MpuVpx6RY3)
+[![Discord server](https://streamkit.discord.com/overlay/status/810717714745786378?icon=true&online=true&logo=white&text_color=%23ffffff&text_size=14&text_outline_color=%23000000&text_outline_size=0&text_shadow_color=%23000000&text_shadow_size=0&bg_color=%231e2124&bg_opacity=0.95&bg_shadow_color=%23000000&bg_shadow_size=0&invite_code=MpuVpx6RY3&limit_speaking=false&small_avatars=false&hide_names=false&fade_chat=0)](https://discord.gg/MpuVpx6RY3)
 
 # What is LaF?
 **LaF = Lite and Fast**</br>
