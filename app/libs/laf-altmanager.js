@@ -2,6 +2,8 @@ require('v8-compile-cache');
 const log = require("electron-log");
 const store = require("electron-store");
 
+// laf-altmanager@1.0.0
+
 // 初期化ブロック
 Object.assign(console, log.functions);
 const config = new store();
