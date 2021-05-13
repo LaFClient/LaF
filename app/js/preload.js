@@ -22,7 +22,7 @@ if (config.get("lang") === "ja_JP") {
 
 Object.assign(console, log.functions);
 
-Object.assign(window.lafUtils, {
+Object.assign(window.lafUtils, { // DONE
     searchMatches: (id, name, cat) => {
         let settingsWindow = window.windows[0];
         let query = settingsWindow.settingSearch.toLowerCase() || "";
@@ -30,11 +30,11 @@ Object.assign(window.lafUtils, {
     }
 })
 
-window.prompt = (message, defaultValue) => {
+window.prompt = (message, defaultValue) => { // DONE
     return ipcRenderer.sendSync("PROMPT", message, defaultValue);
 };
 
-const initIpc = () => {
+const initIpc = () => { // DONE
     ipcRenderer.on("ESC", () => {
         document.exitPointerLock();
     });
@@ -43,7 +43,7 @@ initIpc();
 
 const isEnabledTimer = config.get("enableTimer", true);
 
-const insertMenuTimer = () => {
+const insertMenuTimer = () => { // DONE
     let instructions = document.getElementById("instructions");
     let menuTimerText = `
     <div id="menuTimer" style="position:absolute;top:55%;left:50%;margin-right:50%;transform:translate(-50%,-50%);font-size:50px;color:rgba(255, 255, 255, 0.8);"></div>
@@ -73,7 +73,7 @@ const insertAltManager = () => { // DONE
     mLevelCont.insertAdjacentHTML("afterend", altManagerBtnHTMLloggedIn);
 }
 
-const initMenuTimer = () => {
+const initMenuTimer = () => { // DONE
     const getActivity = () => {
         let gameActivity;
         try  {
@@ -94,7 +94,7 @@ const isEnabledRPC = config.get("enableRPC", true)
 let rpcActivity = null;
 let rpcInterval = null;
 
-const initDiscordRPC = () => {
+const initDiscordRPC = () => { // DONE
     let sendDiscordRPC = () => {
         try {
             let gameActivity = window.getGameActivity();
