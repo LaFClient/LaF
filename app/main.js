@@ -71,6 +71,7 @@ const initFlags = () => {
         ["use-angle", config.get("angleType", "gl"), true],
         ["enable-webgl2-compute-context", null, config.get("webgl2Context", true)],
         ["disable-accelerated-2d-canvas", "true", !config.get("acceleratedCanvas", true)],
+        // Likely need to toggle this as its broken on Linux and causes segfaults. Examples: https://github.com/Mixaz017/idkr/issues/21
         ["in-process-gpu", null, true],
         // その他
         ["autoplay-policy", "no-user-gesture-required", true]
@@ -119,7 +120,7 @@ const initResourceSwapper = (win) => {
                 }
             })
         } catch (e) {
-            console.error("Error occurred on Resource Swapper.");
+            console.error("Error occurred with the Resource Swapper.");
             console.error(e);
         }
     }
@@ -295,16 +296,20 @@ const initNewWindow = (url, title) => {
     });
 
     const sKeys = [
-        ["Esc", () => {             // ウィンドウ内でのESCキーの有効化
+        ["Esc", () => {
+            // ウィンドウ内でのESCキーの有効化
             win.webContents.send("ESC")
         }],
-        ["F5", () => {              // リ↓ロ↑ードする
+        ["F5", () => {
+            // リ↓ロ↑ードする
             win.reload()
         }],
-        ["F7", () => {              // クリップボードへURLをコピー
+        ["F7", () => {
+            // クリップボードへURLをコピー
             clipboard.writeText(win.webContents.getURL())
         }],
-        [["Ctrl+F1", "F12"], () => {         // 開発者ツールの起動
+        [["Ctrl+F1", "F12"], () => {
+            // 開発者ツールの起動
             win.webContents.openDevTools()
         }]
     ];
@@ -514,23 +519,29 @@ const initAutoUpdater = () => {
 
 const initShortcutKeys = () => {
     const sKeys = [
-        ["Esc", () => {             // ゲーム内でのESCキーの有効化
+        ["Esc", () => {
+            // ゲーム内でのESCキーの有効化
             gameWindow.webContents.send("ESC")
         }],
-        ["F5", () => {              // リ↓ロ↑ードする
+        ["F5", () => {
+            // リ↓ロ↑ードする
             gameWindow.reload()
         }],
-        ["F6", () => {              // 別のマッチへ
+        ["F6", () => {
+            // 別のマッチへ
             gameWindow.loadURL("https://krunker.io")
         }],
-        ["F7", () => {              // クリップボードへURLをコピー(実質Inviteボタン)
+        ["F7", () => {
+            // クリップボードへURLをコピー(実質Inviteボタン)
             clipboard.writeText(gameWindow.webContents.getURL())
         }],
-        ["F8", () => {              // クリップボードのURLへアクセス(実質Joinボタン)
+        ["F8", () => {
+            // クリップボードのURLへアクセス(実質Joinボタン)
             let copiedText = clipboard.readText()
             if (lafTools.urlType(copiedText) === "game") gameWindow.loadURL(copiedText)
         }],
-        ["Shift+F8", () => {        // URLを入力するフォームの表示
+        ["Shift+F8", () => {
+            // URLを入力するフォームの表示
             prompt({
                 title: "LaF",
                 label: langPack.inputURL,
@@ -564,11 +575,13 @@ const initShortcutKeys = () => {
             config.set("Fullscreen", !isFullScreen)
             gameWindow.setFullScreen(!isFullScreen);
         }],
-        ["Ctrl+Shift+F1", () => {   // クライアントの再起動
+        ["Ctrl+Shift+F1", () => {
+            // クライアントの再起動
             app.relaunch();
             app.quit();
         }],
-        [["Ctrl+F1", "F12"], () => {         // 開発者ツールの起動
+        [["Ctrl+F1", "F12"], () => {
+            // 開発者ツールの起動
             gameWindow.webContents.openDevTools()
         }]
     ];

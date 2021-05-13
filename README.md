@@ -10,7 +10,7 @@
 # What is LaF?
 **LaF = Lite and Fast**</br>
 Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
-Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to greatful playing experience for low spec pc developping in Japan.
+Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
 
 # LaF v1.3.0
 - [x] メニュータイマー / Menu timer
@@ -36,15 +36,15 @@ Alt+F4: クライアントを閉じる / Quit
 /* Video */
 FPS解放/Unlimited FPS: FPSを解放できます / Unlimited FPS
 Angleタイプ/Angle Type: バックエンドを選択できます。描画バグが起きた場合や画面キャプチャをできない場合、FPSが不安定な場合に変更すると効果があることがあります。 / You can change backend. When graphics issues has occurred, it may effects better.(e.g. Unstable FPS, Can't capture the screen, and so on.)
-WebGL2 Compute Shader: WebGL2 Compute Shaderを使用するか選択できます。これによってパフォーマンスが向上する場合があります(環境依存) / You can toggle WebGL2 Compute Shader. It may effects better to performance.(Depends to environment)
-ハードウェアアクセラレーション(2D)/Hardware Acceleration(2D): 2Dの描画にGPUを使用するか選択できます。 / You can toggle if it use GPU in 2D.
+WebGL2 Compute Shader: WebGL2 Compute Shaderを使用するか選択できます。これによってパフォーマンスが向上する場合があります(環境依存) / You can toggle WebGL2 Compute Shader. It may increase performance (depending on your environment).
+ハードウェアアクセラレーション(2D)/Hardware Acceleration (2D): 2Dの描画にGPUを使用するか選択できます。 / You can toggle if it use GPU in 2D.
 /* Customize */
-言語/UI Language: 言語を変更できます(日本語/英語) / Change the language(JP/EN)
-Discord RPC: Discord RPCの有効化/無効化が出来ます / Toggle if Discord is enabled
-EXITボタン/Exit Button: EXITボタンの位置の変更と非表示の設定ができます / Select EXIT button's position or if it is hidden
-リソーススワッパー/Resource Swapper: リソーススワッパーの有効化・無効化ができます / You can toggle if Resource Swapper is enabled
+言語/UI Language: 言語を変更できます(日本語/英語) / Change the language between Japanese and English.
+Discord RPC: Discord RPCの有効化/無効化が出来ます / Toggle to enable Discord RPC.
+EXITボタン/Exit Button: EXITボタンの位置の変更と非表示の設定ができます / Select EXIT button's position or if it is hidden.
+リソーススワッパー/Resource Swapper: リソーススワッパーの有効化・無効化ができます / You can toggle if Resource Swapper is enabled.
 EasyCSS: EasyCSSのモードを切り替えることが出来ます / You can change EasyCSS mode
-カスタムCSSファイル/Custom CSS Path: EasyCSSの「カスタム」モードで使用するCSSファイルを指定できます / You can select a CSS file that is used in Custom mode of EasyCSS
+カスタムCSSファイル/Custom CSS Path: EasyCSSの「カスタム」モードで使用するCSSファイルを指定できます / You can easily load custom CSS in EasyCSS mode.
 ```
 
 # Requirements
