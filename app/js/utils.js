@@ -145,7 +145,7 @@ module.exports = class utils {
         }
     }
 
-    setConfig(id, value, restart) {
+    setConfig(id, value, restart) { // DONE
         config.set(id, value)
         console.log(`${id} has set to ${value}.`)
         if (restart) {
@@ -156,7 +156,7 @@ module.exports = class utils {
     }
 
     delayID = {};
-    delaySetConfig(id, target, delay = 600) {
+    delaySetConfig(id, target, delay = 600) { // DONE
         if (delayID[id]) clearTimeout(this.delayID[id])
         this.delayID[id] = setTimeout(() => {
             this.setConfig(id, target.value);
@@ -164,7 +164,7 @@ module.exports = class utils {
         }, delay)
     }
 
-    generateHTML(obj) {
+    generateHTML(obj) { // DONE
         switch (obj.type) {
             case "checkbox":
                 return `
@@ -199,7 +199,7 @@ module.exports = class utils {
         };
     }
 
-    setupGameWindow() {
+    setupGameWindow() { // DONE
         const injectSettings = () => {
             settingsWindow = window.windows[0];
 
