@@ -267,6 +267,7 @@ module.exports = class utils {
         let tmpHTML = `
         <div id="lafAltTitle" style="font-size:30px;text-align:center;margin:3px;font-weight:700;">Alt Mamager</div>
         <hr style="color:rgba(28, 28, 28, .5);">
+        <div class='accountButton' onclick='window.utils.addAltAcc()' style='width:100%'>Add Account</div>
         <div class="lafAltMngHolder" style="display:flex;flex-direction:column;justify-content:center;">
         `;
         const generateHTML = () => {
