@@ -56,6 +56,7 @@ module.exports.ja_JP = class {
     saveAccOK = "正常にアカウントの変更を保存しました"
     saveAccErr = "エラー: アカウントの変更を保存できませんでした"
     enableAltMng = "アカウントマネージャー"
+    addAltAccMsg = "アカウント名/パスワードを入力してください"
 }
 
 module.exports.en_US = class {
@@ -116,4 +117,5 @@ module.exports.en_US = class {
     saveAccOK = "Saved account changes successfully"
     saveAccErr = "Error: Couldn't save account changes"
     enableAltMng = "Alt Manager"
+    addAltAccMsg = "Input Account ID/Password"
 }

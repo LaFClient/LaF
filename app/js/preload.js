@@ -152,7 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // console.log("Debug: DOMLoaded")
         observer.disconnect();
         insertMenuTimer();
-        if (config.get("enableAltMng", true)) insertAltManager();
+        if (config.get("enableAltMng", true)) {
+            insertAltManager();
+        }
         window.closeClient = () => {
             ipcRenderer.send("CLOSE");
             console.log("CLOSE BTN")
@@ -160,9 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lafUtils.setupGameWindow();
     });
     let altManagerObserver = new MutationObserver(() => {
-        altManagerObserver.disconnect();
         lafUtils.injectAddAccBtn();
-        setTimeout(altManagerObserver.observe(document.getElementById("menuWindow"), { childList: true }), 500);
     })
     altManagerObserver.observe(document.getElementById("menuWindow"), { childList: true });
     observer.observe(document.getElementById("instructions"), { childList: true });

@@ -199,6 +199,14 @@ module.exports = class utils {
         };
     }
 
+    injectAddAccBtn () {
+        let windowHeaderEl = document.getElementById("windowHeader");
+        let accountButtonEl = document.getElementsByClassName("accountButton")
+        if (accountButtonEl && windowHeaderEl.innerText === "Account") {
+            accountButtonEl[1].insertAdjacentHTML("afterend", "<div class='accountButton' onclick='window.utils.showAddAltAcc()' style='width:910px'>Add Account</div>");
+        }
+    }
+
     setupGameWindow() {
         const injectSettings = () => {
             settingsWindow = window.windows[0];
@@ -247,14 +255,6 @@ module.exports = class utils {
         injectSettings();
     }
 
-    injectAddAccBtn() {
-        let windowHeaderEl = document.getElementById("windowHeader");
-        let accountButtonEl = document.getElementsByClassName("accountButton")
-        if (windowHeaderEl.innerText = "Account" && accountButtonEl) {
-            accountButtonEl[1].insertAdjacentHTML("afterend", "<div class='accountButton' onclick='window.utils.addAltAcc()' style='width:910px'>Add Account</div>");
-        }
-    }
-
     showAltMng() {
         let menuWindow = document.getElementById("menuWindow");
         // overflow-y: auto;width: 800px;max-height: calc(100% - 330px);top: 50%;transform: translate(-50%, -50%);
@@ -267,7 +267,7 @@ module.exports = class utils {
         let tmpHTML = `
         <div id="lafAltTitle" style="font-size:30px;text-align:center;margin:3px;font-weight:700;">Alt Mamager</div>
         <hr style="color:rgba(28, 28, 28, .5);">
-        <div class='accountButton' onclick='window.utils.addAltAcc()' style='width:100%'>Add Account</div>
+        <div class='accountButton' onclick='window.utils.showAddAltAcc()' style='width:100%'>Add Account</div>
         <div class="lafAltMngHolder" style="display:flex;flex-direction:column;justify-content:center;">
         `;
         const generateHTML = () => {
@@ -336,6 +336,16 @@ module.exports = class utils {
         }
     }
 
+    showAddAltAcc() {
+        let menuWindow = document.getElementById('menuWindow');
+        menuWindow.innerHTML = `
+        <input id="accName" type="text" placeholder="Enter Username" class="accountInput" style="margin-top:0">
+        <input id="accPass" type="password" placeholder="Enter New Password" class="accountInput">
+        <div id="accResp" style="margin-top:10px;font-size:18px;color:#FFFFFF;">${langPack.addAltAccMsg}</div>
+        <div class="accountButton" onclick="window.utils.addAltAcc()" style="width:100%">Add Account</div>
+        `
+    }
+
     loginAcc(accName) {
         let altAccounts = JSON.parse(localStorage.getItem("altAccounts"));
         window.logoutAcc()
@@ -357,7 +367,7 @@ module.exports = class utils {
         <input id="accName" type="text" placeholder="Enter Username" class="accountInput" style="margin-top:0" value="${accName}" readonly="readonly">
         <input id="accPass" type="password" placeholder="Enter New Password" class="accountInput">
         <div id="accResp" style="margin-top:10px;font-size:18px;color:rgba(0,0,0,0.5);">${langPack.edittingAcc.replace("%accName%", accName)}</div>
-        <div class="accountButton" onclick="window.utils.addAltAcc(true)" style="width:100%">Save Account</div>
+        <div class="accountButton" onclick="window.utils.saveAltAcc()" style="width:100%">Save Account</div>
         `
     }
 
