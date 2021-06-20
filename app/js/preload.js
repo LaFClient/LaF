@@ -81,9 +81,10 @@ const initMenuTimer = () => {
         } catch (e) {
             // 何もしなくていい
         }
-        let timerSec = gameActivity.time % 60;
-        let timerMin = gameActivity.time < 60 ? "0" : (gameActivity.time - timerSec) / 60;
-        document.getElementById("menuTimer").innerText = (`${("0" + timerMin).slice(-2)}:${("0" + timerSec).slice(-2)}`)
+        let time = Math.floor(gameActivity.time);
+        let timerS = time % 60;
+        let timerM = time < 60 ? "0" : (time - timerS) / 60;
+        document.getElementById("menuTimer").innerText = (`${("0" + timerM).slice(-2)}:${("0" + timerS).slice(-2)}`)
     }
     let menuTimerInterval = setInterval(getActivity, 500);
 }
