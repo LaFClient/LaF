@@ -20,12 +20,19 @@
     "url": "https://github.com/Hiro527/LaF/issues"
   },
   "homepage": "https://github.com/Hiro527/LaF#readme",
+  "electron-version": "9.4.4",
+  "devDepencies": {
+    "electron": "^9.4.4",
+    "electron-builder": "^22.11.7"
+  },
   "dependencies": {
     "discord-rpc": "^4.0.1",
-    "electron": "^13.1.4",
+    "electron": "^9.4.4",
+    "electron-builder": "^22.11.7",
     "electron-localshortcut": "^3.2.1",
     "electron-prompt": "^1.6.2",
     "electron-store": "^8.0.0",
+    "electron-updater": "^4.3.9",
     "log4js": "^6.3.0",
     "v8-compile-cache": "^2.3.0"
   }
