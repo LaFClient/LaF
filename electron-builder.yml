@@ -1,4 +1,4 @@
-appId: jp.laf.hiro
+appId: com.hiroqss.laf
 productName: 'LaF'
 win:
   artifactName: ${productName}_${version}_portable_${os}_${arch}.${ext}
