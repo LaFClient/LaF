@@ -1,6 +1,6 @@
 ![TitleImage](https://raw.githubusercontent.com/Hiro527/LaF/master/app/img/social.png)</br>
 [![License](https://img.shields.io/github/license/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/blob/master/LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
+[![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF/LaF-2.0?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
 ![Code Lines](https://img.shields.io/tokei/lines/github/Hiro527/LaF?style=flat-square)
 [![Latest](https://img.shields.io/github/v/release/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Latest Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/latest/total?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
@@ -19,7 +19,7 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 Due to source code is being like spagetti, I'm planning to release big update for inproving performance and UI/UX.
 I'm not sure when I will be able to release, but I can release in July at earliest. It's Soon, OK?
 
-Working Branch: (Hiro527/LaF-2.0)[https://github.com/Hiro527/LaF/tree/LaF-2.0]
+Working Branch: [Hiro527/LaF-2.0](https://github.com/Hiro527/LaF/tree/LaF-2.0)
 
 # Requirements
 |     | Least/最低 | Recommended/推奨 |
