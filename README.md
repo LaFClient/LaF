@@ -12,9 +12,14 @@
 Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
 
-# LaF v1.3.0
-- [x] メニュータイマー / Menu timer
-- [x] サブ垢マネージャー / Alt Manager
+# LaF 2.0
+ソースコードがスパゲッティーになってきたので性能の改善とUI/UXの改善に向けて大型アップデートを予定しています。
+アップデートの配信時期は未定ですが、早ければ7月中にできるかもしれません。SoonだよSoon。わかったか。
+
+Due to source code is being like spagetti, I'm planning to release big update for inproving performance and UI/UX.
+I'm not sure when I will be able to release, but I can release in July at earliest. It's Soon, OK?
+
+Working Branch: (Hiro527/LaF-2.0)[https://github.com/Hiro527/LaF/tree/LaF-2.0]
 
 # Controls
 ```
