@@ -21,37 +21,6 @@ I'm not sure when I will be able to release, but I can release in July at earlie
 
 Working Branch: (Hiro527/LaF-2.0)[https://github.com/Hiro527/LaF/tree/LaF-2.0]
 
-# Controls
-```
-F5: リロード / Reload
-F6: 別の部屋へ / New Game
-F7: 招待リンクをコピー / Copy the Invitation Link
-F8: コピーした招待リンクを開く / Open the Invitation Link in Clipboard
-Shift+F8: リンクを入力して開く / Open the Invitation Link with Prompt
-F11: フルスクリーン切り替え / Toggle Fullscreen
-
-Ctrl+F1 or F12: 開発者ツールを起動する / Launch Developer Tools
-Ctrl+Shift+F1: 再起動 / Restart
-
-Alt+F4: クライアントを閉じる / Quit
-```
-
-# LaF Settings
-```
-/* Video */
-FPS解放/Unlimited FPS: FPSを解放できます / Unlimited FPS
-Angleタイプ/Angle Type: バックエンドを選択できます。描画バグが起きた場合や画面キャプチャをできない場合、FPSが不安定な場合に変更すると効果があることがあります。 / You can change backend. When graphics issues has occurred, it may effects better.(e.g. Unstable FPS, Can't capture the screen, and so on.)
-WebGL2 Compute Shader: WebGL2 Compute Shaderを使用するか選択できます。これによってパフォーマンスが向上する場合があります(環境依存) / You can toggle WebGL2 Compute Shader. It may increase performance (depending on your environment).
-ハードウェアアクセラレーション(2D)/Hardware Acceleration (2D): 2Dの描画にGPUを使用するか選択できます。 / You can toggle if it use GPU in 2D.
-/* Customize */
-言語/UI Language: 言語を変更できます(日本語/英語) / Change the language between Japanese and English.
-Discord RPC: Discord RPCの有効化/無効化が出来ます / Toggle to enable Discord RPC.
-EXITボタン/Exit Button: EXITボタンの位置の変更と非表示の設定ができます / Select EXIT button's position or if it is hidden.
-リソーススワッパー/Resource Swapper: リソーススワッパーの有効化・無効化ができます / You can toggle if Resource Swapper is enabled.
-EasyCSS: EasyCSSのモードを切り替えることが出来ます / You can change EasyCSS mode
-カスタムCSSファイル/Custom CSS Path: EasyCSSの「カスタム」モードで使用するCSSファイルを指定できます / You can easily load custom CSS in EasyCSS mode.
-```
-
 # Requirements
 |     | Least/最低 | Recommended/推奨 |
 |:---:|   :---:   |      :---:      |
