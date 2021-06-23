@@ -19,5 +19,14 @@
   "bugs": {
     "url": "https://github.com/Hiro527/LaF/issues"
   },
-  "homepage": "https://github.com/Hiro527/LaF#readme"
+  "homepage": "https://github.com/Hiro527/LaF#readme",
+  "dependencies": {
+    "discord-rpc": "^4.0.1",
+    "electron": "^13.1.4",
+    "electron-localshortcut": "^3.2.1",
+    "electron-prompt": "^1.6.2",
+    "electron-store": "^8.0.0",
+    "log4js": "^6.3.0",
+    "v8-compile-cache": "^2.3.0"
+  }
 }
