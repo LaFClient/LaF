@@ -1,7 +1,7 @@
 module.exports = {
     updater: {
         error: '更新に失敗しました: ',
-        checking: '最新のバージョンを確認しています',
+        checking: '更新を確認しています',
         skipped: '更新をスキップしました',
         available: '最新のバージョンが見つかりました: ',
         uptodate: '現在のバージョンは最新です',
