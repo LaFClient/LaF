@@ -1,0 +1,79 @@
+@font-face {
+    font-family: "Aldrich Regular";
+    src: url('../../fonts/Aldrich-Regular.ttf');
+}
+
+@font-face {
+    font-family: "Makinas4 Flat";
+    src: url('../../fonts/Makinas-4-Flat.otf');
+}
+
+* {
+    user-select: none;
+    outline: none;
+    font-family: "Aldrich Regular", "Makinas4 Flat";
+    color: rgb(27, 27, 27);
+}
+
+body {
+    background-image: url('../../img/splash.png');
+    background-color: #000000;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+img {
+    pointer-events: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+#logo {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#appVersion {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    font-size: 20px;
+}
+
+#devMsg {
+    position: absolute;
+    text-align: right;
+    right: 15px;
+    top: 10px;
+    font-size: 15px;
+}
+
+#status {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    font-size: 15px;
+}
+
+#openSettings {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+#openSettingsIcon {
+    font-size: 40px;
+}

@@ -1,6 +1,6 @@
 require('v8-compile-cache');
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
@@ -10,7 +10,7 @@ const config = new store();
 
 const devMode = config.get('devmode');
 
-// 初期化ブロック 開始
+/* 初期化ブロック */
 log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
@@ -61,6 +61,7 @@ const initSplashWindow = () => {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
+            preload: path.join(__dirname, 'js/preload/splashWindow.js'),
         },
     });
     const initAutoUpdater = async (updateMode) => {
@@ -95,6 +96,7 @@ const initSplashWindow = () => {
             splashWindow.webContents.send('status', langPack.updater.downloaded);
         });
         autoUpdater.autoDownload = updateMode === 'download';
+        autoUpdater.allowPrerelease = devMode;
         autoUpdater.checkForUpdates();
     };
     splashWindow.removeMenu();
@@ -104,3 +106,21 @@ const initSplashWindow = () => {
         initAutoUpdater();
     });
 };
+
+
+/* イベントハンドラー */
+
+// SplashWindow
+ipcMain.handle('getAppVersion', async () => {
+    const version = await app.getVersion();
+    return version;
+});
+
+ipcMain.on('openSettings', () => {
+    // Do something
+});
+
+// App
+app.on('ready', () => {
+    initSplashWindow();
+});
