@@ -1,14 +1,21 @@
 require('v8-compile-cache');
 const path = require('path');
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, protocol, shell } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
 // const appConfig = require('./config/main.json');
+const wm = require('./js/util/wm');
+const tools = require('./js/util/tools');
+
 const osType = process.platform;
 const config = new store();
+const lafTools = new tools();
 
 const devMode = config.get('devmode');
+
+let splashWindow = null;
+let gameWindow = null;
 
 /* 初期化ブロック */
 log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
@@ -16,7 +23,11 @@ if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
     app.quit();
 }
-const langPack = require(config.get('lang') === 'ja_JP' ? './lang/ja_JP' : 'en_US');
+protocol.registerSchemesAsPrivileged([{
+    scheme: 'laf',
+    privileges: { secure: true, corsEnabled: true },
+}]);
+const langPack = require(config.get('lang') === 'ja_JP' ? './lang/ja_JP' : './lang/en_US');
 const initFlags = () => {
     let flagsInfo = 'Chromium Options:';
     const chromiumFlags = [
@@ -48,8 +59,16 @@ const initFlags = () => {
     log.info(flagsInfo);
 };
 initFlags();
+
+const launchGame = () => {
+    gameWindow = new wm.gameWindow();
+    gameWindow.once('ready-to-show', () => {
+        splashWindow.destroy();
+    });
+};
+
 const initSplashWindow = () => {
-    const splashWindow = new BrowserWindow({
+    splashWindow = new BrowserWindow({
         width: 640,
         height: 320,
         frame: false,
@@ -59,7 +78,6 @@ const initSplashWindow = () => {
         show: false,
         alwaysOnTop: true,
         webPreferences: {
-            nodeIntegration: true,
             contextIsolation: false,
             preload: path.join(__dirname, 'js/preload/splashWindow.js'),
         },
@@ -79,7 +97,10 @@ const initSplashWindow = () => {
                 setTimeout(() => {
                     if (updateMode === 'skip') {
                         splashWindow.webContents.send('status', langPack.updater.skipped);
-                        return;
+                        setTimeout(() => {
+                            launchGame();
+                            return;
+                        }, 1000);
                     }
                 }, 1000);
             });
@@ -87,13 +108,19 @@ const initSplashWindow = () => {
         autoUpdater.on('update-not-available', (i) => {
             log.info(i);
             splashWindow.webContents.send('status', langPack.updater.uptodate);
-            return;
+            setTimeout(() => {
+                launchGame();
+                return;
+            }, 1000);
         });
         autoUpdater.on('download-progress', (i) => {
             splashWindow.webContents.send('status', langPack.updater.progress.format(Math.floor(i.percent), Math.floor(i.bytesPerSecond / 1000)));
         });
         autoUpdater.on('update-downloaded', () => {
             splashWindow.webContents.send('status', langPack.updater.downloaded);
+            setTimeout(() => {
+                autoUpdater.quitAndInstall();
+            }, 1500);
         });
         autoUpdater.autoDownload = updateMode === 'download';
         autoUpdater.allowPrerelease = devMode;
@@ -122,5 +149,6 @@ ipcMain.on('openSettings', () => {
 
 // App
 app.on('ready', () => {
+    protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:/, ''))));
     initSplashWindow();
 });
