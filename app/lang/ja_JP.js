@@ -15,7 +15,7 @@ module.exports = {
         cancel: 'キャンセル',
         social: {
             leavePageTitle: 'ページを離れますか？',
-            leavePageMessage: '本当にこのページを離れますか？行われた変更は保存されていない可能性があります。'
-        }
-    }
+            leavePageMessage: '本当にこのページを離れますか？行われた変更は保存されていない可能性があります。',
+        },
+    },
 };
