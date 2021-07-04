@@ -34,6 +34,7 @@
     "electron-prompt": "^1.6.2",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.3.9",
+    "npm": "^7.19.1",
     "v8-compile-cache": "^2.3.0"
   }
 }
