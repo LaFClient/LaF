@@ -5,7 +5,8 @@
         "es6": true
     },
     "parserOptions": {
-        "ecmaVersion": 2019
+        "ecmaVersion": 2019,
+        "sourceType": "module"
     },
     "rules": {
         "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
@@ -24,9 +25,10 @@
         "no-lonely-if": "error",
         "no-multi-spaces": "error",
         "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
-        "no-shadow": ["error", { "allow": ["err", "resolve", "reject"] }],
-        "no-trailing-spaces": ["error"],
+        "no-shadow": ["error", { "allow": ["url", "win", "e", "err", "resolve", "reject"] }],
+        "no-trailing-spaces": ["off"],
         "no-var": "error",
+        "no-unused-vars": "off",
         "object-curly-spacing": ["error", "always"],
         "prefer-const": "error",
         "quotes": ["error", "single"],
