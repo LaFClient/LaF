@@ -17,14 +17,6 @@
     "type": "git",
     "url": "git+https://github.com/Hiro527/LaF.git"
   },
-  "build": {
-    "publish": {
-      "provider": "github",
-      "owner": "Hiro527",
-      "repo": "LaF",
-      "releaseType": "draft"
-    }
-  },
   "author": "Hiro",
   "license": "MIT",
   "bugs": {
