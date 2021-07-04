@@ -61,7 +61,7 @@ const initFlags = () => {
 initFlags();
 
 const launchGame = () => {
-    gameWindow = new wm.gameWindow();
+    gameWindow = wm.launchGame();
     gameWindow.once('ready-to-show', () => {
         splashWindow.destroy();
     });
@@ -79,7 +79,7 @@ const initSplashWindow = () => {
         alwaysOnTop: true,
         webPreferences: {
             contextIsolation: false,
-            preload: path.join(__dirname, 'js/preload/splashWindow.js'),
+            preload: path.join(__dirname, 'js/preload/splash.js'),
         },
     });
     const initAutoUpdater = async (updateMode) => {
@@ -87,6 +87,10 @@ const initSplashWindow = () => {
         autoUpdater.on('error', (e) => {
             log.error(e);
             splashWindow.webContents.send('status', langPack.updater.error + e.name);
+            setTimeout(() => {
+                launchGame();
+                return;
+            }, 1000);
             return;
         });
         autoUpdater.on('checking-for-update', () => { splashWindow.send('status', langPack.updater.checking); });

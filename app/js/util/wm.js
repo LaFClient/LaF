@@ -32,6 +32,11 @@ const windows = {
     editor: null,
 };
 
+exports.launchGame = () => {
+    windows.game = new this.gameWindow();
+    return windows.game;
+};
+
 exports.gameWindow = class {
     constructor() {
         const brWin = new BrowserWindow({
@@ -152,7 +157,6 @@ exports.gameWindow = class {
             e.preventDefault();
             openNewWindow(url);
         });
-        windows.game = brWin;
         return brWin;
     }
 };
@@ -166,7 +170,7 @@ exports.socialWindow = class {
             title: 'LaF',
             webPreferences: {
                 contextIsolation: false,
-                preload: path.join(__dirname, '../preload/socualWindow.js'),
+                preload: path.join(__dirname, '../preload/social.js'),
             },
         });
 
