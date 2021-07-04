@@ -3,17 +3,24 @@
   "version": "2.0.0-alpha.1",
   "description": "Lite and Fast Krunker Client",
   "main": "app/main.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "make": "electron-builder"
+    "build:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac",
+    "dist": "electron-builder"
+
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hiro527/LaF.git"
+  },
+  "build": {
+    "publish": {
+      "provider": "github",
+      "owner": "Hiro527",
+      "repo": "LaF",
+      "releaseType": "release"
+    }
   },
   "author": "Hiro",
   "license": "MIT",
@@ -21,8 +28,8 @@
     "url": "https://github.com/Hiro527/LaF/issues"
   },
   "homepage": "https://github.com/Hiro527/LaF#readme",
-  "electron-version": "9.4.4",
-  "devDepencies": {
+  "electronVersion": "9.4.4",
+  "devDependencies": {
     "electron": "^9.4.4",
     "electron-builder": "^22.11.7"
   },
@@ -33,7 +40,6 @@
     "electron-prompt": "^1.6.2",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.3.9",
-    "npm": "^7.19.1",
     "v8-compile-cache": "^2.3.0"
   }
 }
