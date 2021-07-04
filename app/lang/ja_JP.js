@@ -8,4 +8,14 @@ module.exports = {
         progress: 'ダウンロード中: {0}, {1}kB/s',
         downloaded: 'ダウンロードが完了しました',
     },
+    dialog: {
+        yes: 'はい',
+        no: 'いいえ',
+        ok: 'OK',
+        cancel: 'キャンセル',
+        social: {
+            leavePageTitle: 'ページを離れますか？',
+            leavePageMessage: '本当にこのページを離れますか？行われた変更は保存されていない可能性があります。'
+        }
+    }
 };
