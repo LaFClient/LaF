@@ -8,7 +8,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "make": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -27,8 +28,6 @@
   },
   "dependencies": {
     "discord-rpc": "^4.0.1",
-    "electron": "^9.4.4",
-    "electron-builder": "^22.11.7",
     "electron-localshortcut": "^3.2.1",
     "electron-log": "^4.3.5",
     "electron-prompt": "^1.6.2",
