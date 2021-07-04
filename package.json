@@ -4,11 +4,14 @@
   "description": "Lite and Fast Krunker Client",
   "main": "app/main.js",
   "scripts": {
+    "start": "electron .",
+    "build:linux": "electron-builder --linux --dir",
+    "dist:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac --dir",
+    "dist:mac": "electron-builder --mac",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:linux": "electron-builder --linux",
-    "build:mac": "electron-builder --mac",
+    "pack": "electron-builder --dir",
     "dist": "electron-builder"
-
   },
   "repository": {
     "type": "git",
