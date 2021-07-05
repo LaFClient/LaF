@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Aldrich Regular";
+    src: url("../fonts/Aldrich-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Makinas4 Flat";
+    src: url("../fonts/Makinas-4-Flat.otf");
+}
+
+* {
+    font-family: "Aldrich Regular", "Makinas4 Flat";
+}

@@ -1,8 +1,9 @@
 require('v8-compile-cache');
 const path = require('path');
-const { app, BrowserWindow, ipcMain, protocol, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, protocol, shell, ipcRenderer } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
+const prompt = require('electron-prompt');
 const { autoUpdater } = require('electron-updater');
 // const appConfig = require('./config/main.json');
 const wm = require('./js/util/wm');
@@ -10,7 +11,6 @@ const tools = require('./js/util/tools');
 
 const osType = process.platform;
 const config = new store();
-const lafTools = new tools();
 
 const devMode = config.get('devmode');
 
@@ -23,11 +23,14 @@ if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
     app.quit();
 }
+
 protocol.registerSchemesAsPrivileged([{
     scheme: 'laf',
     privileges: { secure: true, corsEnabled: true },
 }]);
+
 const langPack = require(config.get('lang') === 'ja_JP' ? './lang/ja_JP' : './lang/en_US');
+
 const initFlags = () => {
     let flagsInfo = 'Chromium Options:';
     const chromiumFlags = [
@@ -149,6 +152,44 @@ ipcMain.handle('getAppVersion', async () => {
 
 ipcMain.on('openSettings', () => {
     // Do something
+});
+
+// GameWindow
+ipcMain.on('showPrompt', (e, message, defaultValue) => {
+    prompt({
+        title: 'LaF',
+        label: message,
+        value: defaultValue,
+        inputAttrs: {
+            type: 'text',
+        },
+        type: 'input',
+        alwaysOnTop: true,
+        icon: path.join(__dirname, 'img/icon.ico'),
+        skipTaskbar: true,
+        buttonLabels: {
+            ok: langPack.dialog.ok,
+            cancel: langPack.dialog.cancel,
+        },
+        width: 400,
+        height: 200,
+        customStylesheet: path.join(__dirname, 'css/prompt.css'),
+    })
+        .then((r) => {
+            if (r === null) {
+                log.info('showPrompt: User Cancelled.');
+                e.returnValue = null;
+            }
+            else {
+                log.info(r);
+                e.returnValue = r;
+            }
+        })
+        .catch(console.error);
+});
+
+ipcMain.on('exitClient', () => {
+    app.exit();
 });
 
 // App
