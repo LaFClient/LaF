@@ -9,7 +9,7 @@ const tools = require('./tools');
 
 const osType = process.platform;
 const config = new store();
-const lafTools = new tools();
+const lafTools = new tools.clientTools();
 
 const devMode = config.get('devmode');
 const isRPCEnabled = config.get('enableRPC', true);
@@ -149,6 +149,9 @@ exports.gameWindow = class {
         // イベントハンドラ
         brWin.once('ready-to-show', () => {
             brWin.show();
+        });
+        brWin.webContents.on('did-finish-load', () => {
+            brWin.webContents.send('didFinishLoad');
         });
         brWin.on('page-title-updated', (e) => {
             e.preventDefault();
