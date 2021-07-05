@@ -13,11 +13,14 @@ Krunkerは低スペックPCでも動く軽いゲームですが、「公式ク�
 Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
 
 # LaF 2.0
+ライセンスがGNU GPL3.0からMIT Licenseに変更されます。
+The license will be changed to MIT License from GNU GPL3.0.
+
 ソースコードがスパゲッティーになってきたので性能の改善とUI/UXの改善に向けて大型アップデートを予定しています。
-アップデートの配信時期は未定ですが、早ければ7月中にできるかもしれません。SoonだよSoon。わかったか。
+アップデートの配信時期は未定ですが、~~早ければ7月中にできるかもしれません。SoonだよSoon。わかったか。~~ 多分8月の上旬だと思います。
 
 Due to source code is being like spagetti, I'm planning to release big update for inproving performance and UI/UX.
-I'm not sure when I will be able to release, but I can release in July at earliest. It's Soon, OK?
+I'm not sure when I will be able to release, ~~but I can release in July at earliest. It's Soon, OK?~~ It might be published in earler August.
 
 Working Branch: [Hiro527/LaF-2.0](https://github.com/Hiro527/LaF/tree/LaF-2.0)
 
