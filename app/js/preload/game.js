@@ -8,7 +8,7 @@ const tools = require('../util/tools');
 const osType = process.platform;
 const config = new store();
 
-const langPack = require(config.get('lang') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
+const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? './lang/ja_JP' : './lang/en_US');
 
 log.info('Script Loaded: js/preload/preload.js');
 

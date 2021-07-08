@@ -29,7 +29,7 @@ protocol.registerSchemesAsPrivileged([{
     privileges: { secure: true, corsEnabled: true },
 }]);
 
-const langPack = require(config.get('lang') === 'ja_JP' ? './lang/ja_JP' : './lang/en_US');
+const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? './lang/ja_JP' : './lang/en_US');
 
 const initFlags = () => {
     let flagsInfo = 'Chromium Options:';

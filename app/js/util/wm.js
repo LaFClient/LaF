@@ -16,7 +16,7 @@ const isRPCEnabled = config.get('enableRPC', true);
 const isSwapperEnabled = config.get('enableResourceSwapper', true);
 const ezCSSMode = config.get('easyCSSMode', 'disable');
 const isEzCSSEnabled = ezCSSMode !== 'disable';
-const langPack = require(config.get('lang') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
+const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? './lang/ja_JP' : './lang/en_US');
 
 const cssPath = {
     type1: 'css/EasyCSS/type1.css',
