@@ -21,7 +21,7 @@
         "no-console": "off",
         "no-empty-function": "off",
         "no-floating-decimal": "error",
-        "no-inline-comments": "error",
+        "no-inline-comments": "off",
         "no-lonely-if": "error",
         "no-multi-spaces": "error",
         "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
@@ -43,7 +43,7 @@
         "space-in-parens": "error",
         "space-infix-ops": "error",
         "space-unary-ops": "error",
-        "spaced-comment": "error",
+        "spaced-comment": "off",
         "yoda": "error"
     }
 }
