@@ -155,6 +155,11 @@ ipcMain.on('openSettings', () => {
 });
 
 // GameWindow
+ipcMain.handle('restartClient', () => {
+    app.relaunch();
+    app.quit();
+});
+
 ipcMain.on('showPrompt', (e, message, defaultValue) => {
     prompt({
         title: 'LaF',
