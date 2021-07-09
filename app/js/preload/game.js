@@ -8,7 +8,7 @@ const tools = require('../util/tools');
 const osType = process.platform;
 const config = new store();
 
-const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? './lang/ja_JP' : './lang/en_US');
+const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
 
 log.info('Script Loaded: js/preload/preload.js');
 
@@ -16,10 +16,11 @@ log.info('Script Loaded: js/preload/preload.js');
 const isEnabledTimer = config.get('enableTimer', true);
 const devMode = config.get('devmode');
 
+window.OffCliV = true;
+
 window.prompt = (message, defaultValue) => {
     return ipcRenderer.sendSync('showPrompt', message, defaultValue);
 };
-window.OffCliV = true;
 
 const injectWaterMark = () => {
     const gameUIEl = document.getElementById('gameUI');
