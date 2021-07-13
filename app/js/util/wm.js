@@ -18,6 +18,8 @@ const ezCSSMode = config.get('easyCSSMode', 'disable');
 const isEzCSSEnabled = ezCSSMode !== 'disable';
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
 
+log.info('Script Loaded: js/util/wm.js');
+
 const cssPath = {
     type1: 'css/EasyCSS/type1.css',
     type2: 'css/EasyCSS/type2.css',
