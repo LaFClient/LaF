@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.gt = new tools.gameTools();
     const winObserver = new MutationObserver(() => {
         winObserver.disconnect();
-        if (isEnabledTimer) initMenuTimer();
         window.closeClient = () => {
             ipcRenderer.send('exitClient');
         };
@@ -73,5 +72,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ipcRenderer.on('didFinishLoad', () => {
     injectWaterMark();
-
+    if (isEnabledTimer) initMenuTimer();
 });
