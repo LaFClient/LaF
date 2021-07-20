@@ -31,6 +31,27 @@ const injectWaterMark = () => {
     });
 };
 
+const injectExitBtn = () => {
+    const exitBtn = document.getElementById('clientExit');
+    switch (config.get('showExitBtn', 'bottom')) {
+        case 'top':
+            menuContainer.removeChild(menuContainer.children[7]);
+            menuContainer.insertAdjacentHTML('afterbegin', `
+            <div class='menuItem' onmouseenter='playTick()' onclick='clientExitPopup()' id='clientExit'>
+            <div class='menuItemIcon iconExit'></div>
+            <div class='menuItemTitle' id='menuBtnExit'>Exit</div>
+            </div>
+            `);
+            exitBtn.style.display = 'inherit';
+            break;
+        case 'bottom':
+            exitBtn.style.display = 'inherit';
+            break;
+        case 'disable':
+            break;
+    }
+};
+
 const initMenuTimer = () => {
     const instructions = document.getElementById('instructions');
     const menuTimerText = `
@@ -44,7 +65,7 @@ const initMenuTimer = () => {
             gameActivity = window.getGameActivity();
         }
         catch (e) {
-            // 何もしなくていい
+            log.error(e);
         }
         const time = Math.floor(gameActivity.time);
         const timerS = time % 60;
@@ -71,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 ipcRenderer.on('didFinishLoad', () => {
+    injectExitBtn();
     injectWaterMark();
     if (isEnabledTimer) initMenuTimer();
 });
