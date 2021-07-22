@@ -110,7 +110,7 @@ const initResourceSwapper = (win) => {
                     recursiveFolder(win, `${prefix}/${cPath.name}`);
                 } else {
                     let name = `${prefix}/${cPath.name}`;
-                    let isAsset = /^\/(models|textures)($|\/)/.test(name);
+                    let isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
                     if (isAsset) {
                         urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
                     } else {
