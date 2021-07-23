@@ -6,19 +6,21 @@ const log = require('electron-log');
 const prompt = require('electron-prompt');
 const { autoUpdater } = require('electron-updater');
 // const appConfig = require('./config/main.json');
-const wm = require('./js/util/wm');
-const tools = require('./js/util/tools');
 
 const osType = process.platform;
 const config = new store();
 
 const devMode = config.get('devmode');
 
+log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
+
+const wm = require('./js/util/wm');
+const tools = require('./js/util/tools');
+
 let splashWindow = null;
 let gameWindow = null;
 
 /* 初期化ブロック */
-log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
 if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
     app.quit();
