@@ -82,7 +82,7 @@ exports.gameTools = class {
                     <div id='accResp' style='margin-top:20px;margin-bottom:20px;font-size:18px;color:rgba(255,255,255,0.5);text-align:center'>For lost Passwords/Accounts contact <span style='color:rgba(255,255,255,0.8)'>recovery@yendis.ch</span></div>
                 </div>
                 <div style='width:100%;text-align:center;margin-top:10px;background-color:rgba(0,0,0,0.3);padding-top:10px;padding-bottom:20px;'>
-                    <div class='accBtn button buttonG' style='width:95%' onclick='SOUND.play(\`select_0\`,0.1);window.gt.addAltAcc()'>Add Account</div>
+                    <div class='accBtn button buttonPI' style='width:95%' onclick='SOUND.play(\`select_0\`,0.1);window.gt.addAltAcc()'>Add Account</div>
                 </div>
             </div>
         </div>`;

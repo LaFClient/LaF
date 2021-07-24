@@ -163,7 +163,7 @@ ipcMain.handle('restartClient', () => {
 });
 
 ipcMain.handle('showDialog', (e, accName) => {
-    const answer = dialog.showMessageBoxSync(gameWindow, {
+    const answer = dialog.showMessageBox(gameWindow, {
         title: 'LaF',
         message: langPack.altManager.deleteAcc.confirm.replace('%accName%', accName),
         buttons: [langPack.dialog.ok, langPack.dialog.cancel],

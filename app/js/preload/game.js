@@ -44,6 +44,7 @@ const injectAltManager = () => {
     }, 100);
 };
 
+// 技術的問題により一時的に削除
 const injectAddAccBtn = () => {
     const windowHeaderEl = document.getElementById('windowHeader');
     const accBtnEl = document.getElementsByClassName('accBtn');
@@ -120,11 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('exitClient');
         };
     });
-    const menuWindowObserver = new MutationObserver(() => {
-        setTimeout(injectAddAccBtn(), 50);
-    });
     winObserver.observe(document.getElementById('instructions'), { childList: true });
-    menuWindowObserver.observe(document.getElementById('menuWindow'), { childList: true });
 });
 
 ipcRenderer.on('didFinishLoad', () => {
