@@ -18,4 +18,17 @@ module.exports = {
             leavePageMessage: '本当にこのページを離れますか？行われた変更は保存されていない可能性があります。',
         },
     },
+    altManager: {
+        addAcc: {
+            ok: 'アカウントを正常に追加しました',
+            error: 'アカウントを追加できませんでした',
+            saveok: 'アカウントを正常に保存しました',
+        },
+        deleteAcc: {
+            confirm: '本当に%accName%を削除しますか？',
+        },
+        editAcc: {
+            edit: '%accName%を編集中',
+        },
+    },
 };

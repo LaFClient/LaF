@@ -18,4 +18,17 @@ module.exports = {
             leavePageMessage: 'Are you sure you want to leave this page? Your change might not be saved.',
         },
     },
+    altManager: {
+        addAcc: {
+            ok: 'Account added successflly',
+            error: 'Could\'nt add account due to error',
+            saveok: 'Account saved successfly',
+        },
+        deleteAcc: {
+            confirm: 'Are you sure you want to delete %accName%？',
+        },
+        editAcc: {
+            edit: 'Editting %accName%',
+        },
+    },
 };
