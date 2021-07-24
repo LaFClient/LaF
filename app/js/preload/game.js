@@ -4,6 +4,7 @@ const store = require('electron-store');
 const log = require('electron-log');
 const path = require('path');
 const tools = require('../util/tools');
+const { BlockList } = require('net');
 
 const osType = process.platform;
 const config = new store();
@@ -25,9 +26,32 @@ window.prompt = (message, defaultValue) => {
 const injectAltManager = () => {
     const mMenuHolDefEl = document.getElementById('mMenuHolDef');
     mMenuHolDefEl.insertAdjacentHTML('beforeend', `
+    <div class="button buttonR lgn" id="logoutBtn" style="display:none;position:absolute;top:2px;right:770px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
+    Logout <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">logout</span></div>
     <div class="button buttonPI lgn" id="altManagerBtn" style="position:absolute;top:2px;right:500px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
-    Alt Manager <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">manage_accounts</span>
+    Alt Manager <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">manage_accounts</span></div>
     `);
+    const loggedIn = false;
+    setInterval(() => {
+        const logoutBtnEl = document.getElementById('logoutBtn');
+        const signedInHeaderBarEl = document.getElementById('signedInHeaderBar');
+        if (signedInHeaderBarEl.style.display !== 'none') {
+            logoutBtnEl.style.display = 'block';
+        }
+        else {
+            logoutBtnEl.style.display = 'none';
+        }
+    }, 100);
+};
+
+const injectAddAccBtn = () => {
+    const windowHeaderEl = document.getElementById('windowHeader');
+    const accBtnEl = document.getElementsByClassName('accBtn');
+    if (accBtnEl && windowHeaderEl.innerText === 'Account') {
+        accBtnEl[1].insertAdjacentHTML('afterend', `
+        <div class='accBtn button buttonPI' style='width:94.5%;margin-top:20px;' onclick='window.gt.showAddAltAcc()'>Add Account</div>
+        `);
+    }
 };
 
 const injectWaterMark = () => {
@@ -96,7 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('exitClient');
         };
     });
+    const menuWindowObserver = new MutationObserver(() => {
+        setTimeout(injectAddAccBtn(), 50);
+    });
     winObserver.observe(document.getElementById('instructions'), { childList: true });
+    menuWindowObserver.observe(document.getElementById('menuWindow'), { childList: true });
 });
 
 ipcRenderer.on('didFinishLoad', () => {
