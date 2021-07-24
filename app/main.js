@@ -1,6 +1,6 @@
 require('v8-compile-cache');
 const path = require('path');
-const { app, BrowserWindow, ipcMain, protocol, shell, ipcRenderer } = require('electron');
+const { app, BrowserWindow, ipcMain, protocol, shell, ipcRenderer, dialog } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 const prompt = require('electron-prompt');
@@ -160,6 +160,16 @@ ipcMain.on('openSettings', () => {
 ipcMain.handle('restartClient', () => {
     app.relaunch();
     app.quit();
+});
+
+ipcMain.handle('showDialog', (e, accName) => {
+    const answer = dialog.showMessageBoxSync(gameWindow, {
+        title: 'LaF',
+        message: langPack.altManager.deleteAcc.confirm.replace('%accName%', accName),
+        buttons: [langPack.dialog.ok, langPack.dialog.cancel],
+        cancelId: -1,
+    });
+    return answer;
 });
 
 ipcMain.on('showPrompt', (e, message, defaultValue) => {
