@@ -5,6 +5,7 @@ const store = require('electron-store');
 const log = require('electron-log');
 const prompt = require('electron-prompt');
 const { autoUpdater } = require('electron-updater');
+const DiscordRPC = require('discord-rpc');
 // const appConfig = require('./config/main.json');
 
 const osType = process.platform;
@@ -17,8 +18,13 @@ log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n- electron@${process
 const wm = require('./js/util/wm');
 const tools = require('./js/util/tools');
 
+const ClientID = '810350252023349248';
+
 let splashWindow = null;
 let gameWindow = null;
+
+const isRPCEnabled = config.get('enableRPC', true);
+const isSwapperEnabled = config.get('enableResourceSwapper', true);
 
 /* 初期化ブロック */
 if (!app.requestSingleInstanceLock()) {
@@ -143,8 +149,22 @@ const initSplashWindow = () => {
     });
 };
 
+DiscordRPC.register(ClientID);
+const rpc = new DiscordRPC.Client({ transport: 'ipc' });
 
 /* イベントハンドラー */
+// DiscordRPC
+let isDiscordAlive;
+rpc.on('ready', () => {
+    isDiscordAlive = true;
+    log.info('Discord RPC Ready');
+});
+
+ipcMain.handle('RPC_SEND', (e, d) => {
+    if (isDiscordAlive) {
+        rpc.setActivity(d);
+    }
+});
 
 // SplashWindow
 ipcMain.handle('getAppVersion', async () => {
@@ -212,5 +232,18 @@ ipcMain.on('exitClient', () => {
 // App
 app.on('ready', () => {
     protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:/, ''))));
+    if (isRPCEnabled) {
+        let loggedIn;
+        try {
+            rpc.login({ clientId: ClientID });
+            loggedIn = true;
+        }
+        catch (e) {
+            console.error(e);
+        }
+        if (loggedIn) {
+            log.info('Discord Login OK');
+        }
+    }
     initSplashWindow();
 });

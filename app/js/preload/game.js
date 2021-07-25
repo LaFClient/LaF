@@ -13,15 +13,53 @@ const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/j
 
 log.info('Script Loaded: js/preload/preload.js');
 
-
+const isEnabledAltManager = config.get('enableAltMng', true);
 const isEnabledTimer = config.get('enableTimer', true);
+const isEnabledRPC = config.get('enableRPC', true);
 const devMode = config.get('devmode');
+
+let rpcActivity = null;
+let rpcInterval = null;
 
 window.OffCliV = true;
 
 window.prompt = (message, defaultValue) => {
     return ipcRenderer.sendSync('showPrompt', message, defaultValue);
 };
+
+const initDiscordRPC = () => {
+    const sendDiscordRPC = () => {
+        try {
+            const gameActivity = window.getGameActivity();
+            rpcActivity = {
+                state: gameActivity.map,
+                details: gameActivity.mode,
+                largeImageKey: 'laf_icon',
+                largeImageText: 'LaF CLient',
+            };
+            if (gameActivity.time) {
+                rpcActivity.endTimestamp = Date.now() + gameActivity.time * 1e3;
+            }
+            ipcRenderer.invoke('RPC_SEND', rpcActivity);
+        }
+        catch (error) {
+            rpcActivity = {
+                state: 'Playing Krunker',
+                largeImageKey: 'laf_icon',
+                largeImageText: 'LaF CLient',
+            };
+            ipcRenderer.invoke('RPC_SEND', rpcActivity);
+        }
+    };
+    if (isEnabledRPC) {
+        rpcActivity = {
+            startTimestamp: Math.floor(Date.now() / 1e3),
+        };
+        ipcRenderer.invoke('RPC_SEND', rpcActivity);
+        rpcInterval = setInterval(sendDiscordRPC, 500);
+    }
+};
+initDiscordRPC();
 
 const injectAltManager = () => {
     const mMenuHolDefEl = document.getElementById('mMenuHolDef');
@@ -126,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ipcRenderer.on('didFinishLoad', () => {
     injectExitBtn();
-    injectAltManager();
     injectWaterMark();
+    if (isEnabledAltManager) injectAltManager();
     if (isEnabledTimer) initMenuTimer();
 });
