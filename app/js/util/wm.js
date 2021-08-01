@@ -69,7 +69,7 @@ exports.gameWindow = class {
                         }
                         else {
                             const name = `${prefix}/${cPath.name}`;
-                            const isAsset = /^\/(models|textures)($|\/)/.test(name);
+                            const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
                             if (isAsset) {
                                 urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
                             }
@@ -196,7 +196,7 @@ exports.socialWindow = class {
                         }
                         else {
                             const name = `${prefix}/${cPath.name}`;
-                            const isAsset = /^\/(models|textures)($|\/)/.test(name);
+                            const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
                             if (isAsset) {
                                 urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
                             }
