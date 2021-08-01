@@ -152,7 +152,6 @@ ipcRenderer.on('ESC', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.gt = new tools.gameTools();
     const winObserver = new MutationObserver(() => {
         winObserver.disconnect();
         window.closeClient = () => {
@@ -163,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 ipcRenderer.on('didFinishLoad', () => {
+    window.gt = new tools.gameTools();
     injectExitBtn();
     injectWaterMark();
     if (isEnabledAltManager) injectAltManager();
