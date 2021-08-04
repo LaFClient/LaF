@@ -51,5 +51,6 @@ module.exports = {
         topExitBtn: '上',
         bottomExitBtn: '下',
         disableExitBtn: '非表示',
+        selectFile: 'ファイルを選択',
     },
 };

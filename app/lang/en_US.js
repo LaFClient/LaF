@@ -51,5 +51,6 @@ module.exports = {
         topExitBtn: 'Top',
         bottomExitBtn: 'Buttom',
         disableExitBtn: 'Hidden',
+        selectFile: 'Open',
     },
 };

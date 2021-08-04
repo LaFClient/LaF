@@ -2,6 +2,8 @@ const { ipcRenderer } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 
+const settings = require('./settings');
+
 const config = new store();
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
 
@@ -13,12 +15,113 @@ exports.clientTools = class {
         if (url.startsWith('https://krunker.io') || url.startsWith('https://comp.krunker.io/?game=') || url.startsWith('https://127.0.0.1:8080')) return 'game';
         return 'external';
     }
+    generateHTML(obj) {
+        switch (obj.type) {
+            case 'checkbox':
+                return `
+                <label class='switch'>
+                <input type='checkbox' onclick='window.gt.setSetting("${obj.id}", this.checked)'${config.get(obj.id, obj.default) ? ' checked' : ''}>
+                <span class='slider'></span>
+                </label>`;
+            case 'select':
+                let tmpHTML = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
+                Object.keys(obj.options).forEach((k) => {
+                    tmpHTML += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''}>${obj.options[k]}</option>`;
+                });
+                return tmpHTML + '</select>';
+            case 'slider':
+                return `
+                <input type='number' class='sliderVal' id='c_slid_input_${obj.id}' min='${obj.min}' max='${obj.max}' value='${config.get(obj.id, obj.default)}' onkeypress='window.gt.setdSetting("${obj.id}", this)' style='border-width:0px'/><div class='slidecontainer'><input type='range' id='c_slid_${obj.id}' min='${obj.min}' max='${obj.max}' step='${obj.step}' value='${config.get(obj.id, obj.default)}' class='sliderM' oninput='window.gt.setSetting("${obj.id}", this.value)'></div>
+                `;
+            case 'file':
+                return `
+                <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
+                `;
+            case 'fileWithEyes':
+                return `
+                <button class='settingsBtn' onclick='window.gt.openFileDialog(${obj.id})' style="float:right;margin-top:5px;width:auto;">${langPack.settings.selectFile}</button>
+                <a class="material-icons" id="eye_${obj.id}" onclick="window.gt.changeVisibility('${obj.id}')" style="text-decoration:none;float:right;margin-top:10px;color:rgba(255,255,255,1);">${config.get(`${obj.id}_visibility`, true) ? 'visibility' : 'visibility_off'}</a>
+                <div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
+                `;
+            default:
+                return `
+                <input type='${obj.type}' name='${obj.id}' id='c_slid_${obj.id}' ${obj.type == 'color' ? 'style="float:right;margin-top:5px;"' : `class='inputGrey2' ${obj.placeholder ? `placeholder='${obj.placeholder}'` : ''}}`} value='${config.get(obj.id, obj.default).replace(/'/g, '')}' oninput='window.gt.setSetting("${obj.id}", this.value)'/>
+                `;
+        }
+    }
+    setupGameWindow() {
+        const injectSettings = () => {
+            let settingsWindow = window.windows[0];
+
+            const GetSettings = settingsWindow.getSettings;
+            settingsWindow.getSettings = (...args) => GetSettings.call(settingsWindow, ...args).replace(/^<\/div>/, '') + settingsWindow.getCSettings();
+
+            settingsWindow.getCSettings = () => {
+                settingsWindow = window.windows[0];
+                let customHTML = '';
+                if (settingsWindow.tabIndex !== 6 && !settingsWindow.settingSearch) {
+                    return '';
+                }
+                let prevCat = null;
+                Object.values(settings).forEach((k) => {
+                    if (settingsWindow.settingSearch && !window.gt.searchMatches(k.id, k.title, k.cat)) {
+                        return '';
+                    }
+                    let tmpHTML = '';
+                    if (k.cat != prevCat) {
+                        if (prevCat) {
+                            tmpHTML += '</div>';
+                        }
+                        prevCat = k.cat;
+                        tmpHTML += `<div class='setHed' id='setHed_${k.cat}' onclick='window.windows[0].collapseFolder(this)'><span class='material-icons plusOrMinus'>keyboard_arrow_down</span>${k.cat}</div><div class='setBodH' id='setBod_${k.cat}'>`;
+                    }
+                    tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `;
+                    if (k.restart) {
+                        tmpHTML += '<span style=\'color: #eb5656\'> *</span>';
+                    }
+                    customHTML += tmpHTML + this.generateHTML(k) + '</div>';
+                });
+                /*
+                if (!settingsWindow.settingSearch) {
+                    customHTML += `
+                    </div>
+                    <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
+                    <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
+                    <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a></br>
+                    <a onclick="window.utils.tolset('openSwapper')" class="menuLink">${langPack.openSwapFolder}</a> | 
+                    <a onclick="window.utils.tolset('openInfo')" class="menuLink">${langPack.openInfo}</a>
+                    `;
+                }*/
+                return customHTML ? customHTML + '</div>' : '';
+            };
+        };
+        injectSettings();
+    }
 };
 exports.gameTools = class {
     searchMatches(id, name, cat) {
         const settingsWindow = window.windows[0];
         const query = settingsWindow.settingSearch.toLowerCase() || '';
         return (id.toLowerCase() || '').includes(query) || (name.toLowerCase() || '').includes(query) || (cat.toLowerCase() || '').includes(query);
+    }
+    openFileDialog(id) {
+        ipcRenderer.invoke('openFileDialog').then((result) => {
+            const el = document.getElementById(id);
+            el.innerHTML = result;
+        });
+    }
+    changeVisibility(id) {
+        const el = document.getElementById(`eye_${id}`);
+        if (config.get(`${id}_visibility`, true)) {
+            el.innerText = 'visibility_off';
+            document.getElementById(id).style.display = 'none';
+            config.set(`${id}_visibility`, false);
+        }
+        else {
+            el.innerText = 'visibility';
+            document.getElementById(id).style.display = '';
+            config.set(`${id}_visibility`, true);
+        }
     }
     showAltMng() {
         const menuWindow = document.getElementById('menuWindow');

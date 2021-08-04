@@ -3,8 +3,9 @@ const { ipcRenderer } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 const path = require('path');
-const tools = require('../util/tools');
-const { BlockList } = require('net');
+const lafTools = require('../util/tools');
+
+const tools = new lafTools.clientTools();
 
 const osType = process.platform;
 const config = new store();
@@ -82,17 +83,6 @@ const injectAltManager = () => {
     }, 100);
 };
 
-// 技術的問題により一時的に削除
-const injectAddAccBtn = () => {
-    const windowHeaderEl = document.getElementById('windowHeader');
-    const accBtnEl = document.getElementsByClassName('accBtn');
-    if (accBtnEl && windowHeaderEl.innerText === 'Account') {
-        accBtnEl[1].insertAdjacentHTML('afterend', `
-        <div class='accBtn button buttonPI' style='width:94.5%;margin-top:20px;' onclick='window.gt.showAddAltAcc()'>Add Account</div>
-        `);
-    }
-};
-
 const injectWaterMark = () => {
     const gameUIEl = document.getElementById('gameUI');
     ipcRenderer.invoke('getAppVersion').then((v) => {
@@ -154,6 +144,7 @@ ipcRenderer.on('ESC', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const winObserver = new MutationObserver(() => {
         winObserver.disconnect();
+        tools.setupGameWindow();
         window.closeClient = () => {
             ipcRenderer.send('exitClient');
         };
@@ -162,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 ipcRenderer.on('didFinishLoad', () => {
-    window.gt = new tools.gameTools();
+    window.gt = new lafTools.gameTools();
     injectExitBtn();
     injectWaterMark();
     if (isEnabledAltManager) injectAltManager();
