@@ -32,6 +32,7 @@ module.exports = {
         },
     },
     settings: {
+        requireRestart: '再起動が必要です',
         lang: '言語(Language)',
         enableSwapper: 'リソーススワッパー',
         enableRPC: 'Discord RPC',

@@ -72,8 +72,8 @@ exports.clientTools = class {
                         if (prevCat) {
                             tmpHTML += '</div>';
                         }
+                        tmpHTML += `<div class='setHed' id='setHed_${k.cat}' onclick='window.windows[0].collapseFolder(this)'><span class='material-icons plusOrMinus'>keyboard_arrow_down</span>${k.cat}${prevCat ? '' : `<span id="requiresRestart"><span style="color: #eb5656">*</span> ${langPack.settings.requireRestart}</span>`}</div><div class='setBodH' id='setBod_${k.cat}'>`;
                         prevCat = k.cat;
-                        tmpHTML += `<div class='setHed' id='setHed_${k.cat}' onclick='window.windows[0].collapseFolder(this)'><span class='material-icons plusOrMinus'>keyboard_arrow_down</span>${k.cat}</div><div class='setBodH' id='setBod_${k.cat}'>`;
                     }
                     tmpHTML += `<div class='settName' id='${k.id}_div' style='display:${k.hide ? 'none' : 'block'}'>${k.title} `;
                     if (k.restart) {
