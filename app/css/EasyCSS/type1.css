@@ -1,0 +1,393 @@
+/*⚠THIS CSS REQUIRES A RESOURCE SWAPPER⚠*/
+
+/*Code by NamekujiLSDs#7777*/
+
+/*⚠DO NOT RE:WRITE CODES WITHOUT CONTACT ME⚠*/
+
+/*© Copyright 2021 Namekuji All Rights Reserved.*/
+
+
+
+/*Display:none;*/
+#editorBtnM,
+#tlInfHold,
+#newsHolder,
+#uiBase.onMenu #voiceDisplay,
+.menuItem .menuItemIcon,
+.imageButton,
+.verticalSeparator,
+#tlInfHold,
+#newsHolder,
+.menuItem .menuItemIcon,
+.material-icons,
+#seasonLabel,
+#bidPrevBtn,
+#bidPrevBB,
+#maxHP,
+#challIcon,
+#hudClassIcon,
+#timerIcon,
+#ammoMax,
+#ammoIcon
+{
+    display:none;
+    opacity:0;
+}
+
+/*Transparent*/
+#itemSearchH,
+.serverHeader,
+.settingsHeader,
+#selectorContainer,
+#settingsTabLayout{
+    background:transparent;
+}
+
+
+/*Font Change*/
+@font-face {
+	font-family: 'MyFont';
+	src: url(https://f.easyuploader.app/eu-prd/upload/20210330230425_36723173.ttf);
+}
+
+* {
+	font-family: MyFont;
+}
+
+/*left side bar*/
+#menuItemContainer{
+    transform: rotate3d(0,0,1, 2deg);
+    position:fixed;
+    left:-3%;
+    width:200px;
+    top:30px;
+    z-index:2;
+}
+
+.menuItem{
+    border-right: solid 20px white;
+    background:#fbcaff;
+    border-left: solid 120px #84fdff;
+    box-sizing: border-box;
+}
+
+/*When Cursor hover left menu*/
+.menuItem:hover{
+    background:linear-gradient(90deg,#93f8ff,white);
+    width:240px;
+    border-color:lightgreen;
+}
+
+/*Just for beauty*/
+.serverHeader{
+    background:linear-gradient(#e8caff,#e3cdff)
+}
+
+::-webkit-scrollbar{
+    width:0px;
+}
+
+/*menu windos setting*/
+#menuWindow{
+    box-shadow:none !important;
+    background: linear-gradient(0deg, #b4f0ff, #e8caff);
+    border:solid white 5px;
+}
+.menuItem .menuItemTitle{
+    color:lightblue;
+    margin-left: 200%;
+    text-align: right;
+    margin-top:10%;
+    font-size:30px !important;
+    text-shadow: 0 0 20px black,0 0 20px black,0 0 20px black,0 0 20px black,0 0 20px black;
+    transform: rotate3d(0,0,1, -2deg);
+}
+#classPreviewCanvas{
+    margin-bottom:-140px;
+}
+.skinCard{
+    line-height:30px;
+}
+.skinImgC{
+    margin-top:-15px;
+}
+.chalRight{
+    line-height:30px;
+}
+#settingsTabLayout{
+    border-radius:100px;
+}
+
+.settingTab{
+    background:lightblue;
+    border-radius:300px;
+    height: max-content;
+}
+
+.tabANew{
+    border-color:blue;
+}
+
+.settingsHeader,#selectorContainer,#settingsTabLayout{
+    background:transparent;
+    grid-template-columns: auto auto auto auto auto auto auto;
+}
+
+.classCard{
+    border: solid black 3px;
+    margin: 5px;
+    background: #ffffff;
+    color:gray;
+}
+.mapListItem:active .mapActionOvrl, .mapListItem:hover .mapActionOvrl{
+    opacity:0.5;
+}
+.mapActionOvrl{
+    height:100px;
+    background-color:blue;
+}
+.mapListItem{
+    background:gray;
+}
+
+
+.headerBarLeft{
+    z-index:3;
+    width: 345px;
+    background:lightblue;
+}
+
+.headerBar div,#menuKRCount{
+    color:black;
+}
+
+#mLevelCont{
+    background:#2196f3;
+    position:fixed;
+    left:3px;
+}
+
+/*Chat Position*/
+#uiBase.onMenu #chatHolder{
+    position:fixed;
+    left:10%;
+
+}
+.chatItem{
+    background: #ffffff !important;
+    color: gray !important;
+    border: solid black 1px !important;
+    font-size: 20px !important;
+    width: -webkit-fill-available !important;
+    height: min-content !important;
+    line-height: 30px !important;
+}
+.chatMsg{
+    color:black;
+    text-shadow: 6px 5px 21px black;
+}
+#chatList::-webkit-scrollbar{
+    width:1px;
+    background-color:black;
+    color:white;
+}
+
+/*menu ping,fps,server */
+.headerBarRight{
+    position:fixed;
+    right:0%;
+    background:transparent;
+    padding-left:0px;
+}
+#menuServerInfoContainer{
+    position:absolute;
+    right:0%;
+    padding-right:10px;
+}
+#menuRegionLabel,#menuPingText{
+    color:#00ffdb;
+}
+
+/*Loadout Custom Screen*/
+#selectorContainer {
+    background-color: #282828;
+    height: max-content;
+    padding-bottom: 15px;
+}
+
+.selectorItem {
+    background-color: gray !important;
+    border:solid #00eeff 2px;
+}
+
+.selectedItem{
+    background: lightgray !important;
+    box-shadow: 0 0 20px white;
+    filter: none !important;
+}
+.classWeap{
+    color:black;
+}
+.classImgC{
+    margin-top:0px;
+}
+
+/*Menu Buttons*/
+
+.button.small{
+    padding-top:0px !important;
+
+    height:50px !important;
+}
+.button.small,#customizeButton{
+    text-shadow:none !important;
+    background:#abfcff !important;
+    box-shadow:none !important;
+    color:gray !important;
+}
+
+#customizeButton{
+    font-size: xx-large;
+    height: fit-content !important;
+    padding: 0px;
+}
+
+/*Logo*/
+#mainLogo{
+    content:url(https://f.easyuploader.app/eu-prd/upload/20210330233708_62494330.png);
+}
+
+/*top left box*/
+#mailIcon{
+    opacity:1;
+}
+
+/*Put my name in advertise */
+.standout{
+    color:rgb(0 0 0 / 0);
+    font-size:0px;
+}
+
+.standout:before{
+    color:#ffcd05;
+    content:"css by NamekujiLSDs#7777";
+    font-size:25px;
+}
+
+
+/*INGAME UI*/
+
+/*End Board*/
+.endCard{
+    max-content:800px;
+}
+
+/*Healthbar*/
+#healthBar{
+    position:fixed;
+    left:45%;
+    bottom:5%
+}
+.healthBarSeg{
+    background-color:transparent;
+    width:30px;
+}
+
+.hpBSeg{
+    box-shadow:none;
+    border-radius:50px;
+    width:30px;
+    height:30px;
+    background:transparent;
+    border:solid black 5px;
+}
+
+/*Leader Board*/
+#leaderContainer:BEFORE{
+    content:"-LEADERBOARD-";
+    text-align: center;
+    padding-left: 50px;
+    color:#00c0ff;
+    height: min-content;
+    width: min-content;
+    border-bottom:5px solid #c400ff;
+    padding-right: 50px;
+}
+#leaderDisplay{
+    border:black double 8px;
+    border-radius:0px;
+    transform: skew(-5deg, 0deg);
+    position: fixed;
+    right: 30px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+#leaderContainer{
+    transform: skewX(5deg);
+}
+
+/*Health value*/
+#healthValueHolder{
+    background:transparent;
+    position:fixed;
+    margin-bottom:0px;
+    padding-right:0px;
+    padding-left:0px;
+    padding:0px;
+    bottom:35%;
+    left:39%;
+}
+
+#healthValue{
+    font-size:55px;
+    text-align: center;
+    text-shadow: 2px 2px 5px black, -2px -2px 5px black, 2px 2px 5px black, -2px -2px 5px black;
+}
+
+/*TIMER*/
+#timerDisplay{
+    background:transparent;
+    position:fixed;
+    bottom:20%;
+    left:46%;
+    text-align:center;
+}
+
+#timerVal{
+    font-size:60px;
+    text-shadow: 2px 2px 5px black, -2px -2px 5px black, 2px 2px 5px black, -2px -2px 5px black;
+}
+
+/*AMMO and Weapon*/
+#weapDisplay{
+    position:fixed;
+    bottom:40%;
+}
+
+#ammoDisplay{
+    width:80px;
+    letter-spacing:0px;
+    font-size:55px;
+    border-radius:0px;
+    background-color:transparent;
+    position:fixed;
+    margin-bottom:0px;
+    padding-right:0px;
+    padding-left:0px;
+    padding-bottom:-50px;
+    padding:0px;
+    bottom:39%;
+    right:38%;
+    margin-right:0px;
+}
+
+#ammoVal{
+    font-size:55px;
+    text-align: center;
+    text-shadow: 2px 2px 5px black, -2px -2px 5px black, 2px 2px 5px black, -2px -2px 5px black;
+}
+.topRightCounters{
+    position: fixed;
+    right: 0%;
+    top: 15%;
+}

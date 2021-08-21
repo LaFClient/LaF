@@ -21,9 +21,9 @@ const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/j
 log.info('Script Loaded: js/util/wm.js');
 
 const cssPath = {
-    type1: 'css/EasyCSS/type1.css',
-    type2: 'css/EasyCSS/type2.css',
-    type3: 'css/EasyCSS/type3.css',
+    type1: '../../css/EasyCSS/type1.css',
+    type2: '../../css/EasyCSS/type2.css',
+    type3: '../../css/EasyCSS/type3.css',
     custom: config.get('userCSSPath', ''),
 };
 
@@ -284,6 +284,7 @@ exports.socialWindow = class {
         });
         brWin.on('closed', () => {
             brWin.destroy();
+            windows[lafTools.urlType(url)] = null;
         });
         brWin.webContents.on('new-window', (e, url) => {
             e.preventDefault();
