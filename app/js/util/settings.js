@@ -47,7 +47,7 @@ module.exports = {
         cat: 'General',
         type: 'checkbox',
         val: config.get('enableAltMng', true),
-        restart: true,
+        restart: false,
         default: true,
     },
     unlimitedFPS: {
