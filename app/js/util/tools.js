@@ -3,6 +3,7 @@ const store = require('electron-store');
 const log = require('electron-log');
 
 const settings = require('./settings');
+const { lang } = require('./settings');
 
 const config = new store();
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
@@ -58,20 +59,7 @@ exports.clientTools = class {
 
             settingsWindow.getCSettings = () => {
                 settingsWindow = window.windows[0];
-                let customHTML;
-                if (!settingsWindow.settingSearch) {
-                    customHTML = `
-                    <div style='display:flex;width:100%;justify-content:space-between'>
-                    <div class="button buttonPI lgn" id="altManagerBtnS" style="width:500px;margin-right:0px;padding-top:5px;padding-bottom:13px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
-                    Alt Manager <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">manage_accounts</span></div>
-                    <div class="button buttonR lgn" id="logoutBtnS" style="width:200px;margin-right:0px;padding-top:5px;padding-bottom:13px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
-                    Logout <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">logout</span></div>
-                    </div>
-                    `;
-                }
-                else {
-                    customHTML = '';
-                }
+                let customHTML = '';
                 if (settingsWindow.tabIndex !== 6 && !settingsWindow.settingSearch) {
                     return '';
                 }
@@ -94,6 +82,30 @@ exports.clientTools = class {
                     }
                     customHTML += tmpHTML + this.generateHTML(k) + '</div>';
                 });
+                if (!settingsWindow.settingSearch) {
+                    customHTML += `
+                    </div>
+                    <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
+                        <div class="button buttonR lgn" id="resetCOptions" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.resetOptions()">
+                            ${langPack.settings.resetOptions} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">restart_alt</span>
+                        </div>
+                        <div class="button buttonR lgn" id="resetCOptions" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.clearUserData()">
+                            ${langPack.settings.clearUserData} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">delete_forever</span>
+                        </div>
+                    </div>
+                    <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
+                        <div class="button buttonP lgn" id="resetCOptions" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openSwapper()">
+                            ${langPack.settings.openSwapper} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">folder_open</span>
+                        </div>
+                        <div class="button buttonO lgn" id="resetCOptions" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.restartClient()">
+                            ${langPack.settings.restartClient} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">power_settings_new</span>
+                        </div>
+                    </div>
+                    <div class="button buttonG lgn" id="resetCOptions" style="width:99%;padding-top:5px;padding-bottom:13px;left:2px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
+                        ${langPack.settings.openInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">info</span>
+                    </div>
+                    `;
+                }
                 return customHTML ? customHTML + '</div>' : '';
             };
         };
@@ -288,7 +300,27 @@ exports.gameTools = class {
     getSetting(id, status) {
         config.get(id, status);
     }
+    resetOptions() {
+        if (confirm(langPack.dialog.confirmResetConfig)) {
+            config.clear();
+            alert(langPack.dialog.resetedConfig);
+            ipcRenderer.invoke('restartClient');
+        }
+    }
+    clearUserData() {
+        if (confirm(langPack.dialog.confirmClearData)) {
+            ipcRenderer.invoke('clearUserData');
+            alert(langPack.dialog.clearedData);
+            ipcRenderer.invoke('restartClient');
+        }
+    }
+    openSwapper() {
+        ipcRenderer.invoke('openSwapper');
+    }
     restartClient() {
         ipcRenderer.invoke('restartClient');
+    }
+    openInfo() {
+        ipcRenderer.invoke('openInfo');
     }
 };
