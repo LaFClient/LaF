@@ -83,6 +83,16 @@ const injectAltManager = () => {
     }, 100);
 };
 
+const injectAltManagerHeader = () => {
+    if (document.getElementById('windowHeader').innerText !== 'Game Settings') return;
+    const settingsHeaderEl = document.getElementsByClassName('settingsHeader');
+    const lastChildEl = settingsHeaderEl[0].firstElementChild.firstElementChild;
+    lastChildEl.insertAdjacentHTML('beforebegin', `
+    <div class='settingsBtn' style='background-color:#ff4747;' onclick='window.logoutAcc()'>Logout</div>
+    <div class='settingsBtn' style='margin-left:16px;width:150px;background-color:#fa50ae;' onclick='window.gt.showAltMng()'>AltManager</div>
+    `);
+};
+
 const injectWaterMark = () => {
     const gameUIEl = document.getElementById('gameUI');
     ipcRenderer.invoke('getAppVersion').then((v) => {
@@ -98,9 +108,9 @@ const injectExitBtn = () => {
         case 'top':
             menuContainer.removeChild(menuContainer.children[7]);
             menuContainer.insertAdjacentHTML('afterbegin', `
-            <div class='menuItem' onmouseenter='playTick()' onclick='clientExitPopup()' id='clientExit'>
-            <div class='menuItemIcon iconExit'></div>
-            <div class='menuItemTitle' id='menuBtnExit'>Exit</div>
+            <div class="menuItem" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.15);clientExitPopup()" id="clientExit" style="display: inherit;">
+            <div class="menuItemIcon iconExit"></div>
+            <div class="menuItemTitle" id="menuBtnExit">Exit</div>
             </div>
             `);
             exitBtn.style.display = 'inherit';
@@ -149,7 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('exitClient');
         };
     });
+    const menuObserver = new MutationObserver(() => {
+        injectAltManagerHeader();
+    });
     winObserver.observe(document.getElementById('instructions'), { childList: true });
+    menuObserver.observe(document.getElementById('menuWindow'), { childList: true });
 });
 
 ipcRenderer.on('didFinishLoad', () => {
