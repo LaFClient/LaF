@@ -150,6 +150,8 @@ exports.gameWindow = class {
 
         // イベントハンドラ
         brWin.once('ready-to-show', () => {
+            if (config.get('isMaximized', false)) brWin.maximize();
+            if (config.get('Fullscreen', false)) brWin.setFullScreen(true);
             brWin.show();
         });
         brWin.webContents.on('did-finish-load', () => {
@@ -157,6 +159,12 @@ exports.gameWindow = class {
         });
         brWin.on('page-title-updated', (e) => {
             e.preventDefault();
+        });
+        brWin.on('close', () => {
+            const isMaximized = brWin.isMaximized();
+            config.set('isMaximized', isMaximized);
+            const isFullScreen = brWin.isFullScreen();
+            config.set('Fullscreen', isFullScreen);
         });
         brWin.webContents.on('new-window', (e, url) => {
             e.preventDefault();
