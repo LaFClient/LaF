@@ -1,6 +1,6 @@
 ![TitleImage](https://raw.githubusercontent.com/Hiro527/LaF/master/app/img/social.png)</br>
 [![License](https://img.shields.io/github/license/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/blob/master/LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF/LaF-2.0?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
+[![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF/master?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
 ![Code Lines](https://img.shields.io/tokei/lines/github/Hiro527/LaF?style=flat-square)
 [![Latest](https://img.shields.io/github/v/release/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Latest Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/latest/total?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
