@@ -1,19 +1,24 @@
 {
   "name": "laf",
-  "version": "1.4.1",
-  "description": "Krunker Client Made in Japan.",
+  "version": "2.0.0-beta.1",
+  "description": "Lite and Fast Krunker Client",
   "main": "app/main.js",
   "scripts": {
+    "start": "electron .",
+    "build:linux": "electron-builder --linux --dir",
+    "dist:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac --dir",
+    "dist:mac": "electron-builder --mac",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node_modules\\electron\\dist\\electron.exe .",
-    "make": "electron-builder"
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hiro527/LaF.git"
   },
   "author": "Hiro",
-  "license": "GPL-3.0-or-later",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Hiro527/LaF/issues"
   },
@@ -21,16 +26,15 @@
   "electronVersion": "9.4.4",
   "devDependencies": {
     "electron": "^9.4.4",
-    "electron-builder": "^22.10.5"
+    "electron-builder": "^22.9.1"
   },
   "dependencies": {
-    "discord-rpc": "^3.2.0",
+    "discord-rpc": "^4.0.1",
     "electron-localshortcut": "^3.2.1",
-    "electron-log": "^4.3.0",
-    "electron-prompt": "^1.6.1",
-    "electron-store": "^7.0.2",
-    "electron-updater": "^4.3.5",
-    "protocol": "^0.1.4",
-    "v8-compile-cache": "^2.2.0"
+    "electron-log": "^4.3.5",
+    "electron-prompt": "^1.6.2",
+    "electron-store": "^8.0.0",
+    "electron-updater": "^4.3.9",
+    "v8-compile-cache": "^2.3.0"
   }
 }

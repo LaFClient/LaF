@@ -3,7 +3,7 @@
         transform: translateX(640px) rotate(247deg);
     }
     100% {
-        transform: translateX(223.5px) rotate(0deg);
+        transform: translateX(-111.75px) rotate(0deg);
     }
 }
 
@@ -22,7 +22,7 @@
     }
 }
 
-.logo {
+#logo {
     position:absolute;
     top: 50%;
     margin-top: -96.5px;
