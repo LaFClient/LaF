@@ -1,0 +1,31 @@
+@keyframes fadeIn {
+    0% {
+        transform: translateY(-447px)
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,.8));
+        filter: drop-shadow(0px 0px 10px rgba(0,0,0,.8));
+    }
+    66% {
+        -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,.8));
+        filter: drop-shadow(0px 0px 10px rgba(0,0,0,.8));
+    }
+    100% {
+        -webkit-filter: drop-shadow(0px 0px 10px rgba(0,0,0,0));
+        filter: drop-shadow(0px 0px 10px rgba(0,0,0,0));
+    }
+}
+
+#logo {
+    position:absolute;
+    top: 50%;
+    left: 223.5px;
+    margin-top: -96.5px;
+    animation: fadeIn 1s forwards, fadeOut 1.5s forwards;
+}
