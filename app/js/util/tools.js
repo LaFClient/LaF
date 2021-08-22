@@ -58,7 +58,20 @@ exports.clientTools = class {
 
             settingsWindow.getCSettings = () => {
                 settingsWindow = window.windows[0];
-                let customHTML = '';
+                let customHTML;
+                if (!settingsWindow.settingSearch) {
+                    customHTML = `
+                    <div style='display:flex;width:100%;justify-content:space-between'>
+                    <div class="button buttonPI lgn" id="altManagerBtnS" style="width:500px;margin-right:0px;padding-top:5px;padding-bottom:13px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
+                    Alt Manager <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">manage_accounts</span></div>
+                    <div class="button buttonR lgn" id="logoutBtnS" style="width:200px;margin-right:0px;padding-top:5px;padding-bottom:13px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
+                    Logout <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">logout</span></div>
+                    </div>
+                    `;
+                }
+                else {
+                    customHTML = '';
+                }
                 if (settingsWindow.tabIndex !== 6 && !settingsWindow.settingSearch) {
                     return '';
                 }
@@ -81,17 +94,6 @@ exports.clientTools = class {
                     }
                     customHTML += tmpHTML + this.generateHTML(k) + '</div>';
                 });
-                /*
-                if (!settingsWindow.settingSearch) {
-                    customHTML += `
-                    </div>
-                    <a onclick="window.utils.tolset('clearCache')" class="menuLink">${langPack.clearCache}</a> | 
-                    <a onclick="window.utils.tolset('resetOptions')" class="menuLink">${langPack.resetOption}</a> | 
-                    <a onclick="window.utils.tolset('restartClient')" class="menuLink">${langPack.restart}</a></br>
-                    <a onclick="window.utils.tolset('openSwapper')" class="menuLink">${langPack.openSwapFolder}</a> | 
-                    <a onclick="window.utils.tolset('openInfo')" class="menuLink">${langPack.openInfo}</a>
-                    `;
-                }*/
                 return customHTML ? customHTML + '</div>' : '';
             };
         };
