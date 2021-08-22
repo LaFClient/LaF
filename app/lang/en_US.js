@@ -36,7 +36,7 @@ module.exports = {
         lang: 'Language(言語)',
         enableSwapper: 'Resource Swapper',
         enableRPC: 'Discord RPC',
-        enableAltManager: 'Alt Manager',
+        enableAltManager: 'Alt Manager UI',
         unlimitedFPS: 'Unlimited FPS',
         angleType: 'ANGLE Backend',
         webgl2Context: 'WebGL2 Context',
