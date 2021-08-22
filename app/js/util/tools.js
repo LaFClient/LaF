@@ -105,6 +105,10 @@ exports.clientTools = class {
                         ${langPack.settings.openInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">info</span>
                     </div>
                     `;
+                    setTimeout(() => {
+                        const settHolderEl = document.getElementById('settHolder');
+                        settHolderEl.removeChild(settHolderEl.firstElementChild);
+                    }, 1);
                 }
                 return customHTML ? customHTML + '</div>' : '';
             };
