@@ -1,6 +1,6 @@
 require('v8-compile-cache');
 const path = require('path');
-const { app, BrowserWindow, ipcMain, protocol, shell, ipcRenderer, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, protocol, shell, ipcRenderer, dialog, session } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 const prompt = require('electron-prompt');
@@ -57,7 +57,7 @@ const initFlags = () => {
     ];
     chromiumFlags.forEach((f) => {
         const isEnable = f[2] ? 'Enable' : 'Disable';
-        flagsInfo += `\n- ${f[0]}, ${f[1]}: ${isEnable}`;
+        flagsInfo += `\n    - ${f[0]}, ${f[1]}: ${isEnable}`;
         if (f[2]) {
             if (f[1] === null) {
                 app.commandLine.appendSwitch(f[0]);
@@ -172,14 +172,23 @@ ipcMain.handle('getAppVersion', async () => {
     return version;
 });
 
-ipcMain.on('openSettings', () => {
-    // Do something
+// GameWindow
+ipcMain.handle('clearUserData', () => {
+    session.defaultSession.clearStorageData();
+    log.info('Cleared userdata.');
 });
 
-// GameWindow
+ipcMain.handle('openSwapper', () => {
+    shell.showItemInFolder(path.join(app.getPath('documents'), '/LaFSwap'));
+});
+
 ipcMain.handle('restartClient', () => {
     app.relaunch();
     app.quit();
+});
+
+ipcMain.handle('openInfo', () => {
+    shell.openExternal('https://hiro527.github.io/LaF');
 });
 
 ipcMain.handle('showDialog', (e, accName) => {
