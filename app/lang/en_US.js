@@ -17,6 +17,10 @@ module.exports = {
             leavePageTitle: 'Leave this page?',
             leavePageMessage: 'Are you sure you want to leave this page? Your change might not be saved.',
         },
+        confirmResetConfig: 'Are you sure you want to reset client config? You can not revert this operation.',
+        resetedConfig: 'Reseted client config. Restart.',
+        confirmClearData: 'Are you sure you want to clear all user data? You can not revert this operation.',
+        clearedData: 'Cleared all user data. Restart.',
     },
     altManager: {
         addAcc: {
@@ -53,5 +57,10 @@ module.exports = {
         bottomExitBtn: 'Buttom',
         disableExitBtn: 'Hidden',
         selectFile: 'Open',
+        resetOptions: 'Reset Options',
+        clearUserData: 'Delete All Data',
+        openSwapper: 'Open Resource Swapper',
+        restartClient: 'Restart LaF',
+        openInfo: 'About LaF',
     },
 };

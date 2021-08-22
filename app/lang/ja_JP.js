@@ -17,6 +17,10 @@ module.exports = {
             leavePageTitle: 'ページを離れますか？',
             leavePageMessage: '本当にこのページを離れますか？行われた変更は保存されていない可能性があります。',
         },
+        confirmResetConfig: '本当にクライアントの設定をリセットしますか？この操作は取り消すことが出来ません。',
+        resetedConfig: 'クライアントの設定をリセットしました。再起動します。',
+        confirmClearData: '本当にユーザーデータを削除しますか？この操作は取り消すことが出来ません。',
+        clearedData: 'ユーザーデータを削除しました。再起動します。',
     },
     altManager: {
         addAcc: {
@@ -53,5 +57,10 @@ module.exports = {
         bottomExitBtn: '下',
         disableExitBtn: '非表示',
         selectFile: 'ファイルを選択',
+        resetOptions: '設定をリセットする',
+        clearUserData: 'ユーザーデータを削除',
+        openSwapper: 'リソーススワッパーを開く',
+        restartClient: 'LaFを再起動',
+        openInfo: 'LaFについて',
     },
 };
