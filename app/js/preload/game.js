@@ -106,6 +106,7 @@ const injectExitBtn = () => {
     const exitBtn = document.getElementById('clientExit');
     switch (config.get('showExitBtn', 'bottom')) {
         case 'top':
+            menuContainer = document.getElementById("menuItemContainer")
             menuContainer.removeChild(menuContainer.children[7]);
             menuContainer.insertAdjacentHTML('afterbegin', `
             <div class="menuItem" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.15);clientExitPopup()" id="clientExit" style="display: inherit;">
