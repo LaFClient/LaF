@@ -65,9 +65,9 @@ initDiscordRPC();
 const injectAltManager = () => {
     const mMenuHolDefEl = document.getElementById('mMenuHolDef');
     mMenuHolDefEl.insertAdjacentHTML('beforeend', `
-    <div class="button buttonR lgn" id="logoutBtn" style="display:none;position:absolute;top:2px;right:895px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
+    <div class="button buttonR lgn" id="logoutBtn" style="display:none;position:absolute;top:2px;right:895px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
     Logout <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">logout</span></div>
-    <div class="button buttonPI lgn" id="altManagerBtn" style="position:absolute;top:2px;right:625px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
+    <div class="button buttonPI lgn" id="altManagerBtn" style="position:absolute;top:2px;right:625px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
     Alt Manager <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">manage_accounts</span></div>
     `);
     const loggedIn = false;
@@ -106,7 +106,7 @@ const injectExitBtn = () => {
     const exitBtn = document.getElementById('clientExit');
     switch (config.get('showExitBtn', 'bottom')) {
         case 'top':
-            menuContainer = document.getElementById("menuItemContainer")
+            menuContainer = document.getElementById('menuItemContainer');
             menuContainer.removeChild(menuContainer.children[7]);
             menuContainer.insertAdjacentHTML('afterbegin', `
             <div class="menuItem" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.15);clientExitPopup()" id="clientExit" style="display: inherit;">
