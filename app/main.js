@@ -234,6 +234,21 @@ ipcMain.on('showPrompt', (e, message, defaultValue) => {
         .catch(console.error);
 });
 
+ipcMain.handle('openFileDialog', (e) => {
+    const cssPath = dialog.showOpenDialogSync(null, {
+        properties: ['openFile'],
+        title: 'LaF: CSS File Loader',
+        defaultPath: '.',
+        filters: [
+            { name: 'CSS File', extensions: ['txt', 'css'] },
+        ],
+    });
+    if (cssPath) {
+        config.set('userCSSPath', cssPath[0]);
+        e.reply('userCSSPath', cssPath);
+    }
+});
+
 ipcMain.on('exitClient', () => {
     app.exit();
 });

@@ -52,7 +52,15 @@ exports.gameWindow = class {
             },
         });
 
-        const initSwapper = (win) => {
+        const initSwapper = (win, f = true) => {
+            if (!f) {
+                const urls = [];
+                urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
+                win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({
+                    redirectURL: isEzCSSEnabled && new URL(details.url).pathname === '/css/main_custom.css' ? (ezCSSMode === 'custom' ? 'laf:/' + cssPath['custom'] : 'laf:/' + path.join(__dirname, cssPath[ezCSSMode])) : 'laf:/' + path.join(swapPath, new URL(details.url).pathname),
+                }));
+                return;
+            }
             const swapPath = path.join(app.getPath('documents'), '/LaFSwap');
             if (!fs.existsSync(swapPath)) {
                 fs.mkdir(swapPath, { recursive: true }, e => {
@@ -84,13 +92,8 @@ exports.gameWindow = class {
                     log.warn(e);
                 }
             };
-            if (isSwapperEnabled) {
-                recursiveFolder(win);
-            }
-            else if (isEzCSSEnabled && !isSwapperEnabled) {
-                urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
-            }
-            if (!urls.includes('*://krunker.io/css/main_custom.css')) {
+            recursiveFolder(win);
+            if (isEzCSSEnabled) {
                 urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
             }
             if (urls.length) {
@@ -145,7 +148,12 @@ exports.gameWindow = class {
 
         brWin.removeMenu();
         initShortcutKeys();
-        if (isSwapperEnabled) initSwapper(brWin);
+        if (isSwapperEnabled) {
+            initSwapper(brWin);
+        }
+        else if (ezCSSMode) {
+            initSwapper(brWin, false);
+        }
         brWin.loadURL('https://krunker.io');
 
         // イベントハンドラ
