@@ -18,24 +18,24 @@ module.exports = {
             leavePageMessage: 'Are you sure you want to leave this page? Your change might not be saved.',
         },
         confirmResetConfig: 'Are you sure you want to reset client config? You can not revert this operation.',
-        resetedConfig: 'Reseted client config. Restart.',
+        resetedConfig: 'Reset client config. Restart.',
         confirmClearData: 'Are you sure you want to clear all user data? You can not revert this operation.',
         clearedData: 'Cleared all user data. Restart.',
     },
     altManager: {
         addAcc: {
-            ok: 'Account added successflly',
-            error: 'Could\'nt add account due to error',
-            saveok: 'Account saved successfly',
+            ok: 'Account added successfully',
+            error: 'Couldn\'t add account due to error',
+            saveok: 'Account saved successfully',
         },
         deleteAcc: {
             confirm: 'Are you sure you want to delete %accName%？',
         },
         editAcc: {
-            edit: 'Editting %accName%',
+            edit: 'Editing %accName%',
         },
     },
-        settings: {
+    settings: {
         requireRestart: 'Requires restart',
         lang: 'Language(言語)',
         enableSwapper: 'Resource Swapper',
@@ -54,7 +54,7 @@ module.exports = {
         userCSSPath: 'Custom CSS File',
         showExitBtn: 'EXIT Button',
         topExitBtn: 'Top',
-        bottomExitBtn: 'Buttom',
+        bottomExitBtn: 'Bottom',
         disableExitBtn: 'Hidden',
         selectFile: 'Open',
         resetOptions: 'Reset Options',
