@@ -6,6 +6,7 @@ const log = require('electron-log');
 const prompt = require('electron-prompt');
 const { autoUpdater } = require('electron-updater');
 const DiscordRPC = require('discord-rpc');
+const os = require('os');
 // const appConfig = require('./config/main.json');
 
 const osType = process.platform;
@@ -251,6 +252,10 @@ ipcMain.handle('openFileDialog', (e) => {
 
 ipcMain.on('exitClient', () => {
     app.exit();
+});
+
+ipcMain.handle('getPCInfo', () => {
+    
 });
 
 // App
