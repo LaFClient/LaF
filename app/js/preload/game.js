@@ -37,6 +37,8 @@ const initDiscordRPC = () => {
                 details: gameActivity.mode,
                 largeImageKey: 'laf_icon',
                 largeImageText: 'LaF CLient',
+                smallImageKey: `icon_${gameActivity.class.index}`,
+                smallImageText: gameActivity.class.name,
             };
             if (gameActivity.time) {
                 rpcActivity.endTimestamp = Date.now() + gameActivity.time * 1e3;
