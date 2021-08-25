@@ -103,7 +103,7 @@ const initSplashWindow = () => {
             updateCheck = setTimeout(() => {
                 splashWindow.webContents.send('status', langPack.updater.error);
                 setTimeout(() => {
-                    initGameWindow();
+                    launchGame();
                 }, 1000);
             }, 15000);
         });
@@ -117,7 +117,7 @@ const initSplashWindow = () => {
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.uptodate);
             setTimeout(() => {
-                initGameWindow();
+                launchGame();
             }, 1000);
         });
         autoUpdater.on('error', (e) => {
@@ -125,7 +125,7 @@ const initSplashWindow = () => {
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.error + e.name);
             setTimeout(() => {
-                initGameWindow();
+                launchGame();
             }, 1000);
         });
         autoUpdater.on('download-progress', (i) => {
