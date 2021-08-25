@@ -158,6 +158,7 @@ exports.gameTools = class {
         `;
         const generateHTML = () => {
             const altAccounts = JSON.parse(localStorage.getItem('altAccounts'));
+            if (!altAccounts) return;
             Object.keys(altAccounts).forEach((k) => {
                 tmpHTML += `
                 <div class='amAccName' style='display:flex;justify-content:flex-end;align-items:center;'>
