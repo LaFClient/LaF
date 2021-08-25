@@ -96,47 +96,50 @@ const initSplashWindow = () => {
     });
     const initAutoUpdater = async (updateMode) => {
         autoUpdater.logger = log;
-        autoUpdater.on('error', (e) => {
-            log.error(e);
-            splashWindow.webContents.send('status', langPack.updater.error + e.name);
-            setTimeout(() => {
-                launchGame();
-                return;
-            }, 1000);
-            return;
+        let updateCheck = null;
+        autoUpdater.logger = log;
+        autoUpdater.on('checking-for-update', (i) => {
+            splashWindow.webContents.send('checking-for-update');
+            updateCheck = setTimeout(() => {
+                splashWindow.webContents.send('status', langPack.updater.cheking);
+                setTimeout(() => {
+                    initGameWindow();
+                }, 1000);
+            }, 15000);
         });
-        autoUpdater.on('checking-for-update', () => { splashWindow.send('status', langPack.updater.checking); });
         autoUpdater.on('update-available', (i) => {
             log.info(i);
+            if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.available + i.version);
-            setTimeout(() => {
-                if (updateMode === 'skip') {
-                    splashWindow.webContents.send('status', langPack.updater.skipped);
-                    setTimeout(() => {
-                        launchGame();
-                        return;
-                    }, 1000);
-                }
-            }, 1000);
         });
         autoUpdater.on('update-not-available', (i) => {
             log.info(i);
+            if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.uptodate);
             setTimeout(() => {
-                launchGame();
-                return;
+                initGameWindow();
+            }, 1000);
+        });
+        autoUpdater.on('error', (e) => {
+            log.info(e);
+            if (updateCheck) clearTimeout(updateCheck);
+            splashWindow.webContents.send('status', langPack.updater.error + e.name);
+            setTimeout(() => {
+                initGameWindow();
             }, 1000);
         });
         autoUpdater.on('download-progress', (i) => {
-            splashWindow.webContents.send('status', langPack.updater.progress.format(Math.floor(i.percent), Math.floor(i.bytesPerSecond / 1000)));
+            if (updateCheck) clearTimeout(updateCheck);
+            splashWindow.webContents.send('status', langPack.updater.progress.replace('{0}', Math.floor(i.percent)).replace('{1}', Math.floor(i.bytesPerSecond / 1000)));
         });
-        autoUpdater.on('update-downloaded', () => {
+        autoUpdater.on('update-downloaded', (i) => {
+            if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.downloaded);
             setTimeout(() => {
                 autoUpdater.quitAndInstall();
-            }, 1500);
+            }, 3000);
         });
-        autoUpdater.autoDownload = updateMode === 'download';
+        autoUpdater.autoDownload = 'download';
         autoUpdater.allowPrerelease = devMode;
         autoUpdater.checkForUpdates();
     };

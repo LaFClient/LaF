@@ -5,7 +5,7 @@ module.exports = {
         skipped: 'Skipped updating',
         available: 'Update found: ',
         uptodate: 'No updates available.',
-        progress: 'Downloading: {0}, {1}kB/s',
+        progress: 'Downloading: {0}%, {1}kB/s',
         downloaded: 'Downloaded successfully.',
     },
     dialog: {
