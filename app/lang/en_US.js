@@ -3,7 +3,7 @@ module.exports = {
         error: 'Error in updating: ',
         checking: 'Checking for update...',
         skipped: 'Skipped updating',
-        available: 'Update found: ',
+        available: 'Update found: v',
         uptodate: 'No updates available.',
         progress: 'Downloading: {0}%, {1}kB/s',
         downloaded: 'Downloaded successfully.',

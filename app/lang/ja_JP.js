@@ -3,7 +3,7 @@ module.exports = {
         error: '更新に失敗しました: ',
         checking: '更新を確認しています',
         skipped: '更新をスキップしました',
-        available: '最新のバージョンが見つかりました: ',
+        available: '最新のバージョンが見つかりました: v',
         uptodate: '現在のバージョンは最新です',
         progress: 'ダウンロード中: {0}%, {1}kB/s',
         downloaded: 'ダウンロードが完了しました',
