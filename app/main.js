@@ -108,7 +108,7 @@ const initSplashWindow = () => {
         autoUpdater.on('checking-for-update', () => { splashWindow.send('status', langPack.updater.checking); });
         autoUpdater.on('update-available', (i) => {
             log.info(i);
-            splashWindow.webContents.send('status', langPack.update.available + i.version)
+            splashWindow.webContents.send('status', langPack.updater.available + i.version)
             .then(() => {
                 setTimeout(() => {
                     if (updateMode === 'skip') {
