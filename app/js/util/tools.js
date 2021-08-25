@@ -86,23 +86,28 @@ exports.clientTools = class {
                     customHTML += `
                     </div>
                     <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
-                        <div class="button buttonR lgn" id="resetCOptions" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.resetOptions()">
+                        <div class="button buttonR lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.resetOptions()">
                             ${langPack.settings.resetOptions} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">restart_alt</span>
                         </div>
-                        <div class="button buttonR lgn" id="resetCOptions" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.clearUserData()">
+                        <div class="button buttonR lgn" id="clearData" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.clearUserData()">
                             ${langPack.settings.clearUserData} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">delete_forever</span>
                         </div>
                     </div>
                     <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
-                        <div class="button buttonP lgn" id="resetCOptions" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openSwapper()">
+                        <div class="button buttonPI lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openSwapper()">
                             ${langPack.settings.openSwapper} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">folder_open</span>
                         </div>
-                        <div class="button buttonO lgn" id="resetCOptions" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.restartClient()">
+                        <div class="button buttonO lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.restartClient()">
                             ${langPack.settings.restartClient} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">power_settings_new</span>
                         </div>
                     </div>
-                    <div class="button buttonG lgn" id="resetCOptions" style="width:99%;padding-top:5px;padding-bottom:13px;left:2px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
-                        ${langPack.settings.openInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">info</span>
+                    <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
+                        <div class="button buttonG lgn" style="width:95%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
+                            ${langPack.settings.openInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">info</span>
+                        </div>
+                        <div class="button buttonP lgn" style="width:5%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.copyPCInfo()">
+                            <span class="material-icons" style="color:#fff;font-size:30px;margin-top:-8px;vertical-align:middle;">bug_report</span>
+                        </div>
                     </div>
                     `;
                     setTimeout(() => {
@@ -327,5 +332,8 @@ exports.gameTools = class {
     }
     openInfo() {
         ipcRenderer.invoke('openInfo');
+    }
+    copyPCInfo() {
+        ipcRenderer.invoke('copyPCInfo');
     }
 };

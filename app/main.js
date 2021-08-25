@@ -1,6 +1,6 @@
 require('v8-compile-cache');
 const path = require('path');
-const { app, BrowserWindow, ipcMain, protocol, shell, ipcRenderer, dialog, session } = require('electron');
+const { app, BrowserWindow, ipcMain, protocol, shell, dialog, session } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 const prompt = require('electron-prompt');
@@ -255,7 +255,7 @@ ipcMain.on('exitClient', () => {
     app.exit();
 });
 
-ipcMain.handle('getPCInfo', () => {
+ipcMain.handle('copyPCInfo', () => {
     
 });
 
