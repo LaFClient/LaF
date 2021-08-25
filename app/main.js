@@ -99,9 +99,9 @@ const initSplashWindow = () => {
         let updateCheck = null;
         autoUpdater.logger = log;
         autoUpdater.on('checking-for-update', (i) => {
-            splashWindow.webContents.send('checking-for-update');
+            splashWindow.webContents.send('status', langPack.updater.checking);
             updateCheck = setTimeout(() => {
-                splashWindow.webContents.send('status', langPack.updater.cheking);
+                splashWindow.webContents.send('status', langPack.updater.error);
                 setTimeout(() => {
                     initGameWindow();
                 }, 1000);
