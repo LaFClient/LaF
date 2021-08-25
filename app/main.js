@@ -108,18 +108,16 @@ const initSplashWindow = () => {
         autoUpdater.on('checking-for-update', () => { splashWindow.send('status', langPack.updater.checking); });
         autoUpdater.on('update-available', (i) => {
             log.info(i);
-            splashWindow.webContents.send('status', langPack.updater.available + i.version)
-            .then(() => {
-                setTimeout(() => {
-                    if (updateMode === 'skip') {
-                        splashWindow.webContents.send('status', langPack.updater.skipped);
-                        setTimeout(() => {
-                            launchGame();
-                            return;
-                        }, 1000);
-                    }
-                }, 1000);
-            });
+            splashWindow.webContents.send('status', langPack.updater.available + i.version);
+            setTimeout(() => {
+                if (updateMode === 'skip') {
+                    splashWindow.webContents.send('status', langPack.updater.skipped);
+                    setTimeout(() => {
+                        launchGame();
+                        return;
+                    }, 1000);
+                }
+            }, 1000);
         });
         autoUpdater.on('update-not-available', (i) => {
             log.info(i);
