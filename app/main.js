@@ -282,7 +282,7 @@ ipcMain.on('copyPCInfo', () => {
     const osInfoTxt = `OS: ${os.type()} ${os.release()} ${os.arch()}`;
     const cpuInfo = os.cpus();
     const cpuInfoTxt = `CPU: ${cpuInfo[0].model.trim()}@${Math.round((cpuInfo[0].speed / 1000) * 100) / 100}GHz`;
-    const memInfoTxt = `RAM: ${Math.round((os.freemem / 1073741824) * 100) / 100}GB / ${Math.round((os.totalmem / 1073741824) * 100) / 100}GB`;
+    const memInfoTxt = `RAM: ${Math.round(((os.totalmem - os.freemem) / 1073741824) * 100) / 100}GB / ${Math.round((os.totalmem / 1073741824) * 100) / 100}GB`;
     const { exec } = require('child_process');
     let gpuInfoTxt = '';
     exec('wmic path win32_VideoController get name', (error, stdout, stderr) => {
@@ -306,6 +306,9 @@ ipcMain.on('copyPCInfo', () => {
         const sysInfo = '=====Client Information=====\n' + versions + '\n' + uiLang + '\n' + flagsInfo + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + gpuInfoTxt;
         clipboard.writeText(sysInfo);
     });
+});
+ipcMain.on('openLogFolder', () => {
+    shell.showItemInFolder(path.join(app.getPath('appData'), 'laf/logs'));
 });
 
 // App

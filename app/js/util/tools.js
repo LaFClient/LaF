@@ -102,8 +102,11 @@ exports.clientTools = class {
                         </div>
                     </div>
                     <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
-                        <div class="button buttonG lgn" style="width:95%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
+                        <div class="button buttonG lgn" style="width:90%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
                             ${langPack.settings.openInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">info</span>
+                        </div>
+                        <div class="button buttonP lgn" style="width:5%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openLogFolder()">
+                            <span class="material-icons" style="color:#fff;font-size:30px;margin-top:-8px;vertical-align:middle;">description</span>
                         </div>
                         <div class="button buttonP lgn" style="width:5%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.copyPCInfo()">
                             <span class="material-icons" style="color:#fff;font-size:30px;margin-top:-8px;vertical-align:middle;">bug_report</span>
@@ -333,8 +336,11 @@ exports.gameTools = class {
     openInfo() {
         ipcRenderer.invoke('openInfo');
     }
+    openLogFolder() {
+        ipcRenderer.send('openLogFolder');
+    }
     copyPCInfo() {
         ipcRenderer.send('copyPCInfo');
         alert(langPack.dialog.copiedSysInfo);
-    }
+    } 
 };
