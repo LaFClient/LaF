@@ -21,6 +21,7 @@ module.exports = {
         resetedConfig: 'クライアントの設定をリセットしました。再起動します。',
         confirmClearData: '本当にユーザーデータを削除しますか？この操作は取り消すことが出来ません。',
         clearedData: 'ユーザーデータを削除しました。再起動します。',
+        copiedSysInfo: 'システム情報をコピーしました。',
     },
     altManager: {
         addAcc: {

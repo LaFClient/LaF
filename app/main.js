@@ -1,6 +1,6 @@
 require('v8-compile-cache');
 const path = require('path');
-const { app, BrowserWindow, ipcMain, protocol, shell, dialog, session } = require('electron');
+const { app, BrowserWindow, ipcMain, protocol, shell, dialog, session, clipboard } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 const prompt = require('electron-prompt');
@@ -39,6 +39,8 @@ protocol.registerSchemesAsPrivileged([{
 }]);
 
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? './lang/ja_JP' : './lang/en_US');
+
+log.info(`UI Language: ${config.get('lang')}`);
 
 const initFlags = () => {
     let flagsInfo = 'Chromium Options:';
@@ -255,8 +257,55 @@ ipcMain.on('exitClient', () => {
     app.exit();
 });
 
-ipcMain.handle('copyPCInfo', () => {
-    
+ipcMain.on('copyPCInfo', () => {
+    const versions = `LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`;
+    const uiLang = `UI Language: ${config.get('lang')}`;
+    let flagsInfo = 'Chromium Options:';
+    const chromiumFlags = [
+        // ['オプション', null('オプション2'), 有効[bool]]
+        // FPS解放周り
+        ['disable-frame-rate-limit', null, config.get('unlimitedFPS', true)],
+        ['disable-gpu-vsync', null, config.get('unlimitedFPS', true)],
+        // 描画関係
+        ['use-angle', config.get('angleType', 'gl'), true],
+        ['enable-webgl2-compute-context', null, config.get('webgl2Context', true)],
+        ['disable-accelerated-2d-canvas', 'true', !config.get('acceleratedCanvas', true)],
+        // ウィンドウキャプチャに必要な設定(win32でのみ動作する。frznさんに感謝)
+        ['in-process-gpu', null, osType === 'win32' ? true : false],
+        // その他
+        ['autoplay-policy', 'no-user-gesture-required', true],
+    ];
+    chromiumFlags.forEach((f) => {
+        const isEnable = f[2] ? 'Enable' : 'Disable';
+        flagsInfo += `\n    - ${f[0]}, ${f[1]}: ${isEnable}`;
+    });
+    const osInfoTxt = `OS: ${os.type()} ${os.release()} ${os.arch()}`;
+    const cpuInfo = os.cpus();
+    const cpuInfoTxt = `CPU: ${cpuInfo[0].model.trim()}@${Math.round((cpuInfo[0].speed / 1000) * 100) / 100}GHz`;
+    const memInfoTxt = `RAM: ${Math.round((os.freemem / 1073741824) * 100) / 100}GB / ${Math.round((os.totalmem / 1073741824) * 100) / 100}GB`;
+    const { exec } = require('child_process');
+    let gpuInfoTxt = '';
+    exec('wmic path win32_VideoController get name', (error, stdout, stderr) => {
+        if (error || stderr) {
+            gpuInfoTxt = 'Error in exec process.';
+        }
+        else {
+            const output = stdout.split('\r\r\n');
+            output.shift();
+            let c = 0;
+            output.forEach((v) => {
+                if (v !== '') {
+                    gpuInfoTxt += `GPU${c}: ${v.trim()}`;
+                    if (c + 1 !== output.length) {
+                        gpuInfoTxt += '\n';
+                    }
+                    c += 1;
+                }
+            });
+        }
+        const sysInfo = '=====Client Information=====\n' + versions + '\n' + uiLang + '\n' + flagsInfo + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + gpuInfoTxt;
+        clipboard.writeText(sysInfo);
+    });
 });
 
 // App

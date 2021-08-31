@@ -334,6 +334,7 @@ exports.gameTools = class {
         ipcRenderer.invoke('openInfo');
     }
     copyPCInfo() {
-        ipcRenderer.invoke('copyPCInfo');
+        ipcRenderer.send('copyPCInfo');
+        alert(langPack.dialog.copiedSysInfo);
     }
 };
