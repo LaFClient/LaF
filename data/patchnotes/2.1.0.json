@@ -1,0 +1,7 @@
+{
+    "version": "2.1.0",
+    "releaseDate": "2021/09/10 JST",
+    "releaseURL": "https://github.com/Hiro527/LaF/releases/tag/v2.1.0",
+    "notesEn": "- You can copy system info from bug button in settings.\n- Patchnotes will be shown after updating.\n- We can send notifies without updating.",
+    "notesJp": "- システム情報を虫アイコンのボタンからコピーすることができます\n- アップデート後にパッチノートが表示されるようになりました\n- アップデート無しでお知らせを送信することができるようになりました"
+}
