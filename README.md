@@ -14,6 +14,22 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 
 About LaF: https://hiro527.github.io/LaF
 
+# NOTICE
+## English
+Please update to `v2.0.3` yourself. I'm very sorry but there's no way to resolve automatically.
+```
+1. Download the latest installer from link below.
+2. After downloading, please install by using the installer
+```
+Updater will work fine from latest update. I apologize for my mistakes and everyone ping.
+
+## 日本語
+`v2.0.3` への手動でのアップデートをお願いします。大変申し訳ありませんが、これ以外に解決する方法がありませんでした…。
+```
+1. 下のリンクから最新版のインストーラーをダウンロードする
+2. ダウンロードが完了したら、インストールをお願いします
+```
+アップデーターは最新バージョンからは正しく動くよう修正しました。お手数おかけして申し訳ありません。
 # LaF 2.0
 ライセンスがGNU GPL3.0からMIT Licenseに変更されました。
 The license will be changed to MIT License from GNU GPL3.0.
