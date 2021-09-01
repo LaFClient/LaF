@@ -9,12 +9,12 @@ const DiscordRPC = require('discord-rpc');
 const os = require('os');
 // const appConfig = require('./config/main.json');
 
-const osType = process.platform;
+const platformType = process.platform;
 const config = new store();
 
 const devMode = config.get('devmode');
 
-log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`);
+log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${process.versions.electron}\n    - nodejs@${process.versions.node}\n    - Chromium@${process.versions.chrome}`);
 
 const wm = require('./js/util/wm');
 const tools = require('./js/util/tools');
@@ -54,7 +54,7 @@ const initFlags = () => {
         ['enable-webgl2-compute-context', null, config.get('webgl2Context', true)],
         ['disable-accelerated-2d-canvas', 'true', !config.get('acceleratedCanvas', true)],
         // ウィンドウキャプチャに必要な設定(win32でのみ動作する。frznさんに感謝)
-        ['in-process-gpu', null, osType === 'win32' ? true : false],
+        ['in-process-gpu', null, platformType === 'win32' ? true : false],
         // その他
         ['autoplay-policy', 'no-user-gesture-required', true],
     ];
@@ -258,7 +258,7 @@ ipcMain.on('exitClient', () => {
 });
 
 ipcMain.on('copyPCInfo', () => {
-    const versions = `LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n- electron@${process.versions.electron}\n- nodejs@${process.versions.node}\n- Chromium@${process.versions.chrome}`;
+    const versions = `LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${process.versions.electron}\n    - nodejs@${process.versions.node}\n    - Chromium@${process.versions.chrome}`;
     const uiLang = `UI Language: ${config.get('lang')}`;
     let flagsInfo = 'Chromium Options:';
     const chromiumFlags = [
@@ -271,7 +271,7 @@ ipcMain.on('copyPCInfo', () => {
         ['enable-webgl2-compute-context', null, config.get('webgl2Context', true)],
         ['disable-accelerated-2d-canvas', 'true', !config.get('acceleratedCanvas', true)],
         // ウィンドウキャプチャに必要な設定(win32でのみ動作する。frznさんに感謝)
-        ['in-process-gpu', null, osType === 'win32' ? true : false],
+        ['in-process-gpu', null, platformType === 'win32' ? true : false],
         // その他
         ['autoplay-policy', 'no-user-gesture-required', true],
     ];
@@ -285,27 +285,33 @@ ipcMain.on('copyPCInfo', () => {
     const memInfoTxt = `RAM: ${Math.round(((os.totalmem - os.freemem) / 1073741824) * 100) / 100}GB / ${Math.round((os.totalmem / 1073741824) * 100) / 100}GB`;
     const { exec } = require('child_process');
     let gpuInfoTxt = '';
-    exec('wmic path win32_VideoController get name', (error, stdout, stderr) => {
-        if (error || stderr) {
-            gpuInfoTxt = 'Error in exec process.';
-        }
-        else {
-            const output = stdout.split('\r\r\n');
-            output.shift();
-            let c = 0;
-            output.forEach((v) => {
-                if (v !== '') {
-                    gpuInfoTxt += `GPU${c}: ${v.trim()}`;
-                    if (c + 1 !== output.length) {
-                        gpuInfoTxt += '\n';
+    if (platformType === 'win32') {
+        exec('wmic path win32_VideoController get name', (error, stdout, stderr) => {
+            if (error || stderr) {
+                gpuInfoTxt = 'Error in exec process.';
+            }
+            else {
+                const output = stdout.split('\r\r\n');
+                output.shift();
+                let c = 0;
+                output.forEach((v) => {
+                    if (v !== '') {
+                        gpuInfoTxt += `GPU${c}: ${v.trim()}`;
+                        if (c + 1 !== output.length) {
+                            gpuInfoTxt += '\n';
+                        }
+                        c += 1;
                     }
-                    c += 1;
-                }
-            });
-        }
-        const sysInfo = '=====Client Information=====\n' + versions + '\n' + uiLang + '\n' + flagsInfo + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + gpuInfoTxt;
+                });
+            }
+            const sysInfo = '=====Client Information=====\n' + versions + '\n' + uiLang + '\n' + flagsInfo + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + gpuInfoTxt;
+            clipboard.writeText(sysInfo);
+        });
+    }
+    else {
+        const sysInfo = '=====Client Information=====\n' + versions + '\n' + uiLang + '\n' + flagsInfo + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + 'GPU: Couldn\'t get GPU information due to not supported platform.';
         clipboard.writeText(sysInfo);
-    });
+    }
 });
 ipcMain.on('openLogFolder', () => {
     shell.showItemInFolder(path.join(app.getPath('appData'), 'laf/logs'));
