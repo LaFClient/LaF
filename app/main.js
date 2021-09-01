@@ -279,7 +279,12 @@ ipcMain.on('copyPCInfo', () => {
         const isEnable = f[2] ? 'Enable' : 'Disable';
         flagsInfo += `\n    - ${f[0]}, ${f[1]}: ${isEnable}`;
     });
-    const osInfoTxt = `OS: ${os.type()} ${os.release()} ${os.arch()}`;
+    let osVersion = '';
+    if (os.release().startsWith('6.1')) osVersion = 'Windows 7';
+    if (os.release().startsWith('6.2')) osVersion = 'Windows 8';
+    if (os.release().startsWith('6.3')) osVersion = 'Windows 8.1';
+    if (os.release().startsWith('10')) osVersion = 'Windows 10';
+    const osInfoTxt = `OS: ${osVersion} / ${os.release()} ${os.arch()}`;
     const cpuInfo = os.cpus();
     const cpuInfoTxt = `CPU: ${cpuInfo[0].model.trim()}@${Math.round((cpuInfo[0].speed / 1000) * 100) / 100}GHz`;
     const memInfoTxt = `RAM: ${Math.round(((os.totalmem - os.freemem) / 1073741824) * 100) / 100}GB / ${Math.round((os.totalmem / 1073741824) * 100) / 100}GB`;
