@@ -63,5 +63,7 @@ module.exports = {
         openSwapper: 'Open Resource Swapper',
         restartClient: 'Restart LaF',
         openInfo: 'About LaF',
+        twitchUnlinked: 'twitch: Unlinked',
+        twitchLinked: 'twitch: {0}',
     },
 };

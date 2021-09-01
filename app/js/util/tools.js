@@ -112,6 +112,11 @@ exports.clientTools = class {
                             <span class="material-icons" style="color:#fff;font-size:30px;margin-top:-8px;vertical-align:middle;">bug_report</span>
                         </div>
                     </div>
+                    <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
+                        <div class="button buttonP lgn" id="lafTwitchLink" style="width:100%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.linkTwitch()">
+                            ${config.get('isTwitchLinked', false) ? langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc')) : langPack.settings.twitchUnlinked} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">person</span>
+                        </div>
+                    </div>
                     `;
                     setTimeout(() => {
                         const settHolderEl = document.getElementById('settHolder');
@@ -342,5 +347,8 @@ exports.gameTools = class {
     copyPCInfo() {
         ipcRenderer.send('copyPCInfo');
         alert(langPack.dialog.copiedSysInfo);
-    } 
+    }
+    linkTwitch() {
+        ipcRenderer.invoke('linkTwitch');
+    }
 };

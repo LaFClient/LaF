@@ -322,7 +322,25 @@ ipcMain.on('copyPCInfo', () => {
 ipcMain.on('openLogFolder', () => {
     shell.showItemInFolder(path.join(app.getPath('appData'), 'laf/logs'));
 });
-
+ipcMain.handle('linkTwitch', () => {
+    const express = require('express');
+    const isTwitchLinked = config.get('isTwitchLinked', false);
+    const twitchAcc = config.get('twitchAcc', null);
+    const oauthURL = 'https://id.twitch.tv/oauth2/authorize?client_id=q9pn15rtycv6l9waebyyw99d70mh00&redirect_uri=http://localhost:65535&response_type=token&scope=chat:edit';
+    const eapp = express();
+    let server = null;
+    eapp.get('/', (req, res) => {
+        res.sendFile(path.join(__dirname, 'html/twitch.html'));
+    });
+    eapp.get('/token', (req, res) => {
+        console.log(req.query.token);
+        setTimeout(() => server.close(), 1500);
+    });
+    server = eapp.listen('65535', () => {
+        log.info('HTTP Server started.');
+    });
+    shell.openExternal(oauthURL);
+});
 // App
 app.on('ready', () => {
     protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:/, ''))));

@@ -176,3 +176,11 @@ ipcRenderer.on('didFinishLoad', () => {
     if (isEnabledAltManager) injectAltManager();
     if (isEnabledTimer) initMenuTimer();
 });
+
+ipcRenderer.on('writeData', (e, id, value) => {
+    localStorage.setItem(id, value);
+});
+
+ipcRenderer.on('readData', (e, id) => {
+    e.returnValue = localStorage.getItem(id);
+});

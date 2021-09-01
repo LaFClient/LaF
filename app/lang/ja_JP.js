@@ -63,5 +63,7 @@ module.exports = {
         openSwapper: 'リソーススワッパーを開く',
         restartClient: 'LaFを再起動',
         openInfo: 'LaFについて',
+        twitchUnlinked: 'twitch: 未連携',
+        twitchLinked: 'twitch: {0}',
     },
 };
