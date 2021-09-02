@@ -333,7 +333,7 @@ ipcMain.handle('linkTwitch', () => {
         res.sendFile(path.join(__dirname, 'html/twitch.html'));
     });
     eapp.get('/token', (req, res) => {
-        console.log(req.query.token);
+        gameWindow.webContents.send('writeData', 'twitchToken', req.query.token);
         setTimeout(() => server.close(), 1500);
     });
     server = eapp.listen('65535', () => {

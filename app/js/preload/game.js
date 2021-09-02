@@ -184,3 +184,7 @@ ipcRenderer.on('writeData', (e, id, value) => {
 ipcRenderer.on('readData', (e, id) => {
     e.returnValue = localStorage.getItem(id);
 });
+
+ipcRenderer.on('getLink', (e) => {
+    e.returnValue = location.href;
+});
