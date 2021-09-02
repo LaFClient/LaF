@@ -6,9 +6,6 @@
     <script>
         if (location.hash) {
             const token = location.hash.match(/access_token=(.*)&scope/)[1];
-            const timeout = setTimeout(() => {
-                alert('Failed to link. / リンクに失敗しました');
-            }, 5000);
             fetch(`http://localhost:65535/token?token=${token}`);
         }
     </script>
