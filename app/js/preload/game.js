@@ -188,3 +188,15 @@ ipcRenderer.on('readData', (e, id) => {
 ipcRenderer.on('getLink', (e) => {
     e.returnValue = location.href;
 });
+
+ipcRenderer.on('twitchEvent', (e, v) => {
+    const el = document.getElementById('lafTwitchLink');
+    switch (v) {
+        case 'loggedIn': 
+            el.innerText = langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc'));
+            break;
+        case 'loggedOut': 
+            el.innerText = langPack.settings.twitchUnlinked;
+            break;
+    }
+});

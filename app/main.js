@@ -7,6 +7,7 @@ const prompt = require('electron-prompt');
 const { autoUpdater } = require('electron-updater');
 const DiscordRPC = require('discord-rpc');
 const os = require('os');
+const fetch = require('node-fetch');
 // const appConfig = require('./config/main.json');
 
 const platformType = process.platform;
@@ -20,6 +21,7 @@ const wm = require('./js/util/wm');
 const tools = require('./js/util/tools');
 
 const ClientID = '810350252023349248';
+let twitchToken = config.get('twitchToken', null);
 
 let splashWindow = null;
 let gameWindow = null;
@@ -78,6 +80,7 @@ const launchGame = () => {
     gameWindow = wm.launchGame();
     gameWindow.once('ready-to-show', () => {
         splashWindow.destroy();
+        twitchLogin();
     });
 };
 
@@ -151,6 +154,26 @@ const initSplashWindow = () => {
         splashWindow.show();
         initAutoUpdater();
     });
+};
+
+const twitchLogin = () => {
+    if (!config.get('twitchAcc', null)) {
+        const method = 'GET';
+        const headers = {
+            'Authorization': `Bearer ${twitchToken}`,
+            'Client-ID': 'q9pn15rtycv6l9waebyyw99d70mh00',
+        };
+        fetch('https://api.twitch.tv/helix/users', { method, headers })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res.data[0]);
+                log.info(`Twitch Login: ${res.data[0].login}`);
+                config.set('twitchAcc', res.data[0].login);
+                const twitchAcc = res.data[0].login;
+                gameWindow.webContents.send('twitchEvent', 'loggedIn');
+            })
+            .catch(log.error);
+    }
 };
 
 DiscordRPC.register(ClientID);
@@ -319,12 +342,13 @@ ipcMain.on('copyPCInfo', () => {
         clipboard.writeText(sysInfo);
     }
 });
+
 ipcMain.on('openLogFolder', () => {
     shell.showItemInFolder(path.join(app.getPath('appData'), 'laf/logs'));
 });
+
 ipcMain.handle('linkTwitch', () => {
     const express = require('express');
-    const isTwitchLinked = config.get('isTwitchLinked', false);
     const twitchAcc = config.get('twitchAcc', null);
     const oauthURL = 'https://id.twitch.tv/oauth2/authorize?client_id=q9pn15rtycv6l9waebyyw99d70mh00&redirect_uri=http://localhost:65535&response_type=token&scope=chat:edit';
     const eapp = express();
@@ -333,7 +357,10 @@ ipcMain.handle('linkTwitch', () => {
         res.sendFile(path.join(__dirname, 'html/twitch.html'));
     });
     eapp.get('/token', (req, res) => {
-        gameWindow.webContents.send('writeData', 'twitchToken', req.query.token);
+        config.set('twitchToken', req.query.token);
+        twitchToken = req.query.token;
+        log.info('Received token. Server will be closed.');
+        twitchLogin();
         setTimeout(() => server.close(), 1500);
     });
     server = eapp.listen('65535', () => {
@@ -341,6 +368,7 @@ ipcMain.handle('linkTwitch', () => {
     });
     shell.openExternal(oauthURL);
 });
+
 // App
 app.on('ready', () => {
     protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:/, ''))));
