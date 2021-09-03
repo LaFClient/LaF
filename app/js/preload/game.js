@@ -195,7 +195,7 @@ ipcRenderer.on('twitchEvent', (e, v) => {
         case 'loggedIn': 
             el.innerText = langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc'));
             break;
-        case 'loggedOut': 
+        case 'logOut': 
             el.innerText = langPack.settings.twitchUnlinked;
             break;
     }
