@@ -155,8 +155,9 @@ exports.gameTools = class {
         }
     }
     showAltMng() {
+        document.getElementById('windowHolder').className = 'popupWin';
+        document.getElementById('menuWindowSideL').style.display = 'none';
         const menuWindow = document.getElementById('menuWindow');
-        // overflow-y: auto;width: 800px;max-height: calc(100% - 330px);top: 50%;transform: translate(-50%, -50%);
         menuWindow.classList = 'dark';
         menuWindow.style.overflowY = 'auto';
         menuWindow.style.width = '800px';
