@@ -22,6 +22,7 @@ module.exports = {
         confirmClearData: 'Are you sure you want to clear all user data? You can not revert this operation.',
         clearedData: 'Cleared all user data. Restart.',
         copiedSysInfo: 'Copied system information.',
+        twitchLogout: 'Are you sure you want to logout from Twitch?',
     },
     altManager: {
         addAcc: {
@@ -63,7 +64,9 @@ module.exports = {
         openSwapper: 'Open Resource Swapper',
         restartClient: 'Restart LaF',
         openInfo: 'About LaF',
+        twitchLinkCmd: '!link Command',
         twitchUnlinked: 'twitch: Unlinked',
         twitchLinked: 'twitch: {0}',
+        twitchError: 'Twitch: Login Error',
     },
 };

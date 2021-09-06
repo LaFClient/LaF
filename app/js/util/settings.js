@@ -132,4 +132,13 @@ module.exports = {
             disable: langPack.settings.disableExitBtn,
         },
     },
+    enableLinkCmd: {
+        id: 'enableLinkCmd',
+        title: langPack.settings.twitchLinkCmd,
+        cat: 'Twitch',
+        type: 'checkbox',
+        val: config.get('enableLinkCmd', true),
+        restart: false,
+        default: true,
+    },
 };

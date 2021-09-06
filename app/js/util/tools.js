@@ -114,7 +114,7 @@ exports.clientTools = class {
                     </div>
                     <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
                         <div class="button buttonP lgn" id="lafTwitchLink" style="width:100%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.linkTwitch()">
-                            ${config.get('twitchAcc', null) ? langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc')) : langPack.settings.twitchUnlinked}
+                            ${config.get('twitchAcc', null) ? `${config.get('twitchError', false) ? langPack.settings.twitchError : langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc'))}` : langPack.settings.twitchUnlinked}
                         </div>
                     </div>
                     `;
@@ -350,6 +350,16 @@ exports.gameTools = class {
         alert(langPack.dialog.copiedSysInfo);
     }
     linkTwitch() {
-        ipcRenderer.invoke('linkTwitch');
+        if (config.get('twitchToken', null)) {
+            if (confirm(langPack.dialog.twitchLogout)) {
+                config.set('twitchToken', null);
+                config.set('twitchAcc', null);
+            }
+            log.info('Twitch: Logged Out');
+            document.getElementById('lafTwitchLink').innerText = langPack.settings.twitchUnlinked;
+        }
+        else {
+            ipcRenderer.invoke('linkTwitch');
+        }
     }
 };

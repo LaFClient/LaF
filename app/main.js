@@ -126,7 +126,7 @@ const initSplashWindow = () => {
             }, 1000);
         });
         autoUpdater.on('error', (e) => {
-            log.info(e);
+            log.error(e);
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.error + e.name);
             setTimeout(() => {
@@ -157,23 +157,27 @@ const initSplashWindow = () => {
 };
 
 const twitchLogin = () => {
-    if (!config.get('twitchAcc', null)) {
-        const method = 'GET';
-        const headers = {
-            'Authorization': `Bearer ${twitchToken}`,
-            'Client-ID': 'q9pn15rtycv6l9waebyyw99d70mh00',
-        };
-        fetch('https://api.twitch.tv/helix/users', { method, headers })
-            .then(res => res.json())
-            .then(res => {
-                console.log(res.data[0]);
-                log.info(`Twitch Login: ${res.data[0].login}`);
-                config.set('twitchAcc', res.data[0].login);
-                const twitchAcc = res.data[0].login;
-                gameWindow.webContents.send('twitchEvent', 'loggedIn');
-            })
-            .catch(log.error);
-    }
+    if (!twitchToken) return;
+    const method = 'GET';
+    const headers = {
+        'Authorization': `Bearer ${twitchToken}`,
+        'Client-ID': 'q9pn15rtycv6l9waebyyw99d70mh00',
+    };
+    fetch('https://api.twitch.tv/helix/users', { method, headers })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res.data[0]);
+            log.info(`Twitch Login: ${res.data[0].login}`);
+            config.set('twitchAcc', res.data[0].login);
+            gameWindow.webContents.send('twitchEvent', 'loggedIn');
+            config.set('twitchError', false);
+        })
+        .catch(err => {
+            log.error('Twitch Login: Error');
+            log.error(err);
+            gameWindow.webContents.send('twitchEvent', 'loginErr');
+            config.set('twitchError', true);
+        });
 };
 
 DiscordRPC.register(ClientID);
@@ -360,7 +364,7 @@ ipcMain.handle('linkTwitch', () => {
         config.set('twitchToken', req.query.token);
         twitchToken = req.query.token;
         log.info('Received token. Server will be closed.');
-        twitchLogin();
+        twitchLogin(true);
         setTimeout(() => server.close(), 1500);
     });
     server = eapp.listen('65535', () => {

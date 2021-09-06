@@ -22,6 +22,7 @@ module.exports = {
         confirmClearData: '本当にユーザーデータを削除しますか？この操作は取り消すことが出来ません。',
         clearedData: 'ユーザーデータを削除しました。再起動します。',
         copiedSysInfo: 'システム情報をコピーしました。',
+        twitchLogout: '本当にTwitchからログアウトしますか？',
     },
     altManager: {
         addAcc: {
@@ -63,7 +64,9 @@ module.exports = {
         openSwapper: 'リソーススワッパーを開く',
         restartClient: 'LaFを再起動',
         openInfo: 'LaFについて',
-        twitchUnlinked: 'twitch: 未連携',
-        twitchLinked: 'twitch: {0}',
+        twitchLinkCmd: '!linkコマンド',
+        twitchUnlinked: 'Twitch: 未連携',
+        twitchLinked: 'Twitch: {0}',
+        twitchError: 'Twitch: ログインエラー',
     },
 };

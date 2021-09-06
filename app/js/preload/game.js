@@ -198,5 +198,7 @@ ipcRenderer.on('twitchEvent', (e, v) => {
         case 'logOut': 
             el.innerText = langPack.settings.twitchUnlinked;
             break;
+        case 'loginErr':
+            el.innerText = langPack.settings.twitchError;
     }
 });
