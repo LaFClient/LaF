@@ -354,6 +354,7 @@ exports.gameTools = class {
             if (confirm(langPack.dialog.twitchLogout)) {
                 config.set('twitchToken', null);
                 config.set('twitchAcc', null);
+                config.set('twitchAccId', null);
             }
             log.info('Twitch: Logged Out');
             document.getElementById('lafTwitchLink').innerText = langPack.settings.twitchUnlinked;

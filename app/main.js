@@ -19,6 +19,7 @@ log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${pro
 
 const wm = require('./js/util/wm');
 const tools = require('./js/util/tools');
+const { json } = require('express');
 
 const ClientID = '810350252023349248';
 let twitchToken = config.get('twitchToken', null);
@@ -156,6 +157,20 @@ const initSplashWindow = () => {
     });
 };
 
+const getUserIsLive = () => {
+    const method = 'GET';
+    const headers = {
+        'Authorization': `Bearer ${twitchToken}`,
+        'Client-ID': 'q9pn15rtycv6l9waebyyw99d70mh00',
+    };
+    fetch(`https://api.twitch.tv/helix/streams?user_login=${config.get('twitchAcc', null)}`, { method, headers })
+    .then(res => res.json())
+    .then(res => {
+        config.set('isUserLive', res.data[0].viewers !== null ? true : false);
+    })
+    .catch(log.error);
+};
+
 const twitchLogin = () => {
     if (!twitchToken) return;
     const method = 'GET';
@@ -169,8 +184,10 @@ const twitchLogin = () => {
             console.log(res.data[0]);
             log.info(`Twitch Login: ${res.data[0].login}`);
             config.set('twitchAcc', res.data[0].login);
+            config.set('twitchAccId', res.data[0].id);
             gameWindow.webContents.send('twitchEvent', 'loggedIn');
             config.set('twitchError', false);
+            setTimeout(getUserIsLive, 10000);
         })
         .catch(err => {
             log.error('Twitch Login: Error');
@@ -390,4 +407,8 @@ app.on('ready', () => {
         }
     }
     initSplashWindow();
+});
+
+app.on('quit', () => {
+    config.set('isUserLive', false);
 });
