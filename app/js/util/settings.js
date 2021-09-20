@@ -137,8 +137,8 @@ module.exports = {
         title: langPack.settings.twitchLinkCmd,
         cat: 'Twitch',
         type: 'checkbox',
-        val: config.get('enableLinkCmd', true),
+        val: config.get('enableLinkCmd', false),
         restart: false,
-        default: true,
+        default: false,
     },
 };

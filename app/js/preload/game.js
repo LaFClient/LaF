@@ -182,11 +182,11 @@ ipcRenderer.on('writeData', (e, id, value) => {
 });
 
 ipcRenderer.on('readData', (e, id) => {
-    e.returnValue = localStorage.getItem(id);
+    return localStorage.getItem(id);
 });
 
 ipcRenderer.on('getLink', (e) => {
-    e.returnValue = location.href;
+    e.reply('sendLink', location.href);
 });
 
 ipcRenderer.on('twitchEvent', (e, v) => {

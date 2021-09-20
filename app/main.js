@@ -8,6 +8,7 @@ const { autoUpdater } = require('electron-updater');
 const DiscordRPC = require('discord-rpc');
 const os = require('os');
 const fetch = require('node-fetch');
+const tmi = require('tmi.js');
 // const appConfig = require('./config/main.json');
 
 const platformType = process.platform;
@@ -23,6 +24,7 @@ const { json } = require('express');
 
 const ClientID = '810350252023349248';
 let twitchToken = config.get('twitchToken', null);
+let twitchAcc = config.get('twitchAcc', null);
 
 let splashWindow = null;
 let gameWindow = null;
@@ -157,6 +159,31 @@ const initSplashWindow = () => {
     });
 };
 
+const initTwitchChat = () => {
+    if (!config.get('twitchAcc', null)) return;
+    log.info('Twitch Chatbot: Initializing...');
+    const tclient = new tmi.Client({
+        options: { debug: true },
+        identity: {
+            username: config.get('twitchAcc'),
+            password: 'oauth:' + twitchToken,
+        },
+        channels: [
+            config.get('twitchAcc'),
+        ],
+    });
+    tclient.connect().catch(log.error);
+    tclient.on('message', (channel, tags, message, self) => {
+        if (self) return;
+        if (message.toLocaleLowerCase() === '!link') {
+            console.log('msg');
+            ipcMain.on('sendLink', (e, v) => {
+                tclient.say(channel, `@${tags.username} ${v}`);
+            });
+        }
+    });
+};
+
 const getUserIsLive = () => {
     const method = 'GET';
     const headers = {
@@ -181,9 +208,9 @@ const twitchLogin = () => {
     fetch('https://api.twitch.tv/helix/users', { method, headers })
         .then(res => res.json())
         .then(res => {
-            console.log(res.data[0]);
             log.info(`Twitch Login: ${res.data[0].login}`);
             config.set('twitchAcc', res.data[0].login);
+            twitchAcc = res.data[0].login;
             config.set('twitchAccId', res.data[0].id);
             gameWindow.webContents.send('twitchEvent', 'loggedIn');
             config.set('twitchError', false);
@@ -370,8 +397,7 @@ ipcMain.on('openLogFolder', () => {
 
 ipcMain.handle('linkTwitch', () => {
     const express = require('express');
-    const twitchAcc = config.get('twitchAcc', null);
-    const oauthURL = 'https://id.twitch.tv/oauth2/authorize?client_id=q9pn15rtycv6l9waebyyw99d70mh00&redirect_uri=http://localhost:65535&response_type=token&scope=chat:edit';
+    const oauthURL = 'https://id.twitch.tv/oauth2/authorize?client_id=q9pn15rtycv6l9waebyyw99d70mh00&redirect_uri=http://localhost:65535&response_type=token&scope=chat:read+chat:edit+channel:moderate+whispers:read+whispers:edit+channel_editor';
     const eapp = express();
     let server = null;
     eapp.get('/', (req, res) => {
@@ -406,6 +432,7 @@ app.on('ready', () => {
             log.info('Discord Login OK');
         }
     }
+    if (config.get('enableLinkCmd', false)) initTwitchChat();
     initSplashWindow();
 });
 
