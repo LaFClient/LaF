@@ -65,6 +65,7 @@ module.exports = {
         restartClient: 'Restart LaF',
         openInfo: 'About LaF',
         twitchLinkCmd: '!link Command',
+        linkCmdUI: '!link Command Toggle Switch',
         twitchUnlinked: 'twitch: Unlinked',
         twitchLinked: 'twitch: {0}',
         twitchError: 'Twitch: Login Error',

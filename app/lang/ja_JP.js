@@ -65,6 +65,7 @@ module.exports = {
         restartClient: 'LaFを再起動',
         openInfo: 'LaFについて',
         twitchLinkCmd: '!linkコマンド',
+        linkCmdUI: '!linkコマンド切り替えボタン',
         twitchUnlinked: 'Twitch: 未連携',
         twitchLinked: 'Twitch: {0}',
         twitchError: 'Twitch: ログインエラー',

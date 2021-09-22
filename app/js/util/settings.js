@@ -141,4 +141,13 @@ module.exports = {
         restart: false,
         default: false,
     },
+    linkCmdUI: {
+        id: 'linkCmdUI',
+        title: langPack.settings.linkCmdUI,
+        cat: 'Twitch',
+        type: 'checkbox',
+        val: config.get('linkCmdUI', true),
+        restart: false,
+        default: false,
+    },
 };

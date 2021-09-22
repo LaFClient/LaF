@@ -177,16 +177,8 @@ ipcRenderer.on('didFinishLoad', () => {
     if (isEnabledTimer) initMenuTimer();
 });
 
-ipcRenderer.on('writeData', (e, id, value) => {
-    localStorage.setItem(id, value);
-});
-
-ipcRenderer.on('readData', (e, id) => {
-    return localStorage.getItem(id);
-});
-
 ipcRenderer.on('getLink', (e) => {
-    e.reply('sendLink', location.href);
+    ipcRenderer.invoke('sendLink', location.href);
 });
 
 ipcRenderer.on('twitchEvent', (e, v) => {

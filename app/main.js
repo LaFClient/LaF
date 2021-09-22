@@ -174,12 +174,14 @@ const initTwitchChat = () => {
     });
     tclient.connect().catch(log.error);
     tclient.on('message', (channel, tags, message, self) => {
-        if (self) return;
+        if (self || !config.get('enableLinkCmd', false) || !config.get('isUserLive', false)) return;
         if (message.toLocaleLowerCase() === '!link') {
-            console.log('msg');
-            ipcMain.on('sendLink', (e, v) => {
+            console.log('link');
+            ipcMain.handleOnce('sendLink', (e, v) => {
+                console.log(v);
                 tclient.say(channel, `@${tags.username} ${v}`);
             });
+            gameWindow.webContents.send('getLink');
         }
     });
 };
@@ -193,8 +195,11 @@ const getUserIsLive = () => {
     fetch(`https://api.twitch.tv/helix/streams?user_login=${config.get('twitchAcc', null)}`, { method, headers })
     .then(res => res.json())
     .then(res => {
-        if (!res.data[0]) {
-            config.set('isUserLive', res.data[0].viewers !== null ? true : false);
+        if (res.data[0].type === 'live') {
+            config.set('isUserLive', true);
+        }
+        else {
+            config.set('isUserLive', false);
         }
     })
     .catch(log.error);
@@ -388,7 +393,7 @@ ipcMain.on('copyPCInfo', () => {
         });
     }
     else {
-        const sysInfo = '=====Client Information=====\n' + versions + '\n' + flagsInfo + '\n' + uiLang + '\n' + memUsageTxt + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + 'GPU: Couldn\'t get GPU information due to not supported platform.';
+        const sysInfo = '=====Client Information=====\n' + versions + '\n' + flagsInfo + '\n' + uiLang + '\n' + memUsageTxt + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + 'GPU: Not Supported';
         clipboard.writeText(sysInfo);
     }
 });
@@ -434,7 +439,7 @@ app.on('ready', () => {
             log.info('Discord Login OK');
         }
     }
-    if (config.get('enableLinkCmd', false)) initTwitchChat();
+    initTwitchChat();
     initSplashWindow();
 });
 
