@@ -221,7 +221,8 @@ const twitchLogin = () => {
             config.set('twitchAccId', res.data[0].id);
             gameWindow.webContents.send('twitchEvent', 'loggedIn');
             config.set('twitchError', false);
-            setTimeout(getUserIsLive, 10000);
+            setInterval(getUserIsLive, 10000);
+            initTwitchChat();
         })
         .catch(err => {
             log.error('Twitch Login: Error');
@@ -439,7 +440,7 @@ app.on('ready', () => {
             log.info('Discord Login OK');
         }
     }
-    initTwitchChat();
+    if (config.get('twitchAcc', null)) initTwitchChat();
     initSplashWindow();
 });
 

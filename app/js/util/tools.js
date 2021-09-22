@@ -316,8 +316,11 @@ exports.gameTools = class {
             config.set(id, status);
         }, time);
     }
-    getSetting(id, status) {
-        config.get(id, status);
+    getSetting(id, def = false) {
+        config.get(id, def);
+    }
+    toggleSetting(id, def) {
+        config.set(id, !config.get(id, def));
     }
     resetOptions() {
         if (confirm(langPack.dialog.confirmResetConfig)) {
