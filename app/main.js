@@ -166,7 +166,7 @@ const initTwitchChat = () => {
         options: { debug: true },
         identity: {
             username: config.get('twitchAcc'),
-            password: 'oauth:' + twitchToken,
+            password: `oauth:${twitchToken}`,
         },
         channels: [
             config.get('twitchAcc'),
@@ -193,7 +193,9 @@ const getUserIsLive = () => {
     fetch(`https://api.twitch.tv/helix/streams?user_login=${config.get('twitchAcc', null)}`, { method, headers })
     .then(res => res.json())
     .then(res => {
-        config.set('isUserLive', res.data[0].viewers !== null ? true : false);
+        if (!res.data[0]) {
+            config.set('isUserLive', res.data[0].viewers !== null ? true : false);
+        }
     })
     .catch(log.error);
 };
