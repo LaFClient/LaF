@@ -164,6 +164,7 @@ const initTwitchChat = () => {
     log.info('Twitch Chatbot: Initializing...');
     const tclient = new tmi.Client({
         options: { debug: true },
+        logger: log,
         identity: {
             username: config.get('twitchAcc'),
             password: `oauth:${twitchToken}`,
@@ -195,6 +196,7 @@ const getUserIsLive = () => {
     fetch(`https://api.twitch.tv/helix/streams?user_login=${config.get('twitchAcc', null)}`, { method, headers })
     .then(res => res.json())
     .then(res => {
+        if (res.data.length === 0) return;
         if (res.data[0].type === 'live') {
             config.set('isUserLive', true);
         }
@@ -419,7 +421,7 @@ ipcMain.handle('linkTwitch', () => {
         setTimeout(() => server.close(), 1500);
     });
     server = eapp.listen('65535', () => {
-        log.info('HTTP Server started.');
+        log.info('HTTP Server started. It will close after 10 mins passed.');
     });
     shell.openExternal(oauthURL);
 });
@@ -440,7 +442,6 @@ app.on('ready', () => {
             log.info('Discord Login OK');
         }
     }
-    if (config.get('twitchAcc', null)) initTwitchChat();
     initSplashWindow();
 });
 
