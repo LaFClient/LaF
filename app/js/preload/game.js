@@ -67,11 +67,11 @@ initDiscordRPC();
 const injectAltManager = () => {
     const mMenuHolDefEl = document.getElementById('mMenuHolDef');
     mMenuHolDefEl.insertAdjacentHTML('beforeend', `
-    <div class="button buttonR lgn" id="logoutBtn" style="display:none;position:absolute;top:2px;right:985px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
+    <div class="button buttonR lgn" id="logoutBtn" style="display:none;position:absolute;top:2px;right:990px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
     Logout <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">logout</span></div>
-    <div class="button buttonPI lgn" id="altManagerBtn" style="position:absolute;top:2px;right:715px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
+    <div class="button buttonPI lgn" id="altManagerBtn" style="position:absolute;top:2px;right:720px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
     Alt Manager <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">manage_accounts</span></div>
-    <div class="button buttonP lgn" id="linkCmdBtn" style="position:absolute;top:2px;right:620px;width:75px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.toggleSetting('enableLinkCmd', false)">
+    <div class="button buttonP lgn" id="linkCmdBtn" style="position:absolute;top:2px;right:625px;width:75px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.toggleSetting('enableLinkCmd', false)">
     <span id="linkCmdBtnTxt" class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-5px;margin-right:6px;vertical-align:middle;">${config.get('enableLinkCmd', false) ? 'link' : 'link_off'}</span></div>
     `);
     const loggedIn = false;

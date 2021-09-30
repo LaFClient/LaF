@@ -1,6 +1,6 @@
 {
   "name": "laf",
-  "version": "2.1.0",
+  "version": "5.2.7",
   "description": "Lite and Fast Krunker Client",
   "main": "app/main.js",
   "scripts": {

@@ -15,30 +15,8 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 About LaF: https://hiro527.github.io/LaF
 
 # NOTICE
-## English
-Please update to latest version yourself. I'm very sorry but there's no way to resolve automatically.
-```
-1. Download the latest installer from link below.
-2. After downloading, please install by using the installer
-```
-Updater will work fine from `v2.0.3`. I apologize for my mistakes and everyone ping.
-
-## 日本語
-最新版への手動でのアップデートをお願いします。大変申し訳ありませんが、これ以外に解決する方法がありませんでした…。
-```
-1. 下のリンクから最新版のインストーラーをダウンロードする
-2. ダウンロードが完了したら、インストールをお願いします
-```
-アップデーターは`v2.0.3`からは正しく動くよう修正しました。お手数おかけして申し訳ありません。
-# LaF 2.0
-ライセンスがGNU GPL3.0からMIT Licenseに変更されました。
-The license will be changed to MIT License from GNU GPL3.0.
-
-すべてのシステムを再構築しました。コードとUIがきれいになりました^^
-I rebuilt all system. Code and UI are clean and cool now :)
-
-Have a good day with Krunker on LaF!
-
+**THIS SOFTWARE IS NOT MAINTAINED NOW. IT WILL MAKE UI BROKEN AND IMPOSSIBLE TO PLAY.</br>
+このソフトウェアはメンテナンスされていません。UIの破壊やプレイが不可能な状況を引き起こす恐れがあります。**
 # Requirements
 |     | Least/最低 | Recommended/推奨 |
 |:---:|   :---:   |      :---:      |
@@ -50,7 +28,6 @@ Have a good day with Krunker on LaF!
 | Memo | 720p60 Low Settings | 1080p60 High Settings |
 
 # Contact
-Discord server: [LaF: Made in Japan](https://discord.gg/MpuVpx6RY3)</br>
 e-mail: [Send e-mail](mailto:hiro527.dev@gmail.com)</br>
 Discord: Hiro527#0527</br>
 Twitter: [Hiro](https://twitter.com/hiroqss)
