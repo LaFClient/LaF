@@ -33,6 +33,7 @@ const isRPCEnabled = config.get('enableRPC', true);
 const isSwapperEnabled = config.get('enableResourceSwapper', true);
 
 /* 初期化ブロック */
+delete require('electron').nativeImage.createThumbnailFromPath
 if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
     app.quit();
