@@ -15,8 +15,8 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 About LaF: https://hiro527.github.io/LaF
 
 # NOTICE
-**THIS SOFTWARE IS NOT MAINTAINED NOW. IT WILL MAKE UI BROKEN AND IMPOSSIBLE TO PLAY.</br>
-このソフトウェアはメンテナンスされていません。UIの破壊やプレイが不可能な状況を引き起こす恐れがあります。**
+Don't worry. I've decided to continue developing this client.</br>
+安心してください。先程このクライアントの開発を続けることを決めました。
 # Requirements
 |     | Least/最低 | Recommended/推奨 |
 |:---:|   :---:   |      :---:      |
