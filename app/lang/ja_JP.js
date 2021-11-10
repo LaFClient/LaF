@@ -23,6 +23,7 @@ module.exports = {
         clearedData: 'ユーザーデータを削除しました。再起動します。',
         copiedSysInfo: 'システム情報をコピーしました。',
         twitchLogout: '本当にTwitchからログアウトしますか？',
+        infoPage: '現在ページを準備中です。\nそれまでKrunkerをプレイしながらお待ち下さい…。'
     },
     altManager: {
         addAcc: {
