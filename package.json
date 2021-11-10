@@ -1,44 +1,44 @@
 {
-  "name": "laf",
-  "version": "5.2.7",
-  "description": "Lite and Fast Krunker Client",
-  "main": "app/main.js",
-  "scripts": {
-    "start": "electron .",
-    "build:linux": "electron-builder --linux --dir",
-    "dist:linux": "electron-builder --linux",
-    "build:mac": "electron-builder --mac --dir",
-    "dist:mac": "electron-builder --mac",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Hiro527/LaF.git"
-  },
-  "author": "Hiro",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Hiro527/LaF/issues"
-  },
-  "homepage": "https://github.com/Hiro527/LaF#readme",
-  "electronVersion": "9.4.4",
-  "devDependencies": {
-    "electron": "^9.4.4",
-    "electron-builder": "^22.9.1"
-  },
-  "dependencies": {
-    "discord-rpc": "^4.0.1",
-    "electron-localshortcut": "^3.2.1",
-    "electron-log": "^4.3.5",
-    "electron-prompt": "^1.6.2",
-    "electron-store": "^8.0.0",
-    "electron-updater": "^4.3.9",
-    "express": "^4.17.1",
-    "node-fetch": "^2.6.1",
-    "tmi.js": "^1.8.5",
-    "uuid": "^8.3.2",
-    "v8-compile-cache": "^2.3.0"
-  }
+    "name": "laf",
+    "version": "5.2.7",
+    "description": "Lite and Fast Krunker Client",
+    "main": "app/main.js",
+    "scripts": {
+        "start": "electron .",
+        "build:linux": "electron-builder --linux --dir",
+        "dist:linux": "electron-builder --linux",
+        "build:mac": "electron-builder --mac --dir",
+        "dist:mac": "electron-builder --mac",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Hiro527/LaF.git"
+    },
+    "author": "Hiro",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Hiro527/LaF/issues"
+    },
+    "homepage": "https://github.com/Hiro527/LaF#readme",
+    "electronVersion": "9.4.4",
+    "devDependencies": {
+        "electron": "^9.4.4",
+        "electron-builder": "^22.9.1"
+    },
+    "dependencies": {
+        "discord-rpc": "^4.0.1",
+        "electron-localshortcut": "^3.2.1",
+        "electron-log": "^4.3.5",
+        "electron-prompt": "^1.6.2",
+        "electron-store": "^8.0.0",
+        "electron-updater": "^4.3.9",
+        "express": "^4.17.1",
+        "node-fetch": "^2.6.1",
+        "tmi.js": "^1.8.5",
+        "uuid": "^8.3.2",
+        "v8-compile-cache": "^2.3.0"
+    }
 }
