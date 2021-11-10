@@ -1,4 +1,4 @@
 provider: github
 owner: Hiro527
 repo: LaF
-updaterCacheDirName: jp.laf.updater.hiro
+updaterCacheDirName: LaFUpdater
