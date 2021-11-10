@@ -343,7 +343,7 @@ exports.gameTools = class {
         ipcRenderer.invoke('restartClient');
     }
     openInfo() {
-        ipcRenderer.invoke('openInfo');
+        alert(langPack.dialog.infoPage);
     }
     openLogFolder() {
         ipcRenderer.send('openLogFolder');

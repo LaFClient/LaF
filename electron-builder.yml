@@ -1,32 +1,28 @@
 appId: 'com.hiroqss.com'
 productName: 'LaF'
 win:
-  artifactName: ${productName}_${version}_portable_${os}_${arch}.${ext}
+  artifactName: LaF_Portable_Windows_${arch}.${ext}
   target:
     - target: nsis
       arch:
         - x64
         - ia32
-    - target: portable
-      arch:
-        - x64
-        - ia32
 linux:
-  artifactName: ${productName}_${version}_portable_${os}_${arch}.${ext}
+  artifactName: LaF_Portable_Linux_${arch}.${ext}
   target:
     - target: appImage
       arch:
         - x64
         - ia32
-  category: game
+  category: network
 mac:
-  artifactName: ${productName}-${version}_portable_${os}_${arch}.${ext}
+  artifactName: LaF_Portable_macOS_${arch}.${ext}
   target:
     - target: dmg
       arch:
         - x64
 nsis:
-  artifactName: ${productName}_${version}_installer_${os}_${arch}.${ext}
+  artifactName: LaF_Setup_Windows_${arch}.${ext}
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
