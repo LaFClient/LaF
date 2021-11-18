@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 
@@ -350,7 +350,7 @@ exports.gameTools = class {
         ipcRenderer.invoke('restartClient');
     }
     openInfo() {
-        alert(langPack.dialog.infoPage);
+        shell.openExternal('https://github.com/Hiro527/LaF');
     }
     openLogFolder() {
         ipcRenderer.send('openLogFolder');

@@ -205,7 +205,29 @@ ipcRenderer.on('joinMatch', () => {
     const MODES = {
         ffa: 0,
         tdm: 1,
-        ctf: 3
+        hp: 2,
+        ctf: 3,
+        po: 4,
+        has: 5,
+        inf: 6,
+        race: 7,
+        lms: 8,
+        ss: 9,
+        gg: 10,
+        ph: 11,
+        bh: 12,
+        st: 13,
+        koh: 14,
+        oic: 15,
+        td: 16,
+        kc: 17,
+        df: 18,
+        ss: 19,
+        tr: 20,
+        raid: 21,
+        bl: 22,
+        dom: 23,
+        kffa: 24
     };
     fetch(url)
         .then(res => res.json())
@@ -217,10 +239,16 @@ ipcRenderer.on('joinMatch', () => {
             } else {
                 region = new RegExp(/.+:.+/);
             }
-            const joinableGames = data.games.filter(game => game[2] < game[3] && region.test(game[0]) && (game[4].g === MODES[config.get('joinMatchMode')] && config.get('joinMatchMode', 'all') !== 'all') && !game[4].c);
+            const joinableGames = data.games.filter(game => game[2] < game[3] && region.test(game[0]) && (game[4].g === MODES[config.get('joinMatchMode')] || config.get('joinMatchMode', 'all') === 'all') && (config.get('joinMatchCustom', false) ? game[4].c : !game[4].c) && (config.get('joinMatchOCustom', false) ? game[4].oc : !game[4].oc));
+            /*
+            ・人数が上限に達していない
+            ・リージョンが設定と一致する
+            ・モードが設定と一致する
+            ・カスタム・公式カスタムのフラグが設定と一致する
+            */
             joinableGames.sort(function(a, b) {
-                if (a[2] < b[2]) return -1;
-                if (a[2] > b[2]) return 1;
+                if (a[2] > b[2]) return -1;
+                if (a[2] < b[2]) return 1;
                 return 0
             })
             if (joinableGames.length) {
@@ -228,5 +256,5 @@ ipcRenderer.on('joinMatch', () => {
             } else {
                 tools.sendChat(langPack.misc.noJoinableGames, '#fc03ec');
             }
-        })
-})
+        });
+});

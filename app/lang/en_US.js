@@ -72,7 +72,9 @@ module.exports = {
         twitchError: 'Twitch: Login Error',
         joinMatchPresentRegion: 'Strict to present region only',
         joinMatchMode: 'Game Mode',
-        allMode: 'All Mode'
+        allMode: 'All Modes',
+        joinMatchCustom: 'Custom Games',
+        joinMatchOCustom: 'Official Custom Games'
     },
     misc: {
         noJoinableGames: 'There are no joinable games'
