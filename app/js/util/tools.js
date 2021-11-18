@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 
@@ -9,37 +9,37 @@ const config = new store();
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
 
 exports.clientTools = class {
-    urlType(url) {
-        if (url.startsWith('https://krunker.io/social.html')) return 'hub';
-        if (url.startsWith('https://krunker.io/editor.html')) return 'editor';
-        if (url.startsWith('https://krunker.io/viewer.html')) return 'viewer';
-        if (url.startsWith('https://krunker.io') || url.startsWith('https://comp.krunker.io/?game=') || url.startsWith('https://127.0.0.1:8080')) return 'game';
-        return 'external';
-    }
-    generateHTML(obj) {
-        switch (obj.type) {
-            case 'checkbox':
-                return `
+        urlType(url) {
+            if (url.startsWith('https://krunker.io/social.html')) return 'hub';
+            if (url.startsWith('https://krunker.io/editor.html')) return 'editor';
+            if (url.startsWith('https://krunker.io/viewer.html')) return 'viewer';
+            if (url.startsWith('https://krunker.io') || url.startsWith('https://comp.krunker.io/?game=') || url.startsWith('https://127.0.0.1:8080')) return 'game';
+            return 'external';
+        }
+        generateHTML(obj) {
+                switch (obj.type) {
+                    case 'checkbox':
+                        return `
                 <label class='switch'>
                 <input type='checkbox' onclick='window.gt.setSetting("${obj.id}", this.checked)'${config.get(obj.id, obj.default) ? ' checked' : ''}>
                 <span class='slider'></span>
                 </label>`;
-            case 'select':
-                let tmpHTML = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
-                Object.keys(obj.options).forEach((k) => {
-                    tmpHTML += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''}>${obj.options[k]}</option>`;
-                });
-                return tmpHTML + '</select>';
-            case 'slider':
-                return `
+                    case 'select':
+                        let tmpHTML = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
+                        Object.keys(obj.options).forEach((k) => {
+                            tmpHTML += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''}>${obj.options[k]}</option>`;
+                        });
+                        return tmpHTML + '</select>';
+                    case 'slider':
+                        return `
                 <input type='number' class='sliderVal' id='c_slid_input_${obj.id}' min='${obj.min}' max='${obj.max}' value='${config.get(obj.id, obj.default)}' onkeypress='window.gt.setdSetting("${obj.id}", this)' style='border-width:0px'/><div class='slidecontainer'><input type='range' id='c_slid_${obj.id}' min='${obj.min}' max='${obj.max}' step='${obj.step}' value='${config.get(obj.id, obj.default)}' class='sliderM' oninput='window.gt.setSetting("${obj.id}", this.value)'></div>
                 `;
-            case 'file':
-                return `
+                    case 'file':
+                        return `
                 <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
                 `;
-            case 'fileWithEyes':
-                return `
+                    case 'fileWithEyes':
+                        return `
                 <button class='settingsBtn' onclick='window.gt.openFileDialog(${obj.id})' style="float:right;margin-top:5px;width:auto;">${langPack.settings.selectFile}</button>
                 <a class="material-icons" id="eye_${obj.id}" onclick="window.gt.changeVisibility('${obj.id}')" style="text-decoration:none;float:right;margin-top:10px;color:rgba(255,255,255,1);">${config.get(`${obj.id}_visibility`, true) ? 'visibility' : 'visibility_off'}</a>
                 <div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
@@ -127,6 +127,13 @@ exports.clientTools = class {
             };
         };
         injectSettings();
+    }
+    sendChat(msg, color) {
+        const chatListEl = document.getElementById('chatList');
+        const chatId = chatListEl.children.length;
+        const html = `<div data-tab="-1" id="chatMsg_${chatId}"><div class="chatItem"><span class="chatMsg" ${color ? `style="color:${color}"` : ''}>&lrm;${msg}&lrm;</spam/></div><br></div>`;
+        chatListEl.insertAdjacentHTML('beforeend', html);
+        chatListEl.scrollTop = chatListEl.scrollHeight;
     }
 };
 exports.gameTools = class {
@@ -343,7 +350,7 @@ exports.gameTools = class {
         ipcRenderer.invoke('restartClient');
     }
     openInfo() {
-        alert(langPack.dialog.infoPage);
+        shell.openExternal('https://github.com/Hiro527/LaF');
     }
     openLogFolder() {
         ipcRenderer.send('openLogFolder');

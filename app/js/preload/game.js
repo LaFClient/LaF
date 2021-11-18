@@ -33,7 +33,7 @@ const initDiscordRPC = () => {
         try {
             const gameActivity = window.getGameActivity();
             rpcActivity = {
-                state: gameActivity.map,
+                state: gameActivity.map ? gameActivity.map : 'Playing Krunker',
                 details: gameActivity.mode,
                 largeImageKey: 'laf_icon',
                 largeImageText: 'LaF CLient',
@@ -44,8 +44,7 @@ const initDiscordRPC = () => {
                 rpcActivity.endTimestamp = Date.now() + gameActivity.time * 1e3;
             }
             ipcRenderer.invoke('RPC_SEND', rpcActivity);
-        }
-        catch (error) {
+        } catch (error) {
             rpcActivity = {
                 state: 'Playing Krunker',
                 largeImageKey: 'laf_icon',
@@ -62,7 +61,6 @@ const initDiscordRPC = () => {
         rpcInterval = setInterval(sendDiscordRPC, 500);
     }
 };
-initDiscordRPC();
 
 const injectAltManager = () => {
     const mMenuHolDefEl = document.getElementById('mMenuHolDef');
@@ -81,14 +79,12 @@ const injectAltManager = () => {
         const signedInHeaderBarEl = document.getElementById('signedInHeaderBar');
         if (signedInHeaderBarEl.style.display !== 'none') {
             logoutBtnEl.style.display = 'block';
-        }
-        else {
+        } else {
             logoutBtnEl.style.display = 'none';
         }
         if (config.get('enableLinkCmd', false)) {
             linkCmdBtnTxtEl.innerText = 'link';
-        }
-        else {
+        } else {
             linkCmdBtnTxtEl.innerText = 'link_off';
         }
     }, 250);
@@ -146,8 +142,7 @@ const initMenuTimer = () => {
         let gameActivity;
         try {
             gameActivity = window.getGameActivity();
-        }
-        catch (e) {
+        } catch (e) {
             log.error(e);
         }
         const time = Math.floor(gameActivity.time);
@@ -182,6 +177,7 @@ ipcRenderer.on('didFinishLoad', () => {
     window.gt = new lafTools.gameTools();
     injectExitBtn();
     injectWaterMark();
+    initDiscordRPC();
     if (isEnabledAltManager) injectAltManager();
     if (isEnabledTimer) initMenuTimer();
 });
@@ -193,13 +189,72 @@ ipcRenderer.on('getLink', (e) => {
 ipcRenderer.on('twitchEvent', (e, v) => {
     const el = document.getElementById('lafTwitchLink');
     switch (v) {
-        case 'loggedIn': 
+        case 'loggedIn':
             el.innerText = langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc'));
             break;
-        case 'logOut': 
+        case 'logOut':
             el.innerText = langPack.settings.twitchUnlinked;
             break;
         case 'loginErr':
             el.innerText = langPack.settings.twitchError;
     }
+});
+
+ipcRenderer.on('joinMatch', () => {
+    const url = 'https://matchmaker.krunker.io/game-list?hostname=krunker.io';
+    const MODES = {
+        ffa: 0,
+        tdm: 1,
+        hp: 2,
+        ctf: 3,
+        po: 4,
+        has: 5,
+        inf: 6,
+        race: 7,
+        lms: 8,
+        ss: 9,
+        gg: 10,
+        ph: 11,
+        bh: 12,
+        st: 13,
+        koh: 14,
+        oic: 15,
+        td: 16,
+        kc: 17,
+        df: 18,
+        ss: 19,
+        tr: 20,
+        raid: 21,
+        bl: 22,
+        dom: 23,
+        kffa: 24
+    };
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            let region = null;
+            if (config.get('joinMatchPresentRegion', true)) {
+                const gameActivity = window.getGameActivity()
+                region = new RegExp(`${gameActivity.id.slice(0, 3)}:.+`);
+            } else {
+                region = new RegExp(/.+:.+/);
+            }
+            const joinableGames = data.games.filter(game => game[2] < game[3] && region.test(game[0]) && (game[4].g === MODES[config.get('joinMatchMode')] || config.get('joinMatchMode', 'all') === 'all') && (config.get('joinMatchCustom', false) ? game[4].c : !game[4].c) && (config.get('joinMatchOCustom', false) ? game[4].oc : !game[4].oc));
+            /*
+            ・人数が上限に達していない
+            ・リージョンが設定と一致する
+            ・モードが設定と一致する
+            ・カスタム・公式カスタムのフラグが設定と一致する
+            */
+            joinableGames.sort(function(a, b) {
+                if (a[2] > b[2]) return -1;
+                if (a[2] < b[2]) return 1;
+                return 0
+            })
+            if (joinableGames.length) {
+                window.open(`https://krunker.io/?game=${joinableGames[0][0]}`);
+            } else {
+                tools.sendChat(langPack.misc.noJoinableGames, '#fc03ec');
+            }
+        });
 });
