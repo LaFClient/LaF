@@ -70,5 +70,11 @@ module.exports = {
         twitchUnlinked: 'Twitch: 未連携',
         twitchLinked: 'Twitch: {0}',
         twitchError: 'Twitch: ログインエラー',
+        joinMatchPresentRegion: '現在接続中のサーバーに限定する',
+        joinMatchMode: '接続するゲームモード',
+        allMode: '全てのモード'
     },
+    misc: {
+        noJoinableGames: '参加可能なゲームがありません'
+    }
 };

@@ -74,20 +74,17 @@ exports.gameWindow = class {
                     fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach((cPath) => {
                         if (cPath.isDirectory()) {
                             recursiveFolder(win, `${prefix}/${cPath.name}`);
-                        }
-                        else {
+                        } else {
                             const name = `${prefix}/${cPath.name}`;
                             const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
                             if (isAsset) {
                                 urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
-                            }
-                            else {
+                            } else {
                                 urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
                             }
                         }
                     });
-                }
-                catch (e) {
+                } catch (e) {
                     log.warn('ERROR IN RESOURCE SWAPPER');
                     log.warn(e);
                 }
@@ -107,6 +104,9 @@ exports.gameWindow = class {
                 ['Esc', () => {
                     // ゲーム内でのESCキーの有効化
                     brWin.webContents.send('ESC');
+                }],
+                ['F4', () => {
+                    brWin.webContents.send('joinMatch');
                 }],
                 ['F5', () => {
                     // リ↓ロ↑ードする
@@ -135,10 +135,12 @@ exports.gameWindow = class {
                     app.relaunch();
                     app.quit();
                 }],
-                [['Ctrl+F1', 'F12'], () => {
-                    // 開発者ツールの起動
-                    brWin.webContents.openDevTools();
-                }],
+                [
+                    ['Ctrl+F1', 'F12'], () => {
+                        // 開発者ツールの起動
+                        brWin.webContents.openDevTools();
+                    }
+                ],
             ];
 
             sKeys.forEach((k) => {
@@ -150,8 +152,7 @@ exports.gameWindow = class {
         initShortcutKeys();
         if (isSwapperEnabled) {
             initSwapper(brWin);
-        }
-        else if (ezCSSMode) {
+        } else if (ezCSSMode) {
             initSwapper(brWin, false);
         }
         brWin.loadURL('https://krunker.io');
@@ -209,28 +210,24 @@ exports.socialWindow = class {
                     fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach((cPath) => {
                         if (cPath.isDirectory()) {
                             recursiveFolder(win, `${prefix}/${cPath.name}`);
-                        }
-                        else {
+                        } else {
                             const name = `${prefix}/${cPath.name}`;
                             const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
                             if (isAsset) {
                                 urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
-                            }
-                            else {
+                            } else {
                                 urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
                             }
                         }
                     });
-                }
-                catch (e) {
+                } catch (e) {
                     log.warn('ERROR IN RESOURCE SWAPPER');
                     log.warn(e);
                 }
             };
             if (isSwapperEnabled) {
                 recursiveFolder(win);
-            }
-            else if (isEzCSSEnabled && !isSwapperEnabled) {
+            } else if (isEzCSSEnabled && !isSwapperEnabled) {
                 urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
             }
             if (!urls.includes('*://krunker.io/css/main_custom.css')) {
@@ -267,10 +264,12 @@ exports.socialWindow = class {
                     app.relaunch();
                     app.quit();
                 }],
-                [['Ctrl+F1', 'F12'], () => {
-                    // 開発者ツールの起動
-                    brWin.webContents.openDevTools();
-                }],
+                [
+                    ['Ctrl+F1', 'F12'], () => {
+                        // 開発者ツールの起動
+                        brWin.webContents.openDevTools();
+                    }
+                ],
             ];
 
             sKeys.forEach((k) => {
@@ -290,11 +289,11 @@ exports.socialWindow = class {
         });
         brWin.webContents.on('will-prevent-unload', (e) => {
             if (!dialog.showMessageBoxSync({
-                buttons: [langPack.dialog.yes, langPack.dialog.no],
-                title: langPack.dialog.social.leavePageTitle,
-                message: langPack.dialog.social.leavePageMessage,
-                noLink: true,
-            })) {
+                    buttons: [langPack.dialog.yes, langPack.dialog.no],
+                    title: langPack.dialog.social.leavePageTitle,
+                    message: langPack.dialog.social.leavePageMessage,
+                    noLink: true,
+                })) {
                 e.preventDefault();
             }
         });
@@ -319,8 +318,7 @@ const openNewWindow = (url) => {
     if (winObj) {
         winObj.loadURL(url);
         winObj.on('closed', () => windows[lafTools.urlType(url)] = null);
-    }
-    else {
+    } else {
         windows[lafTools.urlType(url)] = new this.socialWindow(url);
     }
 };
