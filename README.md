@@ -12,6 +12,10 @@
 Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
 
+## About ResourceSwapper
+- Path: `%HOMEPATH%\Documents\LaFSwap`
+- You can use it as other client's one. Please put your file as same as MOD.
+
 ## KeyBinds
 | Key | Function |
 |:---:|   :---:  |
