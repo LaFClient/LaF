@@ -87,6 +87,11 @@ const injectAltManager = () => {
         } else {
             linkCmdBtnTxtEl.innerText = 'link_off';
         }
+        try {
+            document.getElementById('mouseAccel_div').style.display = 'block'
+        } catch {
+            // DO NOTHING
+        }
     }, 250);
 };
 
@@ -200,7 +205,7 @@ ipcRenderer.on('twitchEvent', (e, v) => {
     }
 });
 
-ipcRenderer.on('joinMatch', () => {
+ipcRenderer.on('joinMatch', async() => {
     const url = 'https://matchmaker.krunker.io/game-list?hostname=krunker.io';
     const MODES = {
         ffa: 0,
