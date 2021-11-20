@@ -85,7 +85,7 @@ exports.clientTools = class {
                 if (!settingsWindow.settingSearch) {
                     customHTML += `
                     </div>
-                    <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
+                    <div style='display:flex;width:100%;justify-content:space-around;'>
                         <div class="button buttonR lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.resetOptions()">
                             ${langPack.settings.resetOptions} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">restart_alt</span>
                         </div>
@@ -93,7 +93,7 @@ exports.clientTools = class {
                             ${langPack.settings.clearUserData} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">delete_forever</span>
                         </div>
                     </div>
-                    <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
+                    <div style='display:flex;width:100%;justify-content:space-around;'>
                         <div class="button buttonPI lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openSwapper()">
                             ${langPack.settings.openSwapper} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">folder_open</span>
                         </div>
@@ -101,7 +101,7 @@ exports.clientTools = class {
                             ${langPack.settings.restartClient} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">power_settings_new</span>
                         </div>
                     </div>
-                    <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
+                    <div style='display:flex;width:100%;justify-content:space-around;'>
                         <div class="button buttonG lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
                             ${langPack.settings.openInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">code</span>
                         </div>
@@ -115,7 +115,7 @@ exports.clientTools = class {
                             <span class="material-icons" style="color:#fff;font-size:30px;margin-top:-8px;vertical-align:middle;">bug_report</span>
                         </div>
                     </div>
-                    <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
+                    <div style='display:flex;width:100%;justify-content:space-around;'>
                         <div class="button buttonP lgn" id="lafTwitchLink" style="width:100%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.linkTwitch()">
                             ${config.get('twitchAcc', null) ? `${config.get('twitchError', false) ? langPack.settings.twitchError : langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc'))}` : langPack.settings.twitchUnlinked}
                         </div>

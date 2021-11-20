@@ -65,7 +65,7 @@ module.exports = {
         openSwapper: 'Open Resource Swapper',
         restartClient: 'Restart LaF',
         openInfo: 'About LaF',
-        openInfo: 'About CSS',
+        openCSSInfo: 'About CSS',
         twitchLinkCmd: '!link Command',
         linkCmdUI: '!link Command Toggle Switch',
         twitchUnlinked: 'twitch: Unlinked',
