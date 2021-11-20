@@ -102,10 +102,10 @@ exports.clientTools = class {
                         </div>
                     </div>
                     <div style='display:flex;width:100%,justify-content:justify-content:space-around;'>
-                        <div class="button buttonG lgn" style="width:45%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
+                        <div class="button buttonG lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
                             ${langPack.settings.openInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">code</span>
                         </div>
-                        <div class="button buttonPI lgn" style="width:45%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openCSSInfo()">
+                        <div class="button buttonPI lgn" style="width:37.5%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openCSSInfo()">
                             ${langPack.settings.openCSSInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">brush</span>
                         </div>
                         <div class="button buttonP lgn" style="width:5%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openLogFolder()">
