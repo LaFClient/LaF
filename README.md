@@ -7,14 +7,22 @@
 [![Latest Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/latest/total?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/total?style=flat-square&logo=appveyor)](https://github.com/Hiro527/LaF/releases)</br>
 
+
+言語/Language: [English](https://github.com/Hiro527/LaF/blob/master/README.md) | [日本語](https://github.com/Hiro527/LaF/blob/master/README_JA.md)
+
 ## What is LaF?
 **LaF = Lite and Fast**</br>
-Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。</br>
 Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
 
 ## About ResourceSwapper
 - Path: `%HOMEPATH%\Documents\LaFSwap`
 - You can use it as other client's one. Please put your file as same as MOD.
+
+## Twitch !link command
+1. Login to Twitch in settings
+2. Your listener can use `!link` command in stream.
+### Tips
+- You can toggle whether `!link` command is enable in a button which has link icon.
 
 ## KeyBinds
 | Key | Function |
