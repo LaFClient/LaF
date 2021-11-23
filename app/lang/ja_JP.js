@@ -30,12 +30,14 @@ module.exports = {
             ok: 'アカウントを正常に追加しました',
             error: 'アカウントを追加できませんでした',
             saveok: 'アカウントを正常に保存しました',
+            empty: 'ユーザー名とパスワードの両方を入力してください'
         },
         deleteAcc: {
             confirm: '本当に%accName%を削除しますか？',
         },
         editAcc: {
             edit: '%accName%を編集中',
+            empty: 'パスワードを入力してください'
         },
     },
     settings: {
@@ -68,7 +70,7 @@ module.exports = {
         openCSSInfo: 'CSSについて',
         twitchLinkCmd: '!linkコマンド',
         linkCmdUI: '!linkコマンド切り替えボタン',
-        twitchUnlinked: 'Twitch: 未連携',
+        twitchUnlinked: 'Twitchログイン',
         twitchLinked: 'Twitch: {0}',
         twitchError: 'Twitch: ログインエラー',
         joinMatchPresentRegion: '現在接続中の地域に限定する',
