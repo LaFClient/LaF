@@ -23,21 +23,21 @@ module.exports = {
         clearedData: 'ユーザーデータを削除しました。再起動します。',
         copiedSysInfo: 'システム情報をコピーしました。',
         twitchLogout: '本当にTwitchからログアウトしますか？',
-        infoPage: '現在ページを準備中です。\nそれまでKrunkerをプレイしながらお待ち下さい…。'
+        infoPage: '現在ページを準備中です。\nそれまでKrunkerをプレイしながらお待ち下さい…。',
     },
     altManager: {
         addAcc: {
             ok: 'アカウントを正常に追加しました',
             error: 'アカウントを追加できませんでした',
             saveok: 'アカウントを正常に保存しました',
-            empty: 'ユーザー名とパスワードの両方を入力してください'
+            empty: 'ユーザー名とパスワードの両方を入力してください',
         },
         deleteAcc: {
             confirm: '本当に%accName%を削除しますか？',
         },
         editAcc: {
             edit: '%accName%を編集中',
-            empty: 'パスワードを入力してください'
+            empty: 'パスワードを入力してください',
         },
     },
     settings: {
@@ -77,9 +77,10 @@ module.exports = {
         joinMatchMode: '接続するゲームモード',
         allMode: '全てのモード',
         joinMatchCustom: 'カスタムマッチ',
-        joinMatchOCustom: '公式カスタムマッチ'
+        joinMatchOCustom: '公式カスタムマッチ',
+        enableGA: 'Google Analytics',
     },
     misc: {
-        noJoinableGames: '参加可能なゲームがありません'
-    }
+        noJoinableGames: '参加可能なゲームがありません',
+    },
 };

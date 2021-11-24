@@ -12,7 +12,7 @@ const config = new store();
 
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
 
-log.info('Script Loaded: js/preload/preload.js');
+log.info('Script Loaded: js/preload/game.js');
 
 const isEnabledAltManager = config.get('enableAltMng', true);
 const isEnabledTimer = config.get('enableTimer', true);
@@ -23,12 +23,16 @@ let rpcActivity = null;
 let rpcInterval = null;
 
 // Google Analytics Start
-window.dataLayer = window.dataLayer || [];
-
-function gtag() { dataLayer.push(arguments); }
-gtag('js', new Date());
-
-gtag('config', 'G-624ZX98XB0');
+if (config.get('enableGA', true)) {
+    log.info('Enabled Google Analytics');
+    window.dataLayer = window.dataLayer || [];
+    const gtag = () => {
+        dataLayer.push(arguments);
+    };
+    gtag('js', new Date());
+    
+    gtag('config', 'G-624ZX98XB0');
+}
 // Google Analytics End
 
 window.OffCliV = true;
@@ -53,7 +57,8 @@ const initDiscordRPC = () => {
                 rpcActivity.endTimestamp = Date.now() + gameActivity.time * 1e3;
             }
             ipcRenderer.invoke('RPC_SEND', rpcActivity);
-        } catch (error) {
+        }
+        catch (error) {
             rpcActivity = {
                 state: 'Playing Krunker',
                 largeImageKey: 'laf_icon',
@@ -88,17 +93,20 @@ const injectAltManager = () => {
         const signedInHeaderBarEl = document.getElementById('signedInHeaderBar');
         if (signedInHeaderBarEl.style.display !== 'none') {
             logoutBtnEl.style.display = 'block';
-        } else {
+        }
+        else {
             logoutBtnEl.style.display = 'none';
         }
         if (config.get('enableLinkCmd', false)) {
             linkCmdBtnTxtEl.innerText = 'link';
-        } else {
+        }
+        else {
             linkCmdBtnTxtEl.innerText = 'link_off';
         }
         try {
-            document.getElementById('mouseAccel_div').style.display = 'block'
-        } catch {
+            document.getElementById('mouseAccel_div').style.display = 'block';
+        }
+        catch {
             // DO NOTHING
         }
     }, 250);
@@ -156,7 +164,8 @@ const initMenuTimer = () => {
         let gameActivity;
         try {
             gameActivity = window.getGameActivity();
-        } catch (e) {
+        }
+        catch (e) {
             log.error(e);
         }
         const time = Math.floor(gameActivity.time);
@@ -214,7 +223,7 @@ ipcRenderer.on('twitchEvent', (e, v) => {
     }
 });
 
-ipcRenderer.on('joinMatch', async() => {
+ipcRenderer.on('joinMatch', async () => {
     const url = 'https://matchmaker.krunker.io/game-list?hostname=krunker.io';
     const MODES = {
         ffa: 0,
@@ -226,7 +235,7 @@ ipcRenderer.on('joinMatch', async() => {
         inf: 6,
         race: 7,
         lms: 8,
-        ss: 9,
+        sis: 9,
         gg: 10,
         ph: 11,
         bh: 12,
@@ -236,21 +245,22 @@ ipcRenderer.on('joinMatch', async() => {
         td: 16,
         kc: 17,
         df: 18,
-        ss: 19,
+        shs: 19,
         tr: 20,
         raid: 21,
         bl: 22,
         dom: 23,
-        kffa: 24
+        kffa: 24,
     };
     fetch(url)
         .then(res => res.json())
         .then(data => {
             let region = null;
             if (config.get('joinMatchPresentRegion', true)) {
-                const gameActivity = window.getGameActivity()
+                const gameActivity = window.getGameActivity();
                 region = new RegExp(`${gameActivity.id.slice(0, 3)}:.+`);
-            } else {
+            }
+            else {
                 region = new RegExp(/.+:.+/);
             }
             const joinableGames = data.games.filter(game => game[2] < game[3] && region.test(game[0]) && (game[4].g === MODES[config.get('joinMatchMode')] || config.get('joinMatchMode', 'all') === 'all') && (config.get('joinMatchCustom', false) ? game[4].c : !game[4].c) && (config.get('joinMatchOCustom', false) ? game[4].oc : !game[4].oc));
@@ -263,11 +273,12 @@ ipcRenderer.on('joinMatch', async() => {
             joinableGames.sort(function(a, b) {
                 if (a[2] > b[2]) return -1;
                 if (a[2] < b[2]) return 1;
-                return 0
-            })
+                return 0;
+            });
             if (joinableGames.length) {
                 window.open(`https://krunker.io/?game=${joinableGames[0][0]}`);
-            } else {
+            }
+            else {
                 tools.sendChat(langPack.misc.noJoinableGames, '#fc03ec');
             }
         });

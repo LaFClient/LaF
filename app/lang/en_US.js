@@ -30,14 +30,14 @@ module.exports = {
             ok: 'Account added successfully',
             error: 'Couldn\'t add account due to error',
             saveok: 'Account saved successfully',
-            empty: 'Please input both username and password.'
+            empty: 'Please input both username and password.',
         },
         deleteAcc: {
             confirm: 'Are you sure you want to delete %accName%？',
         },
         editAcc: {
             edit: 'Editing %accName%',
-            empty: 'Please input password.'
+            empty: 'Please input password.',
         },
     },
     settings: {
@@ -77,9 +77,10 @@ module.exports = {
         joinMatchMode: 'Game Mode',
         allMode: 'All Modes',
         joinMatchCustom: 'Custom Games',
-        joinMatchOCustom: 'Official Custom Games'
+        joinMatchOCustom: 'Official Custom Games',
+        enableGA: 'Google Analytics',
     },
     misc: {
-        noJoinableGames: 'There are no joinable games'
+        noJoinableGames: 'There are no joinable games',
     },
 };
