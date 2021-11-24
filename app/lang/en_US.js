@@ -30,12 +30,14 @@ module.exports = {
             ok: 'Account added successfully',
             error: 'Couldn\'t add account due to error',
             saveok: 'Account saved successfully',
+            empty: 'Please input both username and password.'
         },
         deleteAcc: {
             confirm: 'Are you sure you want to delete %accName%？',
         },
         editAcc: {
             edit: 'Editing %accName%',
+            empty: 'Please input password.'
         },
     },
     settings: {
@@ -68,8 +70,8 @@ module.exports = {
         openCSSInfo: 'About CSS',
         twitchLinkCmd: '!link Command',
         linkCmdUI: '!link Command Toggle Switch',
-        twitchUnlinked: 'twitch: Unlinked',
-        twitchLinked: 'twitch: {0}',
+        twitchUnlinked: 'Twitch Login',
+        twitchLinked: 'Twitch: {0}',
         twitchError: 'Twitch: Login Error',
         joinMatchPresentRegion: 'Strict to present region only',
         joinMatchMode: 'Game Mode',

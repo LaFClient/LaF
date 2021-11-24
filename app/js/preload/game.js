@@ -22,6 +22,15 @@ const devMode = config.get('devmode');
 let rpcActivity = null;
 let rpcInterval = null;
 
+// Google Analytics Start
+window.dataLayer = window.dataLayer || [];
+
+function gtag() { dataLayer.push(arguments); }
+gtag('js', new Date());
+
+gtag('config', 'G-624ZX98XB0');
+// Google Analytics End
+
 window.OffCliV = true;
 
 window.prompt = (message, defaultValue) => {
