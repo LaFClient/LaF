@@ -33,7 +33,7 @@ const isRPCEnabled = config.get('enableRPC', true);
 const isSwapperEnabled = config.get('enableResourceSwapper', true);
 
 /* 初期化ブロック */
-delete require('electron').nativeImage.createThumbnailFromPath
+delete require('electron').nativeImage.createThumbnailFromPath;
 if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
     app.quit();
@@ -195,17 +195,17 @@ const getUserIsLive = () => {
         'Client-ID': 'q9pn15rtycv6l9waebyyw99d70mh00',
     };
     fetch(`https://api.twitch.tv/helix/streams?user_login=${config.get('twitchAcc', null)}`, { method, headers })
-    .then(res => res.json())
-    .then(res => {
-        if (res.data.length === 0) return;
-        if (res.data[0].type === 'live') {
-            config.set('isUserLive', true);
-        }
-        else {
-            config.set('isUserLive', false);
-        }
-    })
-    .catch(log.error);
+        .then(res => res.json())
+        .then(res => {
+            if (res.data.length === 0) return;
+            if (res.data[0].type === 'live') {
+                config.set('isUserLive', true);
+            }
+ else {
+                config.set('isUserLive', false);
+            }
+        })
+        .catch(log.error);
 };
 
 const twitchLogin = () => {
@@ -289,30 +289,30 @@ ipcMain.handle('showDialog', (e, accName) => {
 
 ipcMain.on('showPrompt', (e, message, defaultValue) => {
     prompt({
-        title: 'LaF',
-        label: message,
-        value: defaultValue,
-        inputAttrs: {
-            type: 'text',
-        },
-        type: 'input',
-        alwaysOnTop: true,
-        icon: path.join(__dirname, 'img/icon.ico'),
-        skipTaskbar: true,
-        buttonLabels: {
-            ok: langPack.dialog.ok,
-            cancel: langPack.dialog.cancel,
-        },
-        width: 400,
-        height: 200,
-        customStylesheet: path.join(__dirname, 'css/prompt.css'),
-    })
+            title: 'LaF',
+            label: message,
+            value: defaultValue,
+            inputAttrs: {
+                type: 'text',
+            },
+            type: 'input',
+            alwaysOnTop: true,
+            icon: path.join(__dirname, 'img/icon.ico'),
+            skipTaskbar: true,
+            buttonLabels: {
+                ok: langPack.dialog.ok,
+                cancel: langPack.dialog.cancel,
+            },
+            width: 400,
+            height: 200,
+            customStylesheet: path.join(__dirname, 'css/prompt.css'),
+        })
         .then((r) => {
             if (r === null) {
                 log.info('showPrompt: User Cancelled.');
                 e.returnValue = null;
             }
-            else {
+ else {
                 log.info(r);
                 e.returnValue = r;
             }
@@ -366,8 +366,8 @@ ipcMain.on('copyPCInfo', () => {
     if (osRelease.startsWith('6.1')) osVersion = 'Windows 7';
     if (osRelease.startsWith('6.2')) osVersion = 'Windows 8';
     if (osRelease.startsWith('6.3')) osVersion = 'Windows 8.1';
-    if (osRelease.startsWith('10') && Number(osRelease.split('.')[2]) < 22000 ) osVersion = 'Windows 10';
-    if (osRelease.startsWith('10') && Number(osRelease.split('.')[2]) >= 22000 ) osVersion = 'Windows 11';
+    if (osRelease.startsWith('10') && Number(osRelease.split('.')[2]) < 22000) osVersion = 'Windows 10';
+    if (osRelease.startsWith('10') && Number(osRelease.split('.')[2]) >= 22000) osVersion = 'Windows 11';
     const osInfoTxt = `OS: ${osVersion} / ${os.release()} ${os.arch()}`;
     const cpuInfo = os.cpus();
     const cpuInfoTxt = `CPU: ${cpuInfo[0].model.trim()}@${Math.round((cpuInfo[0].speed / 1000) * 100) / 100}GHz`;
@@ -380,7 +380,7 @@ ipcMain.on('copyPCInfo', () => {
             if (error || stderr) {
                 gpuInfoTxt = 'Error in exec process.';
             }
-            else {
+ else {
                 const output = stdout.split('\r\r\n');
                 output.shift();
                 let c = 0;
@@ -398,7 +398,7 @@ ipcMain.on('copyPCInfo', () => {
             clipboard.writeText(sysInfo);
         });
     }
-    else {
+ else {
         const sysInfo = '=====Client Information=====\n' + versions + '\n' + flagsInfo + '\n' + uiLang + '\n' + memUsageTxt + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + 'GPU: Not Supported';
         clipboard.writeText(sysInfo);
     }
@@ -438,7 +438,7 @@ app.on('ready', () => {
             rpc.login({ clientId: ClientID });
             loggedIn = true;
         }
-        catch (e) {
+ catch (e) {
             console.error(e);
         }
         if (loggedIn) {
