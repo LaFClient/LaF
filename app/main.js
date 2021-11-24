@@ -201,7 +201,7 @@ const getUserIsLive = () => {
             if (res.data[0].type === 'live') {
                 config.set('isUserLive', true);
             }
- else {
+            else {
                 config.set('isUserLive', false);
             }
         })
@@ -312,7 +312,7 @@ ipcMain.on('showPrompt', (e, message, defaultValue) => {
                 log.info('showPrompt: User Cancelled.');
                 e.returnValue = null;
             }
- else {
+            else {
                 log.info(r);
                 e.returnValue = r;
             }
@@ -380,7 +380,7 @@ ipcMain.on('copyPCInfo', () => {
             if (error || stderr) {
                 gpuInfoTxt = 'Error in exec process.';
             }
- else {
+            else {
                 const output = stdout.split('\r\r\n');
                 output.shift();
                 let c = 0;
@@ -398,7 +398,7 @@ ipcMain.on('copyPCInfo', () => {
             clipboard.writeText(sysInfo);
         });
     }
- else {
+    else {
         const sysInfo = '=====Client Information=====\n' + versions + '\n' + flagsInfo + '\n' + uiLang + '\n' + memUsageTxt + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + 'GPU: Not Supported';
         clipboard.writeText(sysInfo);
     }
