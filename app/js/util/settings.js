@@ -113,7 +113,8 @@ module.exports = {
         options: {
             type1: langPack.settings.easyCSStype1,
             type2: langPack.settings.easyCSStype2,
-            //type3: langPack.easyCSStype3,
+            type3: langPack.settings.easyCSStype3,
+            type4: langPack.settings.easyCSStype4,
             custom: langPack.settings.easyCSSCustom,
             disable: langPack.settings.easyCSSDisable,
         },

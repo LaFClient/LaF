@@ -24,6 +24,7 @@ const cssPath = {
     type1: '../../css/EasyCSS/type1.css',
     type2: '../../css/EasyCSS/type2.css',
     type3: '../../css/EasyCSS/type3.css',
+    type4: '../../css/EasyCSS/type4.css',
     custom: config.get('userCSSPath', ''),
 };
 

@@ -1,0 +1,1161 @@
+/* NeonStorm */
+/*This is a free CSS created by NamekujiLSDs#7777 for all community members.
+If you want to modify this CSS, feel free to do so. However, it is prohibited to falsely claim to be your own work, or to redistribute any part of the code for a fee.
+If you engage in such behavior, you will be banned from the respective communities and in-game.*/
+
+
+:root {
+    --accent-color   : #00efff;
+    --sub-color      : blue;
+    --bg-color-1     : rgba(0, 0, 255, .5);
+    --bg-color-2     : rgba(130, 130, 255, .5);
+    --bg-color-3     : rgb(0 237 255 / 50%);
+    --menu-bg        : rgb(0 255 255 / 100%);
+    --text-main-color: white;
+    --check-yes      : #00ff00;
+    --check-no       : #ff0000;
+}
+
+
+/*Font*/
+
+@font-face {
+    font-family: gamefont;
+    src        : url(https://namekujilsds.github.io/font/daggersquare_NeonStorm.otf);
+}
+
+
+/*General setting*/
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.menuLink {
+    color: black !important;
+}
+
+div#aHider,
+#instructions,
+#bubbleContainer,
+#seasonLabel,
+#gameNameHolder,
+div#tlInfHold,
+#newsHolder,
+.verticalSeparator {
+    display: none !important;
+}
+
+
+/* Menu Timer */
+
+#uiBase.onMenu #spectateUI {
+    display  : block !important;
+    position : fixed;
+    bottom   : 150px;
+    top      : unset;
+    left     : 50%;
+    right    : unset;
+    transform: translate(-50%, 50%);
+    z-index  : 1;
+    width    : 10px;
+    height   : 10px;
+    font-size: 40px !important;
+}
+
+#uiBase.onMenu #spectateHUD {
+    display        : flex;
+    justify-content: center;
+    transform      : unset;
+    left           : unset;
+}
+
+#uiBase.onMenu #specTeam0,
+#uiBase.onMenu #spec0,
+#uiBase.onMenu #spec1,
+#uiBase.onMenu #specNames,
+#uiBase.onMenu #specStats,
+#uiBase.onMenu #specContr,
+#uiBase.onMenu #specKPDContr,
+#uiBase.onMenu #specSus,
+#uiBase.onMenu #specTeam1,
+#uiBase.onMenu #specGMessage,
+#uiBase.onMenu #specGameInfo {
+    display: none !important
+}
+
+#uiBase.onMenu #specTimer {
+    display         : block !important;
+    font-size       : 55px;
+    background-color: transparent;
+    color           : rgba(255, 255, 255, .55)
+}
+
+
+/* ClassPicker */
+
+#aHolder,
+#onetrust-consent-sdk {
+    display: none !important;
+}
+
+#hiddenClasses {
+    display       : flex !important;
+    flex-direction: row;
+    position      : fixed;
+    left          : 50%;
+    top           : 10px;
+    bottom        : unset;
+    transform     : translateX(-50%);
+    margin-right  : 10px;
+}
+
+#menuClassPicker0[onclick="selectClass(0)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_0.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker0[onclick="selectClass(0)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker1[onclick="selectClass(1)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_1.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker1[onclick="selectClass(1)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker2[onclick="selectClass(2)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_2.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker2[onclick="selectClass(2)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker3[onclick="selectClass(3)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_3.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker3[onclick="selectClass(3)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker4[onclick="selectClass(4)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_4.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker4[onclick="selectClass(4)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker5[onclick="selectClass(5)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_5.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker5[onclick="selectClass(5)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker6[onclick="selectClass(6)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_6.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker6[onclick="selectClass(6)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker7[onclick="selectClass(7)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_7.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker7[onclick="selectClass(7)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker8[onclick="selectClass(8)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_8.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker8[onclick="selectClass(8)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker9[onclick="selectClass(9)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_9.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker9[onclick="selectClass(9)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker10[onclick="selectClass(10)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_10.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker10[onclick="selectClass(10)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker11[onclick="selectClass(11)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_11.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker11[onclick="selectClass(11)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker12[onclick="selectClass(12)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_12.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker12[onclick="selectClass(12)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker13[onclick="selectClass(13)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_13.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker13[onclick="selectClass(13)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+#menuClassPicker14[onclick="selectClass(14)"] {
+    display        : block;
+    width          : 60px;
+    height         : 60px;
+    content        : url(https://assets.krunker.io/textures/classes/icon_14.png);
+    pointer-events : auto;
+    image-rendering: pixelated;
+    margin-right   : 10px;
+    padding        : 5px;
+    border-radius  : 10px;
+    border         : 3px solid white;
+}
+
+#menuClassPicker14[onclick="selectClass(14)"]:hover {
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+
+/* Cursor */
+
+* {
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAZCAMAAAAGyf7hAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAAxQAAAMUBHc26qAAAAc5QTFRFHuH/HuH/HuH/AAAAHuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuD+HuH/HuH/HuH/HuH/HuH/HuH/Ht//EYGSHt/8HuH/HuH/HuH/HuH/HuH/BiowD29+HuH/HuH/HuH/HuH/HuH/HuH/HuH/BSgtAAAADFllHuH/HuH/HuH/HuH/D259Ht78HuH/HuH/AAICHuH/HuH/EX+PHuH/HuH/AQUFEHeHHt/8HuH/HuH/HuH/AAIDHuH/HuH/HuH/HuH/AQQFEoeZHuH/HuH/HuH/AxMWE4ebFZGoFZKoHdbzHuH/HuH/HuH/AxQXGLfPHuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/GLHJHuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/CDtDGLLKHuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuD/GsDaHuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/HuH/B/L3AwAAAJp0Uk5TAAECAAMFCAcEChYfHhMYNE1MHAsPLmXZqXNFDBU/iPv4uX4NGUma/P/5wX0gGqD///m8ex0bTqL////6voBD//m/eP+49P91Qf//9rV3Pf/2smsS///znVP//////+RiJf//7dvT0M/MwqFP/+mvj3x2dG9kSywRnv//6qNsSDUvLSsmRpX8/+ikZjcOOHrfl2MyCVJYMwY2I/tDzHoAAAFcSURBVHicY2BgZGJiYmRkYEYCDIwsrGzsHEwoogwsnFzcPLycHExIogxsfPwCgvxCwsiiDCKiYuISklLc0kiiDDKycvIKikpS3MoIUQYVVTV1DU0tbSkdhFoGXQE9dX0DQyNjKRO4KIOpmbm6haWVtY2tHdxcqKClvYOjkx2PMAfYvTBBZ3sHF2M7qAkwQUtnA1dFJ1kTYRagWrigpaWboYu7hyknCyOyoKeXt4+vny4bEwOSoKW/RkBgEH8w0DIkQcuQ0LDwCB6gUqhgZFQ0EMTExsUncMIEE5OSU1LT0jMys7K5wSqz1C0Sc3Lz8gsKi4pLSsvKWRkZdAUr1Curqmtq6+obGpuahcrZgbbztbS2tXd0dnWblPcoSwuDYoaZIbi3z7p/wsRJXJM5WFhYmMCRxSCdMKVCe+o0LjYWRmCcMkBCaXp5wgz+mcHsQF1IsTldmTdYejpKHAMAaa9POyPJa68AAAAASUVORK5CYII=") 3 5, auto !important;
+}
+
+
+/*Menu items*/
+
+
+/*Menu Left Bar*/
+
+#menuItemContainer {
+    top       : unset;
+    bottom    : unset;
+    height    : 800px;
+    top       : 50%;
+    transform : translateY(-50%) skewX(-8deg);
+    width     : 350px;
+    left      : -150px;
+    font-size : 22px !important;
+    background: transparent;
+}
+
+.menuItem .material-icons-outlined {
+    height   : 0;
+    font-size: 0 !important;
+}
+
+.menuItem {
+    background-color: rgba(0, 0, 0, .5);
+
+    padding-right : 30px;
+    display       : flex;
+    align-items   : flex-end;
+    flex-direction: column;
+    border-top    : 2px solid var(--accent-color);
+    border-bottom : 2px solid var(--accent-color);
+    border-color  : black;
+}
+
+.menuItem:hover {
+    background-color: var(--bg-color-1);
+    filter          : brightness(1);
+    text-shadow     : 0 0 15px white;
+    box-shadow      : 0 0 30px var(--accent-color);
+    transform       : scale(1.1);
+    border-color    : var(--accent-color);
+}
+
+.menuItemTitle {
+    font-size: unset !important;
+    color    : var(--text-main-color) !important;
+}
+
+#clientExit {
+    display: flex;
+}
+
+
+/*Menu right bar*/
+
+#rankedSoonTm,
+#faceItIconM,
+#braveWarning {
+    display: none !important;
+}
+
+.buttonD {
+    filter: unset;
+}
+
+#subLogoButtons>.button {
+
+    height         : auto;
+    padding-top    : unset;
+    padding-bottom : unset;
+    padding-right  : unset;
+    font-size      : 22px !important;
+    border         : unset !important;
+    background     : var(--bg-color-1) !important;
+    border-radius  : unset;
+    margin-left    : 0px;
+    margin-right   : 0px;
+    margin-bottom  : 0;
+    flex-grow      : 1;
+    display        : flex;
+    flex-direction : column;
+    align-content  : center;
+    justify-content: center;
+    padding-left   : 30px !important;
+    align-items    : flex-start;
+    border-top     : 2px solid var(--accent-color) !important;
+    border-bottom  : 2px solid var(--accent-color) !important;
+    background     : rgba(0, 0, 0, .5) !important;
+    border-color   : black !important;
+}
+
+.button:hover {
+    transform: unset;
+}
+
+#subLogoButtons {
+    transform     : translateY(-50%)skewX(8deg) !important;
+    display       : flex;
+    position      : fixed;
+    flex-direction: column;
+    height        : 800px;
+    top           : 50%;
+    width         : 350px;
+    font-size     : 22px !important;
+    background    : transparent;
+    left          : unset;
+    right         : -150px;
+}
+
+#subLogoButtons>.button:hover {
+    filter      : brightness(1);
+    text-shadow : 0 0 15px white;
+    box-shadow  : 0 0 30px var(--accent-color);
+    transform   : scale(1.1);
+    background  : var(--bg-color-1) !important;
+    border-color: var(--accent-color) !important;
+}
+
+
+/* top right*/
+
+.headerBarRight {
+    background: transparent;
+}
+
+#editorBtnM,
+.menuSocialB {
+    display: none;
+}
+
+
+/*Bottom right*/
+
+.terms,
+.verticalSeparatorInline {
+    display: none;
+}
+
+#termsInfo {
+    background: transparent;
+    padding   : unset !important;
+    bottom    : 0;
+}
+
+#termsInfo:after {
+    content  : "NamekujiLSDs#7777";
+    color    : var(--accent-color);
+    font-size: 20px;
+}
+
+
+/*CustomizeBar*/
+
+#menuClassNameTag,
+#menuClassSubtext,
+#menuClassName {
+    display: none;
+}
+
+#menuClassContainer {
+    display : unset;
+    position: unset;
+}
+
+#classPreviewCanvas {
+    position     : fixed;
+    bottom       : 50px;
+    margin-bottom: 0;
+    left         : 50%;
+    transform    : translateX(-50%);
+    filter       : drop-shadow(0 0 10px var(--accent-color));
+    opacity      : 0;
+    transition   : .2s;
+}
+
+#customizeButton {
+    position       : fixed;
+    display        : block;
+    bottom         : 0;
+    left           : 50%;
+    transform      : translate(-50%, 50%);
+    height         : 100px;
+    width          : 400px;
+    border-radius  : 1000px;
+    backdrop-filter: blur(10px);
+    background     : var(--bg-color-1);
+    text-shadow    : unset !important;
+}
+
+#customizeButton:hover {
+    filter    : brightness(1);
+    box-shadow: 0 0 30px var(--accent-color);
+}
+
+#menuClassContainer:hover>canvas#classPreviewCanvas {
+    opacity: 1;
+}
+
+
+/*Top left*/
+
+.button.lgn {
+    border-color: var(--accent-color) !important;
+}
+
+.progressBar {
+    display : block;
+    top     : 0;
+    position: fixed;
+    width   : 150px;
+    left    : 0;
+}
+
+.progressBarInner {
+    display         : flex;
+    background-image: linear-gradient(to right, blue, aqua);
+    justify-content : flex-end;
+}
+
+.progressBarInner:after {
+    width        : 8px;
+    height       : 8px;
+    margin-top   : 1px;
+    margin-right : -2px;
+    content      : "";
+    display      : block;
+    background   : aqua;
+    border-radius: 10px;
+    box-shadow   : 0 0 10px blue, 0 0 10px blue, 0 0 10px blue;
+}
+
+#signedInHeaderBar {
+    border-right              : 6px solid var(--accent-color);
+    box-shadow                : 0 0 8px var(--accent-color);
+    display                   : block;
+    height                    : 150px;
+    width                     : 150px;
+    border-bottom-right-radius: 10000px !important;
+}
+
+#menuUsernameContainer img {
+    display: none;
+}
+
+#mLevelCont {
+    background: transparent;
+}
+
+#mailContainer {
+    top     : 100px;
+    position: fixed;
+    left    : 10px;
+}
+
+.junkInfo {
+    position : fixed;
+    top      : 95px;
+    left     : 10px;
+    font-size: 20px !important;
+}
+
+#menuAccountUsername {
+    top     : 23px;
+    position: fixed;
+}
+
+#mLevelContV {
+    position   : fixed;
+    top        : 12px;
+    left       : 180px;
+    line-height: unset;
+    font-size  : 30px;
+}
+
+.bigMFeatBarI {
+    position: fixed;
+    top     : 50px;
+    left    : 160px;
+    margin  : 0;
+}
+
+.krInfo {
+    font-size: 20px !important;
+    position : fixed;
+    top      : 70px;
+    left     : 10px;
+}
+
+#mLevelCont {
+    opacity   : 0;
+    transition: .4s;
+}
+
+div#signedInHeaderBar:hover>#mLevelCont {
+    opacity   : 1;
+    transition: .4s;
+}
+
+
+/* Menu window */
+
+.carousel {
+    display: none;
+}
+
+.settingsHeader,
+#itemSearchH,
+.serverHeader {
+    background     : transparent;
+    backdrop-filter: blur(5px) brightness(0.75);
+}
+
+#menuWindow.dark {
+    background     : linear-gradient(var(--bg-color-2), var(--bg-color-1));
+    border-radius  : unset;
+    border         : solid var(--accent-color) 5px;
+    box-shadow     : 0 0 20px var(--accent-color);
+    backdrop-filter: blur(5px);
+}
+
+div#windowHolder[style="display: block;"] {
+    transform : unset;
+    transition: .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+div#windowHolder[style="display: none;"] {
+    display   : block !important;
+    transform : translateY(100%) scale(0);
+    transition: .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+#windowHolder.popupWin {
+    background: transparent;
+}
+
+.setHed {
+    background: transparent !important;
+    border    : unset;
+}
+
+.setHed,
+.setBodH {
+    background   : transparent;
+    margin-bottom: unset !important;
+    margin-top   : unset !important;
+    margin       : unset !important;
+}
+
+.settName,
+.setHed,
+.settNameSmall,
+.setHed span {
+    color      : var(--text-main-color) !important;
+    text-shadow: 0 0 10px var(--text-main-color);
+}
+
+.settName,
+.settNameSmall {
+    border-bottom: unset;
+}
+
+.settingTab {
+    background: linear-gradient(transparent, rgba(0, 0, 0, .3));
+}
+
+.setSugBox2 {
+    display: none;
+}
+
+.setBodH {
+    width        : calc(100% - 100px);
+    margin-left  : 30px !important;
+    padding-left : 30px;
+    border-left  : 4px solid #fff;
+    border-radius: unset;
+}
+
+.switch {
+    height       : 34px;
+    width        : 34px;
+    border       : solid 4px white;
+    border-radius: 100px;
+}
+
+.slider {
+    border-radius: 100px;
+    top          : 4px;
+    left         : 4px;
+    height       : 26px;
+    width        : 26px;
+}
+
+input:checked+.slider:before {
+    transform : unset;
+    background: var(--check-yes);
+}
+
+.slider:before {
+    height       : 26px;
+    width        : 26px;
+    top          : 0px;
+    position     : absolute;
+    left         : 0px !important;
+    border-radius: 100px;
+    background   : var(--check-no);
+    font-size    : 26px;
+}
+
+.sliderM::-webkit-slider-thumb {
+    background   : var(--sub-color);
+    box-shadow   : 0 0 10px var(--accent-color);
+    border-radius: 100px;
+    border       : 3px var(--accent-color) solid;
+    width        : 20px;
+    height       : 20px;
+}
+
+.sliderM {
+    height    : 8px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5), rgba(0, 0, 0, .5), rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+}
+
+.bigMFeatHold {
+    display: none !important;
+}
+
+.selectorItem {
+    border-radius: 100px;
+    background   : var(--bg-color-2);
+    border-color : var(--accent-color) !important;
+    border       : solid 5px;
+}
+
+.selectorItem:hover {
+    background   : var(--bg-color-3);
+    border-radius: 30px;
+}
+
+.selectedItem {
+    background   : var(--bg-color-1);
+    border-radius: 5px;
+    box-shadow   : 0 0 10px var(--accent-color)
+}
+
+#selectorContainer {
+    background: transparent;
+}
+
+.skinCard:hover,
+.noBtnCard:hover,
+.contCanSelect:hover {
+    box-shadow: 0 0 20px var(--accent-color);
+    border    : 4px solid white;
+}
+
+.custContainer {
+    padding: unset;
+    border : solid 4px #fff6;
+}
+
+.classCard {
+    background : transparent;
+    border     : 3px solid #0000 !important;
+    margin-left: unset;
+}
+
+.classCard:hover {
+    filter: drop-shadow(0 0 5px var(--accent-color));
+    border: 3px #fff solid !important;
+}
+
+input[type=color] {
+    border-color: black;
+}
+
+/* SpectateButton */
+#uiBase.onMenu #spectButton {
+    position: fixed;
+    bottom  : 30px;
+    top     : unset;
+    left    : calc(50% + 300px);
+}
+
+input:checked+.sliderSml:before {
+    transform: unset;
+    height   : 24px;
+    width    : 24px;
+    left     : 4px;
+    bottom   : 4px
+}
+
+.sliderSml:before {
+    height    : 24px;
+    width     : 24px;
+    left      : 4px;
+    bottom    : 4px;
+    background: transparent;
+    border    : 4px solid white;
+}
+
+.switchsml {
+    height: 40px;
+    width : 40px;
+}
+
+.sliderSml {
+    background: var(--check-no);
+}
+
+input:checked+.sliderSml {
+    background: var(--check-yes) !important;
+}
+
+#uiBase.onMenu #spectButton .switchsml .sliderSml:after {
+    content    : "Spectate";
+    margin-left: 50px;
+    font-size  : 30px;
+    color      : var(--accent-color);
+}
+
+#spectButton span[style="font-size:15px;color:rgba(255,255,255,0.6)"] {
+    display: none;
+}
+
+/* Chat */
+#chatHolder {
+    transform: skewX(-8deg);
+
+}
+
+#uiBase.onMenu #chatHolder {
+    left    : 250px;
+    position: fixed;
+}
+
+#chatList {
+    background: transparent;
+}
+
+div[data-tab="-1"],
+div[id*="chatMsg"] {
+    margin-top: 5px;
+    background: rgba(0, 0, 0, .3);
+    border    : solid 4px var(--accent-color);
+}
+
+#chatInputHolder {
+    border: solid 4px var(--accent-color);
+}
+
+#chatInput {
+    background: transparent;
+    box-shadow: unset;
+    border    : unset;
+}
+
+#voiceDisplay {
+    display: none;
+}
+
+
+/* In game UI */
+
+/* Chat */
+#uiBase.onGame #chatHolder {
+    left     : 100px;
+    transform: skewY(-7deg)
+}
+
+/* Health */
+#bottomLeftHolder {
+    position: fixed;
+}
+
+#hudClassIcon {
+    display: none;
+}
+
+#healthBar {
+    z-index       : 14;
+    display       : flex;
+    width         : 400px;
+    flex-direction: row;
+    transform     : skewY(-7deg);
+    position      : fixed;
+    left          : 100px;
+    bottom        : 60px;
+    height        : 60px;
+    filter        : drop-shadow(0 0 10px var(--sub-color));
+}
+
+.healthBarSeg {
+    margin-right : unset;
+    border-radius: unset;
+    display      : block;
+    width        : -webkit-fill-available;
+    background   : transparent;
+}
+
+.hpBSeg {
+    background   : var(--bg-color-3) !important;
+    border-radius: unset;
+    box-shadow   : unset;
+}
+
+
+.healthBarSeg:last-child .hpBSeg {
+    border-bottom-right-radius: 20px;
+
+}
+
+.healthBarSeg:first-child .hpBSeg {
+    border-top-left-radius: 20px;
+}
+
+#healthValueHolder {
+    z-index   : 15;
+    background: transparent;
+    color     : var(--sub-color) !important;
+    transform : skewY(-7deg);
+    bottom    : 55px;
+    position  : fixed;
+    left      : 225px;
+}
+
+#maxHP,
+#healthValue {
+    color    : unset;
+    font-size: 40px;
+}
+
+#challIcon {
+    display: none;
+}
+
+/* Ammo */
+#bottomRight,
+#ammoDisplay {
+    display : block;
+    position: fixed;
+}
+
+#ammoIcon {
+    display: none;
+}
+
+#ammoDisplay {
+    transform                : skewY(7deg);
+    width                    : 400px;
+    right                    : 150px;
+    bottom                   : 50px;
+    height                   : 60px;
+    border-radius            : unset;
+    padding                  : unset !important;
+    border-bottom-left-radius: 20px;
+    background-color         : var(--bg-color-3);
+    filter                   : drop-shadow(0 0 10px var(--sub-color));
+    border-top-right-radius  : 20px;
+    background-image         : linear-gradient(to right, var(--bg-color-1), var(--bg-color-2))
+}
+
+#ammoMax {
+    margin-top: 8px;
+}
+
+#ammoVal {
+    font-size: 50px;
+}
+
+/* weapon */
+.weapIcon[style="opacity: 0.7; margin-right: 25px;"],
+.weapIcon[style="opacity: 0.7;"],
+.weapIcon[style="opacity:0.7;margin-right:25px"] {
+    height    : 0;
+    width     : 0;
+    margin    : unset !important;
+    transition: .2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.weapIcon[style="opacity: 1;"],
+.weapIcon[style="opacity:1"],
+.weapIcon[style="opacity: 1; margin-right: 25px;"] {
+    transition: .2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+}
+
+.weapIcon {
+    margin-bottom: -20px;
+    position     : fixed;
+    left         : 50%;
+    right        : unset;
+    bottom       : 30px;
+    transform    : translateX(-50%);
+    height       : auto;
+    width        : 200px;
+    filter       : brightness(0) drop-shadow(0 0 5px var(--accent-color));
+}
+
+.weapKey {
+    display: none;
+}
+
+#weapDisplay {
+    position     : fixed;
+    width        : 240px;
+    height       : 100px;
+    left         : 50%;
+    transform    : translateX(-50%);
+    bottom       : 50px;
+    padding-left : 20px;
+    padding-right: 20px;
+    border-bottom: 5px solid var(--accent-color);
+    border-radius: 20px;
+}
+
+/* Timer */
+#timerDisplay {
+    position     : fixed;
+    left         : 50%;
+    transform    : translateX(-50%);
+    background   : transparent;
+    padding      : unset;
+    padding-left : 30px;
+    padding-right: 30px;
+    border-radius: 20px;
+    border-bottom: 4px solid var(--accent-color);
+}
+
+#timerIcon {
+    display: none;
+}
+
+#timerVal {
+    font-size: 50px;
+}
+
+/* LeaderBoard */
+#leaderDisplay {
+    right        : 0;
+    position     : fixed;
+    top          : 0;
+    border-radius: unset;
+    border-left  : 3px solid;
+    border-bottom: 3px solid;
+    border-color : var(--accent-color);
+}
+
+.topRightCounters {
+    width   : 400px !important;
+    position: fixed;
+    bottom  : 0px;
+    right   : 550px;
+    left    : unset;
+}
+
+#topRight {
+    position: fixed;
+}
+
+.countIcon {
+    background: transparent;
+}
+
+.countIcon span {
+    color    : black !important;
+    font-size: 35px;
+}
+
+#igXPBar {
+    display: none !important;
+}

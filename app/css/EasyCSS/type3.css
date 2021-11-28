@@ -1,4 +1,764 @@
-/*
-Nothing Here...
-ここには何もありません^^
-*/
+/* White Diabodos */
+/*CSS MADE BY NAMEKUJILSDS#7777*/
+
+/*DO NOT STEEL CODES*/
+/*DO NOT STEEL CODES*/
+/*DO NOT STEEL CODES*/
+
+
+@font-face {
+    font-family: gamefont;
+    src        : url(https://namekujilsds.github.io/font/vag-rounded-400.woff2);
+  }
+  
+  #mLevelCont,
+  .verticalSeparator,
+  .redditSocial,
+  #editorBtnM,
+  .discordSocial,
+  .downloadClient,
+  #menuLvlHold,
+  #bubbleContainer,
+  #uiBase.onMenu #voiceDisplay,
+  .menuItem .menuItemIcon,
+  #ot-sdk-btn-floating.ot-floating-button,
+  ot-floating-button__front,
+  #ot-sdk-btn-floating.ot-floating-button button,
+  div#aHolder,
+  #seasonLabel,
+  #gameNameHolder,
+  #newsHolder,
+  #tlInfHold {
+    display: none !important;
+  }
+  
+  
+  /*Menu Item*/
+  #faceItIconM {
+    display: none;
+  
+  }
+  
+  #windowCloser {
+    display: none;
+  }
+  
+  #settSearch {
+    background: gray;
+  }
+  
+  #adunit {
+    display: none !important;
+  }
+  
+  #menuItemContainer {
+    width         : fit-content;
+    height        : min-content;
+    top           : unset;
+    bottom        : 4%;
+    left          : 50%;
+    transform     : translateX(-50%);
+    flex-direction: row;
+    background    : transparent;
+  }
+  
+  .menuItem {
+    font-size     : 40px !important;
+    align-items   : center;
+    background    : transparent;
+    padding-bottom: 5px;
+    padding-left  : 22px;
+    padding-right : 22px;
+    pointer-events: none;
+  }
+  
+  .menuItem:hover {
+    background : transparent;
+    color      : #fff;
+    border-left: none;
+  }
+  
+  .menuItem:active {
+    background: transparent;
+    color     : #fff;
+  }
+  
+  .menuItem .menuItemTitle {
+    margin-top    : 0;
+    font-size     : 25px !important;
+    text-transform: var(--text-transform);
+    pointer-events: all;
+    transition    : all .2s;
+  }
+  
+  .menuItemTitle:hover {
+    color    : #fff !important;
+    transform: scale(.9);
+  }
+  
+  .menuItemTitle:active {
+    color: #fff !important;
+  }
+  
+  .menuItem .menuItemIcon {
+    display: none;
+  }
+  
+  #windowHolder.popupWin {
+    background: transparent !important;
+  }
+  
+  #windowHolder[style="display: none;"] {
+    display   : block !important;
+    width     : 100%;
+    height    : 100%;
+    transform : translateY(100%);
+    transition: .5s;
+    z-index   : 5;
+  }
+  
+  #windowHolder {
+    position  : fixed;
+    width     : 100%;
+    height    : 100%;
+    transform : translateX(0%);
+    transition: .5s;
+    z-index   : 5;
+  }
+  
+  .setHed {
+    border-radius: 0 !important;
+  }
+  
+  .setHed:hover {
+    background: #52525224;
+    filter    : brightness(4);
+  }
+  
+  #uiBase.onMenu #spectButton {
+    z-index: 1;
+  }
+  
+  #subLogoButtons,
+  #subLogoButtons>.button {
+    background : transparent !important;
+    box-shadow : none !important;
+    text-shadow: none !important;
+  }
+  
+  #subLogoButtons {
+    bottom: 8%;
+  }
+  
+  #menuWindow,
+  #menuWindow.dark {
+    box-shadow: none;
+  }
+  
+  .bigMenTabs,
+  #selectorContainer,
+  .bigMenTabA,
+  .setBodH {
+    background: transparent;
+  }
+  
+  .setHed {
+    border    : 0px;
+    background: transparent;
+  }
+  
+  .settName,
+  .settNameSmall {
+    border-bottom: 0px;
+  }
+  
+  .selectedItem,
+  .selectorItem {
+    background: transparent !important;
+  }
+  
+  .selectorItem:hover {
+    filter: brightness(1.2) drop-shadow(0 0 2px white);
+  }
+  
+  .selectedItem {
+    animation: sentaku 1s infinite;
+    filter   : drop-shadow(0 0 5px white) !important;
+  }
+  
+  @keyframes sentaku {
+    0% {
+      transform: scale(0.9) translateX(-48%) translateX(-5%);
+    }
+  
+    50% {
+      transform: scale(1) translateX(-48%);
+    }
+  
+    100% {
+      transform: scale(.9) translateX(-48%)translateX(-5%);
+    }
+  }
+  
+  #uiBase.onMenu #chatHolder[style="bottom: 20px;"] {
+    left      : 2%;
+    transition: .5s;
+  }
+  
+  #uiBase.onMenu #chatHolder[style="bottom: 148px;"] {
+    transition: .5s;
+    bottom    : 20px !important;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+  
+  #classPreviewCanvas,
+  #menuClassName,
+  #menuClassNameTag,
+  #menuClassSubtext {
+    opacity            : 0;
+    transition-duration: 0.25s;
+  }
+  
+  #menuClassContainer:hover>#classPreviewCanvas {
+    opacity: 1;
+  }
+  
+  #menuClassContainer:hover>#menuClassName {
+    opacity: 1;
+  }
+  
+  #menuClassContainer:hover>#menuClassSubtext {
+    opacity: 1;
+  }
+  
+  #menuClassContainer:hover>#menuClassNameTag {
+    opacity: 1;
+  }
+  
+  #customizeButton:hover {
+    backdrop-filter: blur(3px);
+  }
+  
+  #customizeButton,
+  #policeButton {
+    box-shadow: none !important;
+    background: transparent !important;
+    border    : unset !important;
+  }
+  
+  #signedInHeaderBar {
+    background: transparent;
+  }
+  
+  .headerBarRight {
+    background: transparent;
+    transform : scale(2) translateX(-20%) translateY(5%);
+  }
+  
+  #menuRegionLabel {
+    color: lightpink;
+  }
+  
+  #customizeButton:hover:before {
+    content    : "visibility a";
+    font-family: Material Icons;
+  }
+  
+  #customizeButton:before {
+    content    : "visibility_off a";
+    font-family: Material Icons;
+  }
+  
+  #instructionHolder {
+    backdrop-filter: grayscale(1) brightness(0.6);
+    background     : transparent;
+  }
+  
+  #menuClassContainer {
+    position: absolute;
+    left    : -5%;
+    top     : 59%;
+    z-index : 6;
+  }
+  
+  #uiBase.onMenu #spectButton {
+    position : absolute;
+    transform: scale(1.2);
+    bottom   : -25%;
+    left     : 56%;
+  }
+  
+  #teamSelector {
+    position: fixed;
+    bottom  : 14%;
+    left    : 40%;
+  }
+  
+  #policeButton {
+    display: none;
+  }
+  
+  #termsInfo {
+    background: transparent;
+  }
+  
+  .verticalSeparatorInline {
+    display: none;
+  }
+  
+  .terms {
+    display: none;
+  }
+  
+  .terms.standout {
+    display  : block;
+    font-size: 0px;
+    content  : " ";
+  }
+  
+  .terms.standout:before {
+    font-size: 20px;
+    content  : "CSS BY NAMEKUJILSDs#7777";
+    color    : gold;
+  }
+  
+  #menuMiniProfilePic {
+    display: none;
+  }
+  
+  input[type=number] {
+    background: gray;
+  }
+  
+  input:checked+.slider,
+  input:checked+.sliderSml {
+    background   : #c3f0ff;
+    border-radius: 100px;
+  }
+  
+  input:checked+.slider:before,
+  input:checked+.sliderSml:before {
+    border-radius: 100px;
+    background   : gray;
+    content      : " ";
+  }
+  
+  .sliderM {
+    background   : #ffffff5c;
+    border-radius: 50px;
+  }
+  
+  .sliderM::-webkit-slider-thumb {
+    background-color: #ffffff;
+    width           : 25px;
+    height          : 25px;
+    border          : 5px solid #959595;
+    box-shadow      : 0 0 4px #000000;
+    border-radius   : 30px;
+  }
+  
+  #settingsTabLayout,
+  .menuTabsNew {
+    background: transparent;
+  }
+  
+  .tabANew {
+    animation          : sentaku2 infinite 1s;
+    border-bottom-color: white;
+  }
+  
+  .serverPing.material-icons {
+    display: none;
+  }
+  
+  @keyframes sentaku2 {
+    0% {
+      transform: scale(.9)
+    }
+  
+    50% {
+      transform: scale(1)
+    }
+  
+    100% {
+      transform: scale(.9)
+    }
+  }
+  
+  .slider {
+    border-radius: 50px;
+  }
+  
+  .slider:before {
+    border-radius: 50px;
+  }
+  
+  .headerBarLeft,
+  .button.lgn {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  
+  #menuWindow,
+  #menuWindow.dark {
+    background     : rgba(0, 0, 0, .5);
+    backdrop-filter: blur(4px);
+  }
+  
+  .setHed[style="margin-top:0;margin-bottom:10px"] {
+    color: white;
+  }
+  
+  div[style="color:rgba(0,0,0,0.4)"],
+  .partnerItem,
+  .settName,
+  .floatR,
+  .menuTabNew,
+  .settNameSmall {
+    color: white !important;
+  }
+  
+  span[style="color:rgba(0,0,0,0.5)"] {
+    color: lightgray !important;
+  }
+  
+  div[style="padding:10px;background-color:rgba(0,0,0,0.2);margin-bottom:0px;margin-top:0px;padding-left:15px;font-size:18px"],
+  div[style="margin-bottom:10px"],
+  div[style="margin-top:10px"],
+  div[style="font-size:26px;margin-top:20px;"],
+  div[style="font-size:26px;margin-top:12px;"],
+  div[style="font-size:17px;color:rgba(0,0,0,0.4);margin-top:5px"],
+  div[style="color:rgba(0,0,0,0.6);margin-bottom:20px"],
+  div[style="font-size:26px;margin-top:20px;font-weight:bold"],
+  div[style="color:rgba(0,0,0,0.3);margin-top:-5px;margin-bottom:10px"] {
+    color: lightgray !important;
+  }
+  
+  div[style="padding:10px;background-color:rgba(0,0,0,0.2);margin-bottom:0px;margin-top:0px;padding-left:15px;font-size:18px"] {
+    background: transparent !important;
+  }
+  
+  input {
+    color: white !important;
+  }
+  
+  div[style="float:right"],
+  .mapByTxt,
+  .grey,
+  div[style="font-size:15px;text-align:right;flex-grow:1"] {
+    color: white !important;
+  }
+  
+  div[style="color:rgba(0,0,0,0.6)"] {
+    color: white;
+  }
+  
+  .mapListItem:active .mapActionOvrl,
+  .mapListItem:hover .mapActionOvrl {
+    height: 70%;
+  }
+  
+  .settingsHeader,
+  .serverHeader,
+  #itemSearchH,
+  .settingsHeader {
+    background: transparent;
+  }
+  
+  #spinHeader {
+    font-size: 0px !important;
+  }
+  
+  #spinHeader:before {
+    content  : "BAKUSI";
+    font-size: 53.01px;
+  }
+  
+  #freeKRClaimTxt {
+    text-shadow: none;
+    filter     : drop-shadow(0 0 5px black);
+  }
+  
+  .menuItem,
+  #subLogoButtons>.button {
+    filter: drop-shadow(0 0 2px rgb(255 255 255 / 0.5));
+  }
+  
+  .settingTab {
+    color     : white;
+    background: transparent;
+  }
+  
+  .setHed {
+    color     : aliceblue;
+    border-top: 3px white solid;
+  }
+  
+  span.material-icons.plusOrMinus {
+    color: white;
+  }
+  
+  .settingsBtn {
+    background: gray;
+  }
+  
+  #instructions {
+    color      : white;
+    text-shadow: 0 0 4px white, 0 0 4px white;
+    font-size  : 50px;
+    animation  : moji infinite 1.5s;
+  }
+  
+  @keyframes moji {
+    0% {
+      font-size: 40px;
+    }
+  
+    50% {
+      font-size: 50px;
+    }
+  
+    100% {
+      font-size: 40px;
+    }
+  }
+  
+  .chatItem {
+    width: -webkit-fill-available
+  }
+  
+  #chatList::-webkit-scrollbar {
+    background: transparent;
+    display   : none;
+  }
+  
+  .classCard {
+    background  : #0005;
+    text-shadow : 0 0 2px black;
+    border      : 2px black solid;
+    margin-right: 1%;
+  }
+  
+  #classPreviewCanvas {
+    height: 350px !important;
+    width : 580px !important;
+  }
+  
+  .carousel {
+    display: none;
+  }
+  
+  .menuSelector,
+  .serverHostOpH,
+  .menuSelectorHeader,
+  .serverPCount,
+  .serverRegion {
+    color: white !important;
+  }
+  
+  .menuSelectorHeader {
+    border-bottom: 2px white solid;
+  }
+  
+  /*DO NOT STEEL CODES*/
+  
+  
+  /*Game UI*/
+  
+  
+  /*DO NOT STEEL CODES*/
+  
+  #gameMessage {
+    text-shadow: 0 0 5px black;
+  }
+  
+  .weapIcon {
+    filter: drop-shadow(0 0 2px black)drop-shadow(0 0 2px black)drop-shadow(0 0 2px black)
+  }
+  
+  .weapIcon[style="opacity: 0.7; margin-right: 25px;"],
+  .weapIcon[style="opacity: 0.7;"],
+  .weapIcon[style="opacity:0.7;margin-right:25px"] {
+    position    : fixed;
+    left        : 46%;
+    bottom      : -10%;
+    transition  : .3s;
+    margin-right: 0px !important;
+  }
+  
+  .weapIcon[style="opacity: 1;"],
+  .weapIcon[style="opacity:1"],
+  .weapIcon[style="opacity: 1; margin-right: 25px;"] {
+    bottom      : 2%;
+    position    : fixed;
+    left        : 50%;
+    transform   : translateX(-50%);
+    transition  : .3s;
+    margin-right: 0px !important;
+  }
+  
+  .weapKey {
+    display: none;
+  }
+  
+  #ammoMax,
+  #maxHP,
+  #ammoIcon,
+  #challIcon {
+    display: none;
+  }
+  
+  #ammoDisplay {
+    background-image: url(https://media.discordapp.net/attachments/759360337706483712/794850680380194846/1609577495989.PNG);
+    position        : fixed;
+    background-color: transparent;
+    right           : 49.5%;
+    bottom          : 48%;
+    padding         : 0px !important;
+    height          : 5px;
+  }
+  
+  #ammoVal {
+    transform  : translateY(120px) translateX(180px);
+    font-size  : 50px;
+    text-shadow: 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black;
+  }
+  
+  #reloadMsg {
+    background : transparent;
+    bottom     : 41%;
+    color      : red;
+    font-size  : 20px;
+    text-shadow: 0 0 2px black;
+  }
+  
+  .healthBarSeg {
+    background  : transparent;
+    margin-right: -1px;
+    width       : 50px;
+  }
+  
+  .hpBSeg {
+    box-shadow      : none;
+    border-radius   : 0px;
+    height          : 100%;
+    background-color: white !important;
+    box-shadow      : 0 0 4px black;
+  }
+  
+  #healthBar {
+    height       : 10px;
+    display      : block;
+    border-radius: 0px;
+    position     : fixed;
+    left         : 50%;
+    bottom       : 15px;
+    transform    : translateX(-50%);
+  }
+  
+  #igXPBar {
+    display: none !important;
+  }
+  
+  #hudClassImg {
+    content: url(https://media.discordapp.net/attachments/714628674091089924/836745633952038932/slug-vector-id1020707028.png);
+  }
+  
+  #hudClassIcon {
+    display: none;
+  }
+  
+  #healthValueHolder {
+    background: transparent;
+    position  : fixed;
+    left      : 39%;
+    top       : 62%;
+  }
+  
+  #healthValue {
+    font-size  : 50px;
+    text-shadow: 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black;
+  }
+  
+  #timerIcon {
+    display: none;
+  }
+  
+  #timerDisplay {
+    background: transparent;
+    top       : 75%;
+    left      : 46.5%;
+    position  : fixed;
+  }
+  
+  #timerVal {
+    font-size  : 40px;
+    text-shadow: 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black;
+  }
+  
+  
+  #chatHolder[style="bottom: 148px;"] {
+    bottom    : 20px !important;
+    transition: .3s;
+  }
+  
+  #leaderContainer {
+    border-top: dotted 5px white;
+  }
+  
+  #leaderDisplay:before {
+    content    : "Leader Board";
+    color      : #d592ff;
+    text-shadow: 0 0 4px #9341ffec;
+  }
+  
+  .menuSocialB {
+    display: none;
+  }
+  
+  .menBtnIcn {
+    display: none !important;
+  }
+  
+  div#menuBtnProfile,
+  div#menuBtnShop {
+    font-size: 0 !important;
+  }
+  
+  div#menuBtnProfile:after {
+    font-size: 25px !important;
+    content  : "Profile"
+  }
+  
+  div#menuBtnShop:after {
+    font-size: 25px !important;
+    content  : "Shop"
+  }
+  
+  .menuItem,
+  #subLogoButtons>.button {
+    border-color: transparent !important;
+  }
+  
+  div#rankedSoonTm {
+    display: none !important;
+  }
+  
+  #uiBase.onMenu #chatHolder {
+    left      : 20px;
+    transition: .1s;
+  }
+  
+  #reloadMsg {
+    border: unset !important;
+  
+  }
+  
+  /*DO NOT STEEL CODES*/
+  
+  /* Made in 2020 05/10 */
+  /* Last Update 2021 11/19 */
+  /* Fixed something a lot*/
