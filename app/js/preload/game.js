@@ -46,7 +46,7 @@ const initDiscordRPC = () => {
         try {
             const gameActivity = window.getGameActivity();
             rpcActivity = {
-                state: gameActivity.map ? gameActivity.map : 'Playing Krunker',
+                state: gameActivity.map.length ? gameActivity.map : 'Playing Krunker',
                 details: gameActivity.mode,
                 largeImageKey: 'laf_icon',
                 largeImageText: 'LaF CLient',
