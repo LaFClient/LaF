@@ -48,3 +48,6 @@ Krunkerは低スペックPCでも動く軽いゲームですが、「公式ク�
 e-mail: [Send e-mail](mailto:hiro527.dev@gmail.com)</br>
 Discord: nullA1m#7777</br>
 Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)
+
+## Discord
+<iframe src="https://discord.com/widget?id=911130667448954880&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
