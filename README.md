@@ -6,6 +6,7 @@
 [![Latest](https://img.shields.io/github/v/release/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Latest Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/latest/total?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/total?style=flat-square&logo=appveyor)](https://github.com/Hiro527/LaF/releases)</br>
+[![Discord](https://discord.com/api/guilds/911130667448954880/widget.png)](https://discord.gg/9M9TgDRt9G)
 
 言語/Language: [English](https://github.com/Hiro527/LaF/blob/master/README.md) | [日本語](https://github.com/Hiro527/LaF/blob/master/README_JA.md)
 
@@ -48,6 +49,3 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 e-mail: [Send e-mail](mailto:hiro527.dev@gmail.com)</br>
 Discord: nullA1m#7777</br>
 Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)
-
-## Discord
-<iframe src="https://discord.com/widget?id=911130667448954880&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
