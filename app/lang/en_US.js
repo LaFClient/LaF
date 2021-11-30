@@ -80,6 +80,7 @@ module.exports = {
         joinMatchCustom: 'Custom Games',
         joinMatchOCustom: 'Official Custom Games',
         enableGA: 'Google Analytics',
+        openDiscord: 'Join to Discord Server',
     },
     misc: {
         noJoinableGames: 'There are no joinable games',

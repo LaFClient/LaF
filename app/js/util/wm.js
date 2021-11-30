@@ -75,17 +75,20 @@ exports.gameWindow = class {
                     fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach((cPath) => {
                         if (cPath.isDirectory()) {
                             recursiveFolder(win, `${prefix}/${cPath.name}`);
-                        } else {
+                        }
+                        else {
                             const name = `${prefix}/${cPath.name}`;
                             const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
                             if (isAsset) {
                                 urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
-                            } else {
+                            }
+                            else {
                                 urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
                             }
                         }
                     });
-                } catch (e) {
+                }
+                catch (e) {
                     log.warn('ERROR IN RESOURCE SWAPPER');
                     log.warn(e);
                 }
@@ -140,7 +143,7 @@ exports.gameWindow = class {
                     ['Ctrl+F1', 'F12'], () => {
                         // 開発者ツールの起動
                         brWin.webContents.openDevTools();
-                    }
+                    },
                 ],
             ];
 
@@ -153,7 +156,8 @@ exports.gameWindow = class {
         initShortcutKeys();
         if (isSwapperEnabled) {
             initSwapper(brWin);
-        } else if (ezCSSMode) {
+        }
+        else if (ezCSSMode) {
             initSwapper(brWin, false);
         }
         brWin.loadURL('https://krunker.io');
@@ -211,24 +215,28 @@ exports.socialWindow = class {
                     fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach((cPath) => {
                         if (cPath.isDirectory()) {
                             recursiveFolder(win, `${prefix}/${cPath.name}`);
-                        } else {
+                        }
+                        else {
                             const name = `${prefix}/${cPath.name}`;
                             const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
                             if (isAsset) {
                                 urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
-                            } else {
+                            } 
+                            else {
                                 urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
                             }
                         }
                     });
-                } catch (e) {
+                } 
+                catch (e) {
                     log.warn('ERROR IN RESOURCE SWAPPER');
                     log.warn(e);
                 }
             };
             if (isSwapperEnabled) {
                 recursiveFolder(win);
-            } else if (isEzCSSEnabled && !isSwapperEnabled) {
+            }
+            else if (isEzCSSEnabled && !isSwapperEnabled) {
                 urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
             }
             if (!urls.includes('*://krunker.io/css/main_custom.css')) {
@@ -269,7 +277,7 @@ exports.socialWindow = class {
                     ['Ctrl+F1', 'F12'], () => {
                         // 開発者ツールの起動
                         brWin.webContents.openDevTools();
-                    }
+                    },
                 ],
             ];
 
@@ -319,7 +327,8 @@ const openNewWindow = (url) => {
     if (winObj) {
         winObj.loadURL(url);
         winObj.on('closed', () => windows[lafTools.urlType(url)] = null);
-    } else {
+    }
+    else {
         windows[lafTools.urlType(url)] = new this.socialWindow(url);
     }
 };

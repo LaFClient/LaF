@@ -2,7 +2,6 @@ require('v8-compile-cache');
 const { ipcRenderer } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
-const path = require('path');
 const lafTools = require('../util/tools');
 
 const tools = new lafTools.clientTools();
@@ -21,19 +20,6 @@ const devMode = config.get('devmode');
 
 let rpcActivity = null;
 let rpcInterval = null;
-
-// Google Analytics Start
-if (config.get('enableGA', true)) {
-    log.info('Enabled Google Analytics');
-    window.dataLayer = window.dataLayer || [];
-    const gtag = () => {
-        dataLayer.push(arguments);
-    };
-    gtag('js', new Date());
-    
-    gtag('config', 'G-624ZX98XB0');
-}
-// Google Analytics End
 
 window.OffCliV = true;
 
@@ -182,6 +168,7 @@ ipcRenderer.on('ESC', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    headEl.insertAdjacentHTML('afterstart', tmpHTML);
     const winObserver = new MutationObserver(() => {
         winObserver.disconnect();
         tools.setupGameWindow();

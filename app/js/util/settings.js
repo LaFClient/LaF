@@ -50,15 +50,6 @@ module.exports = {
         restart: false,
         default: true,
     },
-    enableGA: {
-        id: 'enableGA',
-        title: langPack.settings.enableGA,
-        cat: 'General',
-        type: 'checkbox',
-        val: config.get('enableGA', true),
-        restart: false,
-        default: true,
-    },
     unlimitedFPS: {
         id: 'unlimitedFPS',
         title: langPack.settings.unlimitedFPS,

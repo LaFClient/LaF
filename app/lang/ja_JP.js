@@ -80,6 +80,7 @@ module.exports = {
         joinMatchCustom: 'カスタムマッチ',
         joinMatchOCustom: '公式カスタムマッチ',
         enableGA: 'Google Analytics',
+        openDiscord: 'Discordサーバーに参加する',
     },
     misc: {
         noJoinableGames: '参加可能なゲームがありません',

@@ -20,30 +20,36 @@ exports.clientTools = class {
                 switch (obj.type) {
                     case 'checkbox':
                         return `
-                <label class='switch'>
-                <input type='checkbox' onclick='window.gt.setSetting("${obj.id}", this.checked)'${config.get(obj.id, obj.default) ? ' checked' : ''}>
-                <span class='slider'></span>
-                </label>`;
+                        <label class='switch'>
+                        <input type='checkbox' onclick='window.gt.setSetting("${obj.id}", this.checked)'${config.get(obj.id, obj.default) ? ' checked' : ''}>
+                        <span class='slider'></span>
+                        </label>`;
                     case 'select':
                         let tmpHTML = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
                         Object.keys(obj.options).forEach((k) => {
                             tmpHTML += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''}>${obj.options[k]}</option>`;
                         });
                         return tmpHTML + '</select>';
+                    case 'selectec':
+                        let tmpHTMLoc = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
+                        Object.keys(obj.options).forEach((k) => {
+                            tmpHTMLoc += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''} onchange="window.gt.changeCSS(this.value);">${obj.options[k]}</option>`;
+                        });
+                        return tmpHTMLoc + '</select>';
                     case 'slider':
                         return `
-                <input type='number' class='sliderVal' id='c_slid_input_${obj.id}' min='${obj.min}' max='${obj.max}' value='${config.get(obj.id, obj.default)}' onkeypress='window.gt.setdSetting("${obj.id}", this)' style='border-width:0px'/><div class='slidecontainer'><input type='range' id='c_slid_${obj.id}' min='${obj.min}' max='${obj.max}' step='${obj.step}' value='${config.get(obj.id, obj.default)}' class='sliderM' oninput='window.gt.setSetting("${obj.id}", this.value)'></div>
-                `;
+                        <input type='number' class='sliderVal' id='c_slid_input_${obj.id}' min='${obj.min}' max='${obj.max}' value='${config.get(obj.id, obj.default)}' onkeypress='window.gt.setdSetting("${obj.id}", this)' style='border-width:0px'/><div class='slidecontainer'><input type='range' id='c_slid_${obj.id}' min='${obj.min}' max='${obj.max}' step='${obj.step}' value='${config.get(obj.id, obj.default)}' class='sliderM' oninput='window.gt.setSetting("${obj.id}", this.value)'></div>
+                        `;
                     case 'file':
                         return `
-                <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
-                `;
+                        <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
+                        `;
                     case 'fileWithEyes':
                         return `
-                <button class='settingsBtn' onclick='window.gt.openFileDialog(${obj.id})' style="float:right;margin-top:5px;width:auto;">${langPack.settings.selectFile}</button>
-                <a class="material-icons" id="eye_${obj.id}" onclick="window.gt.changeVisibility('${obj.id}')" style="text-decoration:none;float:right;margin-top:10px;color:rgba(255,255,255,1);">${config.get(`${obj.id}_visibility`, true) ? 'visibility' : 'visibility_off'}</a>
-                <div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
-                `;
+                        <button class='settingsBtn' onclick='window.gt.openFileDialog(${obj.id})' style="float:right;margin-top:5px;width:auto;">${langPack.settings.selectFile}</button>
+                        <a class="material-icons" id="eye_${obj.id}" onclick="window.gt.changeVisibility('${obj.id}')" style="text-decoration:none;float:right;margin-top:10px;color:rgba(255,255,255,1);">${config.get(`${obj.id}_visibility`, true) ? 'visibility' : 'visibility_off'}</a>
+                        <div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
+                        `;
             default:
                 return `
                 <input type='${obj.type}' name='${obj.id}' id='c_slid_${obj.id}' ${obj.type == 'color' ? 'style="float:right;margin-top:5px;"' : `class='inputGrey2' ${obj.placeholder ? `placeholder='${obj.placeholder}'` : ''}}`} value='${config.get(obj.id, obj.default).replace(/'/g, '')}' oninput='window.gt.setSetting("${obj.id}", this.value)'/>
@@ -105,19 +111,24 @@ exports.clientTools = class {
                         <div class="button buttonG lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openInfo()">
                             ${langPack.settings.openInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">code</span>
                         </div>
-                        <div class="button buttonPI lgn" style="width:37.5%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openCSSInfo()">
+                        <div class="button buttonPI lgn" style="width:50%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openCSSInfo()">
                             ${langPack.settings.openCSSInfo} <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">brush</span>
+                        </div>
+                    </div>
+                    <div style='display:flex;width:100%;justify-content:space-around;'>
+                        <div class="button buttonP lgn" id="lafTwitchLink" style="width:100%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.linkTwitch()">
+                            ${config.get('twitchAcc', null) ? `${config.get('twitchError', false) ? langPack.settings.twitchError : langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc'))}` : langPack.settings.twitchUnlinked}
+                        </div>
+                    </div>
+                    <div style='display:flex;width:100%;justify-content:space-around;'>
+                        <div class="button lgn" style="width:90%;padding-top:5px;padding-bottom:13px;margin:3px;border:4px solid #5865F2;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.open('https://discord.gg/9M9TgDRt9G')">
+                            ${langPack.settings.openDiscord} <span class="material-icons" style="color:#fff;font-size:30px;margin-top:-8px;vertical-align:middle;">support_agent</span>
                         </div>
                         <div class="button buttonP lgn" style="width:5%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.openLogFolder()">
                             <span class="material-icons" style="color:#fff;font-size:30px;margin-top:-8px;vertical-align:middle;">description</span>
                         </div>
                         <div class="button buttonP lgn" style="width:5%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.copyPCInfo()">
                             <span class="material-icons" style="color:#fff;font-size:30px;margin-top:-8px;vertical-align:middle;">bug_report</span>
-                        </div>
-                    </div>
-                    <div style='display:flex;width:100%;justify-content:space-around;'>
-                        <div class="button buttonP lgn" id="lafTwitchLink" style="width:100%;padding-top:5px;padding-bottom:13px;margin:3px" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.linkTwitch()">
-                            ${config.get('twitchAcc', null) ? `${config.get('twitchError', false) ? langPack.settings.twitchError : langPack.settings.twitchLinked.replace('{0}', config.get('twitchAcc'))}` : langPack.settings.twitchUnlinked}
                         </div>
                     </div>
                     `;
@@ -216,6 +227,13 @@ exports.gameTools = class {
             document.getElementById('windowHeader').innerText = 'Alt Manager';
             menuWindow.innerHTML = tmpHTML;
         }
+    }
+    changeCSS(k) {
+        Object.values(document.getElementsByClassName('easycss')).forEach((el) => {
+            el.disabled = true;
+        });
+        const el = document.getElementById('ec' + k);
+        el.disabled = false;
     }
     showAddAltAcc() {
         const menuWindowEl = document.getElementById('menuWindow');
@@ -356,7 +374,7 @@ exports.gameTools = class {
         shell.openExternal('https://hiro527.github.io');
     }
     openCSSInfo() {
-        shell.openExternal('https://namekujilsds.github.io')
+        shell.openExternal('https://namekujilsds.github.io');
     }
     openLogFolder() {
         ipcRenderer.send('openLogFolder');
