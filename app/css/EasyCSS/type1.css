@@ -23,7 +23,8 @@
 #hudClassIcon,
 #timerIcon,
 #ammoMax,
-#ammoIcon {
+#ammoIcon,
+.menBtnIcn {
     display: none;
     opacity: 0;
 }
