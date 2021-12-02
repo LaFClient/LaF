@@ -324,53 +324,6 @@ input:checked+.slider:before {
 .contCanSelect {
   border: 3px white solid;
 }
-
-
-/* Menu Timer */
-
-#uiBase.onMenu #spectateUI {
-  display  : block !important;
-  position : fixed;
-  bottom   : 50%;
-  top      : unset;
-  left     : 50%;
-  right    : unset;
-  transform: translate(-50%, 50%);
-  z-index  : 1;
-  width    : 10px;
-  height   : 10px;
-  font-size: 40px !important;
-}
-
-#uiBase.onMenu #spectateHUD {
-  display        : flex;
-  justify-content: center;
-  transform      : unset;
-  left           : unset;
-}
-
-#uiBase.onMenu #specTeam0,
-#uiBase.onMenu #spec0,
-#uiBase.onMenu #spec1,
-#uiBase.onMenu #specNames,
-#uiBase.onMenu #specStats,
-#uiBase.onMenu #specContr,
-#uiBase.onMenu #specKPDContr,
-#uiBase.onMenu #specSus,
-#uiBase.onMenu #specTeam1,
-#uiBase.onMenu #specGMessage,
-#uiBase.onMenu #specGameInfo {
-  display: none !important
-}
-
-#uiBase.onMenu #specTimer {
-  display         : block !important;
-  font-size       : 55px;
-  background-color: transparent;
-  color           : rgba(255, 255, 255, .55)
-}
-
-
 /* ClassPicker */
 
 #aHolder,
