@@ -168,7 +168,6 @@ ipcRenderer.on('ESC', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    headEl.insertAdjacentHTML('afterstart', tmpHTML);
     const winObserver = new MutationObserver(() => {
         winObserver.disconnect();
         tools.setupGameWindow();
