@@ -23,7 +23,7 @@ module.exports = {
         clearedData: 'Cleared all user data. Restart.',
         copiedSysInfo: 'Copied system information.',
         twitchLogout: 'Are you sure you want to logout from Twitch?',
-        infoPage: 'We\'re working on infomation page.\nPlease wait for a while by playing Krunker.',
+        infoPage: 'We\'re working on information page.\nPlease wait for a while by playing Krunker.',
     },
     altManager: {
         addAcc: {

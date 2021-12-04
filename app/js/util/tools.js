@@ -9,43 +9,43 @@ const config = new store();
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
 
 exports.clientTools = class {
-        urlType(url) {
-            if (url.startsWith('https://krunker.io/social.html')) return 'hub';
-            if (url.startsWith('https://krunker.io/editor.html')) return 'editor';
-            if (url.startsWith('https://krunker.io/viewer.html')) return 'viewer';
-            if (url.startsWith('https://krunker.io') || url.startsWith('https://comp.krunker.io/?game=') || url.startsWith('https://127.0.0.1:8080')) return 'game';
-            return 'external';
-        }
-        generateHTML(obj) {
-                switch (obj.type) {
-                    case 'checkbox':
-                        return `
+    urlType(url) {
+        if (url.startsWith('https://krunker.io/social.html')) return 'hub';
+        if (url.startsWith('https://krunker.io/editor.html')) return 'editor';
+        if (url.startsWith('https://krunker.io/viewer.html')) return 'viewer';
+        if (url.startsWith('https://krunker.io') || url.startsWith('https://comp.krunker.io/?game=') || url.startsWith('https://127.0.0.1:8080')) return 'game';
+        return 'external';
+    }
+    generateHTML(obj) {
+        switch (obj.type) {
+            case 'checkbox':
+                return `
                         <label class='switch'>
                         <input type='checkbox' onclick='window.gt.setSetting("${obj.id}", this.checked)'${config.get(obj.id, obj.default) ? ' checked' : ''}>
                         <span class='slider'></span>
                         </label>`;
-                    case 'select':
-                        let tmpHTML = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
-                        Object.keys(obj.options).forEach((k) => {
-                            tmpHTML += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''}>${obj.options[k]}</option>`;
-                        });
-                        return tmpHTML + '</select>';
-                    case 'selectec':
-                        let tmpHTMLoc = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
-                        Object.keys(obj.options).forEach((k) => {
-                            tmpHTMLoc += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''} onchange="window.gt.changeCSS(this.value);">${obj.options[k]}</option>`;
-                        });
-                        return tmpHTMLoc + '</select>';
-                    case 'slider':
-                        return `
+            case 'select':
+                let tmpHTML = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
+                Object.keys(obj.options).forEach((k) => {
+                    tmpHTML += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''}>${obj.options[k]}</option>`;
+                });
+                return tmpHTML + '</select>';
+            case 'selectec':
+                let tmpHTMLoc = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
+                Object.keys(obj.options).forEach((k) => {
+                    tmpHTMLoc += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''} onchange="window.gt.changeCSS(this.value);">${obj.options[k]}</option>`;
+                });
+                return tmpHTMLoc + '</select>';
+            case 'slider':
+                return `
                         <input type='number' class='sliderVal' id='c_slid_input_${obj.id}' min='${obj.min}' max='${obj.max}' value='${config.get(obj.id, obj.default)}' onkeypress='window.gt.setdSetting("${obj.id}", this)' style='border-width:0px'/><div class='slidecontainer'><input type='range' id='c_slid_${obj.id}' min='${obj.min}' max='${obj.max}' step='${obj.step}' value='${config.get(obj.id, obj.default)}' class='sliderM' oninput='window.gt.setSetting("${obj.id}", this.value)'></div>
                         `;
-                    case 'file':
-                        return `
+            case 'file':
+                return `
                         <button class='settingsBtn' onclick='window.utils.tolset("${obj.id}")' style="float:right;margin-top:5px;">${langPack.selectFile}</button><div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;">${config.get(obj.id, obj.default)}</div>
                         `;
-                    case 'fileWithEyes':
-                        return `
+            case 'fileWithEyes':
+                return `
                         <button class='settingsBtn' onclick='window.gt.openFileDialog(${obj.id})' style="float:right;margin-top:5px;width:auto;">${langPack.settings.selectFile}</button>
                         <a class="material-icons" id="eye_${obj.id}" onclick="window.gt.changeVisibility('${obj.id}')" style="text-decoration:none;float:right;margin-top:10px;color:rgba(255,255,255,1);">${config.get(`${obj.id}_visibility`, true) ? 'visibility' : 'visibility_off'}</a>
                         <div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
@@ -186,9 +186,9 @@ exports.gameTools = class {
         menuWindow.style.top = '50%';
         menuWindow.style.transform = 'translate(-50%, -50%)';
         let tmpHTML = `
-        <div id='amTitle' style='font-size:30px;text-align:center;margin:3px;font-weight:700;'>Alt Mamager</div>
+        <div id='amTitle' style='font-size:30px;text-align:center;margin:3px;font-weight:700;'>Alt Manager</div>
         <hr style='color:rgba(28, 28, 28, .5);'>
-        <div class='button buttonPI lgn' id='addAccBtn' style='text-align:center;width:98%;margin:3px;padding-top:5px;padding-bottom:13px' onmouseenter='playTick()' onclick='SOUND.play(\`select_0\`,0.1);window.gt.showAddAltAcc()'>Add Acount</div>
+        <div class='button buttonPI lgn' id='addAccBtn' style='text-align:center;width:98%;margin:3px;padding-top:5px;padding-bottom:13px' onmouseenter='playTick()' onclick='SOUND.play(\`select_0\`,0.1);window.gt.showAddAltAcc()'>Add Account</div>
         <div class='amHolder' style='display:flex;flex-direction:column;justify-content:center;'>
         `;
         const generateHTML = () => {
