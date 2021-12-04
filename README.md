@@ -29,7 +29,7 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 |:---:|   :---:  |
 | F4  | Jump to other game[^1] |
 | F5  | Reload |
-| F6  | Jump to other game(Ramdom) |
+| F6  | Jump to other game(Random) |
 | F7  | Copy URL |
 | F8  | Open URL in clipboard |
 
