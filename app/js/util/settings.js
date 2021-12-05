@@ -38,7 +38,16 @@ module.exports = {
         cat: 'General',
         type: 'checkbox',
         val: config.get('enableAltMng', true),
-        restart: false,
+        restart: true,
+        default: true,
+    },
+    autoPlay: {
+        id: 'autoPlay',
+        title: langPack.settings.autoPlay,
+        cat: 'General',
+        type: 'checkbox',
+        val: config.get('autoPlay', true),
+        restart: true,
         default: true,
     },
     enableRPC: {
