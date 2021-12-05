@@ -46,9 +46,9 @@ exports.clientTools = class {
                         `;
             case 'fileWithEyes':
                 return `
-                        <button class='settingsBtn' onclick='window.gt.openFileDialog(${obj.id})' style="float:right;margin-top:5px;width:auto;">${langPack.settings.selectFile}</button>
+                        <button class='settingsBtn' onclick='window.gt.openFileDialog("${obj.id}")' style="float:right;margin-top:5px;width:auto;">${langPack.settings.selectFile}</button>
                         <a class="material-icons" id="eye_${obj.id}" onclick="window.gt.changeVisibility('${obj.id}')" style="text-decoration:none;float:right;margin-top:10px;color:rgba(255,255,255,1);">${config.get(`${obj.id}_visibility`, true) ? 'visibility' : 'visibility_off'}</a>
-                        <div id='${obj.id}' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
+                        <div id='${obj.id}_value' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
                         `;
             default:
                 return `
@@ -158,20 +158,20 @@ exports.gameTools = class {
     }
     openFileDialog(id) {
         ipcRenderer.invoke('openFileDialog').then((result) => {
-            const el = document.getElementById(id);
-            el.innerHTML = result;
+            const el = document.getElementById(`${id}_value`);
+            el.innerText = result;
         });
     }
     changeVisibility(id) {
         const el = document.getElementById(`eye_${id}`);
         if (config.get(`${id}_visibility`, true)) {
             el.innerText = 'visibility_off';
-            document.getElementById(id).style.display = 'none';
+            document.getElementById(`${id}_value`).style.display = 'none';
             config.set(`${id}_visibility`, false);
         }
         else {
             el.innerText = 'visibility';
-            document.getElementById(id).style.display = '';
+            document.getElementById(`${id}_value`).style.display = '';
             config.set(`${id}_visibility`, true);
         }
     }

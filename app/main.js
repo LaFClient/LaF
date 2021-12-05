@@ -329,7 +329,7 @@ ipcMain.handle('openFileDialog', (e) => {
     });
     if (cssPath) {
         config.set('userCSSPath', cssPath[0]);
-        e.reply('userCSSPath', cssPath);
+        return cssPath;
     }
 });
 
