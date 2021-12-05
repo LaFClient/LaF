@@ -20,19 +20,51 @@ const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/j
 
 log.info('Script Loaded: js/util/wm.js');
 
-const cssPath = {
-    type1: '../../css/EasyCSS/type1.css',
-    type2: '../../css/EasyCSS/type2.css',
-    type3: '../../css/EasyCSS/type3.css',
-    type4: '../../css/EasyCSS/type4.css',
-    custom: config.get('userCSSPath', ''),
-};
-
 const windows = {
     game: null,
     hub: null,
     viewer: null,
     editor: null,
+};
+
+const initSwapper = (win) => {
+    const swapPath = path.join(app.getPath('documents'), '/LaFSwap');
+    if (!fs.existsSync(swapPath)) {
+        fs.mkdir(swapPath, { recursive: true }, e => {
+            log.warn('ERROR IN RESOURCE SWAPPER');
+            log.warn(e);
+        });
+    }
+    const urls = [];
+    const recursiveFolder = (win, prefix = '') => {
+        try {
+            fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach((cPath) => {
+                if (cPath.isDirectory()) {
+                    recursiveFolder(win, `${prefix}/${cPath.name}`);
+                }
+                else {
+                    const name = `${prefix}/${cPath.name}`;
+                    const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
+                    if (isAsset) {
+                        urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
+                    }
+                    else {
+                        urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
+                    }
+                }
+            });
+        }
+        catch (e) {
+            log.warn('ERROR IN RESOURCE SWAPPER');
+            log.warn(e);
+        }
+    };
+    recursiveFolder(win);
+    if (urls.length) {
+        win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({
+            redirectURL: 'laf:/' + path.join(swapPath, new URL(details.url).pathname),
+        }));
+    }
 };
 
 exports.launchGame = () => {
@@ -52,57 +84,6 @@ exports.gameWindow = class {
                 preload: path.join(__dirname, '../preload/game.js'),
             },
         });
-
-        const initSwapper = (win, f = true) => {
-            if (!f) {
-                const urls = [];
-                urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
-                win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({
-                    redirectURL: isEzCSSEnabled && new URL(details.url).pathname === '/css/main_custom.css' ? (ezCSSMode === 'custom' ? 'laf:/' + cssPath['custom'] : 'laf:/' + path.join(__dirname, cssPath[ezCSSMode])) : 'laf:/' + path.join(swapPath, new URL(details.url).pathname),
-                }));
-                return;
-            }
-            const swapPath = path.join(app.getPath('documents'), '/LaFSwap');
-            if (!fs.existsSync(swapPath)) {
-                fs.mkdir(swapPath, { recursive: true }, e => {
-                    log.warn('ERROR IN RESOURCE SWAPPER');
-                    log.warn(e);
-                });
-            }
-            const urls = [];
-            const recursiveFolder = (win, prefix = '') => {
-                try {
-                    fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach((cPath) => {
-                        if (cPath.isDirectory()) {
-                            recursiveFolder(win, `${prefix}/${cPath.name}`);
-                        }
-                        else {
-                            const name = `${prefix}/${cPath.name}`;
-                            const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
-                            if (isAsset) {
-                                urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
-                            }
-                            else {
-                                urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
-                            }
-                        }
-                    });
-                }
-                catch (e) {
-                    log.warn('ERROR IN RESOURCE SWAPPER');
-                    log.warn(e);
-                }
-            };
-            recursiveFolder(win);
-            if (isEzCSSEnabled) {
-                urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
-            }
-            if (urls.length) {
-                win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({
-                    redirectURL: isEzCSSEnabled && new URL(details.url).pathname === '/css/main_custom.css' ? (ezCSSMode === 'custom' ? 'laf:/' + cssPath['custom'] : 'laf:/' + path.join(__dirname, cssPath[ezCSSMode])) : 'laf:/' + path.join(swapPath, new URL(details.url).pathname),
-                }));
-            }
-        };
         const initShortcutKeys = () => {
             const sKeys = [
                 ['Esc', () => {
@@ -157,9 +138,6 @@ exports.gameWindow = class {
         if (isSwapperEnabled) {
             initSwapper(brWin);
         }
-        else if (ezCSSMode !== 'disable') {
-            initSwapper(brWin, false);
-        }
         brWin.loadURL('https://krunker.io');
 
         // イベントハンドラ
@@ -200,54 +178,6 @@ exports.socialWindow = class {
                 preload: path.join(__dirname, '../preload/social.js'),
             },
         });
-
-        const initSwapper = (win) => {
-            const swapPath = path.join(app.getPath('documents'), '/LaFSwap');
-            if (!fs.existsSync(swapPath)) {
-                fs.mkdir(swapPath, { recursive: true }, e => {
-                    log.warn('ERROR IN RESOURCE SWAPPER');
-                    log.warn(e);
-                });
-            }
-            const urls = [];
-            const recursiveFolder = (win, prefix = '') => {
-                try {
-                    fs.readdirSync(path.join(swapPath, prefix), { withFileTypes: true }).forEach((cPath) => {
-                        if (cPath.isDirectory()) {
-                            recursiveFolder(win, `${prefix}/${cPath.name}`);
-                        }
-                        else {
-                            const name = `${prefix}/${cPath.name}`;
-                            const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
-                            if (isAsset) {
-                                urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
-                            }
-                            else {
-                                urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
-                            }
-                        }
-                    });
-                }
-                catch (e) {
-                    log.warn('ERROR IN RESOURCE SWAPPER');
-                    log.warn(e);
-                }
-            };
-            if (isSwapperEnabled) {
-                recursiveFolder(win);
-            }
-            else if (isEzCSSEnabled && !isSwapperEnabled) {
-                urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
-            }
-            if (!urls.includes('*://krunker.io/css/main_custom.css')) {
-                urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
-            }
-            if (urls.length) {
-                win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({
-                    redirectURL: isEzCSSEnabled && new URL(details.url).pathname === '/css/main_custom.css' ? (ezCSSMode === 'custom' ? 'laf:/' + cssPath['custom'] : 'laf:/' + path.join(__dirname, cssPath[ezCSSMode])) : 'laf:/' + path.join(swapPath, new URL(details.url).pathname),
-                }));
-            }
-        };
         const initShortcutKeys = () => {
             const sKeys = [
                 ['Esc', () => {

@@ -56,13 +56,13 @@ const initFlags = () => {
         ['disable-frame-rate-limit', null, config.get('unlimitedFPS', true)],
         ['disable-gpu-vsync', null, config.get('unlimitedFPS', true)],
         // 描画関係
-        ['use-angle', config.get('angleType', 'gl'), true],
+        ['use-angle', config.get('angleType', 'default'), true],
         ['enable-webgl2-compute-context', null, config.get('webgl2Context', true)],
         ['disable-accelerated-2d-canvas', 'true', !config.get('acceleratedCanvas', true)],
         // ウィンドウキャプチャに必要な設定(win32でのみ動作する。frznさんに感謝)
         ['in-process-gpu', null, platformType === 'win32' ? true : false],
         // その他
-        ['autoplay-policy', 'no-user-gesture-required', true],
+        ['autoplay-policy', 'no-user-gesture-required', config.get('autoPlay', true)],
     ];
     chromiumFlags.forEach((f) => {
         const isEnable = f[2] ? 'Enable' : 'Disable';
@@ -327,10 +327,10 @@ ipcMain.handle('openFileDialog', (e) => {
             { name: 'CSS File', extensions: ['txt', 'css'] },
         ],
     });
-    if (cssPath) {
+    if (cssPath !== undefined) {
         config.set('userCSSPath', cssPath[0]);
-        return cssPath;
     }
+    return cssPath;
 });
 
 ipcMain.on('exitClient', () => {
@@ -347,13 +347,13 @@ ipcMain.on('copyPCInfo', () => {
         ['disable-frame-rate-limit', null, config.get('unlimitedFPS', true)],
         ['disable-gpu-vsync', null, config.get('unlimitedFPS', true)],
         // 描画関係
-        ['use-angle', config.get('angleType', 'gl'), true],
+        ['use-angle', config.get('angleType', 'default'), true],
         ['enable-webgl2-compute-context', null, config.get('webgl2Context', true)],
         ['disable-accelerated-2d-canvas', 'true', !config.get('acceleratedCanvas', true)],
         // ウィンドウキャプチャに必要な設定(win32でのみ動作する。frznさんに感謝)
         ['in-process-gpu', null, platformType === 'win32' ? true : false],
         // その他
-        ['autoplay-policy', 'no-user-gesture-required', true],
+        ['autoplay-policy', 'no-user-gesture-required', config.get('autoPlay', true)],
     ];
     chromiumFlags.forEach((f) => {
         const isEnable = f[2] ? 'Enable' : 'Disable';

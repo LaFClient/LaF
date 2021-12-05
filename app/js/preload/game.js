@@ -2,6 +2,7 @@ require('v8-compile-cache');
 const { ipcRenderer } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
+const path = require('path');
 const lafTools = require('../util/tools');
 
 const tools = new lafTools.clientTools();
@@ -60,6 +61,22 @@ const initDiscordRPC = () => {
         ipcRenderer.invoke('RPC_SEND', rpcActivity);
         rpcInterval = setInterval(sendDiscordRPC, 500);
     }
+};
+
+const initEasyCSS = () => {
+    const cssPath = {
+        type1: '../../css/EasyCSS/type1.css',
+        type2: '../../css/EasyCSS/type2.css',
+        type3: '../../css/EasyCSS/type3.css',
+        type4: '../../css/EasyCSS/type4.css',
+        custom: config.get('userCSSPath', ''),
+    };
+    // <link rel="stylesheet" title="custom" id="1" href="/css/custom_1.css?build=2kjHD" disabled="">
+    let tmpHTML = '';
+    Object.keys(cssPath).forEach((k) => {
+        tmpHTML += `<link rel="stylesheet" id="ec_${k}" class="easycss" href="laf:/${k === 'custom' ? cssPath[k] : path.join(__dirname, cssPath[k])}" ${config.get('easyCSSMode', 'disable') == k ? '' : 'disabled'}>`;
+    });
+    document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', tmpHTML);
 };
 
 const injectAltManager = () => {
@@ -170,6 +187,7 @@ ipcRenderer.on('ESC', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const winObserver = new MutationObserver(() => {
         winObserver.disconnect();
+        initEasyCSS();
         tools.setupGameWindow();
         window.closeClient = () => {
             ipcRenderer.send('exitClient');
