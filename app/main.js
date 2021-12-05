@@ -56,7 +56,7 @@ const initFlags = () => {
         ['disable-frame-rate-limit', null, config.get('unlimitedFPS', true)],
         ['disable-gpu-vsync', null, config.get('unlimitedFPS', true)],
         // 描画関係
-        ['use-angle', config.get('angleType', 'gl'), true],
+        ['use-angle', config.get('angleType', 'default'), true],
         ['enable-webgl2-compute-context', null, config.get('webgl2Context', true)],
         ['disable-accelerated-2d-canvas', 'true', !config.get('acceleratedCanvas', true)],
         // ウィンドウキャプチャに必要な設定(win32でのみ動作する。frznさんに感謝)
@@ -347,7 +347,7 @@ ipcMain.on('copyPCInfo', () => {
         ['disable-frame-rate-limit', null, config.get('unlimitedFPS', true)],
         ['disable-gpu-vsync', null, config.get('unlimitedFPS', true)],
         // 描画関係
-        ['use-angle', config.get('angleType', 'gl'), true],
+        ['use-angle', config.get('angleType', 'default'), true],
         ['enable-webgl2-compute-context', null, config.get('webgl2Context', true)],
         ['disable-accelerated-2d-canvas', 'true', !config.get('acceleratedCanvas', true)],
         // ウィンドウキャプチャに必要な設定(win32でのみ動作する。frznさんに感謝)

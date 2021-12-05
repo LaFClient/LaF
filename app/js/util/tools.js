@@ -31,9 +31,9 @@ exports.clientTools = class {
                 });
                 return tmpHTML + '</select>';
             case 'selectec':
-                let tmpHTMLoc = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
+                let tmpHTMLoc = `<select onchange='window.gt.setSetting("${obj.id}", this.value);window.gt.changeCSS(this.value);' class="inputGrey2">`;
                 Object.keys(obj.options).forEach((k) => {
-                    tmpHTMLoc += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''} onchange="window.gt.changeCSS(this.value);">${obj.options[k]}</option>`;
+                    tmpHTMLoc += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''}>${obj.options[k]}</option>`;
                 });
                 return tmpHTMLoc + '</select>';
             case 'slider':
@@ -48,7 +48,7 @@ exports.clientTools = class {
                 return `
                         <button class='settingsBtn' onclick='window.gt.openFileDialog("${obj.id}")' style="float:right;margin-top:5px;width:auto;">${langPack.settings.selectFile}</button>
                         <a class="material-icons" id="eye_${obj.id}" onclick="window.gt.changeVisibility('${obj.id}')" style="text-decoration:none;float:right;margin-top:10px;color:rgba(255,255,255,1);">${config.get(`${obj.id}_visibility`, true) ? 'visibility' : 'visibility_off'}</a>
-                        <div id='${obj.id}_value' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${config.get(obj.id, obj.default)}</div>
+                        <div id='${obj.id}_value' style="font-size:13pt;margin-top:10px;text-align:right;display:${config.get(`${obj.id}_visibility`, true) ? '' : 'none'};">${obj.val}</div>
                         `;
             default:
                 return `
@@ -232,7 +232,7 @@ exports.gameTools = class {
         Object.values(document.getElementsByClassName('easycss')).forEach((el) => {
             el.disabled = true;
         });
-        const el = document.getElementById('ec' + k);
+        const el = document.getElementById('ec_' + k);
         el.disabled = false;
     }
     showAddAltAcc() {

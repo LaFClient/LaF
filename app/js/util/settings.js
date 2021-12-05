@@ -100,9 +100,9 @@ module.exports = {
         title: langPack.settings.angleType,
         cat: 'Graphics',
         type: 'select',
-        val: config.get('angleType', 'Default'),
+        val: config.get('angleType', 'default'),
         restart: true,
-        default: 'Default',
+        default: 'default',
         options: {
             default: 'Default',
             gl: 'OpenGL',
@@ -133,9 +133,9 @@ module.exports = {
         id: 'easyCSSMode',
         title: langPack.settings.easyCSSMode,
         cat: 'Customize',
-        type: 'select',
+        type: 'selectec',
         val: config.get('easyCSSMode', 'disable'),
-        restart: true,
+        restart: false,
         default: 'disable',
         options: {
             type1: langPack.settings.easyCSStype1,
@@ -152,7 +152,7 @@ module.exports = {
         cat: 'Customize',
         type: 'fileWithEyes',
         val: config.get('userCSSPath', ''),
-        restart: true,
+        restart: false,
         default: '',
     },
     showExitBtn: {
