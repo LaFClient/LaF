@@ -157,7 +157,7 @@ exports.gameWindow = class {
         if (isSwapperEnabled) {
             initSwapper(brWin);
         }
-        else if (ezCSSMode) {
+        else if (ezCSSMode !== 'disable') {
             initSwapper(brWin, false);
         }
         brWin.loadURL('https://krunker.io');
@@ -221,13 +221,13 @@ exports.socialWindow = class {
                             const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
                             if (isAsset) {
                                 urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
-                            } 
+                            }
                             else {
                                 urls.push(`*://krunker.io${name}`, `*://krunker.io${name}?*`, `*://comp.krunker.io${name}`, `*://comp.krunker.io${name}?*`);
                             }
                         }
                     });
-                } 
+                }
                 catch (e) {
                     log.warn('ERROR IN RESOURCE SWAPPER');
                     log.warn(e);
@@ -298,11 +298,11 @@ exports.socialWindow = class {
         });
         brWin.webContents.on('will-prevent-unload', (e) => {
             if (!dialog.showMessageBoxSync({
-                    buttons: [langPack.dialog.yes, langPack.dialog.no],
-                    title: langPack.dialog.social.leavePageTitle,
-                    message: langPack.dialog.social.leavePageMessage,
-                    noLink: true,
-                })) {
+                buttons: [langPack.dialog.yes, langPack.dialog.no],
+                title: langPack.dialog.social.leavePageTitle,
+                message: langPack.dialog.social.leavePageMessage,
+                noLink: true,
+            })) {
                 e.preventDefault();
             }
         });
