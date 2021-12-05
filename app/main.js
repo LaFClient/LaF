@@ -327,10 +327,10 @@ ipcMain.handle('openFileDialog', (e) => {
             { name: 'CSS File', extensions: ['txt', 'css'] },
         ],
     });
-    if (cssPath) {
+    if (cssPath !== undefined) {
         config.set('userCSSPath', cssPath[0]);
-        return cssPath;
     }
+    return cssPath;
 });
 
 ipcMain.on('exitClient', () => {

@@ -74,7 +74,7 @@ const initEasyCSS = () => {
     // <link rel="stylesheet" title="custom" id="1" href="/css/custom_1.css?build=2kjHD" disabled="">
     let tmpHTML = '';
     Object.keys(cssPath).forEach((k) => {
-        tmpHTML += `<link rel="stylesheet" id="ec_${k}" class="easycss" href="laf:/${path.join(__dirname, cssPath[k])}" ${config.get('easyCSSMode', 'disable') == k ? '' : 'disabled'}>`;
+        tmpHTML += `<link rel="stylesheet" id="ec_${k}" class="easycss" href="laf:/${k === 'custom' ? cssPath[k] : path.join(__dirname, cssPath[k])}" ${config.get('easyCSSMode', 'disable') == k ? '' : 'disabled'}>`;
     });
     document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', tmpHTML);
 };

@@ -4,6 +4,7 @@ const log = require('electron-log');
 
 const settings = require('./settings');
 const { lang } = require('./settings');
+const { link } = require('original-fs');
 
 const config = new store();
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
@@ -158,8 +159,12 @@ exports.gameTools = class {
     }
     openFileDialog(id) {
         ipcRenderer.invoke('openFileDialog').then((result) => {
-            const el = document.getElementById(`${id}_value`);
-            el.innerText = result;
+            if (result !== undefined) {
+                const el = document.getElementById(`${id}_value`);
+                el.innerText = result;
+                const linkEl = document.getElementById('ec_custom');
+                linkEl.setAttribute('href', `laf:/${result}`);
+            }
         });
     }
     changeVisibility(id) {
