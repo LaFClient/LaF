@@ -62,7 +62,7 @@ const initFlags = () => {
         // ウィンドウキャプチャに必要な設定(win32でのみ動作する。frznさんに感謝)
         ['in-process-gpu', null, platformType === 'win32' ? true : false],
         // その他
-        ['autoplay-policy', 'no-user-gesture-required', true],
+        ['autoplay-policy', 'no-user-gesture-required', config.get('autoPlay', true)],
     ];
     chromiumFlags.forEach((f) => {
         const isEnable = f[2] ? 'Enable' : 'Disable';

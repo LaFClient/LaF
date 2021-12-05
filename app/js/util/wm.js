@@ -27,15 +27,7 @@ const windows = {
     editor: null,
 };
 
-const initSwapper = (win, f = true) => {
-    if (!f) {
-        const urls = [];
-        urls.push('*://krunker.io/css/main_custom.css', '*://krunker.io/css/main_custom.css?*', '*://comp.krunker.io/css/main_custom.css', '*://comp.krunker.io/css/main_custom.css?*');
-        win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({
-            redirectURL: isEzCSSEnabled && new URL(details.url).pathname === '/css/main_custom.css' ? (ezCSSMode === 'custom' ? 'laf:/' + cssPath['custom'] : 'laf:/' + path.join(__dirname, cssPath[ezCSSMode])) : 'laf:/' + path.join(swapPath, new URL(details.url).pathname),
-        }));
-        return;
-    }
+const initSwapper = (win) => {
     const swapPath = path.join(app.getPath('documents'), '/LaFSwap');
     if (!fs.existsSync(swapPath)) {
         fs.mkdir(swapPath, { recursive: true }, e => {
@@ -145,9 +137,6 @@ exports.gameWindow = class {
         initShortcutKeys();
         if (isSwapperEnabled) {
             initSwapper(brWin);
-        }
-        else if (ezCSSMode !== 'disable') {
-            initSwapper(brWin, false);
         }
         brWin.loadURL('https://krunker.io');
 
