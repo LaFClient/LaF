@@ -239,15 +239,13 @@ DiscordRPC.register(ClientID);
 const rpc = new DiscordRPC.Client({ transport: 'ipc' });
 
 /* イベントハンドラー */
-// DiscordRPC
-let isDiscordAlive;
+// DiscordRPC`
 rpc.on('ready', () => {
-    isDiscordAlive = true;
     log.info('Discord RPC Ready');
 });
 
 ipcMain.handle('RPC_SEND', (e, d) => {
-    if (isDiscordAlive) {
+    if (rpc.user) {
         rpc.setActivity(d);
     }
 });
@@ -438,7 +436,7 @@ app.on('ready', () => {
             rpc.login({ clientId: ClientID });
             loggedIn = true;
         }
- catch (e) {
+        catch (e) {
             console.error(e);
         }
         if (loggedIn) {

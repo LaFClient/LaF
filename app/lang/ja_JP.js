@@ -81,6 +81,10 @@ module.exports = {
         joinMatchOCustom: '公式カスタムマッチ',
         enableGA: 'Google Analytics',
         openDiscord: 'Discordサーバーに参加する',
+        shareMapInfo: 'プレイ中のマップを表示',
+        shareModeInfo: 'プレイ中のモードを表示',
+        shareClassInfo: '使用中のクラスを表示',
+        shareTimerInfo: '試合の残り時間を表示',
     },
     misc: {
         noJoinableGames: '参加可能なゲームがありません',

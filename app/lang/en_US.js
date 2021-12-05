@@ -81,6 +81,10 @@ module.exports = {
         joinMatchOCustom: 'Official Custom Games',
         enableGA: 'Google Analytics',
         openDiscord: 'Join to Discord Server',
+        shareMapInfo: 'Share map info',
+        shareModeInfo: 'Share gamemode info',
+        shareClassInfo: 'Share class info',
+        shareTimerInfo: 'Share timer info',
     },
     misc: {
         noJoinableGames: 'There are no joinable games',

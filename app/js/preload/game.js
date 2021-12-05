@@ -32,14 +32,14 @@ const initDiscordRPC = () => {
         try {
             const gameActivity = window.getGameActivity();
             rpcActivity = {
-                state: gameActivity.map.length ? gameActivity.map : 'Playing Krunker',
-                details: gameActivity.mode,
+                state: gameActivity.map.length && config.get('shareMapInfo', true) ? gameActivity.map : 'Playing Krunker',
+                details: gameActivity.mode && config.get('shareModeInfo', true) ? gameActivity.mode : undefined,
                 largeImageKey: 'laf_icon',
-                largeImageText: 'LaF CLient',
-                smallImageKey: `icon_${gameActivity.class.index}`,
-                smallImageText: gameActivity.class.name,
+                largeImageText: 'LaF Client',
+                smallImageKey: config.get('shareClassInfo', true) ? `icon_${gameActivity.class.index}` : undefined,
+                smallImageText: config.get('shareClassInfo', true) ? gameActivity.class.name : undefined,
             };
-            if (gameActivity.time) {
+            if (gameActivity.time && config.get('shareTimerInfo', true)) {
                 rpcActivity.endTimestamp = Date.now() + gameActivity.time * 1e3;
             }
             ipcRenderer.invoke('RPC_SEND', rpcActivity);
