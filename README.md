@@ -1,4 +1,5 @@
 # LaF Client for Krunker
+
 ![TitleImage](./app/img/social.png)</br>
 [![License](https://img.shields.io/github/license/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/blob/master/LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF/master?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
@@ -12,32 +13,41 @@
 言語/Language: [English](https://github.com/Hiro527/LaF/blob/master/README.md) | [日本語](https://github.com/Hiro527/LaF/blob/master/README_JA.md)
 
 ## What is LaF?
+
 **LaF = Lite and Fast**</br>
 Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
 
 ## About ResourceSwapper
+
 - Path: `%HOMEPATH%\Documents\LaFSwap`
 - You can use it as other client's one. Please put your file as same as MOD.
 
 ## About HyperQuickJoin
 
 ## About EasyCSS
-![EasyCSS](./app/img/readme/easycss-1.png)<br>
+
+![EasyCSS](./app/img/readme/easycss-1.png)\
 EasyCSS system enables you to load custom css more easily. You don't have to use resource swapper anymore. And also, you don't have to restart the client anymore. It's too old way.
 
 ## Twitch !link command
+
 ![Twitch Login](./app/img/readme/twitch-1.png)
+
 1. Login to Twitch in settings
 2. Your listener can use `!link` command in stream.
 
 ## HyperQuickJoin
+
 ![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
+
 - You can join to your favorite game mode with F4 key!
 
 ### Tips
+
 - You can toggle whether `!link` command is enable in a button![Button](./app/img/readme/twitch-2.png).
 
 ## KeyBinds
+
 | Key | Function |
 |:---:|   :---:  |
 | F4  | Jump to other game[^1] |
@@ -49,6 +59,7 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 [^1]: You can specify gamemode/region in the settings.
 
 ## Requirements
+
 |     | Least/最低 | Recommended/推奨 |
 |:---:|   :---:   |      :---:      |
 | OS  | Windows7 32bit | Windows10 64bit |
@@ -59,20 +70,24 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 | Memo | 720p60 Low Settings | 1080p60 High Settings |
 
 ## About Developers
-### Hiro527 / **Client Coder, Designer**<br>
-Web: [ぬる/Hiro](https://hiro527.github.io/)<br>
-GitHub: [Hiro527](https://github.com/Hiro527)<br>
-Twitch: [nulla1m](https://twitch.tv/nulla1m)<br>
-Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)<br>
-Discord: nullA1m#7777<br>
-Discord Server: [Hiro.js](https://discord.gg/9M9TgDRt9G)<br>
 
-### sh / **Client Coder, A cat**<br>
+### Hiro527 / **Client Coder, Designer**
+
+Web: [ぬる/Hiro](https://hiro527.github.io/)\
+GitHub: [Hiro527](https://github.com/Hiro527)\
+Twitch: [nulla1m](https://twitch.tv/nulla1m)\
+Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)\
+Discord: nullA1m#7777\
+Discord Server: [Hiro.js](https://discord.gg/9M9TgDRt9G)
+
+### sh / **Client Coder, A cat**
+
 GitHub: [shaaaaaQ](https://github.com/shaaaaaQ)
 
-### NamekujiLSDs / **CSS Maker, Designer**<br>
-Web: [Namekuji](https://namekujilsds.github.io/)<br>
-GitHub: [NamekujiLSDs](https://github.com/NamekujiLSDs)<br>
-YouTube: [Namekuji Krunker / ナメクジさん](https://www.youtube.com/channel/UCH65I7YbpEK7B8-Wkr75CJQ)<br>
-Twitter: [@NamekujiLSDs](https://twitter.com/namekujilsds)<br>
-Discord Server: [Sluggy Lounge | Krunker ingame content](https://discord.gg/qusjZSbXQX)<br>
+### NamekujiLSDs / **CSS Maker, Designer**
+
+Web: [Namekuji](https://namekujilsds.github.io/)\
+GitHub: [NamekujiLSDs](https://github.com/NamekujiLSDs)\
+YouTube: [Namekuji Krunker / ナメクジさん](https://www.youtube.com/channel/UCH65I7YbpEK7B8-Wkr75CJQ)\
+Twitter: [@NamekujiLSDs](https://twitter.com/namekujilsds)\
+Discord Server: [Sluggy Lounge | Krunker ingame content](https://discord.gg/qusjZSbXQX)
