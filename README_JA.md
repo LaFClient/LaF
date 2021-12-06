@@ -27,6 +27,11 @@ EasyCSSは、簡単にCSSを読み込むことができる画期的なシステ�
 ![Twitch Login](./app/img/readme/twitch-1.png)
 1. クライアントの設定からTwitchにログインしてください。
 2. あなたの配信の視聴者は配信中に `!link` コマンドを使ってゲームリンクを手に入れることができます。
+
+## HyperQuickJoin
+![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
+- F4キーを押すだけであなたの好きなモードに入ることが出来ます！！
+
 ### Tips
 - メニュー画面にあるリンクアイコンのボタン![Button](./app/img/readme/twitch-2.png)から`!link`コマンドの有効/無効を切り替えることが出来ます。
 

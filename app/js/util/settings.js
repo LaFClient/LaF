@@ -181,7 +181,7 @@ module.exports = {
     joinMatchPresentRegion: {
         id: 'joinMatchPresentRegion',
         title: langPack.settings.joinMatchPresentRegion,
-        cat: 'MatchMaker',
+        cat: 'HyperQuickJoin',
         type: 'checkbox',
         val: config.get('joinMatchPresentRegion', true),
         restart: false,
@@ -190,7 +190,7 @@ module.exports = {
     joinMatchCustom: {
         id: 'joinMatchCustom',
         title: langPack.settings.joinMatchCustom,
-        cat: 'MatchMaker',
+        cat: 'HyperQuickJoin',
         type: 'checkbox',
         val: config.get('joinMatchCustom', false),
         restart: false,
@@ -199,7 +199,7 @@ module.exports = {
     joinMatchOCustom: {
         id: 'joinMatchOCustom',
         title: langPack.settings.joinMatchOCustom,
-        cat: 'MatchMaker',
+        cat: 'HyperQuickJoin',
         type: 'checkbox',
         val: config.get('joinMatchOCustom', false),
         restart: false,
@@ -208,7 +208,7 @@ module.exports = {
     joinMatchMode: {
         id: 'joinMatchMode',
         title: langPack.settings.joinMatchMode,
-        cat: 'MatchMaker',
+        cat: 'HyperQuickJoin',
         type: 'select',
         val: config.get('joinMatchMode', 'all'),
         restart: false,

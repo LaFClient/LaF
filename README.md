@@ -19,6 +19,8 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 - Path: `%HOMEPATH%\Documents\LaFSwap`
 - You can use it as other client's one. Please put your file as same as MOD.
 
+## About HyperQuickJoin
+
 ## About EasyCSS
 ![EasyCSS](./app/img/readme/easycss-1.png)<br>
 EasyCSS system enables you to load custom css more easily. You don't have to use resource swapper anymore. And also, you don't have to restart the client anymore. It's too old way.
@@ -27,6 +29,10 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 ![Twitch Login](./app/img/readme/twitch-1.png)
 1. Login to Twitch in settings
 2. Your listener can use `!link` command in stream.
+
+## HyperQuickJoin
+![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
+- You can join to your favorite game mode with F4 key!
 
 ### Tips
 - You can toggle whether `!link` command is enable in a button![Button](./app/img/readme/twitch-2.png).
