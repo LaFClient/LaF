@@ -24,7 +24,7 @@ Krunkerは低スペックPCでも動く軽いゲームですが、「公式ク�
 
 ## EasyCSSについて
 
-![EasyCSS](./app/img/readme/easycss-1.png)
+![EasyCSS](./app/img/readme/easycss-1.png)\
 EasyCSSは、簡単にCSSを読み込むことができる画期的なシステムです。もうリソーススワッパーを使ったり、変えるたびにクライアントを再起動する必要はありません。それらは古すぎるやり方です。
 
 ## Twitch !link コマンド
@@ -71,11 +71,11 @@ EasyCSSは、簡単にCSSを読み込むことができる画期的なシステ�
 
 ### Hiro527 / **Client Coder, Designer**
 
-Web: [ぬる/Hiro](https://hiro527.github.io/)
-GitHub: [Hiro527](https://github.com/Hiro527)
-Twitch: [nulla1m](https://twitch.tv/nulla1m)
-Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)
-Discord: nullA1m#7777
+Web: [ぬる/Hiro](https://hiro527.github.io/)\
+GitHub: [Hiro527](https://github.com/Hiro527)\
+Twitch: [nulla1m](https://twitch.tv/nulla1m)\
+Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)\
+Discord: nullA1m#7777\
 Discord Server: [Hiro.js](https://discord.gg/9M9TgDRt9G)
 
 ### sh / **Client Coder, A cat**
@@ -84,8 +84,8 @@ GitHub: [shaaaaaQ](https://github.com/shaaaaaQ)
 
 ### NamekujiLSDs / **CSS Maker, Designer**
 
-Web: [Namekuji](https://namekujilsds.github.io/)
-GitHub: [NamekujiLSDs](https://github.com/NamekujiLSDs)
-YouTube: [Namekuji Krunker / ナメクジさん](https://www.youtube.com/channel/UCH65I7YbpEK7B8-Wkr75CJQ)
-Twitter: [@NamekujiLSDs](https://twitter.com/namekujilsds)
+Web: [Namekuji](https://namekujilsds.github.io/)\
+GitHub: [NamekujiLSDs](https://github.com/NamekujiLSDs)\
+YouTube: [Namekuji Krunker / ナメクジさん](https://www.youtube.com/channel/UCH65I7YbpEK7B8-Wkr75CJQ)\
+Twitter: [@NamekujiLSDs](https://twitter.com/namekujilsds)\
 Discord Server: [Sluggy Lounge | Krunker ingame content](https://discord.gg/qusjZSbXQX)
