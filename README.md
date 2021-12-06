@@ -55,6 +55,7 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 | F6  | Jump to other game(Random) |
 | F7  | Copy URL |
 | F8  | Open URL in clipboard |
+| F12 | Open Dev Tools |
 
 [^1]: You can specify gamemode/region in the settings.
 

@@ -198,17 +198,15 @@ exports.socialWindow = class {
                     config.set('Fullscreen', !isFullScreen);
                     brWin.setFullScreen(!isFullScreen);
                 }],
+                ['F12', () => {
+                    // 開発者ツールの起動
+                    brWin.webContents.openDevTools();
+                }],
                 ['Ctrl+Shift+F1', () => {
                     // クライアントの再起動
                     app.relaunch();
                     app.quit();
                 }],
-                [
-                    ['Ctrl+F1', 'F12'], () => {
-                        // 開発者ツールの起動
-                        brWin.webContents.openDevTools();
-                    },
-                ],
             ];
 
             sKeys.forEach((k) => {
