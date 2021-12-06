@@ -26,7 +26,7 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 
 ## About EasyCSS
 
-![EasyCSS](./app/img/readme/easycss-1.png) \
+![EasyCSS](./app/img/readme/easycss-1.png)
 EasyCSS system enables you to load custom css more easily. You don't have to use resource swapper anymore. And also, you don't have to restart the client anymore. It's too old way.
 
 ## Twitch !link command
@@ -71,23 +71,23 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 
 ## About Developers
 
-### Hiro527 / **Client Coder, Designer** \
+### Hiro527 / **Client Coder, Designer**
 
-Web: [ぬる/Hiro](https://hiro527.github.io/) \
-GitHub: [Hiro527](https://github.com/Hiro527) \
-Twitch: [nulla1m](https://twitch.tv/nulla1m) \
-Twitter: [ぬる / Hiro](https://twitter.com/nullA1m) \
-Discord: nullA1m#7777 \
-Discord Server: [Hiro.js](https://discord.gg/9M9TgDRt9G) \
+Web: [ぬる/Hiro](https://hiro527.github.io/)
+GitHub: [Hiro527](https://github.com/Hiro527)
+Twitch: [nulla1m](https://twitch.tv/nulla1m)
+Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)
+Discord: nullA1m#7777
+Discord Server: [Hiro.js](https://discord.gg/9M9TgDRt9G)
 
-### sh / **Client Coder, A cat** \
+### sh / **Client Coder, A cat**
 
 GitHub: [shaaaaaQ](https://github.com/shaaaaaQ)
 
-### NamekujiLSDs / **CSS Maker, Designer** \
+### NamekujiLSDs / **CSS Maker, Designer**
 
-Web: [Namekuji](https://namekujilsds.github.io/) \
-GitHub: [NamekujiLSDs](https://github.com/NamekujiLSDs) \
-YouTube: [Namekuji Krunker / ナメクジさん](https://www.youtube.com/channel/UCH65I7YbpEK7B8-Wkr75CJQ) \
-Twitter: [@NamekujiLSDs](https://twitter.com/namekujilsds) \
-Discord Server: [Sluggy Lounge | Krunker ingame content](https://discord.gg/qusjZSbXQX) \
+Web: [Namekuji](https://namekujilsds.github.io/)
+GitHub: [NamekujiLSDs](https://github.com/NamekujiLSDs)
+YouTube: [Namekuji Krunker / ナメクジさん](https://www.youtube.com/channel/UCH65I7YbpEK7B8-Wkr75CJQ)
+Twitter: [@NamekujiLSDs](https://twitter.com/namekujilsds)
+Discord Server: [Sluggy Lounge | Krunker ingame content](https://discord.gg/qusjZSbXQX)
