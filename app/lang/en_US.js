@@ -86,6 +86,7 @@ module.exports = {
         shareClassInfo: 'Share class info',
         shareTimerInfo: 'Share timer info',
         autoPlay: 'Auto play medias',
+        enableTimer: 'Menu Timer',
     },
     misc: {
         noJoinableGames: 'There are no joinable games',

@@ -41,6 +41,15 @@ module.exports = {
         restart: true,
         default: true,
     },
+    enableTimer: {
+        id: 'enableTimer',
+        title: langPack.settings.enableTimer,
+        cat: 'General',
+        type: 'checkbox',
+        val: config.get('enableTimer', true),
+        restart: true,
+        default: true,
+    },
     autoPlay: {
         id: 'autoPlay',
         title: langPack.settings.autoPlay,
