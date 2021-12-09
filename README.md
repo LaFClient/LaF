@@ -34,7 +34,7 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 ![Twitch Login](./app/img/readme/twitch-1.png)
 
 1. Login to Twitch in settings
-2. Your listener can use `!link` command in stream.
+2. Your viewer can use `!link` command in stream.
 
 ## HyperQuickJoin
 
@@ -44,7 +44,7 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 
 ### Tips
 
-- You can toggle whether `!link` command is enable in a button![Button](./app/img/readme/twitch-2.png).
+- You can toggle whether `!link` command is enable with the button![Button](./app/img/readme/twitch-2.png).
 
 ## KeyBinds
 
