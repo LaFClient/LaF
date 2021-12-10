@@ -24,6 +24,9 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 
 ## About HyperQuickJoin
 
+![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
+- You can join to your favorite gamemode with F4![^1]
+
 ## About EasyCSS
 
 ![EasyCSS](./app/img/readme/easycss-1.png)\

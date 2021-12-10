@@ -37,7 +37,6 @@ EasyCSSは、簡単にCSSを読み込むことができる画期的なシステ�
 ## HyperQuickJoin
 
 ![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
-
 - F4キーを押すだけであなたの好きなモードに入ることが出来ます！！
 
 ### Tips

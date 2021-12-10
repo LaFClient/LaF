@@ -97,7 +97,6 @@ const initSplashWindow = () => {
         movable: false,
         center: true,
         show: false,
-        alwaysOnTop: true,
         webPreferences: {
             contextIsolation: false,
             preload: path.join(__dirname, 'js/preload/splash.js'),
