@@ -22,4 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openSettings = () => {
         ipcRenderer.send('openSettings');
     };
+    window.closeApp = () => {
+        ipcRenderer.send('exitClient');
+    };
 });

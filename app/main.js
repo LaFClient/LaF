@@ -333,7 +333,7 @@ ipcMain.handle('openFileDialog', (e) => {
 });
 
 ipcMain.on('exitClient', () => {
-    app.exit();
+    app.quit();
 });
 
 ipcMain.on('copyPCInfo', () => {
