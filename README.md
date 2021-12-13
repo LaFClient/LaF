@@ -32,10 +32,10 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 |         |    64bit     | LaF_Setup_Linux_x86_64.AppImage |
 
 2. Run the file you downloaded.\
-**Tips** Even if your pc shows 'Windows protected your pc', don't worry. This program has no ransomware. Please press 'Run anyway' to continue the installation.\
+**Tips** Even if your pc shows 'Windows protected your pc', don't worry. This program has no ransomware. Please press 'Run anyway' to continue the installation.
 
 3. Follow the dialog.\
-**Tips** I don't recommend the path to install. But if you have to change it in some reasons, you can change it.\
+**Tips** I don't recommend the path to install. But if you have to change it in some reasons, you can change it.
 
 ## About ResourceSwapper
 
