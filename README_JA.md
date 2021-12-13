@@ -17,6 +17,26 @@
 **LaF = Lite and Fast**</br>
 Krunkerは低スペックPCでも動く軽いゲームですが、「公式クライアントでギリギリ遊べてる・・・」という方も多いはずです。そんな方でも快適に遊べるクライアントを目指して開発している日本製Krunkerクライアントです。
 
+## How to install
+
+1. [最新のリリース](https://github.com/Hiro527/LaF/releases/latest)をダウンロードしてください。\
+**Tips** 下の表を参考にお使いのPCにあったファイルをダウンロードしてください。
+
+|   OS    |   アーキテクチャ   |            ファイル名             |
+| :-----: | :------------: | :-----------------------------: |
+| Windows |    32/64bit    |      LaF_Setup_Windows.exe      |
+|         |     32bit      |   LaF_Setup_Windows_ia32.exe    |
+|         |     64bit      |    LaF_Setup_Windows_x64.exe    |
+|  maxOS  |     64bit      |     LaF_Setup_maxOS_x64.dmg     |
+|  Linux  |     32bit      |  LaF_Setup_Linux_i386.AppImage  |
+|         |     64bit      | LaF_Setup_Linux_x86_64.AppImage |
+
+2. ダウンロードしたファイルを実行してください。\
+**Tips** もしも「WindowsによってPCが保護されました」と表示されても心配しないでください。ウィルスは入っていないので、「実行」ボタンを押してインストールを続けてください。\
+
+3. 指示に従ってインストールしてください。\
+**Tips** インストール用のパスを変更することはおすすめしませんが、必要であれば変更することができます。\
+
 ## リソーススワッパーについて
 
 - フォルダーのパス: `%HOMEPATH%\Documents\LaFSwap`

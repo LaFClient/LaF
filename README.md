@@ -17,6 +17,26 @@
 **LaF = Lite and Fast**</br>
 Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
 
+## How to install
+
+1. Download the [latest release](https://github.com/Hiro527/LaF/releases/latest).\
+**Tips** Please download the file for your pc by refering the table 
+
+|   OS    | Architecture |            File Name            |
+| :-----: | :----------: | :-----------------------------: |
+| Windows |   32/64bit   |      LaF_Setup_Windows.exe      |
+|         |    32bit     |   LaF_Setup_Windows_ia32.exe    |
+|         |    64bit     |    LaF_Setup_Windows_x64.exe    |
+|  maxOS  |    64bit     |     LaF_Setup_maxOS_x64.dmg     |
+|  Linux  |    32bit     |  LaF_Setup_Linux_i386.AppImage  |
+|         |    64bit     | LaF_Setup_Linux_x86_64.AppImage |
+
+2. Run the file you downloaded.\
+**Tips** Even if your pc shows 'Windows protected your pc', don't worry. This program has no ransomware. Please press 'Run anyway' to continue the installation.\
+
+3. Follow the dialog.\
+**Tips** I don't recommend the path to install. But if you have to change it in some reasons, you can change it.\
+
 ## About ResourceSwapper
 
 - Path: `%HOMEPATH%\Documents\LaFSwap`
@@ -51,27 +71,27 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 
 ## KeyBinds
 
-| Key | Function |
-|:---:|   :---:  |
-| F4  | Jump to other game[^1] |
-| F5  | Reload |
-| F6  | Jump to other game(Random) |
-| F7  | Copy URL |
-| F8  | Open URL in clipboard |
-| F12 | Open Dev Tools |
+|  Key  |          Function          |
+| :---: | :------------------------: |
+|  F4   |   Jump to other game[^1]   |
+|  F5   |           Reload           |
+|  F6   | Jump to other game(Random) |
+|  F7   |          Copy URL          |
+|  F8   |   Open URL in clipboard    |
+|  F12  |       Open Dev Tools       |
 
 [^1]: You can specify gamemode/region in the settings.
 
 ## Requirements
 
-|     | Least/最低 | Recommended/推奨 |
-|:---:|   :---:   |      :---:      |
-| OS  | Windows7 32bit | Windows10 64bit |
-| CPU | 2.33GHz x86 Processor | 3.5GHz x86 Processor |
-| RAM | 4GB | 8GB |
+|         |          Least/最低           |       Recommended/推奨        |
+| :-----: | :---------------------------: | :---------------------------: |
+|   OS    |        Windows7 32bit         |        Windows10 64bit        |
+|   CPU   |     2.33GHz x86 Processor     |     3.5GHz x86 Processor      |
+|   RAM   |              4GB              |              8GB              |
 | Network | Broadband Internet Connection | Broadband Internet Connection |
-| Storage | 100MB | 2GB |
-| Memo | 720p60 Low Settings | 1080p60 High Settings |
+| Storage |             100MB             |              2GB              |
+|  Memo   |      720p60 Low Settings      |     1080p60 High Settings     |
 
 ## About Developers
 
