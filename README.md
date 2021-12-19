@@ -90,7 +90,7 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 |   CPU   |     2.33GHz x86 Processor     |     3.5GHz x86 Processor      |
 |   RAM   |              4GB              |              8GB              |
 | Network | Broadband Internet Connection | Broadband Internet Connection |
-| Storage |             100MB             |              2GB              |
+| Storage |             300MB             |              2GB              |
 |  Memo   |      720p60 Low Settings      |     1080p60 High Settings     |
 
 ## About Developers
