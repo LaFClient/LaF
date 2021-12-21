@@ -20,14 +20,14 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 ## How to install
 
 1. Download the [latest release](https://github.com/Hiro527/LaF/releases/latest).\
-**Tips** Please download the file for your pc by refering the table 
+**Tips** Please download the file for your pc by refering the table
 
 |   OS    | Architecture |            File Name            |
 | :-----: | :----------: | :-----------------------------: |
 | Windows |   32/64bit   |      LaF_Setup_Windows.exe      |
 |         |    32bit     |   LaF_Setup_Windows_ia32.exe    |
 |         |    64bit     |    LaF_Setup_Windows_x64.exe    |
-|  maxOS  |    64bit     |     LaF_Setup_maxOS_x64.dmg     |
+|  macOS  |    64bit     |     LaF_Setup_macOS_x64.dmg     |
 |  Linux  |    32bit     |  LaF_Setup_Linux_i386.AppImage  |
 |         |    64bit     | LaF_Setup_Linux_x86_64.AppImage |
 
@@ -45,6 +45,7 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 ## About HyperQuickJoin
 
 ![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
+
 - You can join to your favorite gamemode with F4![^1]
 
 ## About EasyCSS

@@ -27,7 +27,7 @@ Krunkerは低スペックPCでも動く軽いゲームですが、「公式ク�
 | Windows |    32/64bit    |      LaF_Setup_Windows.exe      |
 |         |     32bit      |   LaF_Setup_Windows_ia32.exe    |
 |         |     64bit      |    LaF_Setup_Windows_x64.exe    |
-|  maxOS  |     64bit      |     LaF_Setup_maxOS_x64.dmg     |
+|  macOS  |     64bit      |     LaF_Setup_macOS_x64.dmg     |
 |  Linux  |     32bit      |  LaF_Setup_Linux_i386.AppImage  |
 |         |     64bit      | LaF_Setup_Linux_x86_64.AppImage |
 
@@ -57,6 +57,7 @@ EasyCSSは、簡単にCSSを読み込むことができる画期的なシステ�
 ## HyperQuickJoin
 
 ![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
+
 - F4キーを押すだけであなたの好きなモードに入ることが出来ます！！
 
 ### Tips
