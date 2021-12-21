@@ -27,7 +27,7 @@ Krunkerは低スペックPCでも動く軽いゲームですが、「公式ク�
 | Windows |    32/64bit    |      LaF_Setup_Windows.exe      |
 |         |     32bit      |   LaF_Setup_Windows_ia32.exe    |
 |         |     64bit      |    LaF_Setup_Windows_x64.exe    |
-|  maxOS  |     64bit      |     LaF_Setup_maxOS_x64.dmg     |
+|  macOS  |     64bit      |     LaF_Setup_macOS_x64.dmg     |
 |  Linux  |     32bit      |  LaF_Setup_Linux_i386.AppImage  |
 |         |     64bit      | LaF_Setup_Linux_x86_64.AppImage |
 
@@ -84,7 +84,7 @@ EasyCSSは、簡単にCSSを読み込むことができる画期的なシステ�
 | CPU | 2.33GHz x86 プロセッサ | 3.5GHz x86 プロセッサ |
 | RAM | 4GB | 8GB |
 | Network | ブロードバンドインターネット接続 | ブロードバンドインターネット接続 |
-| Storage | 300MB | 2GB |
+| Storage | 100MB | 2GB |
 | Memo | 720p60 低設定 | 1080p60 高設定 |
 
 ## 開発者について
