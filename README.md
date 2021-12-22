@@ -20,7 +20,7 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 ## How to install
 
 1. Download the [latest release](https://github.com/Hiro527/LaF/releases/latest).\
-**Tips** Please download the file for your pc by refering the table
+**Tips** Please download the file for your pc by referring the table
 
 |   OS    | Architecture |            File Name            |
 | :-----: | :----------: | :-----------------------------: |
