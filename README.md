@@ -13,13 +13,10 @@
 言語/Language: [English](https://github.com/Hiro527/LaF/blob/master/README.md) | [日本語](https://github.com/Hiro527/LaF/blob/master/README_JA.md)
 
 ## What is LaF?
-**LaF = Lite and Fast**</br>
-[Krunker] is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
-
 **LaF = Lite and Fast**<br>
-[Krunker.io](https://krunker.io/) isn't a very heavy game, but there are people who still struggle to get good performance due to a low-spec PC,
+Krunker.io isn't a very heavy game, but there are people who still struggle to get good performance due to a low-spec PC,
 <br>
-[LaF](https://github.com/Hiro527/LaF/) is lite and isnt like other clients with bogged down heavy features. the goal of [LaF](https://github.com/Hiro527/LaF/) is to solve that issue! [LaF](https://github.com/Hiro527/LaF/) is built to give low-spec PC's
+LaF is lite and isnt like other clients with bogged down heavy features. the goal of [LaF](https://github.com/Hiro527/LaF/) is to solve that issue! LaF is built to give low-spec PC's
 <br>
 a chance at good performance in the game.
 
@@ -44,7 +41,7 @@ a chance at good performance in the game.
 
 ## About ResourceSwapper
 - Path: `%HOMEPATH%\Documents\LaFSwap`
-- You can use it the same as other client's swappers. Please put your file as same as "`MOD`".
+- You can use it the same as other client's swappers. Please set the file's to `MOD`.
 
 ## About HyperQuickJoin
 ![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
