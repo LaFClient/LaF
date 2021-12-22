@@ -22,7 +22,7 @@ a chance at good performance in the game.
 
 ## How to install
 1. Download the [latest release](https://github.com/Hiro527/LaF/releases/latest).\
-**Tips** Download the file for your pc by referring the table, select accordingly
+**Tip:** Download the file for your pc by referring the table, select accordingly
 
 |   OS    | Architecture |            File Name            |
 | :-----: | :----------: | :-----------------------------: |
@@ -34,10 +34,10 @@ a chance at good performance in the game.
 |         |    64bit     | LaF_Setup_Linux_x86_64.AppImage |
 
 2. Run the file you downloaded.\
-**Tips** Even if your pc shows 'Windows protected your pc', don't worry. This program has no ransomware. Please press 'Run anyway' to continue the installation.
+**Tip:** Even if your pc shows 'Windows protected your pc', don't worry. This program has no ransomware. Please press 'Run anyway' to continue the installation.
 
 3. Follow the dialog.\
-**Tips** I don't recommend changing the set install path. But if you have to change it in for some reasons, you can change it.
+**Tip:** I don't recommend changing the set install path. But if you have to change it in for some reasons, you can change it.
 
 ## About ResourceSwapper
 - Path: `%HOMEPATH%\Documents\LaFSwap`
@@ -86,7 +86,7 @@ You don't have to use resource swapper anymore. And you don't need to restart th
 
 ## About Developers
 
-### Hiro527 / **Client Coder, Designer**
+### Hiro527 / **Client Dev, Designer**
 Web: [ぬる/Hiro](https://hiro527.github.io/)\
 GitHub: [Hiro527](https://github.com/Hiro527)\
 Twitch: [nulla1m](https://twitch.tv/nulla1m)\
@@ -94,7 +94,7 @@ Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)\
 Discord: nullA1m#7777\
 Discord Server: [Hiro.js](https://discord.gg/9M9TgDRt9G)
 
-### sh / **Client Coder, A cat**
+### sh / **Client Dev, A cat**
 GitHub: [shaaaaaQ](https://github.com/shaaaaaQ)
 
 ### NamekujiLSDs / **CSS Maker, Designer**
