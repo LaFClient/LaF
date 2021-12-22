@@ -36,7 +36,7 @@ const isSwapperEnabled = config.get('enableResourceSwapper', true);
 delete require('electron').nativeImage.createThumbnailFromPath;
 if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
-    app.quit();
+    app.exit();
 }
 
 protocol.registerSchemesAsPrivileged([{
@@ -267,7 +267,7 @@ ipcMain.handle('openSwapper', () => {
 
 ipcMain.handle('restartClient', () => {
     app.relaunch();
-    app.quit();
+    app.exit();
 });
 
 ipcMain.handle('openInfo', () => {
@@ -333,7 +333,7 @@ ipcMain.handle('openFileDialog', (e) => {
 });
 
 ipcMain.on('exitClient', () => {
-    app.quit();
+    app.exit();
 });
 
 ipcMain.on('copyPCInfo', () => {
