@@ -1,19 +1,18 @@
 require('v8-compile-cache');
-const path = require('path');
 const { app, BrowserWindow, ipcMain, protocol, shell, dialog, session, clipboard } = require('electron');
+const autoUpdater = require('electron-updater');
+const prompt = require('electron-prompt');
+const DiscordRPC = require('discord-rpc');
 const store = require('electron-store');
 const log = require('electron-log');
-const prompt = require('electron-prompt');
-const { autoUpdater } = require('electron-updater');
-const DiscordRPC = require('discord-rpc');
-const os = require('os');
 const fetch = require('node-fetch');
 const tmi = require('tmi.js');
+const path = require('path');
+const os = require('os');
 // const appConfig = require('./config/main.json');
 
 const platformType = process.platform;
 const config = new store();
-
 const devMode = config.get('devmode');
 
 log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${process.versions.electron}\n    - nodejs@${process.versions.node}\n    - Chromium@${process.versions.chrome}`);
@@ -21,16 +20,15 @@ log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${pro
 const wm = require('./js/util/wm');
 const tools = require('./js/util/tools');
 const { json } = require('express');
-
 const ClientID = '810350252023349248';
+
 let twitchToken = config.get('twitchToken', null);
 let twitchAcc = config.get('twitchAcc', null);
-
-let splashWindow = null;
-let gameWindow = null;
+let splashWindow = gameWindow = null;
 
 const isRPCEnabled = config.get('enableRPC', true);
 const isSwapperEnabled = config.get('enableResourceSwapper', true);
+
 
 /* 初期化ブロック */
 delete require('electron').nativeImage.createThumbnailFromPath;
@@ -63,22 +61,16 @@ const initFlags = () => {
         ['in-process-gpu', null, platformType === 'win32' ? true : false],
         // その他
         ['autoplay-policy', 'no-user-gesture-required', config.get('autoPlay', true)],
-    ];
-    chromiumFlags.forEach((f) => {
+    ]; chromiumFlags.forEach((f) => {
         const isEnable = f[2] ? 'Enable' : 'Disable';
         flagsInfo += `\n    - ${f[0]}, ${f[1]}: ${isEnable}`;
+        
         if (f[2]) {
-            if (f[1] === null) {
-                app.commandLine.appendSwitch(f[0]);
-            }
-            else {
-                app.commandLine.appendSwitch(f[0], f[1]);
-            }
+            if (f[1] === null) app.commandLine.appendSwitch(f[0]);
+            else app.commandLine.appendSwitch(f[0], f[1]);
         }
-    });
-    log.info(flagsInfo);
-};
-initFlags();
+    }); log.info(flagsInfo);
+}; initFlags();
 
 const launchGame = () => {
     gameWindow = wm.launchGame();
@@ -103,16 +95,14 @@ const initSplashWindow = () => {
         },
     });
     const initAutoUpdater = async (updateMode) => {
-        autoUpdater.logger = log;
         let updateCheck = null;
-        autoUpdater.logger = log;
+        autoUpdater.logger = log;  
+        
         autoUpdater.on('checking-for-update', (i) => {
             splashWindow.webContents.send('status', langPack.updater.checking);
             updateCheck = setTimeout(() => {
                 splashWindow.webContents.send('status', langPack.updater.error);
-                setTimeout(() => {
-                    launchGame();
-                }, 1000);
+                setTimeout(launchGame(), 1000);
             }, 15000);
         });
         autoUpdater.on('update-available', (i) => {
@@ -124,17 +114,13 @@ const initSplashWindow = () => {
             log.info(i);
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.uptodate);
-            setTimeout(() => {
-                launchGame();
-            }, 1000);
+            setTimeout(launchGame(), 1000);
         });
         autoUpdater.on('error', (e) => {
             log.error(e);
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.error + e.name);
-            setTimeout(() => {
-                launchGame();
-            }, 1000);
+            setTimeout(launchGame(), 1000);
         });
         autoUpdater.on('download-progress', (i) => {
             if (updateCheck) clearTimeout(updateCheck);
@@ -143,9 +129,7 @@ const initSplashWindow = () => {
         autoUpdater.on('update-downloaded', (i) => {
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.downloaded);
-            setTimeout(() => {
-                autoUpdater.quitAndInstall();
-            }, 3000);
+            setTimeout(autoUpdater.quitAndInstall(), 3000);
         });
         autoUpdater.autoDownload = 'download';
         autoUpdater.allowPrerelease = devMode;
@@ -181,8 +165,7 @@ const initTwitchChat = () => {
             ipcMain.handleOnce('sendLink', (e, v) => {
                 console.log(v);
                 tclient.say(channel, `@${tags.username} ${v}`);
-            });
-            gameWindow.webContents.send('getLink');
+            }); gameWindow.webContents.send('getLink');
         }
     });
 };
@@ -197,14 +180,9 @@ const getUserIsLive = () => {
         .then(res => res.json())
         .then(res => {
             if (res.data.length === 0) return;
-            if (res.data[0].type === 'live') {
-                config.set('isUserLive', true);
-            }
-            else {
-                config.set('isUserLive', false);
-            }
-        })
-        .catch(log.error);
+            if (res.data[0].type === 'live') config.set('isUserLive', true);
+            else config.set('isUserLive', false);
+        }).catch(log.error);
 };
 
 const twitchLogin = () => {
@@ -225,53 +203,35 @@ const twitchLogin = () => {
             config.set('twitchError', false);
             setInterval(getUserIsLive, 10000);
             initTwitchChat();
-        })
-        .catch(err => {
-            log.error('Twitch Login: Error');
-            log.error(err);
+        }).catch(err => {
+            log.error(`Twitch Login: Error\n${err}`);
             gameWindow.webContents.send('twitchEvent', 'loginErr');
             config.set('twitchError', true);
         });
 };
 
+
 DiscordRPC.register(ClientID);
 const rpc = new DiscordRPC.Client({ transport: 'ipc' });
-
 /* イベントハンドラー */
 // DiscordRPC`
-rpc.on('ready', () => {
-    log.info('Discord RPC Ready');
-});
-
-ipcMain.handle('RPC_SEND', (e, d) => {
-    if (rpc.user) {
-        rpc.setActivity(d);
-    }
-});
-
-// SplashWindow
-ipcMain.handle('getAppVersion', async () => {
+rpc.on('ready', () => { log.info('Discord RPC Ready') });
+ipcMain.handle('RPC_SEND', (e, d) => { if (rpc.user) rpc.setActivity(d) });
+ipcMain.handle('openInfo', () => { shell.openExternal('https://hiro527.github.io/LaF') });
+ipcMain.handle('openSwapper', () => { shell.showItemInFolder(path.join(app.getPath('documents'), '/LaFSwap')) });
+ipcMain.handle('getAppVersion', async () => { // SplashWindow
     const version = await app.getVersion();
     return version;
 });
 
-// GameWindow
-ipcMain.handle('clearUserData', () => {
+ipcMain.handle('clearUserData', () => { // GameWindow
     session.defaultSession.clearStorageData();
     log.info('Cleared userdata.');
-});
-
-ipcMain.handle('openSwapper', () => {
-    shell.showItemInFolder(path.join(app.getPath('documents'), '/LaFSwap'));
 });
 
 ipcMain.handle('restartClient', () => {
     app.relaunch();
     app.quit();
-});
-
-ipcMain.handle('openInfo', () => {
-    shell.openExternal('https://hiro527.github.io/LaF');
 });
 
 ipcMain.handle('showDialog', (e, accName) => {
@@ -280,8 +240,7 @@ ipcMain.handle('showDialog', (e, accName) => {
         message: langPack.altManager.deleteAcc.confirm.replace('%accName%', accName),
         buttons: [langPack.dialog.ok, langPack.dialog.cancel],
         cancelId: -1,
-    });
-    return answer;
+    }); return answer;
 });
 
 ipcMain.on('showPrompt', (e, message, defaultValue) => {
@@ -303,18 +262,15 @@ ipcMain.on('showPrompt', (e, message, defaultValue) => {
             width: 400,
             height: 200,
             customStylesheet: path.join(__dirname, 'css/prompt.css'),
-        })
-        .then((r) => {
+        }).then((r) => {
             if (r === null) {
                 log.info('showPrompt: User Cancelled.');
                 e.returnValue = null;
-            }
-            else {
+            } else {
                 log.info(r);
                 e.returnValue = r;
             }
-        })
-        .catch(console.error);
+        }).catch(console.error);
 });
 
 ipcMain.handle('openFileDialog', (e) => {
@@ -326,16 +282,12 @@ ipcMain.handle('openFileDialog', (e) => {
             { name: 'CSS File', extensions: ['txt', 'css'] },
         ],
     });
-    if (cssPath !== undefined) {
-        config.set('userCSSPath', cssPath[0]);
-    }
+    
+    if (cssPath !== undefined) config.set('userCSSPath', cssPath[0]);
     return cssPath;
 });
 
-ipcMain.on('exitClient', () => {
-    app.quit();
-});
-
+ipcMain.on('exitClient', () => { app.quit() });
 ipcMain.on('copyPCInfo', () => {
     const versions = `LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${process.versions.electron}\n    - nodejs@${process.versions.node}\n    - Chromium@${process.versions.chrome}`;
     const uiLang = `UI Language: ${config.get('lang')}`;
@@ -360,11 +312,13 @@ ipcMain.on('copyPCInfo', () => {
     });
     const osRelease = os.release();
     let osVersion = '';
+    
     if (osRelease.startsWith('6.1')) osVersion = 'Windows 7';
     if (osRelease.startsWith('6.2')) osVersion = 'Windows 8';
     if (osRelease.startsWith('6.3')) osVersion = 'Windows 8.1';
     if (osRelease.startsWith('10') && Number(osRelease.split('.')[2]) < 22000) osVersion = 'Windows 10';
     if (osRelease.startsWith('10') && Number(osRelease.split('.')[2]) >= 22000) osVersion = 'Windows 11';
+    
     const osInfoTxt = `OS: ${osVersion} / ${os.release()} ${os.arch()}`;
     const cpuInfo = os.cpus();
     const cpuInfoTxt = `CPU: ${cpuInfo[0].model.trim()}@${Math.round((cpuInfo[0].speed / 1000) * 100) / 100}GHz`;
@@ -372,15 +326,15 @@ ipcMain.on('copyPCInfo', () => {
     const memUsageTxt = `RAM Usage: ${Math.round((process.memoryUsage().rss / 1048576) * 100) / 100}MB`;
     const { exec } = require('child_process');
     let gpuInfoTxt = '';
+    
     if (platformType === 'win32') {
         exec('wmic path win32_VideoController get name', (error, stdout, stderr) => {
-            if (error || stderr) {
-                gpuInfoTxt = 'Error in exec process.';
-            }
+            if (error || stderr) gpuInfoTxt = 'Error in exec process.';
             else {
                 const output = stdout.split('\r\r\n');
-                output.shift();
                 let c = 0;
+                
+                output.shift();
                 output.forEach((v) => {
                     if (v !== '') {
                         gpuInfoTxt += `GPU${c}: ${v.trim()}`;
@@ -394,35 +348,28 @@ ipcMain.on('copyPCInfo', () => {
             const sysInfo = '=====Client Information=====\n' + versions + '\n' + flagsInfo + '\n' + uiLang + '\n' + memUsageTxt + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + gpuInfoTxt;
             clipboard.writeText(sysInfo);
         });
-    }
-    else {
+    } else {
         const sysInfo = '=====Client Information=====\n' + versions + '\n' + flagsInfo + '\n' + uiLang + '\n' + memUsageTxt + '\n=====System Information=====\n' + osInfoTxt + '\n' + cpuInfoTxt + '\n' + memInfoTxt + '\n' + 'GPU: Not Supported';
         clipboard.writeText(sysInfo);
     }
 });
 
-ipcMain.on('openLogFolder', () => {
-    shell.showItemInFolder(path.join(app.getPath('appData'), 'laf/logs'));
-});
-
+ipcMain.on('openLogFolder', () => { shell.showItemInFolder(path.join(app.getPath('appData'), 'laf/logs')) });
 ipcMain.handle('linkTwitch', () => {
     const express = require('express');
     const oauthURL = 'https://id.twitch.tv/oauth2/authorize?client_id=q9pn15rtycv6l9waebyyw99d70mh00&redirect_uri=http://localhost:65535&response_type=token&scope=chat:read+chat:edit+channel:moderate+whispers:read+whispers:edit+channel_editor';
     const eapp = express();
     let server = null;
-    eapp.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, 'html/twitch.html'));
-    });
+    
+    
+    eapp.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'html/twitch.html')) });
     eapp.get('/token', (req, res) => {
         config.set('twitchToken', req.query.token);
         twitchToken = req.query.token;
         log.info('Received token. Server will be closed.');
         twitchLogin(true);
         setTimeout(() => server.close(), 1500);
-    });
-    server = eapp.listen('65535', () => {
-        log.info('HTTP Server started. It will close after 10 mins passed.');
-    });
+    }); server = eapp.listen('65535', () => { log.info('HTTP Server started. It will close after 10 mins passed.'); });
     shell.openExternal(oauthURL);
 });
 
@@ -434,17 +381,9 @@ app.on('ready', () => {
         try {
             rpc.login({ clientId: ClientID });
             loggedIn = true;
-        }
-        catch (e) {
-            console.error(e);
-        }
-        if (loggedIn) {
-            log.info('Discord Login OK');
-        }
-    }
-    initSplashWindow();
+        } catch (e) {console.error(e)}
+        if (loggedIn) log.info('Discord Login OK');
+    }; initSplashWindow();
 });
 
-app.on('quit', () => {
-    config.set('isUserLive', false);
-});
+app.on('quit', () => { config.set('isUserLive', false) });
