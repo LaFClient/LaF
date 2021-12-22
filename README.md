@@ -13,14 +13,19 @@
 言語/Language: [English](https://github.com/Hiro527/LaF/blob/master/README.md) | [日本語](https://github.com/Hiro527/LaF/blob/master/README_JA.md)
 
 ## What is LaF?
-
 **LaF = Lite and Fast**</br>
-Krunker is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
+[Krunker] is very lite, but maybe there're people who says "I can play barely with minimum FPS with Official Client..." LaF is a client that aiming to provide a great experience for low spec PCs!
+
+**LaF = Lite and Fast**<br>
+[Krunker.io](https://krunker.io/) isn't a very heavy game, but there are people who still struggle to get good performance due to a low-spec PC,
+<br>
+[LaF](https://github.com/Hiro527/LaF/) is lite and isnt like other clients with bogged down heavy features. the goal of [LaF](https://github.com/Hiro527/LaF/) is to solve that issue! [LaF](https://github.com/Hiro527/LaF/) is built to give low-spec PC's
+<br>
+a chance at good performance in the game.
 
 ## How to install
-
 1. Download the [latest release](https://github.com/Hiro527/LaF/releases/latest).\
-**Tips** Please download the file for your pc by referring the table
+**Tips** Download the file for your pc by referring the table, select accordingly
 
 |   OS    | Architecture |            File Name            |
 | :-----: | :----------: | :-----------------------------: |
@@ -35,56 +40,44 @@ Krunker is very lite, but maybe there're people who says "I can play barely with
 **Tips** Even if your pc shows 'Windows protected your pc', don't worry. This program has no ransomware. Please press 'Run anyway' to continue the installation.
 
 3. Follow the dialog.\
-**Tips** I don't recommend the path to install. But if you have to change it in some reasons, you can change it.
+**Tips** I don't recommend changing the set install path. But if you have to change it in for some reasons, you can change it.
 
 ## About ResourceSwapper
-
 - Path: `%HOMEPATH%\Documents\LaFSwap`
-- You can use it as other client's one. Please put your file as same as MOD.
+- You can use it the same as other client's swappers. Please put your file as same as "`MOD`".
 
 ## About HyperQuickJoin
-
 ![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
-
 - You can join to your favorite gamemode with F4![^1]
 
 ## About EasyCSS
-
 ![EasyCSS](./app/img/readme/easycss-1.png)\
-EasyCSS system enables you to load custom css more easily. You don't have to use resource swapper anymore. And also, you don't have to restart the client anymore. It's too old way.
+EasyCSS is a system that allows you to load custom css's easier.
+<br>
+You don't have to use resource swapper anymore. And you don't need to restart the client when swapping.
 
 ## Twitch !link command
-
 ![Twitch Login](./app/img/readme/twitch-1.png)
 
 1. Login to Twitch in settings
 2. Your viewer can use `!link` command in stream.
 
-## HyperQuickJoin
-
-![HyperQuickJoin](./app/img/readme/hyperquickjoin-1.png)
-
-- You can join to your favorite game mode with F4 key!
-
 ### Tips
-
 - You can toggle whether `!link` command is enable with the button![Button](./app/img/readme/twitch-2.png).
 
 ## KeyBinds
-
 |  Key  |          Function          |
 | :---: | :------------------------: |
-|  F4   |   Jump to other game[^1]   |
+|  F4   |   Jump to new game[^1]     |
 |  F5   |           Reload           |
-|  F6   | Jump to other game(Random) |
+|  F6   | Jump to new game(Random)   |
 |  F7   |          Copy URL          |
 |  F8   |   Open URL in clipboard    |
 |  F12  |       Open Dev Tools       |
 
-[^1]: You can specify gamemode/region in the settings.
+[^1]: You can specify gamemode/region in the client settings.
 
 ## Requirements
-
 |         |          Least/最低           |       Recommended/推奨        |
 | :-----: | :---------------------------: | :---------------------------: |
 |   OS    |        Windows7 32bit         |        Windows10 64bit        |
@@ -97,7 +90,6 @@ EasyCSS system enables you to load custom css more easily. You don't have to use
 ## About Developers
 
 ### Hiro527 / **Client Coder, Designer**
-
 Web: [ぬる/Hiro](https://hiro527.github.io/)\
 GitHub: [Hiro527](https://github.com/Hiro527)\
 Twitch: [nulla1m](https://twitch.tv/nulla1m)\
@@ -106,11 +98,9 @@ Discord: nullA1m#7777\
 Discord Server: [Hiro.js](https://discord.gg/9M9TgDRt9G)
 
 ### sh / **Client Coder, A cat**
-
 GitHub: [shaaaaaQ](https://github.com/shaaaaaQ)
 
 ### NamekujiLSDs / **CSS Maker, Designer**
-
 Web: [Namekuji](https://namekujilsds.github.io/)\
 GitHub: [NamekujiLSDs](https://github.com/NamekujiLSDs)\
 YouTube: [Namekuji Krunker / ナメクジさん](https://www.youtube.com/channel/UCH65I7YbpEK7B8-Wkr75CJQ)\
