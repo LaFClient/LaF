@@ -34,7 +34,7 @@ const isSwapperEnabled = config.get('enableResourceSwapper', true);
 delete require('electron').nativeImage.createThumbnailFromPath;
 if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
-    app.quit();
+    app.exit(); // this will
 }
 
 protocol.registerSchemesAsPrivileged([{
@@ -287,7 +287,7 @@ ipcMain.handle('openFileDialog', (e) => {
     return cssPath;
 });
 
-ipcMain.on('exitClient', () => { app.quit() });
+ipcMain.on('exitClient', () => { app.exit() });
 ipcMain.on('copyPCInfo', () => {
     const versions = `LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${process.versions.electron}\n    - nodejs@${process.versions.node}\n    - Chromium@${process.versions.chrome}`;
     const uiLang = `UI Language: ${config.get('lang')}`;
@@ -386,4 +386,4 @@ app.on('ready', () => {
     }; initSplashWindow();
 });
 
-app.on('quit', () => { config.set('isUserLive', false) });
+app.on('exit', () => { config.set('isUserLive', false) });
