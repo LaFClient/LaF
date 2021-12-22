@@ -16,7 +16,7 @@
 **LaF = Lite and Fast**<br>
 Krunker.io isn't a very heavy game, but there are people who still struggle to get good performance due to a low-spec PC,
 <br>
-LaF is lite and isnt like other clients with bogged down heavy features. the goal of [LaF](https://github.com/Hiro527/LaF/) is to solve that issue! LaF is built to give low-spec PC's
+LaF is lite and isnt like other clients with bogged down heavy features. the goal of LaF is to solve that issue! LaF is built to give low-spec PC's
 <br>
 a chance at good performance in the game.
 
