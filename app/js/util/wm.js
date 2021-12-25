@@ -75,8 +75,10 @@ exports.launchGame = () => {
 exports.gameWindow = class {
     constructor() {
         const brWin = new BrowserWindow({
-            width: 1500,
-            height: 1000,
+            width: config.get('window.width', 1500),
+            height: config.get('window.height', 1000),
+            x: config.get('window.x'),
+            y: config.get('window.y'),
             show: false,
             title: 'LaF',
             webPreferences: {
@@ -154,9 +156,18 @@ exports.gameWindow = class {
         });
         brWin.on('close', () => {
             const isMaximized = brWin.isMaximized();
-            config.set('isMaximized', isMaximized);
             const isFullScreen = brWin.isFullScreen();
+            const windowSize = brWin.getSize();
+            const windowPosition = brWin.getPosition();
+
+            config.set('isMaximized', isMaximized);
             config.set('Fullscreen', isFullScreen);
+            if (!(isMaximized || isFullScreen)) {
+                config.set('window.width', windowSize[0]);
+                config.set('window.height', windowSize[1]);
+                config.set('window.x', windowPosition[0]);
+                config.set('window.y', windowPosition[1]);
+            }
         });
         brWin.webContents.on('new-window', (e, url) => {
             e.preventDefault();
