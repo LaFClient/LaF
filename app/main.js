@@ -274,14 +274,13 @@ ipcMain.handle('openInfo', () => {
     shell.openExternal('https://hiro527.github.io/LaF');
 });
 
-ipcMain.handle('showDialog', (e, accName) => {
-    const answer = dialog.showMessageBox(gameWindow, {
+ipcMain.handle('showDialog', async (e, accName) => {
+    const answer = await dialog.showMessageBox(gameWindow, {
         title: 'LaF',
         message: langPack.altManager.deleteAcc.confirm.replace('%accName%', accName),
         buttons: [langPack.dialog.ok, langPack.dialog.cancel],
-        cancelId: -1,
     });
-    return answer;
+    return answer.response;
 });
 
 ipcMain.on('showPrompt', (e, message, defaultValue) => {

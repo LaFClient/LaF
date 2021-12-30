@@ -180,7 +180,7 @@ exports.gameTools = class {
             config.set(`${id}_visibility`, true);
         }
     }
-    showAltMng() {
+    showAltMng(flag = false) {
         document.getElementById('windowHolder').className = 'popupWin';
         document.getElementById('menuWindowSideL').style.display = 'none';
         const menuWindow = document.getElementById('menuWindow');
@@ -218,7 +218,7 @@ exports.gameTools = class {
             tmpHTML += '</div>';
         };
         generateHTML();
-        if (document.getElementById('windowHolder').style.display === 'block') {
+        if (document.getElementById('windowHolder').style.display === 'block' && !flag) {
             if (document.getElementById('windowHeader').innerText === 'Alt Manager') {
                 document.getElementById('windowHolder').style.display = 'none';
             }
@@ -306,15 +306,15 @@ exports.gameTools = class {
         }, 100);
     }
     deleteAcc(accName) {
-        ipcRenderer.invoke('showDialog', accName).then((v) => {
-            if (v === 0) {
+        ipcRenderer.invoke('showDialog', accName)
+        .then((v) => {
+            if (!v) {
                 const altAccounts = JSON.parse(localStorage.getItem('altAccounts'));
                 delete altAccounts[accName];
                 localStorage.setItem('altAccounts', JSON.stringify(altAccounts));
                 this.showAltMng(true);
             }
         });
-        return;
     }
     editAcc(accName) {
         const menuWindowEl = document.getElementById('menuWindow');
