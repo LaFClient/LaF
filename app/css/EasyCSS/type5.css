@@ -343,7 +343,6 @@ input[type=number] {
 }
 
 .setBodH {
-    transform: ;
     border-radius: unset;
     background: var(--accent-color);
 }
