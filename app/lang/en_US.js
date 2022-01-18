@@ -55,6 +55,7 @@ module.exports = {
         easyCSStype2: 'Sakura Theme',
         easyCSStype3: 'White Diabolos',
         easyCSStype4: 'Neon Storm',
+        easyCSStype5: 'Kartoon',
         easyCSSCustom: 'Custom',
         easyCSSDisable: 'Disable',
         userCSSPath: 'Custom CSS File',

@@ -69,6 +69,7 @@ const initEasyCSS = () => {
         type2: '../../css/EasyCSS/type2.css',
         type3: '../../css/EasyCSS/type3.css',
         type4: '../../css/EasyCSS/type4.css',
+        type5: '../../css/EasyCSS/type5.css',
         custom: config.get('userCSSPath', ''),
     };
     // <link rel="stylesheet" title="custom" id="1" href="/css/custom_1.css?build=2kjHD" disabled="">
