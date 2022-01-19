@@ -47,8 +47,9 @@ module.exports = {
         cat: 'General',
         type: 'checkbox',
         val: config.get('enableTimer', true),
-        restart: true,
+        restart: false,
         default: true,
+        onchange: 'window.gt.toggleDisplay("menuTimer")',
     },
     autoPlay: {
         id: 'autoPlay',

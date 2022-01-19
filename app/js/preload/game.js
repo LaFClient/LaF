@@ -161,7 +161,7 @@ const injectExitBtn = () => {
 const initMenuTimer = () => {
     const instructions = document.getElementById('instructions');
     const menuTimerText = `
-    <div id='menuTimer' style='position:absolute;top:55%;left:50%;margin-right:50%;transform:translate(-50%,-50%);font-size:50px;color:rgba(255, 255, 255, 0.8);'>00:00</div>
+    <div id='menuTimer' style='display:${config.get('enableTimer') ? 'block' : 'none'};position:absolute;top:55%;left:50%;margin-right:50%;transform:translate(-50%,-50%);font-size:50px;color:rgba(255, 255, 255, 0.8);'>00:00</div>
     `;
     instructions.insertAdjacentHTML('afterend', menuTimerText);
 
@@ -208,7 +208,7 @@ ipcRenderer.on('didFinishLoad', () => {
     injectWaterMark();
     initDiscordRPC();
     if (isEnabledAltManager) injectAltManager();
-    if (isEnabledTimer) initMenuTimer();
+    initMenuTimer();
 });
 
 ipcRenderer.on('getLink', (e) => {
