@@ -180,13 +180,14 @@ module.exports = {
         cat: 'Customize',
         type: 'select',
         val: config.get('showExitBtn', 'bottom'),
-        restart: true,
+        restart: false,
         default: 'bottom',
         options: {
             top: langPack.settings.topExitBtn,
             bottom: langPack.settings.bottomExitBtn,
             disable: langPack.settings.disableExitBtn,
         },
+        onchange: 'window.gt.injectExitBtn()',
     },
     joinMatchPresentRegion: {
         id: 'joinMatchPresentRegion',

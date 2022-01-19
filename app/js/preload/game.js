@@ -4,6 +4,7 @@ const store = require('electron-store');
 const log = require('electron-log');
 const path = require('path');
 const lafTools = require('../util/tools');
+const { exit } = require('process');
 
 const tools = new lafTools.clientTools();
 
@@ -136,23 +137,23 @@ const injectWaterMark = () => {
 };
 
 const injectExitBtn = () => {
+    menuContainer = document.getElementById('menuItemContainer');
     const exitBtn = document.getElementById('clientExit');
     switch (config.get('showExitBtn', 'bottom')) {
         case 'top':
-            menuContainer = document.getElementById('menuItemContainer');
-            menuContainer.removeChild(menuContainer.children[7]);
             menuContainer.insertAdjacentHTML('afterbegin', `
-            <div class="menuItem" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.15);clientExitPopup()" id="clientExit" style="display: inherit;">
-            <div class="menuItemIcon iconExit"></div>
+            <div class="menuItem" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.15);clientExitPopup()" id="clientExit2" style="display: inherit;">
+            <span class="material-icons-outlined menBtnIcn" style="color:#fb5555">exit_to_app</span>
             <div class="menuItemTitle" id="menuBtnExit">Exit</div>
             </div>
             `);
-            exitBtn.style.display = 'inherit';
+            exitBtn.style.display = 'none';
             break;
         case 'bottom':
             exitBtn.style.display = 'inherit';
             break;
         case 'disable':
+            exitBtn.style.display = 'none';
             break;
     }
 };

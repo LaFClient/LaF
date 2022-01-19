@@ -88,6 +88,7 @@ module.exports = {
         shareTimerInfo: 'Share timer info',
         autoPlay: 'Auto play medias',
         enableTimer: 'Menu Timer',
+        exitBtnAlert: 'It can break the UI with some CSS if you set EXIT button\'s position to top.',
     },
     misc: {
         noJoinableGames: 'There are no joinable games',

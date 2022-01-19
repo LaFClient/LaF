@@ -22,11 +22,11 @@ exports.clientTools = class {
             case 'checkbox':
                 return `
                         <label class='switch'>
-                        <input type='checkbox' onclick='window.gt.setSetting("${obj.id}", this.checked)'${config.get(obj.id, obj.default) ? ' checked' : ''}>
+                        <input type='checkbox' onclick='window.gt.setSetting("${obj.id}", this.checked);${obj.onchange ? obj.onchange : ''}'${config.get(obj.id, obj.default) ? ' checked' : ''}>
                         <span class='slider'></span>
                         </label>`;
             case 'select':
-                let tmpHTML = `<select onchange='window.gt.setSetting("${obj.id}", this.value)' class="inputGrey2">`;
+                let tmpHTML = `<select onchange='window.gt.setSetting("${obj.id}", this.value);${obj.onchange ? obj.onchange : ''}' class="inputGrey2">`;
                 Object.keys(obj.options).forEach((k) => {
                     tmpHTML += `<option value="${k}" ${config.get(obj.id, obj.default) === k ? ' selected' : ''}>${obj.options[k]}</option>`;
                 });
@@ -400,6 +400,33 @@ exports.gameTools = class {
         }
         else {
             ipcRenderer.invoke('linkTwitch');
+        }
+    }
+    injectExitBtn() {
+        menuContainer = document.getElementById('menuItemContainer');
+        const exitBtn = document.getElementById('clientExit');
+        const exitBtn2 = document.getElementById('clientExit2') || undefined;
+        switch (config.get('showExitBtn', 'bottom')) {
+            case 'top':
+                if (!exitBtn2) {
+                    menuContainer.insertAdjacentHTML('afterbegin', `
+                    <div class="menuItem" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.15);clientExitPopup()" id="clientExit2" style="display: inherit;">
+                    <span class="material-icons-outlined menBtnIcn" style="color:#fb5555">exit_to_app</span>
+                    <div class="menuItemTitle" id="menuBtnExit">Exit</div>
+                    </div>
+                    `);
+                }
+                exitBtn.style.display = 'none';
+                alert(langPack.settings.exitBtnAlert);
+                break;
+            case 'bottom':
+                exitBtn.style.display = 'inherit';
+                exitBtn2.remove();
+                break;
+            case 'disable':
+                exitBtn.style.display = 'none';
+                exitBtn2.remove();
+                break;
         }
     }
 };

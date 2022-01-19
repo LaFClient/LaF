@@ -88,6 +88,7 @@ module.exports = {
         shareTimerInfo: '試合の残り時間を表示',
         autoPlay: 'メディアの自動再生',
         enableTimer: 'メニュータイマー',
+        exitBtnAlert: 'EXITボタンを上に配置した場合、CSSファイルによってはUIを破壊する恐れがあります。',
     },
     misc: {
         noJoinableGames: '参加可能なゲームがありません',
