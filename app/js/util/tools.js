@@ -185,7 +185,6 @@ exports.gameTools = class {
         menuWindow.classList = 'dark';
         menuWindow.style.overflowY = 'auto';
         menuWindow.style.width = '800px';
-        menuWindow.style.maxHeight = 'calc(100% - 330px)';
         let tmpHTML = `
         <div id='amTitle' style='font-size:30px;text-align:center;margin:3px;font-weight:700;'>Alt Manager</div>
         <hr style='color:rgba(28, 28, 28, .5);'>
@@ -239,7 +238,7 @@ exports.gameTools = class {
     showAddAltAcc() {
         const menuWindowEl = document.getElementById('menuWindow');
         menuWindowEl.outerHTML = `
-        <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px; max-height: calc(100% - 330px);'>
+        <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px;'>
             <div style='position:relative;z-index:9'>
                 <div id='referralHeader'Add Account</div>
                 <div style='height:20px;'></div><input id='accName' type='text' placeholder='Enter Username' class='accountInput' style='margin-top:0'><input id='accPass' type='password' placeholder='Enter Password' class='accountInput'>
@@ -315,7 +314,7 @@ exports.gameTools = class {
     editAcc(accName) {
         const menuWindowEl = document.getElementById('menuWindow');
         menuWindowEl.outerHTML = `
-        <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px; max-height: calc(100% - 330px);'>
+        <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px;'>
             <div style='position:relative;z-index:9'>
                 <div id='referralHeader'Add Account</div>
                 <div style='height:20px;'></div><input id='accName' type='text' placeholder='Enter Username' class='accountInput' style='margin-top:0' value='${accName}' readonly='readonly'><input id='accPass' type='password' placeholder='Enter Password' class='accountInput'>
