@@ -4,7 +4,6 @@ const store = require('electron-store');
 const log = require('electron-log');
 const path = require('path');
 const lafTools = require('../util/tools');
-const { exit } = require('process');
 
 const tools = new lafTools.clientTools();
 

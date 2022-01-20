@@ -7,15 +7,11 @@ const log = require('electron-log');
 const localShortcut = require('electron-localshortcut');
 const tools = require('./tools');
 
-const osType = process.platform;
 const config = new store();
 const lafTools = new tools.clientTools();
 
-const devMode = config.get('devmode');
-const isRPCEnabled = config.get('enableRPC', true);
 const isSwapperEnabled = config.get('enableResourceSwapper', true);
 const ezCSSMode = config.get('easyCSSMode', 'disable');
-const isEzCSSEnabled = ezCSSMode !== 'disable';
 const langPack = require(config.get('lang', 'en_US') === 'ja_JP' ? '../../lang/ja_JP' : '../../lang/en_US');
 
 log.info('Script Loaded: js/util/wm.js');

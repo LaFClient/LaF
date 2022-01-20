@@ -20,7 +20,6 @@ log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${pro
 
 const wm = require('./js/util/wm');
 const tools = require('./js/util/tools');
-const { json } = require('express');
 
 const ClientID = '810350252023349248';
 let twitchToken = config.get('twitchToken', null);

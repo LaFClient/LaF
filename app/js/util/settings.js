@@ -1,5 +1,4 @@
 require('v8-compile-cache');
-const { ipcRenderer } = require('electron');
 const store = require('electron-store');
 const log = require('electron-log');
 
