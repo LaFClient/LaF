@@ -25,6 +25,10 @@
     text-shadow: 0px 0px var(--black), 0px 1px var(--black), 0px 2px var(--black), 0px 3px var(--black), 0px -1px var(--black), 0px -2px var(--black), 0px -3px var(--black), 1px 0px var(--black), 1px 1px var(--black), 1px 2px var(--black), 1px 3px var(--black), 1px -1px var(--black), 1px -2px var(--black), 1px -3px var(--black), 2px 0px var(--black), 2px 1px var(--black), 2px 2px var(--black), 2px 3px var(--black), 2px -1px var(--black), 2px -2px var(--black), 2px -3px var(--black), 3px 0px var(--black), 3px 1px var(--black), 3px 2px var(--black), 3px 3px var(--black), 3px -1px var(--black), 3px -2px var(--black), 3px -3px var(--black), -1px 0px var(--black), -1px 1px var(--black), -1px 2px var(--black), -1px 3px var(--black), -1px -1px var(--black), -1px -2px var(--black), -1px -3px var(--black), -2px 0px var(--black), -2px 1px var(--black), -2px 2px var(--black), -2px 3px var(--black), -2px -1px var(--black), -2px -2px var(--black), -2px -3px var(--black), -3px 0px var(--black), -3px 1px var(--black), -3px 2px var(--black), -3px 3px var(--black), -3px -1px var(--black), -3px -2px var(--black), -3px -3px var(--black) !important;
 }
 
+body option {
+    color: var(--black) !important;
+}
+
 * {
     font-weight: bolder;
 }
@@ -45,11 +49,15 @@
 }
 
 input#accName, .accountInput {
-    background: gray;
-    background-color: gray;
+    background: var(--white);
+    border: 3px var(--accent-color) solid;
     color: white !important;
     font-size: 22px !important;
-    font-family: nomospace;
+    font-family: monospace;
+}
+
+input.accountInput::placeholder, .inputGrey2::placeholder {
+  color: var(--accent-color) !important;
 }
 
 /* Left Bar */
@@ -138,7 +146,7 @@ input#accName, .accountInput {
     filter: drop-shadow(10px 10px 0 black);
 }
 
-/* top left */
+/* Top left */
 div[style="width:100%;text-align:center;margin-top:10px;background-color:rgba(0,0,0,0.3);padding-top:10px;padding-bottom:20px;"] {
     background: transparent !important;
 }
@@ -166,7 +174,7 @@ div[style="width:100%;text-align:center;margin-top:10px;background-color:rgba(0,
     background: var(--accent-color-2)
 }
 
-/* CHAT */
+/* Chat */
 #voiceDisplay {
     display: none;
 }
@@ -259,6 +267,7 @@ div[id*="chatMsg"] {
 }
 
 #policeButton {
+    border: 3px solid var(--accent-color) !important;
     position: fixed;
     right: 0;
 }
@@ -320,7 +329,7 @@ div[id*="chatMsg"] {
     width: 28%;
 }
 
-/* bot right */
+/* Bottom right */
 #termsInfo .verticalSeparatorInline {
     display: none
 }
@@ -339,6 +348,14 @@ div[id*="chatMsg"] {
 }
 
 input[type=number] {
+    background: transparent;
+}
+
+span[style*="color: #eb5656"] {
+    color: #eb5656 !important;
+}
+
+.serverHeader {
     background: transparent;
 }
 
@@ -395,6 +412,18 @@ input[type=number] {
     backdrop-filter: blur(5px);
 }
 
+#menuWindow .settName, #menuWindow .settNameSmall {
+    color: var(--white) !important;
+}
+
+#menuWindow .settName input, #menuWindow .settName span.slider, #menuWindow .settName .openCollection {
+    transform: translateY(-25%);
+}
+
+#settHolder .button.lgn {
+    background-color: var(--accent-color) !important;
+}
+
 .setSugBox2 {
     display: none !important;
 }
@@ -416,7 +445,7 @@ div#modList,#mapList {
 
 .sliderM {
     height: 8px;
-    background: linear-gradient(to right ,transparent,var(--black),var(--black),transparent)
+    background: linear-gradient(to right ,transparent,var(--accent-color-2), var(--accent-color-2),transparent)
 }
 
 .sliderM::-webkit-slider-thumb {
@@ -435,7 +464,7 @@ input:checked+.slider {
     filter: drop-shadow(5px 5px black)
 }
 
-/* In game UI */
+/* In-game UI */
 #healthBar {
     position: fixed;
     bottom: 20%;
@@ -472,7 +501,7 @@ input:checked+.slider {
 
 #healthValue {
     font-size: 50px !important;
-    ; }
+}
 
 img#challIcon, #maxHP {
     display: none !important;
@@ -487,7 +516,7 @@ img#challIcon, #maxHP {
     padding: unset;
     height: 15px;
     border-radius: unset;
-    background-image: linear-gradient(lime,lime);
+    background-image: linear-gradient(lime, lime);
 }
 
 #ammoIcon {
@@ -574,7 +603,7 @@ img#challIcon, #maxHP {
     color: rgb(251, 192, 45) !important;
 }
 
-/* chat icon */
+/* Chat icon */
 .chatMsg img {
     filter: brightness(0);
 }
