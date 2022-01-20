@@ -1,4 +1,4 @@
-appId: 'com.hiroqss.laf'
+appId: 'com.lafclient'
 productName: 'LaF'
 win:
   artifactName: LaF_Portable_Windows_${arch}.${ext}
