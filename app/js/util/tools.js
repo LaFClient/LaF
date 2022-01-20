@@ -188,8 +188,6 @@ exports.gameTools = class {
         menuWindow.style.overflowY = 'auto';
         menuWindow.style.width = '800px';
         menuWindow.style.maxHeight = 'calc(100% - 330px)';
-        menuWindow.style.top = '50%';
-        menuWindow.style.transform = 'translate(-50%, -50%)';
         let tmpHTML = `
         <div id='amTitle' style='font-size:30px;text-align:center;margin:3px;font-weight:700;'>Alt Manager</div>
         <hr style='color:rgba(28, 28, 28, .5);'>
@@ -259,7 +257,7 @@ exports.gameTools = class {
     addAltAcc(f = false) {
         const accNameEl = document.getElementById('accName');
         const accPassEl = document.getElementById('accPass');
-        const accPassB64 = btoa(accPassEl.value);
+        const accPassB64 = Buffer.from(accNameEl.value).toString('base64');
         let altAccounts = JSON.parse(localStorage.getItem('altAccounts'));
         if (!altAccounts) {
             altAccounts = {
@@ -295,7 +293,7 @@ exports.gameTools = class {
         accNameEl = document.getElementById('accName');
         accPassEl = document.getElementById('accPass');
         accNameEl.value = accName;
-        accPassEl.value = atob(altAccounts[accName]);
+        accPassEl.value = Buffer.from(altAccounts[accName], 'base64').toString();
         accNameEl.style.display = 'none';
         accPassEl.style.display = 'none';
         document.getElementsByClassName('accBtn').forEach((k) => {
@@ -431,6 +429,12 @@ exports.gameTools = class {
     }
     toggleDisplay(id) {
         const el = document.getElementById(id);
-        el.style.display = el.style.display != 'none' ? 'none' : 'block';
+        if (el.style.display == 'none') {
+            el.style.display = el.getAttribute('displayType') ? el.getAttribute('displayType') : 'block';
+        }
+        else {
+            el.setAttribute('displayType', el.style.display);
+            el.style.display = 'none';
+        }
     }
 };

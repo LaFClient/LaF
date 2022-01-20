@@ -41,7 +41,7 @@ const initDiscordRPC = () => {
                 smallImageKey: config.get('shareClassInfo', true) ? `icon_${gameActivity.class.index}` : undefined,
                 smallImageText: config.get('shareClassInfo', true) ? gameActivity.class.name : undefined,
             };
-            if (gameActivity.time && config.get('shareTimerInfo', true)) {
+            if (config.get('shareTimerInfo', true)) {
                 rpcActivity.endTimestamp = Date.now() + gameActivity.time * 1e3;
             }
             ipcRenderer.invoke('RPC_SEND', rpcActivity);
@@ -84,12 +84,14 @@ const initEasyCSS = () => {
 const injectAltManager = () => {
     const mMenuHolDefEl = document.getElementById('mMenuHolDef');
     mMenuHolDefEl.insertAdjacentHTML('beforeend', `
-    <div class="button buttonR lgn" id="logoutBtn" style="display:none;position:absolute;top:2px;right:990px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
+    <div id="altMngHolder" style="display:flex;position:absolute;top:2px;right:625px;width:auto;align-items:flex-end">
+    <div class="button buttonR lgn" id="logoutBtn" style="display:none;width:250px;margin-right:5px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.logoutAcc()">
     Logout <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">logout</span></div>
-    <div class="button buttonPI lgn" id="altManagerBtn" style="position:absolute;top:2px;right:720px;width:250px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
+    <div class="button buttonPI lgn" id="altManagerBtn" style="width:250px;margin-right:5px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.showAltMng()">
     Alt Manager <span class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-8px;margin-right:-10px;vertical-align:middle;">manage_accounts</span></div>
-    <div class="button buttonP lgn" id="linkCmdBtn" style="position:absolute;top:2px;right:625px;width:75px;margin-right:0px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.toggleSetting('enableLinkCmd', false)">
+    <div class="button buttonP lgn" id="linkCmdBtn" style="width:75px;margin-right:5px;padding-top:5px;padding-bottom:13px;z-index:2147483647 !important;" onmouseenter="playTick()" onclick="SOUND.play(\`select_0\`,0.1);window.gt.toggleSetting('enableLinkCmd', false)">
     <span id="linkCmdBtnTxt" class="material-icons" style="color:#fff;font-size:30px;margin-left:6px;margin-top:-5px;margin-right:6px;vertical-align:middle;">${config.get('enableLinkCmd', false) ? 'link' : 'link_off'}</span></div>
+    </div>
     `);
     const loggedIn = false;
     setInterval(() => {
@@ -187,10 +189,11 @@ ipcRenderer.on('ESC', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    initEasyCSS();
     const winObserver = new MutationObserver(() => {
         winObserver.disconnect();
-        initEasyCSS();
         tools.setupGameWindow();
+        window.gt = new lafTools.gameTools();
         window.closeClient = () => {
             ipcRenderer.send('exitClient');
         };
@@ -203,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 ipcRenderer.on('didFinishLoad', () => {
-    window.gt = new lafTools.gameTools();
     injectExitBtn();
     injectWaterMark();
     initDiscordRPC();
