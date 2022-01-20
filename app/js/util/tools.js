@@ -239,7 +239,7 @@ exports.gameTools = class {
     showAddAltAcc() {
         const menuWindowEl = document.getElementById('menuWindow');
         menuWindowEl.outerHTML = `
-        <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px; max-height: calc(100% - 330px); top: 50%; transform: translate(-50%, -50%);'>
+        <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px; max-height: calc(100% - 330px);'>
             <div style='position:relative;z-index:9'>
                 <div id='referralHeader'Add Account</div>
                 <div style='height:20px;'></div><input id='accName' type='text' placeholder='Enter Username' class='accountInput' style='margin-top:0'><input id='accPass' type='password' placeholder='Enter Password' class='accountInput'>
@@ -315,7 +315,7 @@ exports.gameTools = class {
     editAcc(accName) {
         const menuWindowEl = document.getElementById('menuWindow');
         menuWindowEl.outerHTML = `
-        <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px; max-height: calc(100% - 330px); top: 50%; transform: translate(-50%, -50%);'>
+        <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px; max-height: calc(100% - 330px);'>
             <div style='position:relative;z-index:9'>
                 <div id='referralHeader'Add Account</div>
                 <div style='height:20px;'></div><input id='accName' type='text' placeholder='Enter Username' class='accountInput' style='margin-top:0' value='${accName}' readonly='readonly'><input id='accPass' type='password' placeholder='Enter Password' class='accountInput'>
