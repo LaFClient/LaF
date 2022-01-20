@@ -1,4 +1,4 @@
-appId: 'com.lafclient'
+appId: 'tokyo.laf'
 productName: 'LaF'
 win:
   artifactName: LaF_Portable_Windows_${arch}.${ext}
