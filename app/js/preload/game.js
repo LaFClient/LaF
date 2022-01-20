@@ -187,9 +187,9 @@ ipcRenderer.on('ESC', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    initEasyCSS();
     const winObserver = new MutationObserver(() => {
         winObserver.disconnect();
-        initEasyCSS();
         tools.setupGameWindow();
         window.closeClient = () => {
             ipcRenderer.send('exitClient');
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         injectAltManagerHeader();
     });
     winObserver.observe(document.getElementById('instructions'), { childList: true });
-    menuObserver.observe(document.getElementById('menuWindow'), { childList: true });
+    menuObserver.observe(document.getElementById('menuHolder'), { childList: true });
 });
 
 ipcRenderer.on('didFinishLoad', () => {
