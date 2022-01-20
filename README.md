@@ -1,16 +1,16 @@
 # LaF Client for Krunker
 
 ![TitleImage](./app/img/social.png)</br>
-[![License](https://img.shields.io/github/license/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/blob/master/LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/Hiro527/LaF/master?style=flat-square)](https://github.com/Hiro527/LaF/tree/master)
-![Code Lines](https://img.shields.io/tokei/lines/github/Hiro527/LaF?style=flat-square)
-[![Latest](https://img.shields.io/github/v/release/Hiro527/LaF?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
-[![Latest Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/latest/total?style=flat-square)](https://github.com/Hiro527/LaF/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/Hiro527/LaF/total?style=flat-square&logo=appveyor)](https://github.com/Hiro527/LaF/releases)</br>
+[![License](https://img.shields.io/github/license/LaFClient/LaF?style=flat-square)](https://github.com/LaFClient/LaF/blob/master/LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/LaFClient/LaF/master?style=flat-square)](https://github.com/LaFClient/LaF/tree/master)
+![Code Lines](https://img.shields.io/tokei/lines/github/LaFClient/LaF?style=flat-square)
+[![Latest](https://img.shields.io/github/v/release/LaFClient/LaF?style=flat-square)](https://github.com/LaFClient/LaF/releases/latest)
+[![Latest Downloads](https://img.shields.io/github/downloads/LaFClient/LaF/latest/total?style=flat-square)](https://github.com/LaFClient/LaF/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/LaFClient/LaF/total?style=flat-square&logo=appveyor)](https://github.com/LaFClient/LaF/releases)</br>
 
 **Join our Discord: [![Discord](https://discord.com/api/guilds/911130667448954880/widget.png)](https://discord.gg/9M9TgDRt9G)**
 
-言語/Language: [English](https://github.com/Hiro527/LaF/blob/master/README.md) | [日本語](https://github.com/Hiro527/LaF/blob/master/README_JA.md)
+言語/Language: [English](https://github.com/LaFClient/LaF/blob/master/README.md) | [日本語](https://github.com/LaFClient/LaF/blob/master/README_JA.md)
 
 ## What is LaF?
 **LaF = Lite and Fast**<br>
@@ -21,7 +21,7 @@ LaF is lite and isnt like other clients with bogged down heavy features. the goa
 a chance at good performance in the game.
 
 ## How to install
-1. Download the [latest release](https://github.com/Hiro527/LaF/releases/latest).\
+1. Download the [latest release](https://github.com/LaFClient/LaF/releases/latest).\
 **Tip:** Download the file for your pc by referring the table, select accordingly
 
 |   OS    | Architecture |            File Name            |
@@ -63,19 +63,19 @@ You don't have to use resource swapper anymore. And you don't need to restart th
 - You can toggle whether `!link` command is enable with the button![Button](./app/img/readme/twitch-2.png).
 
 ## KeyBinds
-|  Key  |          Function          |
-| :---: | :------------------------: |
-|  F4   |   Jump to new game[^1]     |
-|  F5   |           Reload           |
-|  F6   | Jump to new game(Random)   |
-|  F7   |          Copy URL          |
-|  F8   |   Open URL in clipboard    |
-|  F12  |       Open Dev Tools       |
+|  Key  |         Function         |
+| :---: | :----------------------: |
+|  F4   |   Jump to new game[^1]   |
+|  F5   |          Reload          |
+|  F6   | Jump to new game(Random) |
+|  F7   |         Copy URL         |
+|  F8   |  Open URL in clipboard   |
+|  F12  |      Open Dev Tools      |
 
 [^1]: You can specify gamemode/region in the client settings.
 
 ## Requirements
-|         |          Least/最低           |       Recommended/推奨        |
+|         |             Least             |          Recommended          |
 | :-----: | :---------------------------: | :---------------------------: |
 |   OS    |        Windows7 32bit         |        Windows10 64bit        |
 |   CPU   |     2.33GHz x86 Processor     |     3.5GHz x86 Processor      |
