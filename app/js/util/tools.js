@@ -429,6 +429,12 @@ exports.gameTools = class {
     }
     toggleDisplay(id) {
         const el = document.getElementById(id);
-        el.style.display = el.style.display != 'none' ? 'none' : 'block';
+        if (el.style.display == 'none') {
+            el.style.display = el.getAttribute('displayType') ? el.getAttribute('displayType') : 'block';
+        }
+        else {
+            el.setAttribute('displayType', el.style.display);
+            el.style.display = 'none';
+        }
     }
 };

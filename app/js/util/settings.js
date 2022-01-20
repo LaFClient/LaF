@@ -23,6 +23,15 @@ module.exports = {
         restart: true,
         default: 'en_US',
     },
+    autoPlay: {
+        id: 'autoPlay',
+        title: langPack.settings.autoPlay,
+        cat: 'General',
+        type: 'checkbox',
+        val: config.get('autoPlay', true),
+        restart: true,
+        default: true,
+    },
     enableResourceSwapper: {
         id: 'enableResourceSwapper',
         title: langPack.settings.enableSwapper,
@@ -38,8 +47,9 @@ module.exports = {
         cat: 'General',
         type: 'checkbox',
         val: config.get('enableAltMng', true),
-        restart: true,
+        restart: false,
         default: true,
+        onchange: 'window.gt.toggleDisplay("altMngHolder");',
     },
     enableTimer: {
         id: 'enableTimer',
@@ -50,15 +60,6 @@ module.exports = {
         restart: false,
         default: true,
         onchange: 'window.gt.toggleDisplay("menuTimer")',
-    },
-    autoPlay: {
-        id: 'autoPlay',
-        title: langPack.settings.autoPlay,
-        cat: 'General',
-        type: 'checkbox',
-        val: config.get('autoPlay', true),
-        restart: true,
-        default: true,
     },
     enableRPC: {
         id: 'enableRPC',
