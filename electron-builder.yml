@@ -1,19 +1,11 @@
 appId: 'tokyo.laf'
 productName: 'LaF'
-win:
-  artifactName: LaF_Portable_Windows_${arch}.${ext}
-  target:
-    - target: nsis
-      arch:
-        - x64
-        - ia32
 linux:
   artifactName: LaF_Setup_Linux_${arch}.${ext}
   target:
     - target: appImage
       arch:
         - x64
-        - ia32
   category: network
 mac:
   artifactName: LaF_Setup_macOS_${arch}.${ext}
