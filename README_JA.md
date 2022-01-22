@@ -24,12 +24,9 @@ Krunkerは低スペックPCでも動く軽いゲームですが、「公式ク�
 
 |   OS    | アーキテクチャ |           ファイル名            |
 | :-----: | :------------: | :-----------------------------: |
-| Windows |    32/64bit    |      LaF_Setup_Windows.exe      |
-|         |     32bit      |   LaF_Setup_Windows_ia32.exe    |
-|         |     64bit      |    LaF_Setup_Windows_x64.exe    |
-|  macOS  |     64bit      |     LaF_Setup_macOS_x64.dmg     |
-|  Linux  |     32bit      |  LaF_Setup_Linux_i386.AppImage  |
-|         |     64bit      | LaF_Setup_Linux_x86_64.AppImage |
+| Windows |    64bit     |    LaF_Setup_Windows_x64.exe    |
+|  macOS  |    64bit     |     LaF_Setup_macOS_x64.dmg     |
+|  Linux  |    64bit     | LaF_Setup_Linux_x86_64.AppImage |
 
 2. ダウンロードしたファイルを実行してください。\
 **Tips** もしも「WindowsによってPCが保護されました」と表示されても心配しないでください。ウィルスは入っていないので、「実行」ボタンを押してインストールを続けてください。

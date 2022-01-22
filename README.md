@@ -26,14 +26,11 @@ a chance at good performance in the game.
 
 |   OS    | Architecture |            File Name            |
 | :-----: | :----------: | :-----------------------------: |
-| Windows |   32/64bit   |      LaF_Setup_Windows.exe      |
-|         |    32bit     |   LaF_Setup_Windows_ia32.exe    |
-|         |    64bit     |    LaF_Setup_Windows_x64.exe    |
+| Windows |    64bit     |    LaF_Setup_Windows_x64.exe    |
 |  macOS  |    64bit     |     LaF_Setup_macOS_x64.dmg     |
-|  Linux  |    32bit     |  LaF_Setup_Linux_i386.AppImage  |
-|         |    64bit     | LaF_Setup_Linux_x86_64.AppImage |
+|  Linux  |    64bit     | LaF_Setup_Linux_x86_64.AppImage |
 
-2. Run the file you downloaded.\
+1. Run the file you downloaded.\
 **Tip:** Even if your pc shows 'Windows protected your pc', don't worry. This program has no ransomware. Please press 'Run anyway' to continue the installation.
 
 3. Follow the dialog.\
