@@ -151,7 +151,7 @@ const initSplashWindow = () => {
         autoUpdater.checkForUpdates();
     };
     splashWindow.removeMenu();
-    splashWindow.loadURL(path.join(__dirname, 'html/splashWindow.html'));
+    splashWindow.loadFile(path.join(__dirname, 'html/splashWindow.html'));
     splashWindow.webContents.once('did-finish-load', () => {
         splashWindow.show();
         initAutoUpdater();
