@@ -23,10 +23,11 @@
         "url": "https://github.com/Hiro527/LaF/issues"
     },
     "homepage": "https://github.com/Hiro527/LaF#readme",
-    "electronVersion": "9.4.4",
+    "electronVersion": "10.4.7",
     "devDependencies": {
-        "electron": "^9.4.4",
-        "electron-builder": "^22.13.1"
+        "electron": "10.4.7",
+        "electron-builder": "^22.13.1",
+        "eslint": "^8.3.0"
     },
     "dependencies": {
         "discord-rpc": "^4.0.1",
@@ -35,7 +36,6 @@
         "electron-prompt": "^1.7.0",
         "electron-store": "^8.0.1",
         "electron-updater": "4.3.9",
-        "eslint": "^8.3.0",
         "express": "^4.17.1",
         "node-fetch": "^2.6.6",
         "register-scheme": "0.0.2",
