@@ -136,12 +136,12 @@ exports.gameWindow = class {
         if (isSwapperEnabled) {
             initSwapper(brWin);
         }
+        if (config.get('isMaximized', false)) brWin.maximize();
+        if (config.get('Fullscreen', false)) brWin.setFullScreen(true);
         brWin.loadURL('https://krunker.io');
 
         // イベントハンドラ
         brWin.once('ready-to-show', () => {
-            if (config.get('isMaximized', false)) brWin.maximize();
-            if (config.get('Fullscreen', false)) brWin.setFullScreen(true);
             brWin.show();
         });
         brWin.webContents.on('did-finish-load', () => {
