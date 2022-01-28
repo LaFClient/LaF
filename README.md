@@ -74,7 +74,7 @@ You don't have to use resource swapper anymore. And you don't need to restart th
 ## Requirements
 |         |             Least             |          Recommended          |
 | :-----: | :---------------------------: | :---------------------------: |
-|   OS    |        Windows7 32bit         |        Windows10 64bit        |
+|   OS    |        Windows7 64bit         |        Windows10 64bit        |
 |   CPU   |     2.33GHz x86 Processor     |     3.5GHz x86 Processor      |
 |   RAM   |              4GB              |              8GB              |
 | Network | Broadband Internet Connection | Broadband Internet Connection |
@@ -84,7 +84,7 @@ You don't have to use resource swapper anymore. And you don't need to restart th
 ## About Developers
 
 ### Hiro527 / **Client Dev, Designer**
-Web: [ぬる/Hiro](https://hiro527.github.io/)\
+Web: [ぬる/Hiro](https://hiro527.jp)\
 GitHub: [Hiro527](https://github.com/Hiro527)\
 Twitch: [nulla1m](https://twitch.tv/nulla1m)\
 Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)\

@@ -78,7 +78,7 @@ EasyCSSは、簡単にCSSを読み込むことができる画期的なシステ�
 
 |         |               最低               |               推奨               |
 | :-----: | :------------------------------: | :------------------------------: |
-|   OS    |          Windows7 32bit          |         Windows10 64bit          |
+|   OS    |          Windows7 64bit          |         Windows10 64bit          |
 |   CPU   |      2.33GHz x86 プロセッサ      |      3.5GHz x86 プロセッサ       |
 |   RAM   |               4GB                |               8GB                |
 | Network | ブロードバンドインターネット接続 | ブロードバンドインターネット接続 |
@@ -89,7 +89,7 @@ EasyCSSは、簡単にCSSを読み込むことができる画期的なシステ�
 
 ### Hiro527 / **Client Coder, Designer**
 
-Web: [ぬる/Hiro](https://hiro527.github.io/)\
+Web: [ぬる/Hiro](https://hiro527.jp/)\
 GitHub: [Hiro527](https://github.com/Hiro527)\
 Twitch: [nulla1m](https://twitch.tv/nulla1m)\
 Twitter: [ぬる / Hiro](https://twitter.com/nullA1m)\
