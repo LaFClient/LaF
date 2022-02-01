@@ -254,7 +254,7 @@ exports.gameTools = class {
     addAltAcc(f = false) {
         const accNameEl = document.getElementById('accName');
         const accPassEl = document.getElementById('accPass');
-        const accPassB64 = Buffer.from(accNameEl.value).toString('base64');
+        const accPassB64 = Buffer.from(accPassEl.value).toString('base64');
         let altAccounts = JSON.parse(localStorage.getItem('altAccounts'));
         if (!altAccounts) {
             altAccounts = {
