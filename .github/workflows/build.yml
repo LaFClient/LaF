@@ -28,7 +28,7 @@ jobs:
           node-version: 14.18.1
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --loglevel silly
 
       - name: Build and Release
         run: npm run dist
