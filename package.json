@@ -23,6 +23,7 @@
     "devDependencies": {
         "electron": "^10.4.7",
         "electron-builder": "^22.13.1",
+        "cli-truncate": "2.1.0",
         "eslint": "^8.3.0"
     },
     "dependencies": {
