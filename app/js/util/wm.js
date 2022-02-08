@@ -150,6 +150,16 @@ exports.gameWindow = class {
         brWin.on('page-title-updated', (e) => {
             e.preventDefault();
         });
+        brWin.webContents.on('will-prevent-unload', (e) => {
+            if (!dialog.showMessageBoxSync({
+                buttons: [langPack.dialog.yes, langPack.dialog.no],
+                title: langPack.dialog.social.leavePageTitle,
+                message: langPack.dialog.social.leavePageMessage,
+                noLink: true,
+            })) {
+                e.preventDefault();
+            }
+        });
         brWin.on('close', () => {
             const isMaximized = brWin.isMaximized();
             const isFullScreen = brWin.isFullScreen();
