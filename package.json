@@ -21,7 +21,7 @@
     "homepage": "https://github.com/Hiro527/LaF#readme",
     "electronVersion": "9.4.4",
     "devDependencies": {
-        "electron": "^10.4.7",
+        "electron": "^9.4.4",
         "electron-builder": "^22.13.1",
         "cli-truncate": "2.1.0",
         "eslint": "^8.3.0"
