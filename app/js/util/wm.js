@@ -40,7 +40,7 @@ const initSwapper = (win) => {
                 }
                 else {
                     const name = `${prefix}/${cPath.name}`;
-                    const isAsset = /^\/(models|textures|sound)($|\/)/.test(name);
+                    const isAsset = /^\/(models|textures|sound|scares)($|\/)/.test(name);
                     if (isAsset) {
                         urls.push(`*://assets.krunker.io${name}`, `*://assets.krunker.io${name}?*`);
                     }
@@ -58,7 +58,7 @@ const initSwapper = (win) => {
     recursiveFolder(win);
     if (urls.length) {
         win.webContents.session.webRequest.onBeforeRequest({ urls: urls }, (details, callback) => callback({
-            redirectURL: 'laf:/' + path.join(swapPath, new URL(details.url).pathname),
+            redirectURL: 'laf://' + path.join(swapPath, new URL(details.url).pathname),
         }));
     }
 };

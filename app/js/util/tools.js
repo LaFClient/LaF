@@ -161,7 +161,7 @@ exports.gameTools = class {
                 const el = document.getElementById(`${id}_value`);
                 el.innerText = result;
                 const linkEl = document.getElementById('ec_custom');
-                linkEl.setAttribute('href', `laf:/${result}`);
+                linkEl.setAttribute('href', `laf://${result}`);
             }
         });
     }

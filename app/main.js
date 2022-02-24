@@ -426,7 +426,7 @@ ipcMain.handle('linkTwitch', () => {
 
 // App
 app.on('ready', () => {
-    protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:/, ''))));
+    protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:\//, ''))));
     if (isRPCEnabled) {
         let loggedIn;
         try {
