@@ -16,7 +16,7 @@ jobs:
 
       - name: Install g++-multilib
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt install g++-multilib
+        run: sudo apt update && sudo apt install g++-multilib
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
