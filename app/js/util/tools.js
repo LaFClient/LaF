@@ -240,7 +240,7 @@ exports.gameTools = class {
         menuWindowEl.outerHTML = `
         <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px;'>
             <div style='position:relative;z-index:9'>
-                <div id='referralHeader'Add Account</div>
+                <div id='referralHeader'>Add Account</div>
                 <div style='height:20px;'></div><input id='accName' type='text' placeholder='Enter Username' class='accountInput' style='margin-top:0'><input id='accPass' type='password' placeholder='Enter Password' class='accountInput'>
                 <div class='setBodH' style='margin-left:0px;width:calc(100% - 40px)'>
                     <div id='accResp' style='margin-top:20px;margin-bottom:20px;font-size:18px;color:rgba(255,255,255,0.5);text-align:center'>For lost Passwords/Accounts contact <span style='color:rgba(255,255,255,0.8)'>recovery@yendis.ch</span></div>
