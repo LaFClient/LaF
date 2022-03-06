@@ -3,7 +3,7 @@
 ![TitleImage](./app/img/social.png)</br>
 [![Latest](https://img.shields.io/github/v/release/LaFClient/LaF)](https://github.com/LaFClient/LaF/releases/latest)
 [![Latest Downloads](https://img.shields.io/github/downloads/LaFClient/LaF/latest/total)](https://github.com/LaFClient/LaF/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/LaFClient/LaF/total&logo=appveyor)](https://github.com/LaFClient/LaF/releases)</br>
+[![Downloads](https://img.shields.io/github/downloads/LaFClient/LaF/total?logo=appveyor)](https://github.com/LaFClient/LaF/releases)</br>
 [![License](https://img.shields.io/github/license/LaFClient/LaF)](https://github.com/LaFClient/LaF/blob/master/LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/LaFClient/LaF/master)](https://github.com/LaFClient/LaF/tree/master)
 ![Code Lines](https://img.shields.io/tokei/lines/github/LaFClient/LaF)
