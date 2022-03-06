@@ -1,5 +1,5 @@
 # LaF Client for Krunker
-
+<div style="text-align: center">
 ![TitleImage](./app/img/social.png)</br>
 [![Latest](https://img.shields.io/github/v/release/LaFClient/LaF)](https://github.com/LaFClient/LaF/releases/latest)
 [![Latest Downloads](https://img.shields.io/github/downloads/LaFClient/LaF/latest/total)](https://github.com/LaFClient/LaF/releases/latest)
@@ -9,7 +9,7 @@
 ![Code Lines](https://img.shields.io/tokei/lines/github/LaFClient/LaF)
 [![Build/release](https://github.com/LaFClient/LaF/actions/workflows/build.yml/badge.svg)](https://github.com/LaFClient/LaF/actions/workflows/build.yml)
 [![CodeQL](https://github.com/LaFClient/LaF/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/LaFClient/LaF/actions/workflows/codeql-analysis.yml)
-
+</div>
 
 **Join our Discord: [![Discord](https://discord.com/api/guilds/911130667448954880/widget.png)](https://discord.gg/9M9TgDRt9G)**
 
