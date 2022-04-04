@@ -28,6 +28,7 @@ window.prompt = (message, defaultValue) => {
     return ipcRenderer.sendSync('showPrompt', message, defaultValue);
 };
 
+// DiscordRPC関連の初期化
 const initDiscordRPC = () => {
     const sendDiscordRPC = () => {
         try {
@@ -63,6 +64,7 @@ const initDiscordRPC = () => {
     }
 };
 
+// EasyCSSの初期化
 const initEasyCSS = () => {
     const cssPath = {
         type1: '../../css/EasyCSS/type1.css',
@@ -72,14 +74,15 @@ const initEasyCSS = () => {
         type5: '../../css/EasyCSS/type5.css',
         custom: config.get('userCSSPath', ''),
     };
-    // <link rel="stylesheet" title="custom" id="1" href="/css/custom_1.css?build=2kjHD" disabled="">
     let tmpHTML = '';
+    // タグの挿入
     Object.keys(cssPath).forEach((k) => {
         tmpHTML += `<link rel="stylesheet" id="ec_${k}" class="easycss" href="laf://${k === 'custom' ? cssPath[k] : path.join(__dirname, cssPath[k])}" ${config.get('easyCSSMode', 'disable') == k ? '' : 'disabled'}>`;
     });
     document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', tmpHTML);
 };
 
+// AltManagerの挿入
 const injectAltManager = () => {
     const mMenuHolDefEl = document.getElementById('mMenuHolDef');
     mMenuHolDefEl.insertAdjacentHTML('beforeend', `
@@ -118,6 +121,7 @@ const injectAltManager = () => {
     }, 250);
 };
 
+// メニュー画面に表示するAltManagerのUIの挿入
 const injectAltManagerHeader = () => {
     if (document.getElementById('windowHeader').innerText !== 'Game Settings') return;
     const settingsHeaderEl = document.getElementsByClassName('settingsHeader');
@@ -128,6 +132,7 @@ const injectAltManagerHeader = () => {
     `);
 };
 
+// 右下の「LaF vX.Y.Z」の挿入
 const injectWaterMark = () => {
     const gameUIEl = document.getElementById('gameUI');
     ipcRenderer.invoke('getAppVersion').then((v) => {
@@ -137,6 +142,7 @@ const injectWaterMark = () => {
     });
 };
 
+// Exitボタンの挿入
 const injectExitBtn = () => {
     menuContainer = document.getElementById('menuItemContainer');
     const exitBtn = document.getElementById('clientExit');
@@ -159,6 +165,7 @@ const injectExitBtn = () => {
     }
 };
 
+// メニュータイマーの挿入
 const initMenuTimer = () => {
     const instructions = document.getElementById('instructions');
     const menuTimerText = `
@@ -212,6 +219,7 @@ ipcRenderer.on('didFinishLoad', () => {
     initMenuTimer();
 });
 
+// ゲームリンクの取得
 ipcRenderer.on('getLink', (e) => {
     ipcRenderer.invoke('sendLink', location.href);
 });
@@ -230,6 +238,7 @@ ipcRenderer.on('twitchEvent', (e, v) => {
     }
 });
 
+// HyperQuickJoin
 ipcRenderer.on('joinMatch', async () => {
     const url = 'https://matchmaker.krunker.io/game-list?hostname=krunker.io';
     const MODES = {
@@ -272,10 +281,10 @@ ipcRenderer.on('joinMatch', async () => {
             }
             const joinableGames = data.games.filter(game => game[2] < game[3] && region.test(game[0]) && (game[4].g === MODES[config.get('joinMatchMode')] || config.get('joinMatchMode', 'all') === 'all') && (config.get('joinMatchCustom', false) ? game[4].c : !game[4].c) && (config.get('joinMatchOCustom', false) ? game[4].oc : !game[4].oc));
             /*
-            ・人数が上限に達していない
-            ・リージョンが設定と一致する
-            ・モードが設定と一致する
-            ・カスタム・公式カスタムのフラグが設定と一致する
+            - 人数が上限に達していない
+            - リージョンが設定と一致する
+            - モードが設定と一致する
+            - カスタム・公式カスタムのフラグが設定と一致する
             */
             joinableGames.sort(function(a, b) {
                 if (a[2] > b[2]) return -1;
@@ -290,3 +299,8 @@ ipcRenderer.on('joinMatch', async () => {
             }
         });
 });
+
+/*
+このファイルはブラウザ上で実行されるから、DOMの操作が必要なコードはこっちに書いてください。
+メインプロセスとの情報のやり取りはipcを介して行うことになります。
+*/

@@ -19,25 +19,24 @@ const devMode = config.get('devmode');
 log.info(`LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${process.versions.electron}\n    - nodejs@${process.versions.node}\n    - Chromium@${process.versions.chrome}`);
 
 const wm = require('./js/util/wm');
-const tools = require('./js/util/tools');
 
 const ClientID = '810350252023349248';
 let twitchToken = config.get('twitchToken', null);
-let twitchAcc = config.get('twitchAcc', null);
 
 let splashWindow = null;
 let gameWindow = null;
 
 const isRPCEnabled = config.get('enableRPC', true);
-const isSwapperEnabled = config.get('enableResourceSwapper', true);
 
 /* 初期化ブロック */
+
+// 脆弱性への対応: https://github.com/advisories/GHSA-mpjm-v997-c4h4
 delete require('electron').nativeImage.createThumbnailFromPath;
 if (!app.requestSingleInstanceLock()) {
     log.error('Other process(es) are already existing. Quit. If you can\'t see the window, please kill all task(s).');
     app.exit();
 }
-
+// カスタムプロトコルlaf://への対応(ローカルファイルへのアクセス用)
 protocol.registerSchemesAsPrivileged([{
     scheme: 'laf',
     privileges: { secure: true, corsEnabled: true },
@@ -50,7 +49,7 @@ log.info(`UI Language: ${config.get('lang')}`);
 const initFlags = () => {
     let flagsInfo = 'Chromium Options:';
     const chromiumFlags = [
-        // ['オプション', null('オプション2'), 有効[bool]]
+        // ['オプション', null('オプション2'), 有効[boolean]]
         // FPS解放周り
         ['disable-frame-rate-limit', null, config.get('unlimitedFPS', true)],
         ['disable-gpu-vsync', null, config.get('unlimitedFPS', true)],
@@ -101,10 +100,11 @@ const initSplashWindow = () => {
             preload: path.join(__dirname, 'js/preload/splash.js'),
         },
     });
-    const initAutoUpdater = async (updateMode) => {
+    const initAutoUpdater = async () => {
         autoUpdater.logger = log;
         let updateCheck = null;
         autoUpdater.logger = log;
+        // アップデート確認中
         autoUpdater.on('checking-for-update', (i) => {
             splashWindow.webContents.send('status', langPack.updater.checking);
             updateCheck = setTimeout(() => {
@@ -114,11 +114,13 @@ const initSplashWindow = () => {
                 }, 1000);
             }, 15000);
         });
+        // アップデートが存在するとき
         autoUpdater.on('update-available', (i) => {
             log.info(i);
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.available + i.version);
         });
+        // アップデートなしのとき
         autoUpdater.on('update-not-available', (i) => {
             log.info(i);
             if (updateCheck) clearTimeout(updateCheck);
@@ -127,6 +129,7 @@ const initSplashWindow = () => {
                 launchGame();
             }, 1000);
         });
+        // アップデートエラーのとき(大体はGitHubの障害で起こる)
         autoUpdater.on('error', (e) => {
             log.error(e);
             if (updateCheck) clearTimeout(updateCheck);
@@ -135,10 +138,12 @@ const initSplashWindow = () => {
                 launchGame();
             }, 1000);
         });
+        // ダウンロード中
         autoUpdater.on('download-progress', (i) => {
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.progress.replace('{0}', Math.floor(i.percent)).replace('{1}', Math.floor(i.bytesPerSecond / 1000)));
         });
+        // ダウンロード完了
         autoUpdater.on('update-downloaded', (i) => {
             if (updateCheck) clearTimeout(updateCheck);
             splashWindow.webContents.send('status', langPack.updater.downloaded);
@@ -158,6 +163,7 @@ const initSplashWindow = () => {
     });
 };
 
+// Twitchクライアントの初期化
 const initTwitchChat = () => {
     if (!config.get('twitchAcc', null)) return;
     log.info('Twitch Chatbot: Initializing...');
@@ -186,6 +192,7 @@ const initTwitchChat = () => {
     });
 };
 
+// ログイン中のユーザーがLiveかどうか取得する
 const getUserIsLive = () => {
     const method = 'GET';
     const headers = {
@@ -206,6 +213,7 @@ const getUserIsLive = () => {
         .catch(log.error);
 };
 
+// Twitchユーザー情報取得
 const twitchLogin = () => {
     if (!twitchToken) return;
     const method = 'GET';
@@ -237,11 +245,13 @@ DiscordRPC.register(ClientID);
 const rpc = new DiscordRPC.Client({ transport: 'ipc' });
 
 /* イベントハンドラー */
-// DiscordRPC`
+// DiscordRPC
+// 準備完了
 rpc.on('ready', () => {
     log.info('Discord RPC Ready');
 });
 
+// RPCの更新
 ipcMain.handle('RPC_SEND', (e, d) => {
     if (rpc.user) {
         rpc.setActivity(d);
@@ -249,30 +259,36 @@ ipcMain.handle('RPC_SEND', (e, d) => {
 });
 
 // SplashWindow
-ipcMain.handle('getAppVersion', async () => {
-    const version = await app.getVersion();
+ipcMain.handle('getAppVersion', () => {
+    const version = app.getVersion();
     return version;
 });
 
 // GameWindow
+// ユーザーストレージを削除
 ipcMain.handle('clearUserData', () => {
     session.defaultSession.clearStorageData();
+    config.clear();
     log.info('Cleared userdata.');
 });
 
+// リソスワのフォルダをエクスプローラーに表示
 ipcMain.handle('openSwapper', () => {
     shell.showItemInFolder(path.join(app.getPath('documents'), '/LaFSwap'));
 });
 
+// アプリの再起動
 ipcMain.handle('restartClient', () => {
     app.relaunch();
     app.exit();
 });
 
+// サイトを表示
 ipcMain.handle('openInfo', () => {
-    shell.openExternal('https://hiro527.github.io/LaF');
+    shell.openExternal('https://laf.tokyo');
 });
 
+// ダイアログの表示
 ipcMain.handle('showDialog', async (e, accName) => {
     const answer = await dialog.showMessageBox(gameWindow, {
         title: 'LaF',
@@ -282,6 +298,7 @@ ipcMain.handle('showDialog', async (e, accName) => {
     return answer.response;
 });
 
+// プロンプトの表示
 ipcMain.on('showPrompt', (e, message, defaultValue) => {
     prompt({
             title: 'LaF',
@@ -315,6 +332,7 @@ ipcMain.on('showPrompt', (e, message, defaultValue) => {
         .catch(console.error);
 });
 
+// ファイルを開く
 ipcMain.handle('openFileDialog', (e) => {
     const cssPath = dialog.showOpenDialogSync(null, {
         properties: ['openFile'],
@@ -330,10 +348,12 @@ ipcMain.handle('openFileDialog', (e) => {
     return cssPath;
 });
 
+// アプリ終了
 ipcMain.on('exitClient', () => {
     app.exit();
 });
 
+// PCの情報をコピー
 ipcMain.on('copyPCInfo', () => {
     const versions = `LaF v${app.getVersion()}${devMode ? '@DEV' : ''}\n    - electron@${process.versions.electron}\n    - nodejs@${process.versions.node}\n    - Chromium@${process.versions.chrome}`;
     const uiLang = `UI Language: ${config.get('lang')}`;
@@ -356,6 +376,7 @@ ipcMain.on('copyPCInfo', () => {
         const isEnable = f[2] ? 'Enable' : 'Disable';
         flagsInfo += `\n    - ${f[0]}, ${f[1]}: ${isEnable}`;
     });
+    // OSバージョンの取得
     const osRelease = os.release();
     let osVersion = '';
     if (osRelease.startsWith('6.1')) osVersion = 'Windows 7';
@@ -364,6 +385,7 @@ ipcMain.on('copyPCInfo', () => {
     if (osRelease.startsWith('10') && Number(osRelease.split('.')[2]) < 22000) osVersion = 'Windows 10';
     if (osRelease.startsWith('10') && Number(osRelease.split('.')[2]) >= 22000) osVersion = 'Windows 11';
     const osInfoTxt = `OS: ${osVersion} / ${os.release()} ${os.arch()}`;
+    // ハードウェア情報
     const cpuInfo = os.cpus();
     const cpuInfoTxt = `CPU: ${cpuInfo[0].model.trim()}@${Math.round((cpuInfo[0].speed / 1000) * 100) / 100}GHz`;
     const memInfoTxt = `RAM: ${Math.round(((os.totalmem - os.freemem) / 1073741824) * 100) / 100}GB / ${Math.round((os.totalmem / 1073741824) * 100) / 100}GB`;
@@ -399,10 +421,12 @@ ipcMain.on('copyPCInfo', () => {
     }
 });
 
+// ログファイルのフォルダをエクスプローラーで表示
 ipcMain.on('openLogFolder', () => {
     shell.showItemInFolder(path.join(app.getPath('appData'), 'laf/logs'));
 });
 
+// Twitchにログイン
 ipcMain.handle('linkTwitch', () => {
     const express = require('express');
     const oauthURL = 'https://id.twitch.tv/oauth2/authorize?client_id=q9pn15rtycv6l9waebyyw99d70mh00&redirect_uri=http://localhost:65535&response_type=token&scope=chat:read+chat:edit+channel:moderate+whispers:read+whispers:edit+channel_editor';
@@ -419,7 +443,7 @@ ipcMain.handle('linkTwitch', () => {
         setTimeout(() => server.close(), 1500);
     });
     server = eapp.listen('65535', () => {
-        log.info('HTTP Server started. It will close after 10 mins passed.');
+        log.info('HTTP Server started. It will close after 10 mins has passed.');
     });
     shell.openExternal(oauthURL);
 });
