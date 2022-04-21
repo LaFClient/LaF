@@ -1,0 +1,20 @@
+appId: 'tokyo.laf'
+productName: 'LaF'
+linux:
+  artifactName: LaF_Setup_Linux_${arch}.${ext}
+  target:
+    - target: appImage
+      arch:
+        - x64
+  category: game
+mac:
+  artifactName: LaF_Setup_macOS_${arch}.${ext}
+  target:
+    - target: dmg
+      arch:
+        - x64
+nsis:
+  artifactName: LaF_Setup_Windows_${arch}.${ext}
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
