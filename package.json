@@ -19,6 +19,7 @@
     "homepage": "https://github.com/LaFClient/LaF#readme",
     "electronVersion": "9.4.4",
     "devDependencies": {
+        "@types/discord-rpc": "^4.0.2",
         "@types/node": "^17.0.25",
         "@types/uuid": "^8.3.4",
         "cli-truncate": "^3.1.0",
