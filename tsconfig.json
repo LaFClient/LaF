@@ -92,7 +92,12 @@
     },
     "include": [
         "src/*",
-        "src/index.d.ts",
+        "src/core/*",
+        "src/plugin/*",
+        "src/script/*",
         "src/@types/types.d.ts",
     ],
+    "files": [
+        "src/assets/*"
+    ]
 }
