@@ -24,6 +24,6 @@ interface SocialWindow {
     URL: string;
 }
 
-interface ConfigIdList {
+interface DataStore {
     [name: string]: string
 }
