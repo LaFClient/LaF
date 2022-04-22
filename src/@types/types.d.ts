@@ -23,3 +23,7 @@ interface SocialWindow {
     Window: BrowserWindow;
     URL: string;
 }
+
+interface ConfigIdList {
+    [name: string]: string
+}

@@ -2,7 +2,8 @@
 /* INFORMATION */
 // This program is for transfer old config to newer one.
 // It might be disabled & deleted in the nearly future.
-import * as Store from "electron-store";
+import Store from "electron-store";
+import { ConfigIdList } from "../@types/types";
 
 module.exports = {
     name: "ConfigTransfer",
@@ -12,7 +13,7 @@ module.exports = {
         if (!config.get('client.ConfigVersion', null)) {
             return
         }
-        const ids = {
+        const ids: ConfigIdList = {
             lang: "general.Lang",
             autoPlay: "general.AutoPlay",
             enableResourceSwapper: "general.ResSwp",
@@ -39,7 +40,7 @@ module.exports = {
             twitchToken: "twitch.AccountToken",
         };
         Object.keys(ids).forEach((k) => {
-            const value = config[k] || null;
+            const value = config.get(k) || null;
             if (value) {
                 config.set(ids[k], value);
             }
