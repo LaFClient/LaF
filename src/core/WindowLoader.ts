@@ -1,1 +1,1 @@
-// LaF Client Window Loader (c) 2022 Hiro527
+// LaF Client ウィンドウローダー (c) 2022 Hiro527
