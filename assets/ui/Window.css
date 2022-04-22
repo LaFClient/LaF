@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+2:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --bg-color: rgba(26, 26, 26, 1);
+    --font-color: rgba(255, 255, 255, 1);
+    --separator-color: rgba(255, 255, 255, .8);
+    --hover-color: rgba(255, 255, 255, .25);
+}
+
+html {
+    font-family: 'M PLUS 2', sans-serif;
+    color: var(--font-color);
+}
+
+body {
+    top: 0;
+    left: 0;
+}
+
+#AppControl {
+    -webkit-app-region: drag;
+    user-select: none;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+#AppTitle {
+    font-size: 16px;
+    font-weight: 900;
+    margin-left: 10px;
+    margin-top: -2px;
+    margin-right: 8px;
+}
+
+.AppSeparator {
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 15px;
+    width: 1px;
+    background-color: var(--separator-color);
+}
+
+#AppControls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.AppControlBtnIcon {
+    font-size: 18px !important;
+}
+
+.AppControlBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.AppControlBtn:hover {
+    background-color: var(--hover-color);
+}
+
+#AltManagerSelector {
+    width: 150px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+select#AltManagerSelector,
+option#AltManagerSelector {
+    font-family: 'M PLUS 2', sans-serif;
+    border: #000 0px solid;
+    background: var(--bg-color);
+    color: var(--font-color);
+}
+
+#WindowControls {
+    margin-left: auto;
+    display: flex;
+}
+
+.WindowControlBtn {
+    height: 45px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.WindowControlBtn img {
+    height: 24px;
+    width: 30px;
+    -webkit-user-drag: none;
+}
+
+.WindowControlBtn#Minimize:hover,
+.WindowControlBtn#Maximize:hover {
+    background-color: var(--hover-color);
+}
+
+.WindowControlBtn#Close:hover {
+    background-color: rgba(255, 0, 0, 0.8);
+}
+
+#GameFrame {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 40px);
+    border: none;
+}
