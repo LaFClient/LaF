@@ -81,8 +81,8 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
     const Window = new BrowserWindow({
         width: config.get('window.width', 1500) as number,
         height: config.get('window.height', 1500) as number,
-        minWidth: 900,
-        minHeight: 600,
+        minWidth: 1200,
+        minHeight: 800,
         x: config.get('window.x', undefined) as number | undefined,
         y: config.get('window.y', undefined) as number | undefined,
         backgroundColor: '#1a1a1a',
