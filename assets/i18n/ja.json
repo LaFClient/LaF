@@ -1,3 +1,8 @@
 {
-    "test": "いいね"
+    "dialog": {
+        "yes": "はい",
+        "no": "いいえ",
+        "confirmLeaveTitle": "確認",
+        "confirmLeaveMsg": "本当にこのページを離れますか？変更した内容は保存されていない恐れがあります。"
+    }
 }

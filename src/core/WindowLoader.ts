@@ -169,11 +169,26 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             k[1] as () => void
         );
     });
-    initSwapper(Window);
+    if (config.get('general.ResSwp')) initSwapper(Window);
     Window.loadFile(path.join(__dirname, '../../assets/ui/GameWindow.html'));
     Window.removeMenu();
     Window.on('ready-to-show', () => {
         Window.show();
-    })
+    });
+    Window.on('page-title-updated', (e) => {
+        e.preventDefault();
+    });
+    Window.webContents.on('will-prevent-unload', (e) => {
+        if (
+            !dialog.showMessageBoxSync({
+                buttons: [i18n.t('dialog.yes'), i18n.t('dialog.no')],
+                title: i18n.t('dialog.confirmLeaveTitle'),
+                message: i18n.t('dialog.confirmLeaveMsg'),
+                noLink: true,
+            })
+        ) {
+            e.preventDefault();
+        }
+    });
     return Window;
 };
