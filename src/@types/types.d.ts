@@ -7,23 +7,6 @@ interface LaFPlugin {
     run: Function;
 }
 
-interface DiscordRPCController {
-    Client: RPCClient;
-    Stop: Function;
-    Set: Function;
-}
-
-interface GameWindow {
-    Window: BrowserWindow;
-    GameInfo: Object;
-    URL: string;
-}
-
-interface SocialWindow {
-    Window: BrowserWindow;
-    URL: string;
-}
-
 interface DataStore {
     [name: string]: string
 }
