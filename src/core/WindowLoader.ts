@@ -156,10 +156,17 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             },
         ],
         [
-            ['Ctrl+F1', 'F12'],
+            'F12',
             () => {
-                // 開発者ツールの起動
-                Window.webContents.openDevTools();
+                // 開発者ツールの起動(ゲーム)
+                Window.webContents.send('OpenDevTools');
+            },
+        ],
+        [
+            'Ctrl+F12',
+            () => {
+                // 開発者ツールの起動(ウィンドウ)
+                Window.webContents.openDevTools({ mode: 'detach' });
             },
         ],
     ].forEach((k) => {
