@@ -33,16 +33,17 @@
             <div class="AppControlBtn" id="AppLinkCmd" title="!link for Twitch" onclick="AppControl(this.id);"><span
                     class="material-symbols-sharp AppControlBtnIcon">link</span></div>
             <div class="AppControlBtn" id="AppFullscrToggle" title="Fullscreen (F11)" onclick="AppControl(this.id);">
-                <span class="material-symbols-sharp AppControlBtnIcon">fullscreen</span></div>
+                <span class="material-symbols-sharp AppControlBtnIcon">fullscreen</span>
+            </div>
             <div class="AppSeparator"></div>
-            <div class="AppControlBtn" id="AMAddAccount" title="Add New Account" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">add</span></div>
-            <select id="AltManagerSelector" onchange="AppControl(this.id);">
-                <option value="Guest">Guest</option>
-            </select>
             <div id="AltManagerContainer">
+                <div class="AppControlBtn" id="AMAddAccount" title="Add New Account" onclick="AppControl(this.id);">
+                    <span class="material-symbols-sharp AppControlBtnIcon">add</span></div>
+                <select id="AltManagerSelector" onchange="AppControl(this.id);">
+                    <option value="Guest">Guest</option>
+                </select>
                 <div class="AppControlBtn disabled" id="AMEdit" title="Edit" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">edit</span></div>
+                        class="material-symbols-sharp AppControlBtnIcon">edit</span></div>
                 <div class="AppControlBtn disabled" id="AMDelete" title="Delete" onclick="AppControl(this.id);"><span
                         class="material-symbols-sharp AppControlBtnIcon">delete</span></div>
                 <div class="AppControlBtn disabled" id="AMLogin" title="Login" onclick="AppControl(this.id);"><span
