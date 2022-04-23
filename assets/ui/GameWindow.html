@@ -4,8 +4,7 @@
 <head>
     <title>LaF Client</title>
     <meta charset="utf-8">
-    <link rel="stylesheet"
-        href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="./Window.css">
 </head>
 
@@ -15,40 +14,26 @@
             LaF Client
         </div>
         <div id="AppControls">
-            <div class="AppControlBtn disabled" id="AppGoBack" title="Reload (F5)" onclick="AppControl(this.id);"><span
-                class="material-symbols-sharp AppControlBtnIcon">navigate_before</span></div>
-            <div class="AppControlBtn disabled" id="AppGoNext" title="Reload (F5)" onclick="AppControl(this.id);"><span
-                class="material-symbols-sharp AppControlBtnIcon">navigate_next</span></div>
-            <div class="AppControlBtn" id="AppReload" title="Reload (F5)" onclick="AppControl(this.id);"><span
-                class="material-symbols-sharp AppControlBtnIcon">refresh</span></div>
+            <div class="AppControlBtn disabled" id="AppGoBack" title="Reload (F5)" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">navigate_before</span></div>
+            <div class="AppControlBtn disabled" id="AppGoNext" title="Reload (F5)" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">navigate_next</span></div>
+            <div class="AppControlBtn" id="AppReload" title="Reload (F5)" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">refresh</span></div>
             <div class="AppSeparator"></div>
-            <div class="AppControlBtn" id="AppHQJoin" title="HyperQuickJoin (F4)" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">bolt</span></div>
-            <div class="AppControlBtn" id="AppNewGame" title="New Game (F6)" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">sports_esports</span></div>
-            <div class="AppControlBtn" id="AppCopyURL" title="Copy URL (F7)" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">file_copy</span></div>
-            <div class="AppControlBtn" id="AppOpenURL" title="Open URL (F8)" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">content_paste</span></div>
-            <div class="AppControlBtn" id="AppLinkCmd" title="!link for Twitch" onclick="AppControl(this.id);"><span
-                class="material-symbols-sharp AppControlBtnIcon">link</span></div>
-            <div class="AppControlBtn" id="AppFullscrToggle" title="Fullscreen (F11)" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">fullscreen</span></div>
+            <div class="AppControlBtn" id="AppHQJoin" title="HyperQuickJoin (F4)" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">saved_search</span></div>
+            <div class="AppControlBtn" id="AppNewGame" title="New Game (F6)" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">find_replace</span></div>
+            <div class="AppControlBtn" id="AppCopyURL" title="Copy URL (F7)" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">file_copy</span></div>
+            <div class="AppControlBtn" id="AppOpenURL" title="Open URL (F8)" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">content_paste</span></div>
+            <div class="AppControlBtn" id="AppLinkCmd" title="!link for Twitch" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">link</span></div>
+            <div class="AppControlBtn" id="AppFullscrToggle" title="Fullscreen (F11)" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">fullscreen</span></div>
             <div class="AppSeparator"></div>
-            <div class="AppControlBtn" id="AMAddAccount" title="Add New Account" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">add</span></div>
+            <div class="AppControlBtn" id="AMAddAccount" title="Add New Account" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">add</span></div>
             <select id="AltManagerSelector" onchange="AppControl(this.id);">
                 <option value="Guest">Guest</option>
             </select>
-            <div class="AppControlBtn disabled" id="AMEdit" title="Edit" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">edit</span></div>
-            <div class="AppControlBtn disabled" id="AMDelete" title="Delete" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">delete</span></div>
-            <div class="AppControlBtn disabled" id="AMLogin" title="Login" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">login</span></div>
+            <div class="AppControlBtn disabled" id="AMEdit" title="Edit" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">edit</span></div>
+            <div class="AppControlBtn disabled" id="AMDelete" title="Delete" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">delete</span></div>
+            <div class="AppControlBtn disabled" id="AMLogin" title="Login" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">login</span></div>
             <div class="AppSeparator"></div>
-            <div class="AppControlBtn" id="AppSettings" title="Open Settings" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">settings</span></div>
+            <div class="AppControlBtn" id="AppSettings" title="Open Settings" onclick="AppControl(this.id);"><span class="material-symbols-sharp AppControlBtnIcon">settings</span></div>
         </div>
         <div class="AppSeparator"></div>
         <div id="SystemMessage">
