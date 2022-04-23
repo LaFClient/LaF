@@ -9,7 +9,7 @@ export const name: string = 'ConfigTransfer';
 export const version: string = '1.0';
 export const execute = (): void => {
     const config = new Store();
-    if (!config.get('client.ConfigVersion', null)) {
+    if (config.get('client.ConfigVersion', null)) {
         return;
     }
     const ids: DataStore = {
@@ -37,12 +37,18 @@ export const execute = (): void => {
         joinMatchMode: 'hqjoin.GameMode',
         enableLinkCmd: 'twitch.LinkCommand',
         twitchToken: 'twitch.AccountToken',
+        twitchAcc: 'twitch.AccountName',
+        twitchAccId: 'twitch.AccountId',
+        isMaximized: 'window.Maximized',
+        Fullscreen: 'window.FullScreen',
     };
     Object.keys(ids).forEach((k) => {
-        const value = config.get(k) || null;
-        if (value) {
+        const value = config.get(k, undefined);
+        if (value !== undefined) {
+            config.delete(k);
             config.set(ids[k], value);
         }
     });
+    config.set('client.ConfigVersion', '2.0')
     log.info('Config has been transferred to new version.');
 };
