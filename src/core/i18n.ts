@@ -14,8 +14,8 @@ export const localization = (locale: string) => {
         fallbackLng: 'en',
         initImmediate: false,
         backend: {
-            loadPath: path.join(__dirname, 'i18n/{{lng}}.json'),
-            addPath: path.join(__dirname, 'i18n/{{lng}}-missing.json'),
+            loadPath: path.join(__dirname, '../../assets/i18n/{{lng}}.json'),
+            addPath: path.join(__dirname, '../../assets/i18n/{{lng}}-missing.json'),
             jsonIndent: 4,
         },
         saveMissing: isDev,

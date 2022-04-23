@@ -18,7 +18,7 @@ import isDev from 'electron-is-dev';
 import { localization } from '../core/i18n';
 import { i18n } from 'i18next';
 
-const PackageInfo = require('../package.json');
+const PackageInfo = require('../../package.json');
 
 let locale = localization(app.getLocale());
 const config = new Store();
@@ -85,9 +85,11 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
         y: config.get('window.y', undefined) as number | undefined,
         show: false,
         title: 'LaF Client',
+        frame: false,
         webPreferences: {
             contextIsolation: false,
             preload: path.join(__dirname, '../script/GameWindow.js'),
+            webviewTag: true,
         },
     });
     [
@@ -164,6 +166,11 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             k[1] as () => void
         );
     });
+    // initSwapper(Window);
     Window.loadFile(path.join(__dirname, '../../assets/ui/GameWindow.html'));
+    Window.removeMenu();
+    Window.on('ready-to-show', () => {
+        Window.show();
+    })
     return Window;
 };

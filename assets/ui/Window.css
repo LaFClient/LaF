@@ -7,19 +7,16 @@
     --hover-color: rgba(255, 255, 255, .25);
 }
 
-html {
-    font-family: 'M PLUS 2', sans-serif;
-    color: var(--font-color);
-}
-
 body {
     top: 0;
     left: 0;
 }
 
 #AppControl {
-    -webkit-app-region: drag;
     user-select: none;
+    font-family: 'M PLUS 2', sans-serif;
+    color: var(--font-color);
+    -webkit-app-region: drag;
     position: absolute;
     display: flex;
     justify-content: space-between;
@@ -58,6 +55,7 @@ body {
 }
 
 #AppControls {
+    -webkit-app-region: no-drag;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -110,6 +108,7 @@ option#AltManagerSelector {
 }
 
 #WindowControls {
+    -webkit-app-region: no-drag;
     margin-left: auto;
     display: flex;
 }
