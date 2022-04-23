@@ -15,7 +15,6 @@ import * as fs from 'fs';
 import * as localShortcut from 'electron-localshortcut';
 import isDev from 'electron-is-dev';
 
-import { localization } from '../core/i18n';
 import i18next from 'i18next';
 
 const PackageInfo = require('../../package.json');
@@ -185,6 +184,10 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
     Window.on('page-title-updated', (e) => {
         e.preventDefault();
     });
+    Window.webContents.on('new-window', (e, url) => {
+        e.preventDefault();
+        shell.openExternal(url);
+    })
     Window.webContents.on('will-prevent-unload', (e) => {
         if (
             !dialog.showMessageBoxSync({
@@ -197,5 +200,8 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             e.preventDefault();
         }
     });
+    Window.on('close', (e) => {
+        Window.destroy();
+    })
     return Window;
 };
