@@ -16,21 +16,38 @@
         </div>
         <div id="AppControls">
             <div class="AppSeparator"></div>
-            <div class="AppControlBtn" id="AppReload" title="Reload (F5)"><span class="material-symbols-sharp AppControlBtnIcon">refresh</span></div>
-            <div class="AppControlBtn" id="AppHQJoin" title="HyperQuickJoin (F4)"><span class="material-symbols-sharp AppControlBtnIcon">bolt</span></div>
-            <div class="AppControlBtn" id="AppNewGame" title="New Game (F6)"><span class="material-symbols-sharp AppControlBtnIcon">sports_esports</span></div>
-            <div class="AppControlBtn" id="AppCopyURL" title="Copy URL (F7)"><span class="material-symbols-sharp AppControlBtnIcon">file_copy</span></div>
-            <div class="AppControlBtn" id="AppOpenURL" title="Open URL (F8)"><span class="material-symbols-sharp AppControlBtnIcon">content_paste</span></div>
+            <div class="AppControlBtn" id="AppReload" title="Reload (F5)"><span
+                    class="material-symbols-sharp AppControlBtnIcon">refresh</span></div>
+            <div class="AppControlBtn" id="AppHQJoin" title="HyperQuickJoin (F4)"><span
+                    class="material-symbols-sharp AppControlBtnIcon">bolt</span></div>
+            <div class="AppControlBtn" id="AppNewGame" title="New Game (F6)"><span
+                    class="material-symbols-sharp AppControlBtnIcon">sports_esports</span></div>
+            <div class="AppControlBtn" id="AppCopyURL" title="Copy URL (F7)"><span
+                    class="material-symbols-sharp AppControlBtnIcon">file_copy</span></div>
+            <div class="AppControlBtn" id="AppOpenURL" title="Open URL (F8)"><span
+                    class="material-symbols-sharp AppControlBtnIcon">content_paste</span></div>
+            <div class="AppControlBtn" id="AppFullscrToggle" title="Fullscreen (F11)"><span
+                    class="material-symbols-sharp AppControlBtnIcon">fullscreen</span></div>
             <div class="AppSeparator"></div>
-            <div class="AppControlBtn" id="AMAddAccount" title="Add New Account"><span class="material-symbols-sharp AppControlBtnIcon">add</span></div>
+            <div class="AppControlBtn" id="AMAddAccount" title="Add New Account"><span
+                    class="material-symbols-sharp AppControlBtnIcon">add</span></div>
             <select id="AltManagerSelector">
-                <option value="">No Accounts</option>
+                <option value="">Guest Player</option>
             </select>
-            <div class="AppControlBtn" id="AMEditAccount" title="Edit Account"><span class="material-symbols-sharp AppControlBtnIcon">edit</span></div>
-            <div class="AppControlBtn" id="AMDeleteAccount" title="Delete Account"><span class="material-symbols-sharp AppControlBtnIcon">delete</span></div>
-            <div class="AppControlBtn" id="AMLoginAccount" title="Login with the Account"><span class="material-symbols-sharp AppControlBtnIcon">login</span></div>
+            <div class="AppControlBtn" id="AMEdit" title="Edit"><span
+                    class="material-symbols-sharp AppControlBtnIcon">edit</span></div>
+            <div class="AppControlBtn" id="AMDelete" title="Delete"><span
+                    class="material-symbols-sharp AppControlBtnIcon">delete</span></div>
+            <div class="AppControlBtn" id="AMLogin" title="Login"><span
+                    class="material-symbols-sharp AppControlBtnIcon">login</span></div>
             <div class="AppSeparator"></div>
-            <div class="AppControlBtn" id="AppSetting" title="Open Settings"><span class="material-symbols-sharp AppControlBtnIcon">settings</span></div>
+            <div class="AppControlBtn" id="AppSettings" title="Open Settings" style="margin-right: 0;"><span
+                    class="material-symbols-sharp AppControlBtnIcon">settings</span></div>
+        </div>
+        <div class="AppSeparator"></div>
+        <div id="SystemMessage">
+            <div id="SystemMessageText">
+            </div>
         </div>
         <div id="WindowControls">
             <div class="WindowControlBtn" id="Minimize"><img src="./img/minimize.svg"></div>
@@ -38,7 +55,7 @@
             <div class="WindowControlBtn" id="Close"><img src="./img/close.svg"></div>
         </div>
     </div>
-    <div></div>
+    <div id="UISwitcher"></div>
     <webview id="GameFrame" src="https://krunker.io"></webview>
 </body>
 
