@@ -40,13 +40,15 @@
             <select id="AltManagerSelector" onchange="AppControl(this.id);">
                 <option value="Guest">Guest</option>
             </select>
-            <div class="AppControlBtn disabled" id="AMEdit" title="Edit" onclick="AppControl(this.id);"><span
+            <div id="AltManagerContainer">
+                <div class="AppControlBtn disabled" id="AMEdit" title="Edit" onclick="AppControl(this.id);"><span
                     class="material-symbols-sharp AppControlBtnIcon">edit</span></div>
-            <div class="AppControlBtn disabled" id="AMDelete" title="Delete" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">delete</span></div>
-            <div class="AppControlBtn disabled" id="AMLogin" title="Login" onclick="AppControl(this.id);"><span
-                    class="material-symbols-sharp AppControlBtnIcon">login</span></div>
-            <div class="AppSeparator"></div>
+                <div class="AppControlBtn disabled" id="AMDelete" title="Delete" onclick="AppControl(this.id);"><span
+                        class="material-symbols-sharp AppControlBtnIcon">delete</span></div>
+                <div class="AppControlBtn disabled" id="AMLogin" title="Login" onclick="AppControl(this.id);"><span
+                        class="material-symbols-sharp AppControlBtnIcon">login</span></div>
+                <div class="AppSeparator"></div>
+            </div>
             <div class="AppControlBtn" id="AppSettings" title="Open Settings" onclick="AppControl(this.id);"><span
                     class="material-symbols-sharp AppControlBtnIcon">settings</span></div>
         </div>

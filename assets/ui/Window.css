@@ -76,6 +76,12 @@ body {
     margin-right: 2.5px;
 }
 
+#AltManagerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 #SystemMessage .AppControlBtn {
     width: auto;
     min-width: 30px;
