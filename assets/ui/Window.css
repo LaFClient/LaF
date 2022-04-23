@@ -74,7 +74,8 @@ body {
     height: 30px;
     width: 30px;
     border-radius: 5px;
-    margin-right: 5px;
+    margin-left: 2.5px;
+    margin-right: 2.5px;
 }
 
 #SystemMessage .AppControlBtn {
@@ -84,6 +85,14 @@ body {
 
 .AppControlBtn:hover {
     background-color: var(--hover-color);
+}
+
+.AppControlBtn.disabled:hover {
+    background-color: inherit;
+}
+
+.AppControlBtn.disabled .AppControlBtnIcon {
+    color: rgba(255, 255, 255, .5);
 }
 
 #AltManagerSelector {
