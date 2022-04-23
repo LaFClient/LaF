@@ -5,10 +5,10 @@ import i18next from 'i18next';
 import i18next_fsbackend from 'i18next-node-fs-backend';
 import path from 'path';
 
-export const localization = async (locale: string) => {
+export const localization = (locale: string) => {
     log.info('Initializing i18n module...');
     i18next.use(i18next_fsbackend);
-    await i18next.init({
+    return i18next.init({
         debug: isDev,
         lng: 'en',
         fallbackLng: 'en',
@@ -19,8 +19,9 @@ export const localization = async (locale: string) => {
             jsonIndent: 4,
         },
         saveMissing: isDev,
+    }).then(() => {
+        // 言語コード: https://source.chromium.org/chromium/chromium/src/+/master:ui/base/l10n/l10n_util.cc
+        i18next.changeLanguage(locale);
+        return i18next;
     });
-    // 言語コード: https://source.chromium.org/chromium/chromium/src/+/master:ui/base/l10n/l10n_util.cc
-    i18next.changeLanguage(locale);
-    return i18next;
 };
