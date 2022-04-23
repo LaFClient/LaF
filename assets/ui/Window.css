@@ -107,6 +107,11 @@ option#AltManagerSelector {
     color: var(--font-color);
 }
 
+select#AltManagerSelector:focus,
+option#AltManagerSelector:focus {
+    outline: unset;
+}
+
 #WindowControls {
     -webkit-app-region: no-drag;
     margin-left: auto;
