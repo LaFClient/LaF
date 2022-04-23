@@ -5,7 +5,6 @@ import Store from 'electron-store';
 import log from 'electron-log';
 import path from 'path';
 import isDev from 'electron-is-dev';
-import { i18n } from 'i18next';
 
 import { LaFPlugin } from './@types/types';
 import * as ConfigTransfer from './plugin/ConfigTransfer';
@@ -15,14 +14,15 @@ import { localization } from './core/i18n';
 
 const PackageInfo = require('../package.json');
 
-const locale = localization(app.getLocale());
-const config = new Store();
-
 log.info(
     `LaF Client ${PackageInfo.version}${isDev ? '-development' : '-release'}\n    - electron@${process.versions.electron}\n    - nodejs@${process.versions.node}\n    - Chromium@${process.versions.chrome}`
 );
 
 /* 初期化ブロック */
+
+const i18n = localization(app.getLocale());
+const config = new Store();
+
 // 設定移行用
 ConfigTransfer.execute();
 
@@ -73,5 +73,6 @@ log.info(flagsInfo);
 
 
 app.on('ready', async () => {
+    protocol.registerFileProtocol('laf', (request, callback) => callback(decodeURI(request.url.replace(/^laf:\//, ''))));
     await WindowLoader.LaunchGame();
 });

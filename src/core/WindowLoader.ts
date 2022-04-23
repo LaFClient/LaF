@@ -16,11 +16,11 @@ import * as localShortcut from 'electron-localshortcut';
 import isDev from 'electron-is-dev';
 
 import { localization } from '../core/i18n';
-import { i18n } from 'i18next';
+import i18next from 'i18next';
 
 const PackageInfo = require('../../package.json');
 
-let locale = localization(app.getLocale());
+let i18n = i18next;
 const config = new Store();
 
 const initSwapper = (win: BrowserWindow) => {
@@ -81,8 +81,11 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
     const Window = new BrowserWindow({
         width: config.get('window.width', 1500) as number,
         height: config.get('window.height', 1500) as number,
+        minWidth: 900,
+        minHeight: 600,
         x: config.get('window.x', undefined) as number | undefined,
         y: config.get('window.y', undefined) as number | undefined,
+        backgroundColor: '#1a1a1a',
         show: false,
         title: 'LaF Client',
         frame: false,
@@ -166,7 +169,7 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             k[1] as () => void
         );
     });
-    // initSwapper(Window);
+    initSwapper(Window);
     Window.loadFile(path.join(__dirname, '../../assets/ui/GameWindow.html'));
     Window.removeMenu();
     Window.on('ready-to-show', () => {
