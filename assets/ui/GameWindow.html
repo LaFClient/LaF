@@ -30,15 +30,18 @@
                     class="material-symbols-sharp AppControlBtnIcon">file_copy</span></div>
             <div class="AppControlBtn" id="AppOpenURL" title="Open URL (F8)" onclick="AppControl(this.id);"><span
                     class="material-symbols-sharp AppControlBtnIcon">content_paste</span></div>
-            <div class="AppControlBtn" id="AppLinkCmd" title="!link for Twitch" onclick="AppControl(this.id);"><span
+            <div class="AppControlBtn" id="AppLinkCmd" title="!link for Twitch"
+                onclick="AppControl(this.id);ToggleStatus(this.id, 'link', 'link_off');"><span
                     class="material-symbols-sharp AppControlBtnIcon">link</span></div>
-            <div class="AppControlBtn" id="AppFullscrToggle" title="Fullscreen (F11)" onclick="AppControl(this.id);">
+            <div class="AppControlBtn" id="AppFullscrToggle" title="Fullscreen (F11)"
+                onclick="AppControl(this.id);ToggleStatus(this.id, 'fullscreen', 'fullscreen_exit');">
                 <span class="material-symbols-sharp AppControlBtnIcon">fullscreen</span>
             </div>
             <div class="AppSeparator"></div>
             <div id="AltManagerContainer">
                 <div class="AppControlBtn" id="AMAddAccount" title="Add New Account" onclick="AppControl(this.id);">
-                    <span class="material-symbols-sharp AppControlBtnIcon">add</span></div>
+                    <span class="material-symbols-sharp AppControlBtnIcon">add</span>
+                </div>
                 <select id="AltManagerSelector" onchange="AppControl(this.id);">
                     <option value="Guest">Guest</option>
                 </select>
@@ -53,19 +56,16 @@
             <div class="AppControlBtn" id="AppSettings" title="Open Settings" onclick="AppControl(this.id);"><span
                     class="material-symbols-sharp AppControlBtnIcon">settings</span></div>
         </div>
-        <div class="AppSeparator"></div>
-        <div id="SystemMessage">
-            <div id="SystemMessageText">
-            </div>
-        </div>
         <div id="WindowControls">
-            <div class="WindowControlBtn" id="Minimize"><img src="./img/minimize.svg"></div>
-            <div class="WindowControlBtn" id="Maximize"><img src="./img/maximize.svg"></div>
-            <div class="WindowControlBtn" id="Close"><img src="./img/close.svg"></div>
+            <div class="WindowControlBtn" id="Minimize" onclick="AppControl(this.id);"><img src="./img/minimize.svg"
+                    id="MinimizeIcon"></div>
+            <div class="WindowControlBtn" id="Maximize" onclick="AppControl(this.id);"><img src="./img/maximize.svg"
+                    id="MaximizeIcon"></div>
+            <div class="WindowControlBtn" id="Close" onclick="AppControl(this.id);"><img src="./img/close.svg"
+                    id="CloseIcon"></div>
         </div>
     </div>
     <div id="UISwitcher"></div>
-    <webview id="GameFrame" src="https://krunker.io" preload="../../out/script/GameFrame.js"></webview>
 </body>
 
 </html>
