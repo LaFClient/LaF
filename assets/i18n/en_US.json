@@ -4,5 +4,8 @@
         "no": "No",
         "confirmLeaveTitle": "Confirm",
         "confirmLeaveMsg": "Are you sure you want to leave this page? Changes you made may not be saved."
+    },
+    "ui": {
+        "copyUrl": "Copied URL to clipboard!"
     }
 }
