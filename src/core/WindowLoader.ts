@@ -2,6 +2,7 @@
 require('v8-compile-cache');
 import {
     app,
+    BrowserView,
     BrowserWindow,
     clipboard,
     dialog,
@@ -16,13 +17,14 @@ import * as localShortcut from 'electron-localshortcut';
 import isDev from 'electron-is-dev';
 
 import i18next from 'i18next';
+import { UrlType } from './Tools';
 
 const PackageInfo = require('../../package.json');
 
 let i18n = i18next;
 const config = new Store();
 
-const initSwapper = (win: BrowserWindow) => {
+const initSwapper = (win: BrowserView) => {
     const swapPath = path.join(app.getPath('documents'), '/LaFSwap');
     if (!fs.existsSync(swapPath)) {
         fs.mkdir(swapPath, { recursive: true }, (e) => {
@@ -31,7 +33,7 @@ const initSwapper = (win: BrowserWindow) => {
         });
     }
     const urls: string[] = [];
-    const recursiveFolder = (win: BrowserWindow, prefix = '') => {
+    const recursiveFolder = (win: BrowserView, prefix = '') => {
         try {
             fs.readdirSync(path.join(swapPath, prefix), {
                 withFileTypes: true,
@@ -77,9 +79,10 @@ const initSwapper = (win: BrowserWindow) => {
 };
 
 export const LaunchGame = async (): Promise<BrowserWindow> => {
+    // ウィンドウの初期化
     const Window = new BrowserWindow({
         width: config.get('window.width', 1500) as number,
-        height: config.get('window.height', 1500) as number,
+        height: config.get('window.height', 1000) as number,
         minWidth: 1200,
         minHeight: 800,
         x: config.get('window.x', undefined) as number | undefined,
@@ -94,60 +97,81 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             webviewTag: true,
         },
     });
-    [
+    if (config.get('window.Maximized')) Window.maximize();
+    if (config.get('window.FullScreen')) Window.setFullScreen(true);
+    // ブラウザビューの初期化
+    const view = new BrowserView({
+        webPreferences: {
+            preload: path.join(__dirname, '../script/GameView.js'),
+        },
+    });
+    view.webContents.loadURL('https://krunker.io');
+    Window.setBrowserView(view);
+    // ブラウザビューの位置を指定
+    view.setBounds({
+        x: 0,
+        y: 40,
+        width: Window.getBounds().width,
+        height: Window.getBounds().height - 40,
+    });
+    view.setBackgroundColor('#1a1a1a');
+    // ショートカットの登録
+    const Shortcuts = [
         [
-            'Esc',
-            () => {
-                // ゲーム内でのESCキーの有効化
-                Window.webContents.send('ESC');
-            },
-        ],
-        [
-            'F4',
+            'f4',
             () => {
                 Window.webContents.send('HQJoin');
             },
         ],
         [
-            'F5',
+            'f5',
             () => {
                 // リ↓ロ↑ードする
-                Window.reload();
+                view.webContents.reload();
             },
         ],
         [
-            'F6',
+            'ctrl+f5',
+            () => {
+                // リ↓ロ↑ードする(キャッシュ無効化)
+                view.webContents.reloadIgnoringCache();
+            },
+        ],
+        [
+            'f6',
             () => {
                 // 別のマッチへ
                 Window.webContents.send('NewGame');
             },
         ],
         [
-            'F7',
+            'f7',
             () => {
                 // クリップボードへURLをコピー
-                Window.webContents.send('CopyURL');
+                clipboard.writeText(view.webContents.getURL());
             },
         ],
         [
-            'F8',
+            'f8',
             () => {
                 // クリップボードのURLへアクセス
-                const copiedText = clipboard.readText();
-                if (copiedText.match(/^https?:\/\/krunker.io\/\?game=.*/))
-                    Window.webContents.send('OpenGame', copiedText);
+                const url = clipboard.readText();
+                if (UrlType(url) === 'game') {
+                    view.webContents.loadURL(url);
+                }
             },
         ],
         [
-            'F11',
+            'f11',
             () => {
                 const isFullScreen = Window.isFullScreen();
-                config.set('window.isFullscreen', !isFullScreen);
                 Window.setFullScreen(!isFullScreen);
+                Window.webContents.send('ToggleFullScreenUI');
+                config.set('window.FullScreen', !isFullScreen);
             },
         ],
         [
-            'Ctrl+Shift+F1',
+            'ctrl+shift+f1',
             () => {
                 // クライアントの再起動
                 app.relaunch();
@@ -155,40 +179,127 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             },
         ],
         [
-            'F12',
+            'f12',
             () => {
                 // 開発者ツールの起動(ゲーム)
-                Window.webContents.send('OpenDevTools');
+                view.webContents.openDevTools();
             },
         ],
         [
-            'Ctrl+F12',
+            'ctrl+f12',
             () => {
                 // 開発者ツールの起動(ウィンドウ)
-                Window.webContents.openDevTools({ mode: 'detach' });
+                Window.webContents.openDevTools();
             },
         ],
-    ].forEach((k) => {
+    ];
+    Shortcuts.forEach((k) => {
         localShortcut.register(
             Window,
             k[0] as string | string[],
             k[1] as () => void
         );
     });
-    if (config.get('general.ResSwp')) initSwapper(Window);
+    if (config.get('general.ResSwp')) initSwapper(view);
     Window.loadFile(path.join(__dirname, '../../assets/ui/GameWindow.html'));
     Window.removeMenu();
+    ipcMain.handle('UIInformation', () => {
+        return {
+            canGoBack: view.webContents.canGoBack(),
+            canGoNext: view.webContents.canGoForward(),
+            isFullScreen: Window.isFullScreen(),
+            isMaximized: Window.isMaximized(),
+            isLinkCmdEnabled:
+                config.get('twitch.AccountName', null) &&
+                config.get('twitch.LinkCommand', false),
+        };
+    });
+    ipcMain.handle('WindowControl', (e, action) => {
+        switch (action) {
+            case 'Maximize':
+                if (Window.isMaximized() || Window.isFullScreen()) {
+                    if (Window.isFullScreen()) {
+                        Window.setFullScreen(false);
+                        Window.webContents.send('ToggleFullScreenUI');
+                    }
+                    Window.unmaximize();
+                } else {
+                    Window.maximize();
+                }
+                break;
+            case 'Minimize':
+                Window.minimize();
+                break;
+            case 'Close':
+                Window.close();
+        }
+    });
+    ipcMain.handle('GetConfig', (e, id) => {
+        return config.get(id);
+    });
+    ipcMain.on('AppFullscrToggle', (e) => {
+        const isFullScreen = Window.isFullScreen();
+        Window.setFullScreen(!isFullScreen);
+        config.set('window.FullScreen', !isFullScreen);
+    });
+    ipcMain.on('AppFullscrUIToggle', (e) => {
+        Window.webContents.send('ToggleFullScreenUI');
+    })
+    ipcMain.on('AppGoBack', () => {
+        if (view.webContents.canGoBack()) view.webContents.goBack();
+    });
+    ipcMain.on('AppGoNext', () => {
+        if (view.webContents.canGoForward()) view.webContents.goForward();
+    });
+    ipcMain.on('LoadURL', (e, url) => {
+        view.webContents.loadURL(url);
+    });
+    ipcMain.on('AppReload', () => {
+        view.webContents.reload();
+    });
+    ipcMain.on('AppReloadWithoutCache', () => {
+        view.webContents.reloadIgnoringCache();
+    });
+    ipcMain.on('AppCopyURL', () => {
+        clipboard.writeText(view.webContents.getURL());
+    });
+    ipcMain.on('AppNewGame', () => {
+        view.webContents.loadURL('https://krunker.io/');
+    });
+    ipcMain.on('AppLinkCmd', () => {
+        const prevVal = config.get('twitch.LinkCommand', false);
+        config.set('twitch.LinkCommand', !prevVal);
+    });
+    ipcMain.on('AppRelaunch', () => {
+        app.relaunch();
+        app.quit();
+    });
+    ipcMain.on('OpenGameDevTool', () => {
+        view.webContents.openDevTools();
+    });
+    ipcMain.on('OpenWindowDevTool', () => {
+        Window.webContents.openDevTools();
+    });
+    Window.on('resize', () => {
+        const newBounds = Window.getBounds();
+        const isMaximized = Window.isMaximized() && !Window.isFullScreen();
+        const MaximizeMargin = 16;
+        view.setBounds({
+            x: 0,
+            y: 40,
+            width: newBounds.width - (isMaximized ? MaximizeMargin : 0),
+            height: newBounds.height - 40 - (isMaximized ? MaximizeMargin : 0),
+        });
+    });
     Window.on('ready-to-show', () => {
+        Window.webContents.send('InitUI');
         Window.show();
     });
-    Window.on('page-title-updated', (e) => {
-        e.preventDefault();
-    });
-    Window.webContents.on('new-window', (e, url) => {
+    view.webContents.on('new-window', (e, url) => {
         e.preventDefault();
         shell.openExternal(url);
-    })
-    Window.webContents.on('will-prevent-unload', (e) => {
+    });
+    view.webContents.on('will-prevent-unload', (e) => {
         if (
             !dialog.showMessageBoxSync({
                 buttons: [i18n.t('dialog.yes'), i18n.t('dialog.no')],
@@ -201,7 +312,18 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
         }
     });
     Window.on('close', (e) => {
+        config.set('window.Maximized', Window.isMaximized());
+        config.set('window.FullScreen', Window.isFullScreen());
+        if (!(Window.isFullScreen() || Window.isMaximized())) {
+            const Size = Window.getSize();
+            const Position = Window.getPosition();
+            config.set('window.x', Position[0]);
+            config.set('window.y', Position[1]);
+            config.set('window.width', Size[0]);
+            config.set('window.height', Size[1]);
+        }
         Window.destroy();
-    })
+        app.quit();
+    });
     return Window;
 };
