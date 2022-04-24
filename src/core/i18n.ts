@@ -4,6 +4,9 @@ import isDev from 'electron-is-dev';
 import i18next from 'i18next';
 import i18next_fsbackend from 'i18next-node-fs-backend';
 import path from 'path';
+import Store from 'electron-store';
+
+const config = new Store();
 
 export const localization = (locale: string) => {
     if (i18next.isInitialized) return i18next;
@@ -12,8 +15,8 @@ export const localization = (locale: string) => {
     return i18next
         .init({
             debug: isDev,
-            lng: 'en',
-            fallbackLng: 'en',
+            lng: config.get('general.Lang', 'en_US') as string,
+            fallbackLng: 'en_US',
             initImmediate: false,
             backend: {
                 loadPath: path.join(
