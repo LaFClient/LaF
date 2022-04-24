@@ -1,5 +1,5 @@
-import { BrowserWindow } from "electron";
-import { RPCClient } from "discord-rpc";
+import { BrowserWindow } from 'electron';
+import { RPCClient } from 'discord-rpc';
 
 interface LaFPlugin {
     name: string;
@@ -8,5 +8,14 @@ interface LaFPlugin {
 }
 
 interface DataStore {
-    [name: string]: string
+    [name: string]: string;
+}
+
+interface ClientWindow extends Window {
+    AppControl: Function;
+    OffCliV: boolean;
+    WindowType: string;
+    ToggleStatus: Function;
+    ShowMessage: Function;
+    HQJoin: Function;
 }
