@@ -118,41 +118,41 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
     // ショートカットの登録
     const Shortcuts = [
         [
-            'f4',
+            'F4',
             () => {
                 Window.webContents.send('HQJoin');
             },
         ],
         [
-            'f5',
+            'F5',
             () => {
                 // リ↓ロ↑ードする
                 view.webContents.reload();
             },
         ],
         [
-            'ctrl+f5',
+            'Ctrl+F5',
             () => {
                 // リ↓ロ↑ードする(キャッシュ無効化)
                 view.webContents.reloadIgnoringCache();
             },
         ],
         [
-            'f6',
+            'F6',
             () => {
                 // 別のマッチへ
                 Window.webContents.send('NewGame');
             },
         ],
         [
-            'f7',
+            'F7',
             () => {
                 // クリップボードへURLをコピー
                 clipboard.writeText(view.webContents.getURL());
             },
         ],
         [
-            'f8',
+            'F8',
             () => {
                 // クリップボードのURLへアクセス
                 const url = clipboard.readText();
@@ -162,7 +162,7 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             },
         ],
         [
-            'f11',
+            'F11',
             () => {
                 const isFullScreen = Window.isFullScreen();
                 Window.setFullScreen(!isFullScreen);
@@ -171,7 +171,7 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             },
         ],
         [
-            'ctrl+shift+f1',
+            'Ctrl+Shift+F1',
             () => {
                 // クライアントの再起動
                 app.relaunch();
@@ -179,14 +179,14 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             },
         ],
         [
-            'f12',
+            'F12',
             () => {
                 // 開発者ツールの起動(ゲーム)
                 view.webContents.openDevTools();
             },
         ],
         [
-            'ctrl+f12',
+            'Ctrl+F12',
             () => {
                 // 開発者ツールの起動(ウィンドウ)
                 Window.webContents.openDevTools();
