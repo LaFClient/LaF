@@ -6,6 +6,6 @@
         "confirmLeaveMsg": "Are you sure you want to leave this page? Changes you made may not be saved."
     },
     "ui": {
-        "copyUrl": "Copied URL to clipboard!"
+        "copyUrl": "&lrm;Copied URL to clipboard!&lrm;"
     }
 }
