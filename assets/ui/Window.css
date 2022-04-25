@@ -17,7 +17,6 @@ body {
     user-select: none;
     font-family: 'M PLUS 2', sans-serif;
     color: var(--font-color);
-    -webkit-app-region: drag;
     position: absolute;
     display: flex;
     justify-content: flex-start;
@@ -37,6 +36,17 @@ body {
 
 #AppControl a:hover {
     text-decoration: underline;
+}
+
+#DragArea {
+    position: absolute;
+    display: block;
+    top: 5px;
+    left: 5px;
+    width: calc(100% - 10px);
+    height: calc(100% - 5px);
+    -webkit-app-region: drag;
+    z-index: -1;
 }
 
 #AppTitle {
