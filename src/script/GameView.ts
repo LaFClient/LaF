@@ -104,3 +104,18 @@ const Shortcuts = [
 Shortcuts.forEach((k) => {
     Mousetrap.bind(k[0] as string, k[1] as () => void);
 });
+
+const ShowMessage = (message: string, color?: string) => {
+    const MesasgeList = document.getElementById('chatList')!;
+    const NewMessageId = MesasgeList.childElementCount;
+    MesasgeList.insertAdjacentHTML(
+        'beforeend',
+        `<div data-tab="-1" id="chatMsg_${NewMessageId}"><div class="chatItem"><span class="chatMsg"${
+            color ? ` style="color:${color}"` : ''
+        }>${message}</span></div><br></div>`
+    );
+};
+
+ipcRenderer.on('ShowMessage', (e, message: string, color: string) => {
+    ShowMessage(message, color);
+});

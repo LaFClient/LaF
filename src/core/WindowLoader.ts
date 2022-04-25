@@ -149,6 +149,7 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             () => {
                 // クリップボードへURLをコピー
                 clipboard.writeText(view.webContents.getURL());
+                view.webContents.send('ShowMessage', i18n.t('ui.copyUrl'), '#fc03ec');
             },
         ],
         [
@@ -262,6 +263,7 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
     });
     ipcMain.on('AppCopyURL', () => {
         clipboard.writeText(view.webContents.getURL());
+        view.webContents.send('ShowMessage', i18n.t('ui.copyUrl'), '#fc03ec');
     });
     ipcMain.on('AppNewGame', () => {
         view.webContents.loadURL('https://krunker.io/');
