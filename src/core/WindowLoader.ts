@@ -108,11 +108,14 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
     view.webContents.loadURL('https://krunker.io');
     Window.setBrowserView(view);
     // ブラウザビューの位置を指定
+    const newBounds = Window.getBounds();
+    const isMaximized = Window.isMaximized() && !Window.isFullScreen();
+    const MaximizeMargin = 16;
     view.setBounds({
         x: 0,
         y: 40,
-        width: Window.getBounds().width,
-        height: Window.getBounds().height - 40,
+        width: newBounds.width - (isMaximized ? MaximizeMargin : 0),
+        height: newBounds.height - 40 - (isMaximized ? MaximizeMargin : 0),
     });
     view.setBackgroundColor('#1a1a1a');
     // ショートカットの登録
