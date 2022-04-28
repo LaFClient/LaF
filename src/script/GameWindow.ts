@@ -6,14 +6,19 @@ import log from 'electron-log';
 import path from 'path';
 import isDev from 'electron-is-dev';
 
-import i18next from 'i18next';
-import { ClientWindow } from '../@types/types';
+import { localization } from '../core/i18n';
+import { ClientWindow, GameActivity, AltAccounts } from '../@types/types';
 import { UrlType } from '../core/Tools';
+import { i18n as i18nType } from 'i18next';
+
+const LangResource = require('../../assets/i18n/en_US.json');
 
 const PackageInfo = require('../../package.json');
 
-let i18n = i18next;
+let i18n: i18nType;
 const config = new Store();
+
+let isAMInitialized = false;
 
 declare const window: ClientWindow;
 
@@ -48,6 +53,12 @@ window.AppControl = async (id: string) => {
 };
 
 window.ToggleStatus = (id: string, valTrue: string, valFalse: string) => {
+    if (
+        Array.from(document.getElementById(id)!.classList).some(
+            (c) => c === 'disabled'
+        )
+    )
+        return;
     const BtnEl = document.getElementById(id)!;
     const status = BtnEl.innerHTML.match(valFalse);
     BtnEl.innerHTML = `<span class="material-symbols-sharp AppControlBtnIcon">${
@@ -57,6 +68,7 @@ window.ToggleStatus = (id: string, valTrue: string, valFalse: string) => {
 
 // UIの初期化
 window.onload = async () => {
+    i18n = await localization();
     const UIInfo = await ipcRenderer.invoke('UIInformation');
     document.getElementById(
         'AppFullscrToggle'
@@ -68,6 +80,13 @@ window.onload = async () => {
     )!.innerHTML = `<span class="material-symbols-sharp AppControlBtnIcon">${
         UIInfo.isLinkCmdEnabled ? 'link' : 'link_off'
     }</span>`;
+    Object.keys(LangResource.ui.title).forEach((k) => {
+        document
+            .getElementById(k)
+            ?.setAttribute('title', i18n.t(`ui.title.${k}`));
+    });
+    document.getElementById('AMLoading')!.innerText =
+        i18n.t('ui.title.AMLoading');
     setInterval(async () => {
         const UIInfo = await ipcRenderer.invoke('UIInformation');
         // ナビゲーション
@@ -99,4 +118,53 @@ ipcRenderer.on('ToggleFullScreenUI', (e) => {
 
 ipcRenderer.on('ShowMessage', (e, message: string, ms?: number) => {
     window.ShowMessage(message, ms);
+});
+
+ipcRenderer.on('GameActivity', (e, gameActivity: GameActivity) => {
+    const PreviousAccount = config.get('client.user', null);
+    const CurrentAccount = gameActivity.user;
+    config.set('client.user', CurrentAccount);
+    if (PreviousAccount !== CurrentAccount && isAMInitialized) {
+        document
+            .getElementById(`option_${PreviousAccount}`)
+            ?.removeAttribute('selected');
+        document
+            .getElementById(`option_${CurrentAccount}`)
+            ?.setAttribute('selected', '');
+    }
+    const SelectEl = document.getElementById('AltManagerSelector')! as HTMLSelectElement;
+    const SelectedValue = SelectEl.options[SelectEl.selectedIndex].value;
+    if (SelectedValue === 'Guest') {
+        document.getElementById('AMEdit')!.className = 'AppControlBtn disabled';
+        document.getElementById('AMDelete')!.className = 'AppControlBtn disabled';
+        document.getElementById('AMLogin')!.className = 'AppControlBtn disabled';
+        document.getElementById('AMLogin')!.removeAttribute('style');
+        document.getElementById('AMLogout')!.style.display = 'none';
+    }
+    else {
+        document.getElementById('AMEdit')!.className = 'AppControlBtn';
+        document.getElementById('AMDelete')!.className = 'AppControlBtn';
+        document.getElementById('AMLogin')!.className = 'AppControlBtn';
+        if (SelectedValue === CurrentAccount) {
+            document.getElementById('AMLogin')!.style.display = 'none';
+            document.getElementById('AMLogout')!.removeAttribute('style');
+        }
+        else {
+            document.getElementById('AMLogin')!.removeAttribute('style');
+            document.getElementById('AMLogout')!.style.display = 'none';
+        }
+    }
+});
+
+ipcRenderer.on('AltAccounts', (e, Accounts: AltAccounts) => {
+    const AMSelector = document.getElementById('AltManagerSelector')!;
+    let AccountsHTML = '<option id="option_Guest" value="Guest">Guest</option>';
+    const CurrentAccount = config.get('client.user', null);
+    Object.keys(Accounts).forEach((k) => {
+        AccountsHTML += `<option id="option_${k}" value="${k}"${
+            k === CurrentAccount ? ' selected' : ''
+        }>${k}</option>`;
+    });
+    AMSelector.innerHTML = AccountsHTML;
+    isAMInitialized = true;
 });

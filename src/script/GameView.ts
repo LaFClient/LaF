@@ -3,14 +3,16 @@ require('v8-compile-cache');
 import { app, clipboard, ipcRenderer } from 'electron';
 import Store from 'electron-store';
 import Mousetrap from 'mousetrap';
-import i18next from 'i18next';
+import { i18n as i18nType } from 'i18next';
+
+import { localization } from '../core/i18n';
 
 import { ClientWindow } from '../@types/types';
 import { UrlType } from '../core/Tools';
 
 const PackageInfo = require('../../package.json');
 
-let i18n = i18next;
+let i18n: i18nType;
 const config = new Store();
 
 declare const window: ClientWindow;
@@ -119,3 +121,15 @@ const ShowMessage = (message: string, color?: string) => {
 ipcRenderer.on('ShowMessage', (e, message: string, color: string) => {
     ShowMessage(message, color);
 });
+
+window.onload = async () => {
+    i18n = await localization();
+    ipcRenderer.sendTo(1, 'AltAccounts', JSON.parse(localStorage.getItem('altAccounts') || ''));
+    setInterval(() => {
+        const gameActivity = window.getGameActivity();
+        // メインプロセスへ
+        ipcRenderer.send('GameActivity', gameActivity);
+        // UIプロセスへ
+        ipcRenderer.sendTo(1, 'GameActivity', gameActivity);
+    }, 200);
+};

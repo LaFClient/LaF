@@ -6,6 +6,24 @@
         "confirmLeaveMsg": "Are you sure you want to leave this page? Changes you made may not be saved."
     },
     "ui": {
-        "copyUrl": "&lrm;Copied URL to clipboard!&lrm;"
+        "copyUrl": "&lrm;Copied URL to clipboard!&lrm;",
+        "title": {
+            "AppGoBack": "Go Back",
+            "AppGoNext": "Go Forward",
+            "AppReload": "Reload (F5)",
+            "AppHQJoin": "HyperQuickJoin (F4)",
+            "AppNewGame": "New Game (F6)",
+            "AppCopyURL": "Copy URL (F7)",
+            "AppOpenURL": "Open URL (F8)",
+            "AppLinkCmd": "!link for Twitch",
+            "AppFullscrToggle": "Fullscreen (F11)",
+            "AMAddAccount": "Add New Account",
+            "AMLoading": "Loading...",
+            "AMEdit": "Edit Account",
+            "AMDelete": "Delete Account",
+            "AMLogin": "Login to Account",
+            "AMLogout": "Logout from Account",
+            "AppSettings": "Open Settings"
+        }
     }
 }

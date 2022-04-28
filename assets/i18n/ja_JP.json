@@ -6,6 +6,24 @@
         "confirmLeaveMsg": "本当にこのページを離れますか？変更した内容は保存されていない恐れがあります。"
     },
     "ui": {
-        "copyUrl": "&lrm;クリップボードにURLをコピーしました!&lrm;"
+        "copyUrl": "&lrm;クリップボードにURLをコピーしました!&lrm;",
+        "title": {
+            "AppGoBack": "戻る",
+            "AppGoNext": "進む",
+            "AppReload": "再読み込み (F5)",
+            "AppHQJoin": "HyperQuickJoin (F4)",
+            "AppNewGame": "新しい試合に行く (F6)",
+            "AppCopyURL": "URLをコピー (F7)",
+            "AppOpenURL": "コピーしたURLを開く (F8)",
+            "AppLinkCmd": "Twitch用!linkコマンド",
+            "AppFullscrToggle": "フルスクリーン (F11)",
+            "AMAddAccount": "アカウントを追加",
+            "AMLoading": "読み込み中…",
+            "AMEdit": "アカウントを編集",
+            "AMDelete": "アカウントを削除",
+            "AMLogin": "アカウントでログイン",
+            "AMLogout": "アカウントからログアウト",
+            "AppSettings": "設定を開く"
+        }
     }
 }
