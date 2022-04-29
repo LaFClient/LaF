@@ -125,7 +125,7 @@ window.onload = async () => {
     ipcRenderer.sendTo(
         1,
         'AltAccounts',
-        JSON.parse(localStorage.getitem('altAccounts') || '{}')
+        JSON.parse(localStorage.getItem('altAccounts') || '{}')
     );
     setInterval(() => {
         const gameActivity = window.getGameActivity();
@@ -136,7 +136,7 @@ window.onload = async () => {
         ipcRenderer.sendTo(
             1,
             'AltAccounts',
-            JSON.parse(localStorage.getitem('altAccounts') || '{}')
+            JSON.parse(localStorage.getItem('altAccounts') || '{}')
         );
     }, 200);
 };
@@ -185,7 +185,7 @@ ipcRenderer.on('LoginAccount', (e, AccountName: string) => {
     window.logoutAcc();
     let accNameEl = document.getElementById('accName') as HTMLInputElement;
     let accPassEl = document.getElementById('accPass') as HTMLInputElement;
-    const altAccounts = JSON.parse(localStorage.getitem('altAccounts') || '{}');
+    const altAccounts = JSON.parse(localStorage.getItem('altAccounts') || '{}');
     accNameEl.value = AccountName;
     accPassEl.value = Buffer.from(
         altAccounts[AccountName],
@@ -267,7 +267,7 @@ ipcRenderer.on('DeleteAccount', (e, AccountName: string) => {
     );
     if (result) {
         const altAccounts = JSON.parse(
-            localStorage.getitem('altAccounts') || '{}'
+            localStorage.getItem('altAccounts') || '{}'
         );
         delete altAccounts[AccountName];
         localStorage.setItem('altAccounts', JSON.stringify(altAccounts));
