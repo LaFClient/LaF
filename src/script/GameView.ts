@@ -125,7 +125,7 @@ window.onload = async () => {
     ipcRenderer.sendTo(
         1,
         'AltAccounts',
-        JSON.parse(localStorage.getItem('altAccounts') || '')
+        JSON.parse(localStorage.getitem('altAccounts') || '{}')
     );
     setInterval(() => {
         const gameActivity = window.getGameActivity();
@@ -136,7 +136,7 @@ window.onload = async () => {
         ipcRenderer.sendTo(
             1,
             'AltAccounts',
-            JSON.parse(localStorage.getItem('altAccounts') || '')
+            JSON.parse(localStorage.getitem('altAccounts') || '{}')
         );
     }, 200);
 };
@@ -147,7 +147,7 @@ window.saveAcc = (force?: boolean) => {
     const accRespEl = document.getElementById('accResp')!;
     const accPassB64 = Buffer.from(accPassEl.value).toString('base64');
     let altAccounts: AltAccounts = JSON.parse(
-        localStorage.getItem('altAccounts') || ''
+        localStorage.getItem('altAccounts') || '{}'
     );
     if (!(accNameEl.value.length || accPassEl.value.length))
         accRespEl.innerText;
@@ -185,7 +185,7 @@ ipcRenderer.on('LoginAccount', (e, AccountName: string) => {
     window.logoutAcc();
     let accNameEl = document.getElementById('accName') as HTMLInputElement;
     let accPassEl = document.getElementById('accPass') as HTMLInputElement;
-    const altAccounts = JSON.parse(localStorage.getItem('altAccounts') || '');
+    const altAccounts = JSON.parse(localStorage.getitem('altAccounts') || '{}');
     accNameEl.value = AccountName;
     accPassEl.value = Buffer.from(
         altAccounts[AccountName],
@@ -262,10 +262,14 @@ ipcRenderer.on('EditAccount', (e, AccountName: string) => {
 });
 
 ipcRenderer.on('DeleteAccount', (e, AccountName: string) => {
-    const result = window.confirm(i18n.t('ui.altm.confirmDelete').replace('{0}', AccountName))
+    const result = window.confirm(
+        i18n.t('ui.altm.confirmDelete').replace('{0}', AccountName)
+    );
     if (result) {
-        const altAccounts = JSON.parse(localStorage.getItem('altAccounts') || '');
+        const altAccounts = JSON.parse(
+            localStorage.getitem('altAccounts') || '{}'
+        );
         delete altAccounts[AccountName];
         localStorage.setItem('altAccounts', JSON.stringify(altAccounts));
     }
-})
+});
