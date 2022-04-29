@@ -26,12 +26,23 @@ interface GameActivity {
 
 interface ClientWindow extends Window {
     AppControl: Function;
-    OffCliV: boolean;
     WindowType: string;
     ToggleStatus: Function;
     ShowMessage: Function;
     HQJoin: Function;
+    AddAccount: () => void;
+    EditAccount: () => void;
+    DeleteAccount: () => void;
+    LoginAccount: () => void;
+    LogoutAccount: () => void;
+}
+
+interface GameWindow extends Window {
+    OffCliV: boolean;
     getGameActivity: () => GameActivity;
+    logoutAcc: () => void;
+    loginAcc: () => void;
+    saveAcc: (force?: boolean) => void;
 }
 
 interface AltAccounts {

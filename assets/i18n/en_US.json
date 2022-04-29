@@ -24,6 +24,18 @@
             "AMLogin": "Login to Account",
             "AMLogout": "Logout from Account",
             "AppSettings": "Open Settings"
+        },
+        "altm": {
+            "guestAcc": "Guest / Unknown Account",
+            "addTitle": "Add Account",
+            "saveTitle": "Save Account",
+            "namePh": "Enter Username",
+            "passPh": "Enter Password",
+            "info": "Enter account info to add",
+            "ok": "Account saved successfully",
+            "error": "Couldn't add account due to error",
+            "empty": "Please input both username and password.",
+            "confirmDelete": "Are you sure you want to delete {0}?"
         }
     }
 }

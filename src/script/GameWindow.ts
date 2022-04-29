@@ -19,6 +19,7 @@ let i18n: i18nType;
 const config = new Store();
 
 let isAMInitialized = false;
+let Accounts: AltAccounts = {};
 
 declare const window: ClientWindow;
 
@@ -132,39 +133,88 @@ ipcRenderer.on('GameActivity', (e, gameActivity: GameActivity) => {
             .getElementById(`option_${CurrentAccount}`)
             ?.setAttribute('selected', '');
     }
-    const SelectEl = document.getElementById('AltManagerSelector')! as HTMLSelectElement;
+    const SelectEl = document.getElementById(
+        'AltManagerSelector'
+    )! as HTMLSelectElement;
     const SelectedValue = SelectEl.options[SelectEl.selectedIndex].value;
     if (SelectedValue === 'Guest') {
         document.getElementById('AMEdit')!.className = 'AppControlBtn disabled';
-        document.getElementById('AMDelete')!.className = 'AppControlBtn disabled';
-        document.getElementById('AMLogin')!.className = 'AppControlBtn disabled';
+        document.getElementById('AMDelete')!.className =
+            'AppControlBtn disabled';
+        document.getElementById('AMLogin')!.className =
+            'AppControlBtn disabled';
         document.getElementById('AMLogin')!.removeAttribute('style');
         document.getElementById('AMLogout')!.style.display = 'none';
-    }
-    else {
+    } else {
         document.getElementById('AMEdit')!.className = 'AppControlBtn';
         document.getElementById('AMDelete')!.className = 'AppControlBtn';
         document.getElementById('AMLogin')!.className = 'AppControlBtn';
         if (SelectedValue === CurrentAccount) {
             document.getElementById('AMLogin')!.style.display = 'none';
             document.getElementById('AMLogout')!.removeAttribute('style');
-        }
-        else {
+        } else {
             document.getElementById('AMLogin')!.removeAttribute('style');
             document.getElementById('AMLogout')!.style.display = 'none';
         }
     }
 });
 
-ipcRenderer.on('AltAccounts', (e, Accounts: AltAccounts) => {
-    const AMSelector = document.getElementById('AltManagerSelector')!;
-    let AccountsHTML = '<option id="option_Guest" value="Guest">Guest</option>';
+ipcRenderer.on('AltAccounts', (e, data: AltAccounts) => {
+    const Update = JSON.stringify(Accounts) !== '{}';
+    if (
+        JSON.stringify(data) === JSON.stringify(Accounts) &&
+        Update
+    ) {
+        return;
+    }
+    Accounts = data;
+    const AMSelector = document.getElementById(
+        'AltManagerSelector'
+    )! as HTMLSelectElement;
+    const SelectedValue = AMSelector.options[AMSelector.selectedIndex].value;
+    let AccountsHTML = `<option id="option_Guest" value="Guest">${i18n.t(
+        'ui.altm.guestAcc'
+    )}</option>`;
     const CurrentAccount = config.get('client.user', null);
     Object.keys(Accounts).forEach((k) => {
         AccountsHTML += `<option id="option_${k}" value="${k}"${
-            k === CurrentAccount ? ' selected' : ''
+            (k === CurrentAccount && !Update) || k === SelectedValue
+                ? ' selected'
+                : ''
         }>${k}</option>`;
     });
     AMSelector.innerHTML = AccountsHTML;
     isAMInitialized = true;
 });
+
+window.AddAccount = () => {
+    ipcRenderer.sendTo(2, 'AddAccount');
+};
+
+window.EditAccount = () => {
+    const SelectEl = document.getElementById(
+        'AltManagerSelector'
+    )! as HTMLSelectElement;
+    const AccountName = SelectEl.options[SelectEl.selectedIndex].value;
+    ipcRenderer.sendTo(2, 'EditAccount', AccountName);
+};
+
+window.LoginAccount = () => {
+    const SelectEl = document.getElementById(
+        'AltManagerSelector'
+    )! as HTMLSelectElement;
+    const AccountName = SelectEl.options[SelectEl.selectedIndex].value;
+    ipcRenderer.sendTo(2, 'LoginAccount', AccountName);
+};
+
+window.LogoutAccount = () => {
+    ipcRenderer.sendTo(2, 'LogoutAccount');
+};
+
+window.DeleteAccount = () => {
+    const SelectEl = document.getElementById(
+        'AltManagerSelector'
+    )! as HTMLSelectElement;
+    const AccountName = SelectEl.options[SelectEl.selectedIndex].value;
+    ipcRenderer.sendTo(2, 'DeleteAccount', AccountName);
+};

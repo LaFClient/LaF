@@ -39,19 +39,19 @@
                 <span class="material-symbols-sharp AppControlBtnIcon">fullscreen</span>
             </div>
             <div class="AppSeparator"></div>
-            <div class="AppControlBtn" id="AMAddAccount" onclick="AppControl(this.id);">
+            <div class="AppControlBtn" id="AMAddAccount" onclick="AddAccount();">
                 <span class="material-symbols-sharp AppControlBtnIcon">add</span>
             </div>
             <select id="AltManagerSelector" onchange="AppControl(this.id);">
                 <option id="AMLoading" value=""></option>
             </select>
-            <div class="AppControlBtn disabled" id="AMEdit" onclick="AppControl(this.id);"><span
+            <div class="AppControlBtn disabled" id="AMEdit" onclick="EditAccount();"><span
                     class="material-symbols-sharp AppControlBtnIcon">edit</span></div>
-            <div class="AppControlBtn disabled" id="AMDelete" onclick="AppControl(this.id);"><span
+            <div class="AppControlBtn disabled" id="AMDelete" onclick="DeleteAccount();"><span
                     class="material-symbols-sharp AppControlBtnIcon">delete</span></div>
-            <div class="AppControlBtn disabled" id="AMLogin" onclick="AppControl(this.id);"><span
+            <div class="AppControlBtn disabled" id="AMLogin" onclick="LoginAccount();"><span
                     class="material-symbols-sharp AppControlBtnIcon">login</span></div>
-            <div class="AppControlBtn" id="AMLogout" onclick="AppControl(this.id);" style="display: none;">
+            <div class="AppControlBtn" id="AMLogout" onclick="LogoutAccount();" style="display: none;">
                 <span class="material-symbols-sharp AppControlBtnIcon">logout</span></div>
             <div class="AppSeparator"></div>
             <div class="AppControlBtn" id="AppSettings" onclick="AppControl(this.id);"><span

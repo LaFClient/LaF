@@ -7,7 +7,7 @@ import { i18n as i18nType } from 'i18next';
 
 import { localization } from '../core/i18n';
 
-import { ClientWindow } from '../@types/types';
+import { AltAccounts, ClientWindow, GameWindow } from '../@types/types';
 import { UrlType } from '../core/Tools';
 
 const PackageInfo = require('../../package.json');
@@ -15,9 +15,7 @@ const PackageInfo = require('../../package.json');
 let i18n: i18nType;
 const config = new Store();
 
-declare const window: ClientWindow;
-
-window.WindowType = 'game';
+declare const window: GameWindow;
 
 window.OffCliV = true;
 
@@ -33,7 +31,7 @@ const Shortcuts = [
     [
         'f4',
         () => {
-            window.HQJoin;
+            HQJoin();
         },
     ],
     [
@@ -107,6 +105,10 @@ Shortcuts.forEach((k) => {
     Mousetrap.bind(k[0] as string, k[1] as () => void);
 });
 
+const HQJoin = () => {
+    // WIP
+};
+
 const ShowMessage = (message: string, color?: string) => {
     const MesasgeList = document.getElementById('chatList')!;
     const NewMessageId = MesasgeList.childElementCount;
@@ -118,18 +120,152 @@ const ShowMessage = (message: string, color?: string) => {
     );
 };
 
-ipcRenderer.on('ShowMessage', (e, message: string, color: string) => {
-    ShowMessage(message, color);
-});
-
 window.onload = async () => {
     i18n = await localization();
-    ipcRenderer.sendTo(1, 'AltAccounts', JSON.parse(localStorage.getItem('altAccounts') || ''));
+    ipcRenderer.sendTo(
+        1,
+        'AltAccounts',
+        JSON.parse(localStorage.getItem('altAccounts') || '')
+    );
     setInterval(() => {
         const gameActivity = window.getGameActivity();
         // メインプロセスへ
         ipcRenderer.send('GameActivity', gameActivity);
         // UIプロセスへ
         ipcRenderer.sendTo(1, 'GameActivity', gameActivity);
+        ipcRenderer.sendTo(
+            1,
+            'AltAccounts',
+            JSON.parse(localStorage.getItem('altAccounts') || '')
+        );
     }, 200);
 };
+
+window.saveAcc = (force?: boolean) => {
+    const accNameEl = document.getElementById('accName')! as HTMLInputElement;
+    const accPassEl = document.getElementById('accPass')! as HTMLInputElement;
+    const accRespEl = document.getElementById('accResp')!;
+    const accPassB64 = Buffer.from(accPassEl.value).toString('base64');
+    let altAccounts: AltAccounts = JSON.parse(
+        localStorage.getItem('altAccounts') || ''
+    );
+    if (!(accNameEl.value.length || accPassEl.value.length))
+        accRespEl.innerText;
+    if (!altAccounts) {
+        altAccounts = {
+            [accNameEl.value]: accPassB64,
+        };
+        localStorage.setItem('altAccounts', JSON.stringify(altAccounts));
+        accNameEl.value = '';
+        accPassEl.value = '';
+        accRespEl!.innerText = i18n.t('ui.altm.ok');
+    } else {
+        let existing = false;
+        Object.keys(altAccounts).forEach((k) => {
+            if (k === accNameEl.value && !force) {
+                accRespEl!.innerText = i18n.t('ui.altm.error');
+                existing = true;
+            }
+        });
+        if (!existing || force) {
+            altAccounts[accNameEl.value] = accPassB64;
+            localStorage.setItem('altAccounts', JSON.stringify(altAccounts));
+            accNameEl.value = '';
+            accPassEl.value = '';
+            accRespEl.innerText = i18n.t('ui.altm.ok');
+        }
+    }
+};
+
+ipcRenderer.on('ShowMessage', (e, message: string, color: string) => {
+    ShowMessage(message, color);
+});
+
+ipcRenderer.on('LoginAccount', (e, AccountName: string) => {
+    window.logoutAcc();
+    let accNameEl = document.getElementById('accName') as HTMLInputElement;
+    let accPassEl = document.getElementById('accPass') as HTMLInputElement;
+    const altAccounts = JSON.parse(localStorage.getItem('altAccounts') || '');
+    accNameEl.value = AccountName;
+    accPassEl.value = Buffer.from(
+        altAccounts[AccountName],
+        'base64'
+    ).toString();
+    accNameEl.style.display = 'none';
+    accPassEl.style.display = 'none';
+    document
+        .getElementById('menuWindow')
+        ?.lastElementChild?.lastElementChild?.remove();
+    setTimeout(() => {
+        window.loginAcc();
+    }, 100);
+});
+
+ipcRenderer.on('LogoutAccount', (e) => {
+    window.logoutAcc();
+});
+
+ipcRenderer.on('AddAccount', (e) => {
+    document.getElementById('windowHolder')!.className = 'popupWin';
+    document.getElementById('menuWindowSideL')!.style.display = 'none';
+    const menuWindowEl = document.getElementById('menuWindow')!;
+    menuWindowEl.outerHTML = `
+    <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px;'>
+        <div style='position:relative;z-index:9'>
+            <div id='referralHeader'>Add Account</div>
+            <div style='height:20px;'></div><input id='accName' type='text' placeholder='${i18n.t(
+                'ui.altm.namePh'
+            )}' class='accountInput' style='margin-top:0'><input id='accPass' type='password' placeholder='${i18n.t(
+        'ui.altm.passPh'
+    )}' class='accountInput'>
+            <div class='setBodH' style='margin-left:0px;width:calc(100% - 40px)'>
+                <div id='accResp' style='margin-top:20px;margin-bottom:20px;font-size:18px;color:rgba(255,255,255,0.5);text-align:center'>${i18n.t(
+                    'ui.altm.info'
+                )}</span></div>
+            </div>
+            <div style='width:100%;text-align:center;margin-top:10px;background-color:rgba(0,0,0,0.3);padding-top:10px;padding-bottom:20px;'>
+                <div class='accBtn button buttonPI' style='width:95%' onclick='SOUND.play(\`select_0\`,0.1);saveAcc();'>${i18n.t(
+                    'ui.altm.addTitle'
+                )}</div>
+            </div>
+        </div>
+    </div>`;
+    document.getElementById('windowHolder')!.style.display = 'block';
+});
+
+ipcRenderer.on('EditAccount', (e, AccountName: string) => {
+    document.getElementById('windowHolder')!.className = 'popupWin';
+    document.getElementById('menuWindowSideL')!.style.display = 'none';
+    const menuWindowEl = document.getElementById('menuWindow')!;
+    menuWindowEl.outerHTML = `
+    <div id='menuWindow' class='dark' style='overflow-y: auto; width: 960px;'>
+        <div style='position:relative;z-index:9'>
+            <div id='referralHeader'>Edit Account</div>
+            <div style='height:20px;'></div><input id='accName' type='text' placeholder='${i18n.t(
+                'ui.altm.namePh'
+            )}' class='accountInput' style='margin-top:0' value='${AccountName}' readonly='readonly'><input id='accPass' type='password' placeholder='${i18n.t(
+        'ui.altm.passPh'
+    )}' class='accountInput'>
+            <div class='setBodH' style='margin-left:0px;width:calc(100% - 40px)'>
+                <div id='accResp' style='margin-top:20px;margin-bottom:20px;font-size:18px;color:rgba(255,255,255,0.5);text-align:center'>${i18n.t(
+                    'ui.altm.info'
+                )}</span></div>
+            </div>
+            <div style='width:100%;text-align:center;margin-top:10px;background-color:rgba(0,0,0,0.3);padding-top:10px;padding-bottom:20px;'>
+                <div class='accBtn button buttonPI' style='width:95%' onclick='SOUND.play(\`select_0\`,0.1);saveAcc(true);'>${i18n.t(
+                    'ui.altm.saveTitle'
+                )}</div>
+            </div>
+        </div>
+    </div>`;
+    document.getElementById('windowHolder')!.style.display = 'block';
+});
+
+ipcRenderer.on('DeleteAccount', (e, AccountName: string) => {
+    const result = window.confirm(i18n.t('ui.altm.confirmDelete').replace('{0}', AccountName))
+    if (result) {
+        const altAccounts = JSON.parse(localStorage.getItem('altAccounts') || '');
+        delete altAccounts[AccountName];
+        localStorage.setItem('altAccounts', JSON.stringify(altAccounts));
+    }
+})
