@@ -120,8 +120,19 @@ const ShowMessage = (message: string, color?: string) => {
     );
 };
 
+const injectWaterMark = () => {
+    const gameUIEl = document.getElementById('gameUI')!;
+    gameUIEl.insertAdjacentHTML(
+        'beforeend',
+        `
+    <div id='LaFWaterMark' style='position:absolute;font-size:15px;bottom:5px;right:5px;color:rgba(255, 255, 255, .75);'>LaF v${PackageInfo.version}</div>
+    `
+    );
+};
+
 window.onload = async () => {
     i18n = await localization();
+    injectWaterMark();
     ipcRenderer.sendTo(
         1,
         'AltAccounts',
