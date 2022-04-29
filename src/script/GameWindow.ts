@@ -100,7 +100,7 @@ window.onload = async () => {
             UIInfo.canGoNext ? '' : ' disabled'
         }`;
         // ウィンドウのコントロールボタン
-        if (UIInfo.isMaximized) {
+        if (UIInfo.isMaximized || UIInfo.isFullScreen) {
             document
                 .getElementById('MaximizeIcon')
                 ?.setAttribute('src', './img/maximized.svg');
