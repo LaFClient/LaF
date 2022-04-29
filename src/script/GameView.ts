@@ -110,9 +110,9 @@ const HQJoin = () => {
 };
 
 const ShowMessage = (message: string, color?: string) => {
-    const MesasgeList = document.getElementById('chatList')!;
-    const NewMessageId = MesasgeList.childElementCount;
-    MesasgeList.insertAdjacentHTML(
+    const MessageList = document.getElementById('chatList')!;
+    const NewMessageId = MessageList.childElementCount;
+    MessageList.insertAdjacentHTML(
         'beforeend',
         `<div data-tab="-1" id="chatMsg_${NewMessageId}"><div class="chatItem"><span class="chatMsg"${
             color ? ` style="color:${color}"` : ''
