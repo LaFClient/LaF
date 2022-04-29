@@ -15,13 +15,14 @@ import path from 'path';
 import * as fs from 'fs';
 import * as localShortcut from 'electron-localshortcut';
 import isDev from 'electron-is-dev';
+import { i18n as i18nType } from 'i18next';
 
-import i18next from 'i18next';
 import { UrlType } from './Tools';
+import { localization } from './i18n';
 
 const PackageInfo = require('../../package.json');
 
-let i18n = i18next;
+let i18n: i18nType;
 const config = new Store();
 
 const initSwapper = (win: BrowserView) => {
@@ -79,6 +80,7 @@ const initSwapper = (win: BrowserView) => {
 };
 
 export const LaunchGame = async (): Promise<BrowserWindow> => {
+    i18n = await localization();
     // ウィンドウの初期化
     const Window = new BrowserWindow({
         width: config.get('window.width', 1500) as number,
