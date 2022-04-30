@@ -14,7 +14,7 @@ import log from 'electron-log';
 import path from 'path';
 import * as fs from 'fs';
 import * as localShortcut from 'electron-localshortcut';
-import isDev from 'electron-is-dev';
+import { v4 } from 'uuid';
 import { i18n as i18nType } from 'i18next';
 
 import { UrlType } from './Tools';
@@ -24,6 +24,8 @@ const PackageInfo = require('../../package.json');
 
 let i18n: i18nType;
 const config = new Store();
+
+let GameWindow: BrowserWindow;
 
 const initSwapper = (win: BrowserView) => {
     const swapPath = path.join(app.getPath('documents'), '/LaFSwap');
@@ -154,7 +156,11 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             () => {
                 // クリップボードへURLをコピー
                 clipboard.writeText(view.webContents.getURL());
-                view.webContents.send('ShowMessage', i18n.t('ui.copyUrl'), '#fc03ec');
+                view.webContents.send(
+                    'ShowMessage',
+                    i18n.t('ui.copyUrl'),
+                    '#fc03ec'
+                );
             },
         ],
         [
@@ -240,9 +246,6 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
                 Window.close();
         }
     });
-    ipcMain.handle('GetConfig', (e, id) => {
-        return config.get(id);
-    });
     ipcMain.on('AppFullscrToggle', (e) => {
         const isFullScreen = Window.isFullScreen();
         Window.setFullScreen(!isFullScreen);
@@ -250,7 +253,7 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
     });
     ipcMain.on('AppFullscrUIToggle', (e) => {
         Window.webContents.send('ToggleFullScreenUI');
-    })
+    });
     ipcMain.on('AppGoBack', () => {
         if (view.webContents.canGoBack()) view.webContents.goBack();
     });
@@ -302,9 +305,15 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
         Window.webContents.send('InitUI');
         Window.show();
     });
-    view.webContents.on('new-window', (e, url) => {
+    view.webContents.on('new-window', async (e, url) => {
         e.preventDefault();
-        shell.openExternal(url);
+        if (UrlType(url) === 'game') {
+            view.webContents.loadURL(url);
+        } else if (UrlType(url) === 'external') {
+            shell.openExternal(url);
+        } else {
+            await LaunchSocial(url);
+        }
     });
     view.webContents.on('will-prevent-unload', (e) => {
         if (
@@ -316,6 +325,12 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
             })
         ) {
             e.preventDefault();
+        }
+    });
+    view.webContents.on('will-navigate', (e, url: string) => {
+        e.preventDefault();
+        if (UrlType(url) === 'external') {
+            shell.openExternal(url);
         }
     });
     Window.on('close', (e) => {
@@ -331,6 +346,212 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
         }
         Window.destroy();
         app.quit();
+    });
+    GameWindow = Window;
+    return Window;
+};
+
+const LaunchSocial = async (url: string): Promise<BrowserWindow> => {
+    // WindowId
+    const WindowId = v4();
+    // ウィンドウの初期化
+    const Window = new BrowserWindow({
+        width: 1200,
+        height: 800,
+        minWidth: 900,
+        minHeight: 600,
+        center: true,
+        backgroundColor: '#1a1a1a',
+        show: false,
+        title: 'LaF Client',
+        frame: false,
+        webPreferences: {
+            contextIsolation: false,
+            preload: path.join(__dirname, '../script/SocialWindow.js'),
+            webviewTag: true,
+        },
+    });
+    // ブラウザビューの初期化
+    const view = new BrowserView({
+        webPreferences: {
+            preload: path.join(__dirname, '../script/SocialView.js'),
+        },
+    });
+    view.webContents.loadURL(url);
+    Window.setBrowserView(view);
+    // ブラウザビューの位置を指定
+    const newBounds = Window.getBounds();
+    const isMaximized = Window.isMaximized() && !Window.isFullScreen();
+    const MaximizeMargin = 16;
+    view.setBounds({
+        x: 0,
+        y: 40,
+        width: newBounds.width - (isMaximized ? MaximizeMargin : 0),
+        height: newBounds.height - 40 - (isMaximized ? MaximizeMargin : 0),
+    });
+    view.setBackgroundColor('#1a1a1a');
+    // ショートカットの登録
+    const Shortcuts = [
+        [
+            'F5',
+            () => {
+                // リ↓ロ↑ードする
+                view.webContents.reload();
+            },
+        ],
+        [
+            'Ctrl+F5',
+            () => {
+                // リ↓ロ↑ードする(キャッシュ無効化)
+                view.webContents.reloadIgnoringCache();
+            },
+        ],
+        [
+            'F7',
+            () => {
+                // クリップボードへURLをコピー
+                clipboard.writeText(view.webContents.getURL());
+            },
+        ],
+        [
+            'F8',
+            () => {
+                // クリップボードのURLへアクセス
+                const url = clipboard.readText();
+                if (UrlType(url) !== 'game' || UrlType(url) !== 'external') {
+                    view.webContents.loadURL(url);
+                }
+            },
+        ],
+        [
+            'F12',
+            () => {
+                // 開発者ツールの起動(ソーシャル)
+                view.webContents.openDevTools();
+            },
+        ],
+        [
+            'Ctrl+F12',
+            () => {
+                // 開発者ツールの起動(ウィンドウ)
+                Window.webContents.openDevTools();
+            },
+        ],
+    ];
+    Shortcuts.forEach((k) => {
+        localShortcut.register(
+            Window,
+            k[0] as string | string[],
+            k[1] as () => void
+        );
+    });
+    if (config.get('general.ResSwp')) initSwapper(view);
+    Window.loadFile(path.join(__dirname, '../../assets/ui/SocialWindow.html'));
+    Window.removeMenu();
+    ipcMain.handle(`UIInformation-${WindowId}`, () => {
+        return {
+            canGoBack: view.webContents.canGoBack(),
+            canGoNext: view.webContents.canGoForward(),
+            isFullScreen: Window.isFullScreen(),
+            isMaximized: Window.isMaximized(),
+            isLinkCmdEnabled:
+                config.get('twitch.AccountName', null) &&
+                config.get('twitch.LinkCommand', false),
+        };
+    });
+    ipcMain.handle(`WindowControl-${WindowId}`, (e, action) => {
+        switch (action) {
+            case 'Maximize':
+                if (Window.isMaximized() || Window.isFullScreen()) {
+                    if (Window.isFullScreen()) {
+                        Window.setFullScreen(false);
+                        Window.webContents.send('ToggleFullScreenUI');
+                    }
+                    Window.unmaximize();
+                } else {
+                    Window.maximize();
+                }
+                break;
+            case 'Minimize':
+                Window.minimize();
+                break;
+            case 'Close':
+                Window.close();
+        }
+    });
+    ipcMain.on(`AppGoBack-${WindowId}`, () => {
+        if (view.webContents.canGoBack()) view.webContents.goBack();
+    });
+    ipcMain.on(`AppGoNext-${WindowId}`, () => {
+        if (view.webContents.canGoForward()) view.webContents.goForward();
+    });
+    ipcMain.on(`LoadURL-${WindowId}`, (e, url) => {
+        view.webContents.loadURL(url);
+    });
+    ipcMain.on(`AppReload-${WindowId}`, () => {
+        view.webContents.reload();
+    });
+    ipcMain.on(`AppReloadWithoutCache-${WindowId}`, () => {
+        view.webContents.reloadIgnoringCache();
+    });
+    ipcMain.on(`AppCopyURL-${WindowId}`, () => {
+        clipboard.writeText(view.webContents.getURL());
+    });
+    ipcMain.on(`OpenSocialDevTool-${WindowId}`, () => {
+        view.webContents.openDevTools();
+    });
+    ipcMain.on(`OpenWindowDevTool-${WindowId}`, () => {
+        Window.webContents.openDevTools();
+    });
+    Window.on('resize', () => {
+        const newBounds = Window.getBounds();
+        const isMaximized = Window.isMaximized() && !Window.isFullScreen();
+        const MaximizeMargin = 16;
+        view.setBounds({
+            x: 0,
+            y: 40,
+            width: newBounds.width - (isMaximized ? MaximizeMargin : 0),
+            height: newBounds.height - 40 - (isMaximized ? MaximizeMargin : 0),
+        });
+    });
+    Window.on('ready-to-show', () => {
+        Window.webContents.send('InitUI');
+        Window.show();
+        Window.webContents.send('WindowId', WindowId);
+        view.webContents.send('WindowId', WindowId);
+    });
+    view.webContents.on('new-window', (e, url) => {
+        e.preventDefault();
+        if (UrlType(url) !== 'game' && UrlType(url) !== 'external') {
+            if (UrlType(url) !== UrlType(view.webContents.getURL())) {
+                LaunchSocial(url);
+            } else {
+                view.webContents.loadURL(url);
+            }
+        } else if (UrlType(url) === 'game') {
+            GameWindow.getBrowserView()?.webContents.loadURL(url);
+        }
+    });
+    view.webContents.on('will-prevent-unload', (e) => {
+        if (
+            !dialog.showMessageBoxSync({
+                buttons: [i18n.t('dialog.yes'), i18n.t('dialog.no')],
+                title: i18n.t('dialog.confirmLeaveTitle'),
+                message: i18n.t('dialog.confirmLeaveMsg'),
+                noLink: true,
+            })
+        ) {
+            e.preventDefault();
+        }
+    });
+    view.webContents.on('will-navigate', (e, url: string) => {
+        e.preventDefault();
+        if (UrlType(url) === 'external') {
+            shell.openExternal(url);
+        }
+    });
+    Window.on('close', (e) => {
+        Window.destroy();
     });
     return Window;
 };
