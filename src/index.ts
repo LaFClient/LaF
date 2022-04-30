@@ -96,10 +96,14 @@ chromiumFlags.forEach((f) => {
 log.info(flagsInfo);
 
 app.on('ready', async () => {
+    // Ipcハンドラのセットアップ
     await setupIpc();
+    // i18nモジュールの初期化
     i18n = await localization();
+    // カスタムファイルプロトコルの登録
     protocol.registerFileProtocol('laf', (request, callback) =>
         callback(decodeURI(request.url.replace(/^laf:\//, '')))
     );
+    // ゲームの起動
     await WindowLoader.LaunchGame();
 });

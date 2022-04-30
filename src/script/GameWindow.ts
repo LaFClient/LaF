@@ -53,6 +53,7 @@ window.AppControl = async (id: string) => {
     }
 };
 
+// ボタンのアイコンを切り替える
 window.ToggleStatus = (id: string, valTrue: string, valFalse: string) => {
     if (
         Array.from(document.getElementById(id)!.classList).some(
@@ -121,6 +122,8 @@ ipcRenderer.on('ShowMessage', (e, message: string, ms?: number) => {
     window.ShowMessage(message, ms);
 });
 
+
+// AltManagerのUIを更新
 ipcRenderer.on('GameActivity', (e, gameActivity: GameActivity) => {
     const PreviousAccount = config.get('client.user', null);
     const CurrentAccount = gameActivity.user;
@@ -159,6 +162,7 @@ ipcRenderer.on('GameActivity', (e, gameActivity: GameActivity) => {
     }
 });
 
+// AltManagerのセレクタを更新
 ipcRenderer.on('AltAccounts', (e, data: AltAccounts) => {
     const Update = JSON.stringify(Accounts) !== '{}';
     if (

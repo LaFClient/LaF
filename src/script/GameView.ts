@@ -17,6 +17,7 @@ const config = new Store();
 
 declare const window: GameWindow;
 
+// クライアントのバージョン警告を無効化
 window.OffCliV = true;
 
 // ショートカットの登録
@@ -75,6 +76,7 @@ const Shortcuts = [
     [
         'f11',
         () => {
+            // フルスクリーンの切り替え
             ipcRenderer.send('AppFullscrToggle');
             ipcRenderer.send('AppFullscrUIToggle');
         },
@@ -105,10 +107,12 @@ Shortcuts.forEach((k) => {
     Mousetrap.bind(k[0] as string, k[1] as () => void);
 });
 
+// クイックジョイン
 const HQJoin = () => {
     // WIP
 };
 
+// チャット欄にメッセージを表示するやつ
 const ShowMessage = (message: string, color?: string) => {
     const MessageList = document.getElementById('chatList')!;
     const NewMessageId = MessageList.childElementCount;
@@ -120,6 +124,7 @@ const ShowMessage = (message: string, color?: string) => {
     );
 };
 
+// ウォーターマークの挿入
 const injectWaterMark = () => {
     const gameUIEl = document.getElementById('gameUI')!;
     gameUIEl.insertAdjacentHTML(
@@ -130,6 +135,7 @@ const injectWaterMark = () => {
     );
 };
 
+// 読み込み時に発火
 window.onload = async () => {
     i18n = await localization();
     injectWaterMark();
@@ -152,10 +158,12 @@ window.onload = async () => {
     }, 200);
 };
 
+// アカウントをAltManagerに保存
 window.saveAcc = (force?: boolean) => {
     const accNameEl = document.getElementById('accName')! as HTMLInputElement;
     const accPassEl = document.getElementById('accPass')! as HTMLInputElement;
     const accRespEl = document.getElementById('accResp')!;
+    // パスワードは一応Base64にしておく(悪あがき)
     const accPassB64 = Buffer.from(accPassEl.value).toString('base64');
     let altAccounts: AltAccounts = JSON.parse(
         localStorage.getItem('altAccounts') || '{}'
@@ -192,6 +200,7 @@ ipcRenderer.on('ShowMessage', (e, message: string, color: string) => {
     ShowMessage(message, color);
 });
 
+// アカウントでログイン
 ipcRenderer.on('LoginAccount', (e, AccountName: string) => {
     window.logoutAcc();
     let accNameEl = document.getElementById('accName') as HTMLInputElement;
@@ -212,10 +221,12 @@ ipcRenderer.on('LoginAccount', (e, AccountName: string) => {
     }, 100);
 });
 
+// アカウントからログアウト
 ipcRenderer.on('LogoutAccount', (e) => {
     window.logoutAcc();
 });
 
+// アカウント登録画面を表示
 ipcRenderer.on('AddAccount', (e) => {
     document.getElementById('windowHolder')!.className = 'popupWin';
     document.getElementById('menuWindowSideL')!.style.display = 'none';
@@ -244,6 +255,7 @@ ipcRenderer.on('AddAccount', (e) => {
     document.getElementById('windowHolder')!.style.display = 'block';
 });
 
+// アカウントの編集画面を表示
 ipcRenderer.on('EditAccount', (e, AccountName: string) => {
     document.getElementById('windowHolder')!.className = 'popupWin';
     document.getElementById('menuWindowSideL')!.style.display = 'none';
@@ -272,6 +284,7 @@ ipcRenderer.on('EditAccount', (e, AccountName: string) => {
     document.getElementById('windowHolder')!.style.display = 'block';
 });
 
+// アカウントの削除画面を表示
 ipcRenderer.on('DeleteAccount', (e, AccountName: string) => {
     const result = window.confirm(
         i18n.t('ui.altm.confirmDelete').replace('{0}', AccountName)

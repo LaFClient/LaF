@@ -8,8 +8,10 @@ import Store from 'electron-store';
 const config = new Store();
 
 export const localization = (locale?: string) => {
+    // 初期化済み→そのままreturn
     if (i18next.isInitialized) return i18next;
     log.info('Initializing i18n module...');
+    // jsonを使うためのミドルウェア
     i18next.use(i18next_fsbackend);
     return i18next
         .init({
