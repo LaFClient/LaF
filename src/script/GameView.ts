@@ -20,6 +20,25 @@ declare const window: GameWindow;
 // クライアントのバージョン警告を無効化
 window.OffCliV = true;
 
+// AltManager関係
+ipcRenderer.sendTo(
+    1,
+    'AltAccounts',
+    JSON.parse(localStorage.getItem('altAccounts') || '{}')
+);
+setInterval(() => {
+    const gameActivity = window.getGameActivity();
+    // メインプロセスへ
+    ipcRenderer.send('GameActivity', gameActivity);
+    // UIプロセスへ
+    ipcRenderer.sendTo(1, 'GameActivity', gameActivity);
+    ipcRenderer.sendTo(
+        1,
+        'AltAccounts',
+        JSON.parse(localStorage.getItem('altAccounts') || '{}')
+    );
+}, 200);
+
 // ショートカットの登録
 const Shortcuts = [
     [
@@ -139,23 +158,6 @@ const injectWaterMark = () => {
 window.onload = async () => {
     i18n = await localization();
     injectWaterMark();
-    ipcRenderer.sendTo(
-        1,
-        'AltAccounts',
-        JSON.parse(localStorage.getItem('altAccounts') || '{}')
-    );
-    setInterval(() => {
-        const gameActivity = window.getGameActivity();
-        // メインプロセスへ
-        ipcRenderer.send('GameActivity', gameActivity);
-        // UIプロセスへ
-        ipcRenderer.sendTo(1, 'GameActivity', gameActivity);
-        ipcRenderer.sendTo(
-            1,
-            'AltAccounts',
-            JSON.parse(localStorage.getItem('altAccounts') || '{}')
-        );
-    }, 200);
 };
 
 // アカウントをAltManagerに保存
