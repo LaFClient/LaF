@@ -1,6 +1,6 @@
 // LaF Client GameFrame Preload (c) 2022 Hiro527
 require('v8-compile-cache');
-import { app, clipboard, ipcRenderer } from 'electron';
+import { clipboard, ipcRenderer } from 'electron';
 import Store from 'electron-store';
 import Mousetrap from 'mousetrap';
 import { i18n as i18nType } from 'i18next';

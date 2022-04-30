@@ -3,8 +3,6 @@ require('v8-compile-cache');
 import { app, BrowserWindow, clipboard, ipcRenderer } from 'electron';
 import Store from 'electron-store';
 import log from 'electron-log';
-import path from 'path';
-import isDev from 'electron-is-dev';
 
 import { localization } from '../core/i18n';
 import { ClientWindow, GameActivity, AltAccounts } from '../@types/types';
@@ -38,7 +36,9 @@ window.AppControl = async (id: string) => {
         case 'Close':
             await ipcRenderer.invoke(`WindowControl-${WindowId}`, id);
             if (id === 'Maximize') {
-                const UIInfo = await ipcRenderer.invoke(`UIInformation-${WindowId}`);
+                const UIInfo = await ipcRenderer.invoke(
+                    `UIInformation-${WindowId}`
+                );
                 if (UIInfo.isMaximized) {
                     document
                         .getElementById('MaximizeIcon')
