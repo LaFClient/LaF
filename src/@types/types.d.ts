@@ -37,6 +37,12 @@ interface ClientWindow extends Window {
     LogoutAccount: () => void;
 }
 
+interface SettingsWindow extends Window {
+    AppControl: Function;
+    setConfig: Function;
+    getConfig: Function;
+}
+
 interface GameWindow extends Window {
     OffCliV: boolean;
     getGameActivity: () => GameActivity;

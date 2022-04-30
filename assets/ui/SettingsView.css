@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+2:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --bg-color: rgba(26, 26, 26, 1);
+    --font-color: rgba(255, 255, 255, 1);
+    --separator-color: rgba(255, 255, 255, .8);
+    --hover-color: rgba(255, 255, 255, .25);
+}
+
+body {
+    user-select: none;
+    font-family: 'M PLUS 2', sans-serif;
+    color: var(--font-color);
+    top: 0;
+    left: 0;
+    margin: 0;
+}
