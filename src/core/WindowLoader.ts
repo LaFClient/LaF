@@ -290,6 +290,9 @@ export const LaunchGame = async (): Promise<BrowserWindow> => {
     ipcMain.on('OpenWindowDevTool', () => {
         Window.webContents.openDevTools();
     });
+    ipcMain.on('AppSettings', async () => {
+        await OpenSettings();
+    });
     Window.on('resize', () => {
         const newBounds = Window.getBounds();
         const isMaximized = Window.isMaximized() && !Window.isFullScreen();
@@ -502,6 +505,146 @@ const LaunchSocial = async (url: string): Promise<BrowserWindow> => {
     });
     ipcMain.on(`OpenWindowDevTool-${WindowId}`, () => {
         Window.webContents.openDevTools();
+    });
+    Window.on('resize', () => {
+        const newBounds = Window.getBounds();
+        const isMaximized = Window.isMaximized() && !Window.isFullScreen();
+        const MaximizeMargin = 16;
+        view.setBounds({
+            x: 0,
+            y: 40,
+            width: newBounds.width - (isMaximized ? MaximizeMargin : 0),
+            height: newBounds.height - 40 - (isMaximized ? MaximizeMargin : 0),
+        });
+    });
+    Window.on('ready-to-show', () => {
+        Window.webContents.send('InitUI');
+        Window.show();
+        Window.webContents.send('WindowId', WindowId);
+        view.webContents.send('WindowId', WindowId);
+    });
+    view.webContents.on('new-window', (e, url) => {
+        e.preventDefault();
+        if (UrlType(url) !== 'game' && UrlType(url) !== 'external') {
+            if (UrlType(url) !== UrlType(view.webContents.getURL())) {
+                LaunchSocial(url);
+            } else {
+                view.webContents.loadURL(url);
+            }
+        } else if (UrlType(url) === 'game') {
+            GameWindow.getBrowserView()?.webContents.loadURL(url);
+        }
+    });
+    view.webContents.on('will-prevent-unload', (e) => {
+        if (
+            !dialog.showMessageBoxSync({
+                buttons: [i18n.t('dialog.yes'), i18n.t('dialog.no')],
+                title: i18n.t('dialog.confirmLeaveTitle'),
+                message: i18n.t('dialog.confirmLeaveMsg'),
+                noLink: true,
+            })
+        ) {
+            e.preventDefault();
+        }
+    });
+    view.webContents.on('will-navigate', (e, url: string) => {
+        e.preventDefault();
+        if (UrlType(url) === 'external') {
+            shell.openExternal(url);
+        }
+    });
+    Window.on('close', (e) => {
+        Window.destroy();
+    });
+    return Window;
+};
+
+const OpenSettings = async (): Promise<BrowserWindow> => {
+    // WindowId
+    const WindowId = v4();
+    // ウィンドウの初期化
+    const Window = new BrowserWindow({
+        width: 900,
+        height: 600,
+        resizable: false,
+        center: true,
+        backgroundColor: '#1a1a1a',
+        show: false,
+        title: 'LaF Client',
+        frame: false,
+        webPreferences: {
+            contextIsolation: false,
+            preload: path.join(__dirname, '../script/SettingsWindow.js'),
+            webviewTag: true,
+        },
+    });
+    // ブラウザビューの初期化
+    const view = new BrowserView({
+        webPreferences: {
+            preload: path.join(__dirname, '../script/SettingsView.js'),
+        },
+    });
+    view.webContents.loadFile(
+        path.join(__dirname, '../../assets/ui/SettingsView.html')
+    );
+    Window.setBrowserView(view);
+    // ブラウザビューの位置を指定
+    const newBounds = Window.getBounds();
+    const isMaximized = Window.isMaximized() && !Window.isFullScreen();
+    const MaximizeMargin = 16;
+    view.setBounds({
+        x: 0,
+        y: 40,
+        width: newBounds.width - (isMaximized ? MaximizeMargin : 0),
+        height: newBounds.height - 40 - (isMaximized ? MaximizeMargin : 0),
+    });
+    view.setBackgroundColor('#1a1a1a');
+    // ショートカットの登録
+    const Shortcuts = [
+        [
+            'Ctrl+F12',
+            () => {
+                // 開発者ツールの起動(ウィンドウ)
+                Window.webContents.openDevTools();
+            },
+        ],
+    ];
+    Shortcuts.forEach((k) => {
+        localShortcut.register(
+            Window,
+            k[0] as string | string[],
+            k[1] as () => void
+        );
+    });
+    Window.loadFile(
+        path.join(__dirname, '../../assets/ui/SettingsWindow.html')
+    );
+    Window.removeMenu();
+    ipcMain.handle(`WindowControl-${WindowId}`, (e, action) => {
+        switch (action) {
+            case 'Maximize':
+                if (Window.isMaximized() || Window.isFullScreen()) {
+                    if (Window.isFullScreen()) {
+                        Window.setFullScreen(false);
+                        Window.webContents.send('ToggleFullScreenUI');
+                    }
+                    Window.unmaximize();
+                } else {
+                    Window.maximize();
+                }
+                break;
+            case 'Minimize':
+                Window.minimize();
+                break;
+            case 'Close':
+                Window.close();
+        }
+    });
+    ipcMain.on(`OpenWindowDevTool-${WindowId}`, () => {
+        Window.webContents.openDevTools();
+    });
+    ipcMain.on(`AppControlBtn-${WindowId}`, () => {
+        shell.openExternal(view.webContents.getURL());
     });
     Window.on('resize', () => {
         const newBounds = Window.getBounds();
