@@ -81,6 +81,7 @@ const chromiumFlags: any[] = [
         'no-user-gesture-required',
         config.get('general.AutoPlay', true),
     ],
+    ['proxy-server', 'localhost:37564', config.get('dev.enableProxy', false)],
 ];
 chromiumFlags.forEach((f) => {
     const isEnable = f[2] ? 'Enable' : 'Disable';
