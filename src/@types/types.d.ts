@@ -13,8 +13,8 @@ interface DataStore {
 
 interface GameActivity {
     class: {
-        name: string,
-        index: string
+        name: string;
+        index: string;
     };
     custom: boolean;
     id: string;
