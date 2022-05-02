@@ -122,7 +122,6 @@ ipcRenderer.on('ShowMessage', (e, message: string, ms?: number) => {
     window.ShowMessage(message, ms);
 });
 
-
 // AltManagerのUIを更新
 ipcRenderer.on('GameActivity', (e, gameActivity: GameActivity) => {
     const PreviousAccount = config.get('client.user', null);
@@ -165,10 +164,7 @@ ipcRenderer.on('GameActivity', (e, gameActivity: GameActivity) => {
 // AltManagerのセレクタを更新
 ipcRenderer.on('AltAccounts', (e, data: AltAccounts) => {
     const Update = JSON.stringify(Accounts) !== '{}';
-    if (
-        JSON.stringify(data) === JSON.stringify(Accounts) &&
-        Update
-    ) {
+    if (JSON.stringify(data) === JSON.stringify(Accounts) && Update) {
         return;
     }
     Accounts = data;
