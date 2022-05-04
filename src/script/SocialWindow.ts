@@ -16,8 +16,6 @@ const PackageInfo = require('../../package.json');
 let i18n: i18nType;
 const config = new Store();
 
-let isAMInitialized = false;
-let Accounts: AltAccounts = {};
 
 let WindowId: string;
 

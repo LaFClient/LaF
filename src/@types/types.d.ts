@@ -54,3 +54,18 @@ interface GameWindow extends Window {
 interface AltAccounts {
     [index: string]: string;
 }
+
+interface ClientSettings {
+    [index: string]:
+        {
+            category: string;
+        }
+        |{
+            type: 'checkbox' | 'select' | 'input' | 'slider';
+            default?: string | boolean;
+            options?: {
+                [index: string]: string | boolean;
+            };
+            restart: boolean;
+        };
+}
