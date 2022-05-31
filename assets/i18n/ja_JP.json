@@ -37,5 +37,16 @@
             "empty": "ユーザー名とパスワードの両方を入力して下さい",
             "confirmDelete": "本当に{0}を削除しますか？"
         }
+    },
+    "settings": {
+        "ezcss":{
+            "type1": "LaF Theme",
+            "type2": "Sakura Theme",
+            "type3": "White Diabolos",
+            "type4": "Neon Storm",
+            "type5": "Kartoon",
+            "custom": "カスタム",
+            "disable": "無効"
+        }
     }
 }
