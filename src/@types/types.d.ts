@@ -49,6 +49,8 @@ interface GameWindow extends Window {
     logoutAcc: () => void;
     loginAcc: () => void;
     saveAcc: (force?: boolean) => void;
+    windows: any[];
+    gameLoaded: boolean
 }
 
 interface AltAccounts {

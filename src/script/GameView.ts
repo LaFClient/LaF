@@ -26,18 +26,20 @@ ipcRenderer.sendTo(
     'AltAccounts',
     JSON.parse(localStorage.getItem('altAccounts') || '{}')
 );
-setInterval(() => {
-    const gameActivity = window.getGameActivity();
-    // メインプロセスへ
-    ipcRenderer.send('GameActivity', gameActivity);
-    // UIプロセスへ
-    ipcRenderer.sendTo(1, 'GameActivity', gameActivity);
-    ipcRenderer.sendTo(
-        1,
-        'AltAccounts',
-        JSON.parse(localStorage.getItem('altAccounts') || '{}')
-    );
-}, 200);
+const initAltManager = () => {
+    setInterval(() => {
+        const gameActivity = window.getGameActivity();
+        // メインプロセスへ
+        ipcRenderer.send('GameActivity', gameActivity);
+        // UIプロセスへ
+        ipcRenderer.sendTo(1, 'GameActivity', gameActivity);
+        ipcRenderer.sendTo(
+            1,
+            'AltAccounts',
+            JSON.parse(localStorage.getItem('altAccounts') || '{}')
+        );
+    }, 200);
+};
 
 // ショートカットの登録
 const Shortcuts = [
@@ -153,6 +155,25 @@ const injectWaterMark = () => {
     `
     );
 };
+
+// クライアント設定タブの無効化
+const deleteClientTab = () => {
+    const settingsWindow = window.windows[0];
+    settingsWindow.tabs.advanced.pop();
+    settingsWindow.tabs.basic.pop();
+};
+
+// ゲーム読み込み時に発火
+const winObserver = new MutationObserver(() => {
+    winObserver.disconnect();
+    deleteClientTab();
+    initAltManager();
+});
+document.addEventListener('DOMContentLoaded', () => {
+    winObserver.observe(document.getElementById('instructions')!, {
+        childList: true,
+    });
+});
 
 // 読み込み時に発火
 window.onload = async () => {
