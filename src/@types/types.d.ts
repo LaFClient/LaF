@@ -61,8 +61,8 @@ interface ClientSettings {
             category: string;
         }
         |{
-            type: 'checkbox' | 'select' | 'input' | 'slider';
-            default?: string | boolean;
+            type: 'checkbox' | 'select' | 'input' | 'slider' | 't_account';
+            default?: string | boolean | null;
             options?: {
                 [index: string]: string | boolean;
             };
