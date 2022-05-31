@@ -173,14 +173,14 @@ export const settings: ClientSettings = {
     Twitch: {
         category: 'twitch',
     },
+    TwitchAccount: {
+        type: 't_account',
+        default: null,
+        restart: false
+    },
     LinkCommand: {
         type: 'checkbox',
         default: false,
         restart: false,
     },
-    TwitchAccount: {
-        type: 't_account',
-        default: null,
-        restart: false
-    }
 };

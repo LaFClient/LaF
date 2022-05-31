@@ -39,7 +39,7 @@
         }
     },
     "settings": {
-        "ezcss":{
+        "ezcss": {
             "type1": "LaF Theme",
             "type2": "Sakura Theme",
             "type3": "White Diabolos",
@@ -47,6 +47,32 @@
             "type5": "Kartoon",
             "custom": "Custom",
             "disable": "Disabled"
-        }
+        },
+        "General": "General",
+        "Lang": "Language",
+        "AutoPlay": "Media Auto Play",
+        "ResSwp": "Resource Swapper",
+        "AltMng": "Alt Manager",
+        "MenuTimer": "Menu Timer",
+        "Discord": "Discord",
+        "RPC": "Share Activity",
+        "ShareMap": "Show Map",
+        "ShareMode": "Show Game Mode",
+        "ShareClass": "Show Current Class",
+        "ShareTimer": "Show Game Timer",
+        "Graphics": "Graphics",
+        "AngleType": "ANGLE Backend",
+        "GL2Context": "WebGL2 Context",
+        "HWAcceleration": "Hardware Acceleration",
+        "Custom": "Customizes",
+        "EasyCSSMode": "EasyCSS",
+        "UserCSSPath": "UserCSS",
+        "HQJoin": "HyperQuickJoin",
+        "RestrictRegion": "Restrict to Current Region",
+        "OfficialCustomMatch": "Official Custom Match",
+        "GameMode": "Game Mode",
+        "Twitch": "Twitch",
+        "TwitchAccount": "Twitch Account",
+        "LinkCommand": "!link Command"
     }
 }

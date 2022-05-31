@@ -47,6 +47,32 @@
             "type5": "Kartoon",
             "custom": "カスタム",
             "disable": "無効"
-        }
+        },
+        "General": "一般",
+        "Lang": "言語",
+        "AutoPlay": "メディアの自動再生",
+        "ResSwp": "リソーススワッパー",
+        "AltMng": "アカウントマネージャー",
+        "MenuTimer": "メニュータイマー",
+        "Discord": "Discord",
+        "RPC": "アクティビティの共有",
+        "ShareMap": "マップを表示",
+        "ShareMode": "ゲームモードを表示",
+        "ShareClass": "使用中のクラスを表示",
+        "ShareTimer": "試合のタイマーを表示",
+        "Graphics": "グラフィックス",
+        "AngleType": "ANGLEバックエンド",
+        "GL2Context": "WebGL2コンテキスト",
+        "HWAcceleration": "ハードウェアアクセラレーション",
+        "Custom": "カスタマイズ",
+        "EasyCSSMode": "EasyCSS",
+        "UserCSSPath": "ユーザーCSS",
+        "HQJoin": "HyperQuickJoin",
+        "RestrictRegion": "現在接続中の地域に限定",
+        "OfficialCustomMatch": "公式カスタムマッチ",
+        "GameMode": "ゲームモード",
+        "Twitch": "Twitch",
+        "TwitchAccount": "Twitchアカウント",
+        "LinkCommand": "!linkコマンド"
     }
 }
