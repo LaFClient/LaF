@@ -1,11 +1,11 @@
 // LaF Client GameWindow Preload (c) 2022 Hiro527
 require('v8-compile-cache');
-import { app, BrowserWindow, clipboard, ipcRenderer } from 'electron';
+import { clipboard, ipcRenderer } from 'electron';
 import Store from 'electron-store';
 import log from 'electron-log';
 
 import { localization } from '../core/i18n';
-import { ClientWindow, GameActivity, AltAccounts } from '../@types/types';
+import { ClientWindow } from '../@types/types';
 import { UrlType } from '../core/Tools';
 import { i18n as i18nType } from 'i18next';
 
