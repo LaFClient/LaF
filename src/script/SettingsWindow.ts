@@ -1,6 +1,6 @@
 // LaF Client SettingsWindow Preload (c) 2022 Hiro527
 require('v8-compile-cache');
-import { app, BrowserWindow, clipboard, ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 import Store from 'electron-store';
 import log from 'electron-log';
 
@@ -22,12 +22,6 @@ declare const window: SettingsWindow;
 
 window.AppControl = async (id: string) => {
     switch (id) {
-        case 'AppOpenURL':
-            const url = clipboard.readText();
-            if (UrlType(url) !== 'game' || UrlType(url) !== 'external') {
-                ipcRenderer.send(`LoadURL-${WindowId}`, url);
-            }
-            break;
         case 'Minimize':
         case 'Maximize':
         case 'Close':
