@@ -48,6 +48,10 @@
             "custom": "Custom",
             "disable": "Disabled"
         },
+        "tooltip": {
+            "AngleType": "You can choose rendering method. It greatly affects to performance. You can try other one if you are not getting enough framerate.",
+            "HWAcceleration": "It might greatly lower performance. Disabling is not recommended."
+        },
         "General": "General",
         "Lang": "Language",
         "AutoPlay": "Media Auto Play",
