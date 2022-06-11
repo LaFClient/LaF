@@ -5,6 +5,7 @@
     --font-color: rgba(255, 255, 255, 1);
     --separator-color: rgba(255, 255, 255, .8);
     --hover-color: rgba(255, 255, 255, .25);
+    --disabled-color: rgba(255, 255, 255, 0.25);
 }
 
 body {
@@ -153,6 +154,14 @@ option#AltManagerSelector:focus {
 .WindowControlBtn#Minimize:hover,
 .WindowControlBtn#Maximize:hover {
     background-color: var(--hover-color);
+}
+
+.WindowControlBtn.disabled {
+    stroke: var(--disabled-color);
+}
+
+.WindowControlBtn.disabled:hover {
+    background-color: unset;
 }
 
 .WindowControlBtn#Close:hover {

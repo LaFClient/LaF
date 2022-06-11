@@ -602,6 +602,13 @@ const OpenSettings = async (): Promise<BrowserWindow> => {
     // ショートカットの登録
     const Shortcuts = [
         [
+            'F12',
+            () => {
+                // 開発者ツールの起動
+                view.webContents.openDevTools();
+            }
+        ],
+        [
             'Ctrl+F12',
             () => {
                 // 開発者ツールの起動(ウィンドウ)
@@ -622,17 +629,6 @@ const OpenSettings = async (): Promise<BrowserWindow> => {
     Window.removeMenu();
     ipcMain.handle(`WindowControl-${WindowId}`, (e, action) => {
         switch (action) {
-            case 'Maximize':
-                if (Window.isMaximized() || Window.isFullScreen()) {
-                    if (Window.isFullScreen()) {
-                        Window.setFullScreen(false);
-                        Window.webContents.send('ToggleFullScreenUI');
-                    }
-                    Window.unmaximize();
-                } else {
-                    Window.maximize();
-                }
-                break;
             case 'Minimize':
                 Window.minimize();
                 break;
@@ -640,11 +636,25 @@ const OpenSettings = async (): Promise<BrowserWindow> => {
                 Window.close();
         }
     });
+    ipcMain.on(`OpenViewDevTool-${WindowId}`, () => {
+        view.webContents.openDevTools();
+    })
     ipcMain.on(`OpenWindowDevTool-${WindowId}`, () => {
         Window.webContents.openDevTools();
     });
     ipcMain.on(`AppControlBtn-${WindowId}`, () => {
         shell.openExternal(view.webContents.getURL());
+    });
+    ipcMain.handle(`UIInformation-${WindowId}`, () => {
+        return {
+            canGoBack: view.webContents.canGoBack(),
+            canGoNext: view.webContents.canGoForward(),
+            isFullScreen: Window.isFullScreen(),
+            isMaximized: Window.isMaximized(),
+            isLinkCmdEnabled:
+                config.get('twitch.AccountName', null) &&
+                config.get('twitch.LinkCommand', false),
+        };
     });
     Window.on('resize', () => {
         const newBounds = Window.getBounds();

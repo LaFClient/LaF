@@ -60,10 +60,11 @@ interface AltAccounts {
 interface ClientSettings {
     [index: string]:
         {
+            type: 'category';
             category: string;
         }
         |{
-            type: 'checkbox' | 'select' | 'input' | 'slider' | 't_account';
+            type: 'checkbox' | 'select' | 'input' | 'slider' | 't_account' | 'checkbox_e';
             default?: string | boolean | null;
             options?: {
                 [index: string]: string | boolean;
